@@ -9,15 +9,18 @@
     %br
     %br
     - if current_user
-      Here are your Buildings:
-      %br
-      - Building.where(owner_id: current_user.owner_id).each do |building|
+      - if current_user.owner_id != nil
+        Here are your Buildings:
         %br
-        = building.name
-        &nbsp;&nbsp;
-        = link_to "-edit", edit_building_path(building.id)
-        &nbsp;&nbsp;
-        = link_to "-view rent roll", "/rent_roll/#{building.id}"
+        - Building.where(owner_id: current_user.owner_id).each do |building|
+          %br
+          = building.name
+          &nbsp;&nbsp;
+          = link_to "-edit", edit_building_path(building.id)
+          &nbsp;&nbsp;
+          = link_to "-view rent roll", "/rent_roll/#{building.id}"
+      - else
+        Please request approval to see your buildings
       %br
       %br
       %br

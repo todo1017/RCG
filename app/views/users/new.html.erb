@@ -17,6 +17,10 @@
       <%= f.text_field :email %>
     </div>
     <div class="field">
+      <%= f.label :owner %><br>
+      <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>
+    </div>
+    <div class="field">
       <%= f.label :password %><br />
       <%= f.password_field :password %>
     </div>
