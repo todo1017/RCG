@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @building.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @building.description %>
+</p>
+
+<p>
+  <strong>Comp group:</strong>
+  <%= @building.comp_group_id %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @building.phone %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @building.manager %>
+</p>
+
+<p>
+  <strong>Number of units:</strong>
+  <%= @building.number_of_units %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @building.website %>
+</p>
+
+<p>
+  <strong>Year built:</strong>
+  <%= @building.year_built %>
+</p>
+
+<p>
+  <strong>Year remodeled:</strong>
+  <%= @building.year_remodeled %>
+</p>
+
+<%= link_to 'Edit', edit_building_path(@building) %> |
+<%= link_to 'Back', buildings_path %>

@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Building Units</h1>
+
+<div style ="width: 900px; height:500px; border:1px solid grey; overflow-x:scroll; overflow-y:scroll">
+
+<table>
+  <thead>
+    <tr>
+      <th>Number</th>
+      <th>Building</th>
+      <th>Unit type</th>
+      <th>Sq feet</th>
+      <th>Resident name</th>
+      <th>Market rent</th>
+      <th>Actual rent</th>
+      <th>Resident deposit</th>
+      <th>Other deposit</th>
+      <th>Move in</th>
+      <th>Move out</th>
+      <th>Lease expiration</th>
+      <th>Notes</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @building_units.each do |building_unit| %>
+      <tr>
+        <td><%= building_unit.number %></td>
+        <td><%= building_unit.building_id %></td>
+        <td><%= building_unit.unit_type_id %></td>
+        <td><%= building_unit.sq_feet %></td>
+        <td><%= building_unit.resident_name %></td>
+        <td><%= building_unit.market_rent %></td>
+        <td><%= building_unit.actual_rent %></td>
+        <td><%= building_unit.resident_deposit %></td>
+        <td><%= building_unit.other_deposit %></td>
+        <td><%= building_unit.move_in %></td>
+        <td><%= building_unit.move_out %></td>
+        <td><%= building_unit.lease_expiration %></td>
+        <td><%= building_unit.notes %></td>
+        <td><%= link_to 'Show', building_unit %></td>
+        <td><%= link_to 'Edit', edit_building_unit_path(building_unit) %></td>
+        <td><%= link_to 'Destroy', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+
+<br>
+
+<%= link_to 'New Building unit', new_building_unit_path %>

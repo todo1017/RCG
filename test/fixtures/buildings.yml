@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  description: MyText
+  comp_group_id: 1
+  phone: MyText
+  manager: MyText
+  number_of_units: 1
+  website: MyText
+  year_built: 1
+  year_remodeled: 1
+
+two:
+  name: MyText
+  description: MyText
+  comp_group_id: 1
+  phone: MyText
+  manager: MyText
+  number_of_units: 1
+  website: MyText
+  year_built: 1
+  year_remodeled: 1

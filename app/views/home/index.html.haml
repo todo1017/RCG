@@ -1,0 +1,31 @@
+.row
+  .col-md-3
+  .col-md-6
+    %br
+    %br
+    Welcome to the RCG web application!!
+    %br
+    %br
+    %br
+    %br
+    - if current_user
+      Here are your Buildings:
+      %br
+      - Building.where(owner_id: current_user.owner_id).each do |building|
+        %br
+        = building.name
+        &nbsp;&nbsp;
+        = link_to "-edit", edit_building_path(building.id)
+        &nbsp;&nbsp;
+        = link_to "-view rent roll", "/rent_roll/#{building.id}"
+      %br
+      %br
+      %br
+      %br
+      = "Logged in as #{current_user.email}."
+      = link_to "Log Out", logout_path, {:class=>"btn btn-success"}
+    - else
+      = link_to "Sign Up", signup_path
+      = "or"
+      = link_to "Log In", login_path, {:class=>"btn btn-success"}
+  .col-md-3

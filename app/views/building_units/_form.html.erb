@@ -1,0 +1,69 @@
+<%= form_for(@building_unit) do |f| %>
+  <% if @building_unit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@building_unit.errors.count, "error") %> prohibited this building_unit from being saved:</h2>
+
+      <ul>
+      <% @building_unit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :number %><br>
+    <%= f.number_field :number %>
+  </div>
+  <div class="field">
+    <%= f.label :building_id %><br>
+    <%= f.number_field :building_id %>
+  </div>
+  <div class="field">
+    <%= f.label :unit_type_id %><br>
+    <%= f.number_field :unit_type_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sq_feet %><br>
+    <%= f.number_field :sq_feet %>
+  </div>
+  <div class="field">
+    <%= f.label :resident_name %><br>
+    <%= f.text_area :resident_name %>
+  </div>
+  <div class="field">
+    <%= f.label :market_rent %><br>
+    <%= f.text_field :market_rent %>
+  </div>
+  <div class="field">
+    <%= f.label :actual_rent %><br>
+    <%= f.text_field :actual_rent %>
+  </div>
+  <div class="field">
+    <%= f.label :resident_deposit %><br>
+    <%= f.text_field :resident_deposit %>
+  </div>
+  <div class="field">
+    <%= f.label :other_deposit %><br>
+    <%= f.text_field :other_deposit %>
+  </div>
+  <div class="field">
+    <%= f.label :move_in %><br>
+    <%= f.date_select :move_in %>
+  </div>
+  <div class="field">
+    <%= f.label :move_out %><br>
+    <%= f.date_select :move_out %>
+  </div>
+  <div class="field">
+    <%= f.label :lease_expiration %><br>
+    <%= f.date_select :lease_expiration %>
+  </div>
+  <div class="field">
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

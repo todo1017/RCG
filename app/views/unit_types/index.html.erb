@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Unit Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Beds</th>
+      <th>Baths</th>
+      <th>Sq ft low</th>
+      <th>Sq ft high</th>
+      <th>Floor low</th>
+      <th>Floor high</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @unit_types.each do |unit_type| %>
+      <tr>
+        <td><%= unit_type.description %></td>
+        <td><%= unit_type.beds %></td>
+        <td><%= unit_type.baths %></td>
+        <td><%= unit_type.sq_ft_low %></td>
+        <td><%= unit_type.sq_ft_high %></td>
+        <td><%= unit_type.floor_low %></td>
+        <td><%= unit_type.floor_high %></td>
+        <td><%= link_to 'Show', unit_type %></td>
+        <td><%= link_to 'Edit', edit_unit_type_path(unit_type) %></td>
+        <td><%= link_to 'Destroy', unit_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Unit type', new_unit_type_path %>

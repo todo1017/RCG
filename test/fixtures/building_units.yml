@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  building_id: 1
+  unit_type_id: 1
+  sq_feet: 1
+  resident_name: MyText
+  market_rent: 
+  actual_rent: 
+  resident_deposit: 
+  other_deposit: 
+  move_in: 2016-02-16
+  move_out: 2016-02-16
+  lease_expiration: 2016-02-16
+  notes: MyText
+
+two:
+  number: 1
+  building_id: 1
+  unit_type_id: 1
+  sq_feet: 1
+  resident_name: MyText
+  market_rent: 
+  actual_rent: 
+  resident_deposit: 
+  other_deposit: 
+  move_in: 2016-02-16
+  move_out: 2016-02-16
+  lease_expiration: 2016-02-16
+  notes: MyText

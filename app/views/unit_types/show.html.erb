@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @unit_type.description %>
+</p>
+
+<p>
+  <strong>Beds:</strong>
+  <%= @unit_type.beds %>
+</p>
+
+<p>
+  <strong>Baths:</strong>
+  <%= @unit_type.baths %>
+</p>
+
+<p>
+  <strong>Sq ft low:</strong>
+  <%= @unit_type.sq_ft_low %>
+</p>
+
+<p>
+  <strong>Sq ft high:</strong>
+  <%= @unit_type.sq_ft_high %>
+</p>
+
+<p>
+  <strong>Floor low:</strong>
+  <%= @unit_type.floor_low %>
+</p>
+
+<p>
+  <strong>Floor high:</strong>
+  <%= @unit_type.floor_high %>
+</p>
+
+<%= link_to 'Edit', edit_unit_type_path(@unit_type) %> |
+<%= link_to 'Back', unit_types_path %>

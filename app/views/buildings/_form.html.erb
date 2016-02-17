@@ -1,0 +1,57 @@
+<%= form_for(@building) do |f| %>
+  <% if @building.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@building.errors.count, "error") %> prohibited this building from being saved:</h2>
+
+      <ul>
+      <% @building.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :owner %><br>
+    <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_area :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :comp_group_id %><br>
+    <%= f.number_field :comp_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br>
+    <%= f.text_area :phone %>
+  </div>
+  <div class="field">
+    <%= f.label :manager %><br>
+    <%= f.text_area :manager %>
+  </div>
+  <div class="field">
+    <%= f.label :number_of_units %><br>
+    <%= f.number_field :number_of_units %>
+  </div>
+  <div class="field">
+    <%= f.label :website %><br>
+    <%= f.text_area :website %>
+  </div>
+  <div class="field">
+    <%= f.label :year_built %><br>
+    <%= f.number_field :year_built %>
+  </div>
+  <div class="field">
+    <%= f.label :year_remodeled %><br>
+    <%= f.number_field :year_remodeled %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

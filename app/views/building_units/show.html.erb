@@ -1,0 +1,71 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @building_unit.number %>
+</p>
+
+<p>
+  <strong>Building:</strong>
+  <%= @building_unit.building_id %>
+</p>
+
+<p>
+  <strong>Unit type:</strong>
+  <%= @building_unit.unit_type_id %>
+</p>
+
+<p>
+  <strong>Sq feet:</strong>
+  <%= @building_unit.sq_feet %>
+</p>
+
+<p>
+  <strong>Resident name:</strong>
+  <%= @building_unit.resident_name %>
+</p>
+
+<p>
+  <strong>Market rent:</strong>
+  <%= @building_unit.market_rent %>
+</p>
+
+<p>
+  <strong>Actual rent:</strong>
+  <%= @building_unit.actual_rent %>
+</p>
+
+<p>
+  <strong>Resident deposit:</strong>
+  <%= @building_unit.resident_deposit %>
+</p>
+
+<p>
+  <strong>Other deposit:</strong>
+  <%= @building_unit.other_deposit %>
+</p>
+
+<p>
+  <strong>Move in:</strong>
+  <%= @building_unit.move_in %>
+</p>
+
+<p>
+  <strong>Move out:</strong>
+  <%= @building_unit.move_out %>
+</p>
+
+<p>
+  <strong>Lease expiration:</strong>
+  <%= @building_unit.lease_expiration %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @building_unit.notes %>
+</p>
+
+<%= link_to 'Edit', edit_building_unit_path(@building_unit) %> |
+<%= link_to 'Back', building_units_path %>
+

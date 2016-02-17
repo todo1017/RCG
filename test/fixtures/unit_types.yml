@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  beds: 1
+  baths: 1
+  sq_ft_low: 1
+  sq_ft_high: 1
+  floor_low: 1
+  floor_high: 1
+
+two:
+  description: MyText
+  beds: 1
+  baths: 1
+  sq_ft_low: 1
+  sq_ft_high: 1
+  floor_low: 1
+  floor_high: 1
