@@ -10,38 +10,38 @@
       </ul>
     </div>
   <% end %>
+  <%#= f.hidden_field :owner_id, current_user.owner_id %>
 
-  <div class="field">
-    <%= f.label :owner %><br>
-    <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>
-  </div>
+  <!--<div class="field">-->
+    <%#= f.label :owner %><br>
+    <!--<%#= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>-->
+  <!--</div>-->
+    <i>Two column format coming soon</i>
+    <br>
+    <br>
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_area :name %>
+    <%= f.text_field :name, size: "50" %>
   </div>
+    <div class="field">
+      <%= f.label :manager %><br>
+      <%= f.text_field :manager, size: "50" %>
+    </div>
+    <div class="field">
+      <%= f.label :website %><br>
+      <%= f.text_field :website, size: "50" %>
+    </div>
   <div class="field">
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
-  </div>
-  <div class="field">
-    <%= f.label :comp_group_id %><br>
-    <%= f.number_field :comp_group_id %>
+    <%= f.text_area :description, size: "50x5" %>
   </div>
   <div class="field">
     <%= f.label :phone %><br>
-    <%= f.text_area :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :manager %><br>
-    <%= f.text_area :manager %>
+    <%= f.telephone_field :phone %>
   </div>
   <div class="field">
     <%= f.label :number_of_units %><br>
     <%= f.number_field :number_of_units %>
-  </div>
-  <div class="field">
-    <%= f.label :website %><br>
-    <%= f.text_area :website %>
   </div>
   <div class="field">
     <%= f.label :year_built %><br>
@@ -51,7 +51,14 @@
     <%= f.label :year_remodeled %><br>
     <%= f.number_field :year_remodeled %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <br>
+    <%= f.submit "Submit", {:class=>"btn btn-success"} %>
+    <%= link_to 'cancel', root_path %>
+    <br>
+    <br>
+    <div class="field">
+      <%= f.label :comp_group_id %><br>
+      <%= f.number_field :comp_group_id %>
+    </div>
+    <br>
 <% end %>

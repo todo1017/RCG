@@ -1,16 +1,12 @@
 .row
-  .col-md-3
-  .col-md-6
-    %br
-    %br
-    Welcome to the RCG web application!!
-    %br
-    %br
+  .col-md-1
+  .col-md-8
     %br
     %br
     - if current_user
       - if current_user.owner_id != nil
-        Here are your Buildings:
+        %b
+          Your Buildings:
         %br
         - Building.where(owner_id: current_user.owner_id).each do |building|
           %br
@@ -19,14 +15,30 @@
           = link_to "-edit", edit_building_path(building.id)
           &nbsp;&nbsp;
           = link_to "-view rent roll", "/rent_roll/#{building.id}"
+        %br
+        %br
+        = link_to "Add New Building", new_building_path
+        %br
+        %br
+        %br
+        %br
+        %b
+          New Users Requiring Approval to see your Buildings:
+        %br
+        %br
+        %i
+          Feature coming soon
+        %br
+        %br
       - else
         Please request approval to see your buildings
       %br
       %br
       %br
       %br
-      = "Logged in as #{current_user.email}."
       = link_to "Log Out", logout_path, {:class=>"btn btn-success"}
+      &nbsp;&nbsp;
+      = "#{current_user.email}"
     - else
       = link_to "Sign Up", signup_path
       = "or"

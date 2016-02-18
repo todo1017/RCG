@@ -1,5 +1,7 @@
 class BuildingUnit < ActiveRecord::Base
 
+  belongs_to :building
+
   def self.import(file)
 
     xlsx = Roo::Spreadsheet.open(file)
