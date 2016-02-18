@@ -2,7 +2,7 @@
 
 <h1>Listing Building Units</h1>
 
-<div style ="width: 900px; height:500px; border:1px solid grey; overflow-x:scroll; overflow-y:scroll">
+<div style ="width: 900px; height:300px; border:1px solid grey; overflow-x:scroll; overflow-y:scroll">
 
 <table>
   <thead>
@@ -25,7 +25,9 @@
   </thead>
 
   <tbody>
+    <% building_id = 0 %>
     <% @building_units.each do |building_unit| %>
+      <% building_id = building_unit.building_id %>
       <tr>
         <td><%= building_unit.number %></td>
         <td><%= building_unit.building_id %></td>
@@ -49,6 +51,16 @@
 </table>
 
 </div>
+
+<br>
+
+<h2>Import New Yardi Data</h2>
+
+<%= form_tag import_building_units_path, multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= hidden_field_tag :building_id, building_id %>
+    <%= submit_tag "Import" %>
+<% end %>
 
 <br>
 

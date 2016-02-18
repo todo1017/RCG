@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   resources :sessions
   resources :owners
   resources :buildings
-  resources :building_units
+  resources :building_units do
+    collection { post :import }
+  end
   resources :unit_types
 
   # Example of regular route:

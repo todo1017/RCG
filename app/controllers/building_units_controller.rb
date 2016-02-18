@@ -12,6 +12,11 @@ class BuildingUnitsController < ApplicationController
     render :index
   end
 
+  def import
+    BuildingUnit.import(params[:file])
+    redirect_to "/rent_roll/#{params[:building_id].to_i}", notice: "Yardi data updated"
+  end
+
   # GET /building_units/1
   # GET /building_units/1.json
   def show
