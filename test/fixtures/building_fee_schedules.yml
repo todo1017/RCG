@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  building_id: 1
+  parking: 1.5
+  parking_: MyText
+  parking_extra: 1.5
+  parking_extra_: MyText
+  security_deposit: 1.5
+  security_deposit_: MyText
+  amenity_fee: 1.5
+  amenity_fee_: MyText
+  trash_fee: 1.5
+  trash_fee_: MyText
+  pet_deposit: 1.5
+  pet_deposit_: MyText
+  pet_dog: 1.5
+  pet_dog_: MyText
+  pet_cat: 1.5
+  pet_cat_: MyText
+  application_fee: 1.5
+  application_fee_: MyText
+  minimum_lease: 1
+  minimum_lease_: MyText
+  monthly_fees: 1.5
+  monthly_fees_: MyText
+  yearly_fees: 1.5
+  yearly_fees_: MyText
+
+two:
+  building_id: 1
+  parking: 1.5
+  parking_: MyText
+  parking_extra: 1.5
+  parking_extra_: MyText
+  security_deposit: 1.5
+  security_deposit_: MyText
+  amenity_fee: 1.5
+  amenity_fee_: MyText
+  trash_fee: 1.5
+  trash_fee_: MyText
+  pet_deposit: 1.5
+  pet_deposit_: MyText
+  pet_dog: 1.5
+  pet_dog_: MyText
+  pet_cat: 1.5
+  pet_cat_: MyText
+  application_fee: 1.5
+  application_fee_: MyText
+  minimum_lease: 1
+  minimum_lease_: MyText
+  monthly_fees: 1.5
+  monthly_fees_: MyText
+  yearly_fees: 1.5
+  yearly_fees_: MyText

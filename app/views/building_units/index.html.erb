@@ -1,10 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Building Units</h1>
+<h2>Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
 
-<div style ="width: 900px; height:300px; border:1px solid grey; overflow-x:scroll; overflow-y:scroll">
+<%= form_tag import_building_units_path, multipart: true do %>
+    <table><tr><td width="300">
+      <h4>Import New Yardi Data</h4>
+      <%= file_field_tag :file %>
+      <%= hidden_field_tag :building_id, params[:building_id] %>
+      <%= submit_tag "Import" %>
+    </td><td>
+      <%= link_to 'Manually Add New Building unit', new_building_unit_path %>
+    </td></tr></table>
+<% end %>
 
-<table>
+<br>
+
+<div class="scroll-table-div">
+
+<table class="scroll-table">
   <thead>
     <tr>
       <th>Number</th>
@@ -20,14 +33,12 @@
       <th>Move out</th>
       <th>Lease expiration</th>
       <th>Notes</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
   <tbody>
-    <% building_id = 0 %>
     <% @building_units.each do |building_unit| %>
-      <% building_id = building_unit.building_id %>
       <tr>
         <td><%= building_unit.number %></td>
         <td><%= building_unit.building_id %></td>
@@ -42,9 +53,9 @@
         <td><%= building_unit.move_out %></td>
         <td><%= building_unit.lease_expiration %></td>
         <td><%= building_unit.notes %></td>
-        <td><%= link_to 'Show', building_unit %></td>
+        <!--<td><%#= link_to 'Show', building_unit %></td>-->
         <td><%= link_to 'Edit', edit_building_unit_path(building_unit) %></td>
-        <td><%= link_to 'Destroy', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -53,15 +64,5 @@
 </div>
 
 <br>
-
-<h2>Import New Yardi Data</h2>
-
-<%= form_tag import_building_units_path, multipart: true do %>
-    <%= file_field_tag :file %>
-    <%= hidden_field_tag :building_id, building_id %>
-    <%= submit_tag "Import" %>
-<% end %>
-
 <br>
 
-<%= link_to 'New Building unit', new_building_unit_path %>

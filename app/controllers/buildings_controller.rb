@@ -28,7 +28,10 @@ class BuildingsController < ApplicationController
 
     respond_to do |format|
       if @building.save
-        format.html { redirect_to @building, notice: 'Building was successfully created.' }
+        building_fee_schedule = BuildingFeeSchedule.new
+        building_fee_schedule.update_attribute :building_id, @building.id
+        building_fee_schedule.save!
+        format.html { redirect_to root_path, notice: 'Building was successfully created.' }
         format.json { render :show, status: :created, location: @building }
       else
         format.html { render :new }

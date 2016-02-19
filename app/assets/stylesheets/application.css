@@ -20,3 +20,19 @@
 #notice {
     color: orange;
 }
+
+.scroll-table-div {
+    /*border:1px solid grey;*/
+    overflow-x:scroll;
+    overflow-y:scroll;
+}
+
+.scroll-table {
+    width: 700px;
+    /*height:300px;*/
+}
+th, td { min-width: 100px; }
+
+.yellow-td {
+    background-color: lightgoldenrodyellow;
+}
