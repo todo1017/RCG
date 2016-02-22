@@ -1,0 +1,2 @@
+module BuildingAmenitiesHelper
+end

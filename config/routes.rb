@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :amenity_concierges
+  resources :building_amenities
   resources :building_fee_schedules
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

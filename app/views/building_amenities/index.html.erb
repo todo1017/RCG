@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Building Amenities for <%= current_user.owner.name %> & Competitors</h2>
+
+<div class="scroll-table-div">
+
+<table>
+  <thead>
+    <tr>
+      <th>Building</th>
+      <th>Business center</th>
+      <th>Resident lounge</th>
+      <th>Screening room</th>
+      <th>Rooftop deck</th>
+      <th>Train station</th>
+      <th>Pool</th>
+      <th>Gated</th>
+      <th>Concierge</th>
+      <th>Recreation</th>
+      <th>Fitness</th>
+      <th>Other</th>
+      <th>amentity 1 name</th>
+      <th>amentity 2 name</th>
+      <th>amentity 3 name</th>
+      <th>amentity 11 name</th>
+      <th>amentity 12 name</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @building_amenities.each do |building_amenity| %>
+      <tr>
+        <td><%= link_to building_amenity.building.name, edit_building_amenity_path(building_amenity) %></td>
+        <td<%=cell_color(building_amenity.business_center)%>>
+          <%= if building_amenity.business_center == true then "Y" elsif building_amenity.business_center == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.business_center_} %>
+        </td>
+        <td<%=cell_color(building_amenity.resident_lounge)%>>
+          <%= if building_amenity.resident_lounge == true then "Y" elsif building_amenity.resident_lounge == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.resident_lounge_} %>
+        </td>
+        <td<%=cell_color(building_amenity.screening_room)%>>
+          <%= if building_amenity.screening_room == true then "Y" elsif building_amenity.screening_room == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.screening_room_} %>
+        </td>
+        <td<%=cell_color(building_amenity.rooftop_deck)%>>
+          <%= if building_amenity.rooftop_deck == true then "Y" elsif building_amenity.rooftop_deck == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.rooftop_deck_} %>
+        </td>
+        <td<%=cell_color(building_amenity.train_station)%>>
+          <%= if building_amenity.train_station == true then "Y" elsif building_amenity.train_station == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.train_station_} %>
+        </td>
+        <td<%=cell_color(building_amenity.pool)%>>
+          <%= if building_amenity.pool == true then "Y" elsif building_amenity.pool == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.pool_} %>
+        </td>
+        <td<%=cell_color(building_amenity.gated)%>>
+          <%= if building_amenity.gated == true then "Y" elsif building_amenity.gated == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.gated_} %>
+        </td>
+        <td>
+          <%= AmenityConcierge.find(building_amenity.amenity_concierge_id).name if building_amenity.amenity_concierge_id != nil %>
+        </td>
+        <td<%=cell_color(building_amenity.recreation)%>>
+          <%= if building_amenity.recreation == true then "Y" elsif building_amenity.recreation == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.recreation_} %>
+        </td>
+        <td<%=cell_color(building_amenity.fitness)%>>
+          <%= if building_amenity.fitness == true then "Y" elsif building_amenity.fitness == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_amenity.fitness_} %>
+        </td>
+        <td<%=cell_color(building_amenity.other)%>>
+          <%= building_amenity.other %>
+        </td>
+        <td><%#= building_amenity.amentity_1 %></td>
+        <td><%#= building_amenity.amentity_2 %></td>
+        <td><%#= building_amenity.amentity_3 %></td>
+        <td><%#= building_amenity.amentity_11 %></td>
+        <td><%#= building_amenity.amentity_12 %></td>
+        <td><%= link_to 'Edit', edit_building_amenity_path(building_amenity) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>
+
+<br>

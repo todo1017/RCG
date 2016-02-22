@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Amenity Concierges</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @amenity_concierges.each do |amenity_concierge| %>
+      <tr>
+        <td><%= amenity_concierge.name %></td>
+        <td><%= link_to 'Show', amenity_concierge %></td>
+        <td><%= link_to 'Edit', edit_amenity_concierge_path(amenity_concierge) %></td>
+        <td><%= link_to 'Destroy', amenity_concierge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Amenity concierge', new_amenity_concierge_path %>

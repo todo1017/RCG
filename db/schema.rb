@@ -11,7 +11,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219130251) do
+ActiveRecord::Schema.define(version: 20160222182704) do
+
+  create_table "amenity_concierges", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "building_amenities", force: :cascade do |t|
+    t.integer  "building_id"
+    t.boolean  "business_center"
+    t.text     "business_center_"
+    t.boolean  "resident_lounge"
+    t.text     "resident_lounge_"
+    t.boolean  "screening_room"
+    t.text     "screening_room_"
+    t.boolean  "rooftop_deck"
+    t.text     "rooftop_deck_"
+    t.boolean  "train_station"
+    t.text     "train_station_"
+    t.boolean  "pool"
+    t.text     "pool_"
+    t.boolean  "gated"
+    t.text     "gated_"
+    t.integer  "amenity_concierge_id"
+    t.text     "concierge_"
+    t.boolean  "recreation"
+    t.text     "recreation_"
+    t.boolean  "fitness"
+    t.text     "fitness_"
+    t.text     "other"
+    t.boolean  "amenity_1"
+    t.text     "amenity_1_"
+    t.string   "amenity_1_name"
+    t.boolean  "amenity_2"
+    t.text     "amenity_2_"
+    t.string   "amenity_2_name"
+    t.boolean  "amenity_3"
+    t.text     "amenity_3_"
+    t.string   "amenity_3_name"
+    t.integer  "amenity_11_id"
+    t.text     "amenity_11_"
+    t.string   "amenity_11_name"
+    t.integer  "amenity_12_id"
+    t.text     "amenity_12_"
+    t.string   "amenity_12_name"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "building_fee_schedules", force: :cascade do |t|
     t.integer  "building_id"

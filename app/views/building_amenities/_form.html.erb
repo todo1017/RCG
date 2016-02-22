@@ -1,0 +1,146 @@
+<%= form_for(@building_amenity) do |f| %>
+  <% if @building_amenity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@building_amenity.errors.count, "error") %> prohibited this building_amenity from being saved:</h2>
+
+      <ul>
+      <% @building_amenity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="actions">
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/building_amenities" %>
+    </div>
+  <div class="field">
+    <br>
+    <%= f.label "Business Center (with a field for comments)" %><br>
+    <%= f.select :business_center, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.business_center), :include_blank => true %>
+    <%= f.text_area :business_center_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :resident_lounge %><br>
+    <%= f.select :resident_lounge, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.resident_lounge), :include_blank => true %>
+    <%= f.text_area :resident_lounge_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :screening_room %><br>
+    <%= f.select :screening_room, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.screening_room), :include_blank => true %>
+    <%= f.text_area :screening_room_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :rooftop_deck %><br>
+    <%= f.select :rooftop_deck, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.rooftop_deck), :include_blank => true %>
+    <%= f.text_area :rooftop_deck_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :train_station %><br>
+    <%= f.select :train_station, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.train_station), :include_blank => true %>
+    <%= f.text_area :train_station_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :pool %><br>
+    <%= f.select :pool, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.pool), :include_blank => true %>
+    <%= f.text_area :pool_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :gated %><br>
+    <%= f.select :gated, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.gated), :include_blank => true %>
+    <%= f.text_area :gated_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :amenity_concierge_id %><br>
+    <%= f.select :amenity_concierge_id, options_from_collection_for_select(AmenityConcierge.all, :id, :name, @building_amenity.amenity_concierge_id), :include_blank => true %>
+    <%= f.text_area :concierge_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :recreation %><br>
+    <%= f.select :recreation, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.recreation), :include_blank => true %>
+    <%= f.text_area :recreation_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :fitness %><br>
+    <%= f.select :fitness, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_amenity.fitness), :include_blank => true %>
+    <%= f.text_area :fitness_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :other %><br>
+    <%= f.text_area :other %>
+  </div>
+  <!--<div class="field">-->
+    <!--<br>-->
+    <%#= f.label :amenity_1 %>
+    <!--<%#= f.check_box :amenity_1 %>-->
+    <!--<%#= f.text_area :amenity_1_ %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_1_name %>
+    <!--<%#= f.text_field :amenity_1_name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_2 %>
+    <!--<%#= f.check_box :amenity_2 %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_2_ %>
+    <!--<%#= f.text_area :amenity_2_ %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_2_name %>
+    <!--<%#= f.text_field :amenity_2_name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_3 %>
+    <!--<%#= f.check_box :amenity_3 %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_3_ %>
+    <!--<%#= f.text_area :amenity_3_ %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_3_name %>
+    <!--<%#= f.text_field :amenity_3_name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_11 %>
+    <!--<%#= f.number_field :amenity_11 %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_11_ %>
+    <!--<%#= f.text_area :amenity_11_ %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_11_name %>
+    <!--<%#= f.text_field :amenity_11_name %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_12 %>
+    <!--<%#= f.number_field :amenity_12 %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_12_ %>
+    <!--<%#= f.text_area :amenity_12_ %>-->
+  <!--</div>-->
+  <!--<div class="field">-->
+    <%#= f.label :amenity_12_name %>
+    <!--<%#= f.text_field :amenity_12_name %>-->
+  <!--</div>-->
+    <div class="actions">
+      <br>
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/building_amenities" %>
+    </div>
+<% end %>
