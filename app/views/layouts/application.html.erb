@@ -1,7 +1,13 @@
+<% if current_user && current_user.owner != nil %>
+    <% application_name = current_user.owner.name + " Apartment App (powered by RCG)"  %>
+<% else %>
+    <% application_name = "RCG Apartment Application"  %>
+<% end %>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rcg</title>
+  <title><%= application_name %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -17,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%= root_path %>">RCG Apartment Application
+      <a class="navbar-brand" href="<%= root_path %>"><%= application_name %>
       </a>
     </div>
     <%- if current_user %>
