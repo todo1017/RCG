@@ -19,11 +19,11 @@
       <th>Recreation</th>
       <th>Fitness</th>
       <th>Other</th>
-      <th>amentity 1 name</th>
-      <th>amentity 2 name</th>
-      <th>amentity 3 name</th>
-      <th>amentity 11 name</th>
-      <th>amentity 12 name</th>
+      <!--<th>amentity 1 name</th>-->
+      <!--<th>amentity 2 name</th>-->
+      <!--<th>amentity 3 name</th>-->
+      <!--<th>amentity 11 name</th>-->
+      <!--<th>amentity 12 name</th>-->
       <th></th>
     </tr>
   </thead>
@@ -60,7 +60,7 @@
           <%= if building_amenity.gated == true then "Y" elsif building_amenity.gated == false then "N" end %>
           <%= render partial: "shared/comment", locals: {comment_field: building_amenity.gated_} %>
         </td>
-        <td>
+        <td<%=cell_color(building_amenity.amenity_concierge_id)%>>
           <%= AmenityConcierge.find(building_amenity.amenity_concierge_id).name if building_amenity.amenity_concierge_id != nil %>
         </td>
         <td<%=cell_color(building_amenity.recreation)%>>
@@ -74,11 +74,11 @@
         <td<%=cell_color(building_amenity.other)%>>
           <%= building_amenity.other %>
         </td>
-        <td><%#= building_amenity.amentity_1 %></td>
-        <td><%#= building_amenity.amentity_2 %></td>
-        <td><%#= building_amenity.amentity_3 %></td>
-        <td><%#= building_amenity.amentity_11 %></td>
-        <td><%#= building_amenity.amentity_12 %></td>
+        <!--<td><%#= building_amenity.amentity_1 %></td>-->
+        <!--<td><%#= building_amenity.amentity_2 %></td>-->
+        <!--<td><%#= building_amenity.amentity_3 %></td>-->
+        <!--<td><%#= building_amenity.amentity_11 %></td>-->
+        <!--<td><%#= building_amenity.amentity_12 %></td>-->
         <td><%= link_to 'Edit', edit_building_amenity_path(building_amenity) %></td>
       </tr>
     <% end %>
