@@ -52,7 +52,7 @@ class BuildingUnitsController < ApplicationController
   def update
     respond_to do |format|
       if @building_unit.update(building_unit_params)
-        format.html { redirect_to @building_unit, notice: 'Building unit was successfully updated.' }
+        format.html { redirect_to "/rent_roll/#{@building_unit.building_id.to_i}", notice: 'Building unit was successfully updated.' }
         format.json { render :show, status: :ok, location: @building_unit }
       else
         format.html { render :edit }
@@ -79,6 +79,6 @@ class BuildingUnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_unit_params
-      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes)
+      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes, :resident_id, :floor)
     end
 end

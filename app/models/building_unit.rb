@@ -13,7 +13,6 @@ class BuildingUnit < ActiveRecord::Base
       bulding_unit = find_or_initialize_by(number: row["number"].to_s)
 
       # bulding_unit.update ?????: row["unit_type"].to_s
-      # bulding_unit.update ??????: row["resident_id"].to_s
 
       bulding_unit.update building_id: xlsx.sheets.first.to_i
       bulding_unit.update sq_feet: row["sq_feet"].to_i
@@ -27,6 +26,7 @@ class BuildingUnit < ActiveRecord::Base
       bulding_unit.update lease_expiration: Date.strptime(row["lease_expiration"], "%m/%d/%Y")
       bulding_unit.update move_out: Date.strptime(row["move_out"], "%m/%d/%Y") if row["move_out"] != nil
       bulding_unit.update notes: row["notes"].to_s
+      bulding_unit.update resident_id: row["resident_id"].to_s
     end
 
   end

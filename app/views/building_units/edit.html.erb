@@ -1,6 +1,4 @@
-<h1>Editing Building Unit</h1>
+<h3><%= Building.find(@building_unit.building_id).name %> -- Edit Apartment #<%= @building_unit.number %></h3>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @building_unit %> |
-<%= link_to 'Back', building_units_path %>
