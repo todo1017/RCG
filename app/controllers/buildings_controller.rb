@@ -14,7 +14,7 @@ class BuildingsController < ApplicationController
 
   # GET /buildings/new
   def new
-    @building = Building.new
+    @building = Building.new(competitor: false)
   end
 
   # GET /buildings/1/edit
@@ -51,7 +51,7 @@ class BuildingsController < ApplicationController
   def update
     respond_to do |format|
       if @building.update(building_params)
-        format.html { redirect_to @building, notice: 'Building was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Building was successfully updated.' }
         format.json { render :show, status: :ok, location: @building }
       else
         format.html { render :edit }
@@ -78,6 +78,6 @@ class BuildingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_params
-      params.require(:building).permit(:owner_id, :name, :description, :comp_group_id, :phone, :manager, :number_of_units, :website, :year_built, :year_remodeled)
+      params.require(:building).permit(:owner_id, :name, :description, :comp_group_id, :phone, :manager, :number_of_units, :website, :year_built, :year_remodeled, :geography_id, :competitor)
     end
 end

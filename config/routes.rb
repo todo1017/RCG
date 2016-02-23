@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :geographies
   resources :amenity_patios
   resources :amenity_ceilings
   resources :building_unit_amenities

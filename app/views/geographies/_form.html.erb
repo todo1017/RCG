@@ -1,0 +1,23 @@
+<%= form_for(@geography) do |f| %>
+  <% if @geography.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@geography.errors.count, "error") %> prohibited this geography from being saved:</h2>
+
+      <ul>
+      <% @geography.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+    <div class="actions">
+      <br>
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/geographies" %>
+    </div>
+<% end %>

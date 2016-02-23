@@ -27,7 +27,10 @@
   <tbody>
     <% @building_fee_schedules.each do |building_fee_schedule| %>
       <tr>
-        <td><%= link_to building_fee_schedule.building.name, edit_building_fee_schedule_path(building_fee_schedule) %></td>
+        <td>
+          <%= if building_fee_schedule.building.competitor == true then raw "<b>comp</b>" end %>
+          <%= link_to building_fee_schedule.building.name, edit_building_fee_schedule_path(building_fee_schedule) %>
+        </td>
         <td<%=cell_color(building_fee_schedule.parking)%>>
           <%= building_fee_schedule.parking %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.parking_} %>

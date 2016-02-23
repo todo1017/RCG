@@ -10,7 +10,7 @@
         %b
           Your Buildings:
         %br
-        - Building.where(owner_id: current_user.owner_id).each do |building|
+        - Building.where(owner_id: current_user.owner_id).where(competitor: false).each do |building|
           %br
           = building.name
           &nbsp;&nbsp;
@@ -22,6 +22,22 @@
         = link_to "Add New Building", new_building_path
         %br
         %br
+        %b
+          Competitor Buildings:
+        %br
+        - Building.where(owner_id: current_user.owner_id).where(competitor: true).each do |building|
+          %br
+          = building.name
+          = " (#{Geography.find(building.geography_id).name})" if building.geography_id != nil
+          &nbsp;&nbsp;
+          = link_to "-edit", edit_building_path(building.id)
+          -#&nbsp;&nbsp;
+          -#= link_to "-view rent roll", "/rent_roll/#{building.id}"
+        %br
+        %br
+        -#= link_to "Add New Building", new_building_path
+        -#%br
+        -#%br
         %br
         %br
         %b
@@ -36,6 +52,9 @@
         %br
         %b
           Ronan_Admin Only:
+        %br
+        %br
+        = link_to "Geography Values", "/geographies"
         %br
         %br
         = link_to "Concierge Values", "/amenity_concierges"

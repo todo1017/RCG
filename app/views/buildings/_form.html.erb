@@ -16,6 +16,10 @@
     <%#= f.label :owner %><br>
     <!--<%#= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>-->
   <!--</div>-->
+    <%= f.submit "Submit", {:class=>"btn btn-success"} %>
+    <%= link_to 'cancel', root_path %>
+    <br>
+    <br>
     <i>Two column format coming soon</i>
     <br>
     <br>
@@ -24,6 +28,18 @@
     <%= f.text_field :name, size: "50" %>
   </div>
     <div class="field">
+      <br>
+      <%= f.label "Ownership" %><br>
+      <%= f.radio_button :competitor, false %>&nbsp;Owned by <%= current_user.owner.name %>&nbsp;&nbsp;
+      <%= f.radio_button :competitor, true %>&nbsp;Competitor Building
+    </div>
+    <div class="field">
+      <br>
+      <%= f.label :geography_id %><br>
+      <%= f.select :geography_id, options_from_collection_for_select(Geography.all, :id, :name, @building.geography_id), :include_blank => true %>
+    </div>
+    <div class="field">
+      <br>
       <%= f.label :manager %><br>
       <%= f.text_field :manager, size: "50" %>
     </div>
