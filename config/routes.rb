@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  resources :amenity_patios
+  resources :amenity_ceilings
+  resources :building_unit_amenities
   resources :amenity_concierges
   resources :building_amenities
   resources :building_fee_schedules

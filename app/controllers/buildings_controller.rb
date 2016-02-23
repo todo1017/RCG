@@ -34,6 +34,9 @@ class BuildingsController < ApplicationController
         building_amenity = BuildingAmenity.new
         building_amenity.update_attribute :building_id, @building.id
         building_amenity.save!
+        building_unit_amenity = BuildingUnitAmenity.new
+        building_unit_amenity.update_attribute :building_id, @building.id
+        building_unit_amenity.save!
         format.html { redirect_to root_path, notice: 'Building was successfully created.' }
         format.json { render :show, status: :created, location: @building }
       else

@@ -7,7 +7,15 @@
 <table>
   <thead>
     <tr>
-      <th>Building</th>
+      <th></th>
+      <th>Washer dryer</th>
+      <th>Microwave</th>
+      <th>Security alarm</th>
+      <th>Amenity ceiling</th>
+      <th>Amenity patio</th>
+      <th>Oversized windows</th>
+      <th>Other</th>
+      <th>|||||</th>
       <th>Business center</th>
       <th>Resident lounge</th>
       <th>Screening room</th>
@@ -30,8 +38,35 @@
 
   <tbody>
     <% @building_amenities.each do |building_amenity| %>
+        <% building_unit_amenity = BuildingUnitAmenity.where(building_id: building_amenity.building_id).first %>
       <tr>
-        <td><%= link_to building_amenity.building.name, edit_building_amenity_path(building_amenity) %></td>
+        <td><%= link_to building_unit_amenity.building.name, edit_building_unit_amenity_path(building_unit_amenity) %></td>
+        <td<%=cell_color(building_unit_amenity.washer_dryer)%>>
+          <%= if building_unit_amenity.washer_dryer == true then "Y" elsif building_unit_amenity.washer_dryer == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.washer_dryer_} %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.microwave)%>>
+          <%= if building_unit_amenity.microwave == true then "Y" elsif building_unit_amenity.microwave == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.microwave_} %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.security_alarm)%>>
+          <%= if building_unit_amenity.security_alarm == true then "Y" elsif building_unit_amenity.security_alarm == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.security_alarm_} %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.amenity_ceiling_id)%>>
+          <%= AmenityCeiling.find(building_unit_amenity.amenity_ceiling_id).name if building_unit_amenity.amenity_ceiling_id != nil %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.amenity_patio_id)%>>
+          <%= AmenityPatio.find(building_unit_amenity.amenity_patio_id).name if building_unit_amenity.amenity_patio_id != nil %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.oversized_windows)%>>
+          <%= if building_unit_amenity.oversized_windows == true then "Y" elsif building_unit_amenity.oversized_windows == false then "N" end %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.oversized_windows_} %>
+        </td>
+        <td<%=cell_color(building_unit_amenity.other)%>>
+          <%= building_unit_amenity.other %>
+        </td>
+        <td>|||||</td>
         <td<%=cell_color(building_amenity.business_center)%>>
           <%= if building_amenity.business_center == true then "Y" elsif building_amenity.business_center == false then "N" end %>
           <%= render partial: "shared/comment", locals: {comment_field: building_amenity.business_center_} %>

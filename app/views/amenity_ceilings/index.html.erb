@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Amenity Ceilings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @amenity_ceilings.each do |amenity_ceiling| %>
+      <tr>
+        <td><%= amenity_ceiling.name %></td>
+        <td><%= link_to 'Show', amenity_ceiling %></td>
+        <td><%= link_to 'Edit', edit_amenity_ceiling_path(amenity_ceiling) %></td>
+        <td><%= link_to 'Destroy', amenity_ceiling, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Amenity ceiling', new_amenity_ceiling_path %>

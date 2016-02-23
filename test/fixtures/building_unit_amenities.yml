@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  building_id: 1
+  washer_dryer: false
+  washer_dryer_: MyText
+  microwave: false
+  microwave_: MyText
+  security_alarm: false
+  security_alarm_: MyText
+  amenity_ceiling_id: 1
+  ceiling_: MyText
+  amenity_patio_id: 1
+  patio_: MyText
+  oversized_windows: false
+  oversized_windows_: MyText
+  other: MyText
+  other_: MyText
+
+two:
+  building_id: 1
+  washer_dryer: false
+  washer_dryer_: MyText
+  microwave: false
+  microwave_: MyText
+  security_alarm: false
+  security_alarm_: MyText
+  amenity_ceiling_id: 1
+  ceiling_: MyText
+  amenity_patio_id: 1
+  patio_: MyText
+  oversized_windows: false
+  oversized_windows_: MyText
+  other: MyText
+  other_: MyText

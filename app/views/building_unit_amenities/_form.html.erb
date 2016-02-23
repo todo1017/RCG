@@ -1,0 +1,63 @@
+<%= form_for(@building_unit_amenity) do |f| %>
+  <% if @building_unit_amenity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@building_unit_amenity.errors.count, "error") %> prohibited this building_unit_amenity from being saved:</h2>
+
+      <ul>
+      <% @building_unit_amenity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="actions">
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/building_amenities" %>
+    </div>
+  <div class="field">
+    <br>
+    <%= f.label :washer_dryer %><br>
+    <%= f.select :washer_dryer, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.washer_dryer), :include_blank => true %>
+    <%= f.text_area :washer_dryer_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :microwave %><br>
+    <%= f.select :microwave, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.microwave), :include_blank => true %>
+    <%= f.text_area :microwave_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :security_alarm %><br>
+    <%= f.select :security_alarm, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.security_alarm), :include_blank => true %>
+    <%= f.text_area :security_alarm_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :amenity_ceiling_id %><br>
+    <%= f.select :amenity_ceiling_id, options_from_collection_for_select(AmenityCeiling.all, :id, :name, @building_unit_amenity.amenity_ceiling_id), :include_blank => true %>
+    <%= f.text_area :ceiling_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :amenity_patio_id %><br>
+    <%= f.select :amenity_patio_id, options_from_collection_for_select(AmenityPatio.all, :id, :name, @building_unit_amenity.amenity_patio_id), :include_blank => true %>
+    <%= f.text_area :patio_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :oversized_windows %><br>
+    <%= f.select :oversized_windows, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.oversized_windows), :include_blank => true %>
+    <%= f.text_area :oversized_windows_ %>
+  </div>
+  <div class="field">
+    <br>
+    <%= f.label :other %><br>
+    <%= f.text_area :other %>
+  </div>
+    <div class="actions">
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/building_amenities" %>
+    </div>
+<% end %>

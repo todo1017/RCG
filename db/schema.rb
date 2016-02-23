@@ -11,9 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222182704) do
+ActiveRecord::Schema.define(version: 20160222205122) do
+
+  create_table "amenity_ceilings", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "amenity_concierges", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "amenity_patios", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,6 +108,26 @@ ActiveRecord::Schema.define(version: 20160222182704) do
     t.integer  "owner_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "building_unit_amenities", force: :cascade do |t|
+    t.integer  "building_id"
+    t.boolean  "washer_dryer"
+    t.text     "washer_dryer_"
+    t.boolean  "microwave"
+    t.text     "microwave_"
+    t.boolean  "security_alarm"
+    t.text     "security_alarm_"
+    t.integer  "amenity_ceiling_id"
+    t.text     "ceiling_"
+    t.integer  "amenity_patio_id"
+    t.text     "patio_"
+    t.boolean  "oversized_windows"
+    t.text     "oversized_windows_"
+    t.text     "other"
+    t.text     "other_"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
   end
 
   create_table "building_units", force: :cascade do |t|

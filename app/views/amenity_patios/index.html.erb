@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Amenity Patios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @amenity_patios.each do |amenity_patio| %>
+      <tr>
+        <td><%= amenity_patio.name %></td>
+        <td><%= link_to 'Show', amenity_patio %></td>
+        <td><%= link_to 'Edit', edit_amenity_patio_path(amenity_patio) %></td>
+        <td><%= link_to 'Destroy', amenity_patio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Amenity patio', new_amenity_patio_path %>
