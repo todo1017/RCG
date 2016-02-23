@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Amenity Concierges</h1>
+<h3>COMMUNITY FEATURE -- Concierges</h3>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3"></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
 
@@ -14,7 +14,6 @@
     <% @amenity_concierges.each do |amenity_concierge| %>
       <tr>
         <td><%= amenity_concierge.name %></td>
-        <td><%= link_to 'Show', amenity_concierge %></td>
         <td><%= link_to 'Edit', edit_amenity_concierge_path(amenity_concierge) %></td>
         <td><%= link_to 'Destroy', amenity_concierge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

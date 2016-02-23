@@ -28,7 +28,7 @@ class AmenityCeilingsController < ApplicationController
 
     respond_to do |format|
       if @amenity_ceiling.save
-        format.html { redirect_to @amenity_ceiling, notice: 'Amenity ceiling was successfully created.' }
+        format.html { redirect_to "/amenity_ceilings", notice: 'Amenity ceiling was successfully created.' }
         format.json { render :show, status: :created, location: @amenity_ceiling }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AmenityCeilingsController < ApplicationController
   def update
     respond_to do |format|
       if @amenity_ceiling.update(amenity_ceiling_params)
-        format.html { redirect_to @amenity_ceiling, notice: 'Amenity ceiling was successfully updated.' }
+        format.html { redirect_to "/amenity_ceilings", notice: 'Amenity ceiling was successfully updated.' }
         format.json { render :show, status: :ok, location: @amenity_ceiling }
       else
         format.html { render :edit }

@@ -28,7 +28,7 @@ class AmenityPatiosController < ApplicationController
 
     respond_to do |format|
       if @amenity_patio.save
-        format.html { redirect_to @amenity_patio, notice: 'Amenity patio was successfully created.' }
+        format.html { redirect_to "/amenity_patios", notice: 'Amenity patio was successfully created.' }
         format.json { render :show, status: :created, location: @amenity_patio }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AmenityPatiosController < ApplicationController
   def update
     respond_to do |format|
       if @amenity_patio.update(amenity_patio_params)
-        format.html { redirect_to @amenity_patio, notice: 'Amenity patio was successfully updated.' }
+        format.html { redirect_to "/amenity_patios", notice: 'Amenity patio was successfully updated.' }
         format.json { render :show, status: :ok, location: @amenity_patio }
       else
         format.html { render :edit }

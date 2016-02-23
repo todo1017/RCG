@@ -28,7 +28,7 @@ class AmenityConciergesController < ApplicationController
 
     respond_to do |format|
       if @amenity_concierge.save
-        format.html { redirect_to @amenity_concierge, notice: 'Amenity concierge was successfully created.' }
+        format.html { redirect_to "/amenity_concierges", notice: 'Amenity concierge was successfully created.' }
         format.json { render :show, status: :created, location: @amenity_concierge }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AmenityConciergesController < ApplicationController
   def update
     respond_to do |format|
       if @amenity_concierge.update(amenity_concierge_params)
-        format.html { redirect_to @amenity_concierge, notice: 'Amenity concierge was successfully updated.' }
+        format.html { redirect_to "/amenity_concierges", notice: 'Amenity concierge was successfully updated.' }
         format.json { render :show, status: :ok, location: @amenity_concierge }
       else
         format.html { render :edit }
