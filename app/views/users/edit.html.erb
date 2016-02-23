@@ -1,0 +1,31 @@
+<h3>Set User Approval for <%= @user.owner.name %></h3>
+
+<%= form_for @user do |f| %>
+    <% if @user.errors.any? %>
+        <div class="error_messages">
+          <h2>Form is invalid</h2>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <br><br>
+      <%= @user.email %>
+    </div>
+    <div class="field">
+      <br>
+      <br>
+      <%= f.radio_button :approved, true %>&nbsp;Approved&nbsp;&nbsp;
+      <%= f.radio_button :approved, false %>&nbsp;Not Approved
+    </div>
+    <div class="actions">
+      <br>
+      <br>
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= link_to "cancel", "/users" %>
+    </div>
+<% end %>

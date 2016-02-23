@@ -8,7 +8,7 @@
     - if current_user
       - if current_user.owner_id != nil
         %b
-          Your Buildings:
+          = "#{current_user.owner.name} Buildings:"
         %br
         - Building.where(owner_id: current_user.owner_id).where(competitor: false).each do |building|
           %br
@@ -41,17 +41,16 @@
         %br
         %br
         %b
-          New Users Requiring Approval to see your Buildings:
+          = "#{current_user.owner.name}_Admin Only:"
         %br
         %br
-        %i
-          Feature coming soon
+        = link_to "User Approvals", "/users"
         %br
         %br
         %br
         %br
         %b
-          Ronan_Admin Only:
+          RCG_Admin Only:
         %br
         %br
         = link_to "Owners", "/owners"

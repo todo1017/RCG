@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h3>User Approvals</h3>
+
+<table>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= if user.approved == true then raw "<i>Approved</i>" end %></td>
+        <td><%= link_to 'Change', edit_user_path(user) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
