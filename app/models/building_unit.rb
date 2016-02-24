@@ -12,7 +12,7 @@ class BuildingUnit < ActiveRecord::Base
 
       bulding_unit = find_or_initialize_by(number: row["number"].to_s)
 
-      # bulding_unit.update ?????: row["unit_type"].to_s
+      bulding_unit.update bed_bath: row["unit_type"].to_s
 
       bulding_unit.update building_id: xlsx.sheets.first.to_i
       bulding_unit.update sq_feet: row["sq_feet"].to_i

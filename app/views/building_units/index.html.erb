@@ -1,18 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
 
-<%= form_tag import_building_units_path, multipart: true do %>
-    <table><tr><td width="300">
-      <h4>Import New Yardi Data</h4>
-      <%= file_field_tag :file %>
-      <%= hidden_field_tag :building_id, params[:building_id] %>
-      <%= submit_tag "Import" %>
-    </td><td>
-      <!-- If you bring this back, need to add a valid "building_id" to the CANCEL link -->
-      <%#= link_to 'Manually Add New Building unit', new_building_unit_path %>
-    </td></tr></table>
-<% end %>
+<%- if params[:building_id] == nil %>
+    <h2>All Apartment records</h2>
+    <!-- If you bring this back, need to add a valid "building_id" to the CANCEL link -->
+    <%= link_to 'Add Competitor Apartment', new_building_unit_path %>
+    <br><br>
+    <i>This needs to show the apartment Owner's name...</i>
+<%- else %>
+    <h2>Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
+    <%= form_tag import_building_units_path, multipart: true do %>
+        <table><tr><td width="300">
+          <h4>Import New Yardi Data</h4>
+          <%= file_field_tag :file %>
+          <%= hidden_field_tag :building_id, params[:building_id] %>
+          <%= submit_tag "Import" %>
+        </td><td>
+        </td></tr></table>
+    <% end %>
+<%- end %>
 
 <br>
 
@@ -23,7 +29,8 @@
     <tr>
       <th>Number</th>
       <th>Floor</th>
-      <th>Unit type</th>
+      <th>Beds</th>
+      <th>Baths</th>
       <th>Sq feet</th>
       <th>Resident Id</th>
       <th>Resident name</th>
@@ -34,6 +41,7 @@
       <th>Move in</th>
       <th>Move out</th>
       <th>Lease expiration</th>
+      <th>BedBath</th>
       <th>Notes</th>
       <th colspan="2"></th>
     </tr>
@@ -44,7 +52,8 @@
       <tr>
         <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
         <td><%= building_unit.floor %></td>
-        <td><%= building_unit.unit_type_id %></td>
+        <td><%= building_unit.beds %></td>
+        <td><%= building_unit.baths %></td>
         <td><%= building_unit.sq_feet %></td>
         <td><%= building_unit.resident_id %></td>
         <td><%= building_unit.resident_name %></td>
@@ -55,6 +64,7 @@
         <td><%= building_unit.move_in %></td>
         <td><%= building_unit.move_out %></td>
         <td><%= building_unit.lease_expiration %></td>
+        <td><%= building_unit.bed_bath %></td>
         <td><%= building_unit.notes %></td>
         <td><%= link_to 'Edit', edit_building_unit_path(building_unit) %></td>
         <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
