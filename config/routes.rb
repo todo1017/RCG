@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy', as: 'logout'
   get 'admin_screens', to: 'owners#index', as: 'admin_screens'
+  get 'comparisons', to: 'building_units#comparisons'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll'
 

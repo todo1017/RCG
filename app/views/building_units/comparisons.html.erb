@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<br>
+
+<div class="scroll-table-div">
+
+  <table class="scroll-table">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Floor</th>
+      <th>Beds</th>
+      <th>Baths</th>
+      <th>Sq feet</th>
+      <th>Market rent</th>
+      <th>Comparisons</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @building_units.each do |building_unit| %>
+        <% comps_1 = comps_query_1(building_unit) %>
+        <% comps_2 = comps_query_2(building_unit) %>
+        <tr>
+          <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
+          <td><%= building_unit.floor %></td>
+          <td><%= building_unit.beds %></td>
+          <td><%= building_unit.baths %></td>
+          <td><%= building_unit.sq_feet %></td>
+          <td><%= building_unit.market_rent %></td>
+          <td>
+            <% comps_1.each do |comp| %>
+                <%= comp.actual_rent %> <%= comp.building_id %><br>
+            <% end.empty? and begin %>
+                nothing exact
+            <% end %>
+            <% comps_2.each do |comp| %>
+                <%= comp.actual_rent %><br>
+            <% end %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<br>
+<br>
+

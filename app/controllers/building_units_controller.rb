@@ -12,6 +12,10 @@ class BuildingUnitsController < ApplicationController
     render :index
   end
 
+  def comparisons
+    @building_units = BuildingUnit.where(actual_rent: nil)
+  end
+
   def import
     BuildingUnit.import(params[:file])
     redirect_to "/rent_roll/#{params[:building_id].to_i}", notice: "Yardi data updated"
