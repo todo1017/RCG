@@ -32,6 +32,11 @@
     </div>
     <div class="field">
       <br>
+      <%= f.label "Comp Group (if competitor)" %><br>
+      <%= f.select :comp_group_id, options_from_collection_for_select(CompGroup.all, :id, :name, @building.comp_group_id), :include_blank => true %>
+    </div>
+    <div class="field">
+      <br>
       <%= f.label :geography_id %><br>
       <%= f.select :geography_id, options_from_collection_for_select(Geography.all, :id, :name, @building.geography_id), :include_blank => true %>
     </div>
@@ -68,10 +73,5 @@
     <%= f.submit "Submit", {:class=>"btn btn-success"} %>
     <%= link_to 'cancel', root_path %>
     <br>
-    <br>
-    <div class="field">
-      <%= f.label :comp_group_id %><br>
-      <%= f.number_field :comp_group_id %>
-    </div>
     <br>
 <% end %>

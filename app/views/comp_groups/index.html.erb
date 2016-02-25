@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Comp Groups</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comp_groups.each do |comp_group| %>
+      <tr>
+        <td><%= comp_group.name %></td>
+        <td><%= link_to 'Edit', edit_comp_group_path(comp_group) %></td>
+        <td><%= link_to 'Destroy', comp_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comp group', new_comp_group_path %>

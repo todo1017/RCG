@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224154322) do
+ActiveRecord::Schema.define(version: 20160225151001) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -168,6 +168,12 @@ ActiveRecord::Schema.define(version: 20160224154322) do
     t.integer  "owner_id"
     t.integer  "geography_id"
     t.boolean  "competitor"
+  end
+
+  create_table "comp_groups", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "geographies", force: :cascade do |t|
