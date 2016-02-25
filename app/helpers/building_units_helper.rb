@@ -22,8 +22,8 @@ module BuildingUnitsHelper
 
     comp_apartments = comp_query_var(building_unit)
 
-    first = comp_apartments.where(building_id: 10, beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
-    second = comp_apartments.where(building_id: 10, beds: beds, baths: baths, floor: [floor-2, floor+2])
+    first = comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
+    second = comp_apartments.where(beds: beds, baths: baths, floor: [floor-2, floor+2])
     # third
 
     # USE the "first" query for the count but it's already been displayed so don't return it again here
