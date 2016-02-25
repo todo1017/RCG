@@ -30,7 +30,7 @@
           <td><%= building_unit.market_rent %></td>
           <td>
             <% comps_1.each do |comp| %>
-                <%= comp.actual_rent %> <%= comp.building_id %><br>
+                <%= comp.actual_rent %><br>
             <% end.empty? and begin %>
                 nothing exact
             <% end %>
