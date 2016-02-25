@@ -1,26 +1,26 @@
 module BuildingUnitsHelper
 
-  def comp_query_var(building_unit)
-    BuildingUnit.where(building_id: 5)
+  def comp_query_var(building_unit, comp_group_id)
+    BuildingUnit.joins(:building).where(buildings: {competitor: true, comp_group_id: comp_group_id})
   end
 
-  def comps_query_1(building_unit)
+  def comps_query_1(building_unit, comp_group_id)
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
 
-    comp_apartments = comp_query_var(building_unit)
+    comp_apartments = comp_query_var(building_unit, comp_group_id)
 
     first = comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
 
   end
 
-  def comps_query_2(building_unit)
+  def comps_query_2(building_unit, comp_group_id)
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
 
-    comp_apartments = comp_query_var(building_unit)
+    comp_apartments = comp_query_var(building_unit, comp_group_id)
 
     first = comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
     second = comp_apartments.where(beds: beds, baths: baths, floor: [floor-2, floor+2])

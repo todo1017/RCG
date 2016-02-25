@@ -42,7 +42,7 @@ class BuildingUnitsController < ApplicationController
 
     respond_to do |format|
       if @building_unit.save
-        format.html { redirect_to @building_unit, notice: 'Building unit was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Building unit was successfully created.' }
         format.json { render :show, status: :created, location: @building_unit }
       else
         format.html { render :new }

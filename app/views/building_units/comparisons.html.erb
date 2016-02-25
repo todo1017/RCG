@@ -13,14 +13,14 @@
       <th>Baths</th>
       <th>Sq feet</th>
       <th>Market rent</th>
-      <th>Comparisons</th>
+      <%- CompGroup.all.each do |comp_group| %>
+        <th><%= comp_group.name %></th>
+      <% end %>
     </tr>
     </thead>
 
     <tbody>
     <% @building_units.each do |building_unit| %>
-        <% comps_1 = comps_query_1(building_unit) %>
-        <% comps_2 = comps_query_2(building_unit) %>
         <tr>
           <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
           <td><%= building_unit.floor %></td>
@@ -28,16 +28,20 @@
           <td><%= building_unit.baths %></td>
           <td><%= building_unit.sq_feet %></td>
           <td><%= building_unit.market_rent %></td>
-          <td>
-            <% comps_1.each do |comp| %>
-                <%= comp.actual_rent %><br>
-            <% end.empty? and begin %>
-                nothing exact
+            <%- CompGroup.all.each do |comp_group| %>
+                <td>
+                    <% comps_1 = comps_query_1(building_unit, comp_group.id) %>
+                    <% comps_2 = comps_query_2(building_unit, comp_group.id) %>
+                    <% comps_1.each do |comp| %>
+                        <%= render partial: "mouseover", locals: {comp: comp} %><br>
+                    <% end.empty? and begin %>
+                        nothing exact
+                    <% end %>
+                    <% comps_2.each do |comp| %>
+                      <%= render partial: "mouseover", locals: {comp: comp} %><br>
+                    <% end %>
+                </td>
             <% end %>
-            <% comps_2.each do |comp| %>
-                <%= comp.actual_rent %><br>
-            <% end %>
-          </td>
         </tr>
     <% end %>
     </tbody>
