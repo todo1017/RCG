@@ -13,8 +13,16 @@
       <th>Baths</th>
       <th>Sq feet</th>
       <th>Market rent</th>
+      <%- last_comp_group = "" %>
       <%- CompGroup.all.each do |comp_group| %>
-        <th><%= comp_group.name %></th>
+        <%- Geography.all.each do |geography| %>
+            <th>
+                <%= comp_group.name if comp_group.name != last_comp_group %>
+                <br>
+                <%= geography.name %>
+            </th>
+            <% last_comp_group = comp_group.name %>
+        <% end %>
       <% end %>
     </tr>
     </thead>
@@ -29,9 +37,10 @@
           <td><%= building_unit.sq_feet %></td>
           <td><%= building_unit.market_rent %></td>
             <%- CompGroup.all.each do |comp_group| %>
+              <%- Geography.all.each do |geography| %>
                 <td>
-                    <% comps_1 = comps_query_1(building_unit, comp_group.id) %>
-                    <% comps_2 = comps_query_2(building_unit, comp_group.id) %>
+                    <% comps_1 = comps_query_1(building_unit, comp_group.id, geography.id) %>
+                    <% comps_2 = comps_query_2(building_unit, comp_group.id, geography.id) %>
                     <% comps_1.each do |comp| %>
                         <%= render partial: "mouseover", locals: {comp: comp} %><br>
                     <% end.empty? and begin %>
@@ -41,6 +50,7 @@
                       <%= render partial: "mouseover", locals: {comp: comp} %><br>
                     <% end %>
                 </td>
+              <% end %>
             <% end %>
         </tr>
     <% end %>
