@@ -18,9 +18,6 @@
       <th>Pet cat</th>
       <th>Application fee</th>
       <th>Minimum lease</th>
-      <th>Monthly fees</th>
-      <th>Yearly fees</th>
-      <th></th>
     </tr>
   </thead>
 
@@ -71,15 +68,6 @@
           <%= building_fee_schedule.minimum_lease %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.minimum_lease_} %>
         </td>
-        <td<%=cell_color(building_fee_schedule.monthly_fees)%>>
-          <%= building_fee_schedule.monthly_fees %>
-          <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.monthly_fees_} %>
-        </td>
-        <td<%=cell_color(building_fee_schedule.yearly_fees)%>>
-          <%= building_fee_schedule.yearly_fees %>
-          <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.yearly_fees_} %>
-        </td>
-        <td><%= link_to 'Edit', edit_building_fee_schedule_path(building_fee_schedule) %></td>
       </tr>
     <% end %>
   </tbody>
