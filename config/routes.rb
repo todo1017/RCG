@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'comparisons', to: 'building_units#comparisons'
   get 'comp_new', to: 'building_units#comp_new'
   get 'comp_edit', to: 'building_units#comp_edit'
+  get 'comp_index', to: 'building_units#comp_index'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll'
 

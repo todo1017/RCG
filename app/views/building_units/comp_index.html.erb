@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+
+
+<h2>Competitor Apartments</h2>
+
+<%= link_to 'Add New', "/comp_new" %>
+
+<br><br>
+
+
+<div class="scroll-table-div">
+
+  <table class="scroll-table">
+    <thead>
+    <tr>
+      <th>Number</th>
+      <th>Floor</th>
+      <th>Beds</th>
+      <th>Baths</th>
+      <th>Sq feet</th>
+      <th>Actual rent</th>
+      <th>Move out</th>
+      <th>Lease expiration</th>
+      <th>Notes</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @building_units.each do |building_unit| %>
+        <tr>
+          <td><%= link_to "Unit within #{building_unit.building.name}", edit_building_unit_path(building_unit) %></td>
+          <td><%= building_unit.floor %></td>
+          <td><%= building_unit.beds %></td>
+          <td><%= building_unit.baths %></td>
+          <td><%= building_unit.sq_feet %></td>
+          <td><%= building_unit.actual_rent %></td>
+          <td><%= building_unit.move_out %></td>
+          <td><%= building_unit.lease_expiration %></td>
+          <td><%= building_unit.notes %></td>
+          <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+</div>
+
+<br>
+<br>
+

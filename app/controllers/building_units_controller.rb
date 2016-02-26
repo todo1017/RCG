@@ -4,7 +4,10 @@ class BuildingUnitsController < ApplicationController
   # GET /building_units
   # GET /building_units.json
   def index
-    @building_units = BuildingUnit.all
+    @building_units = BuildingUnit.joins(:building).where(buildings: {competitor: false})
+  end
+  def comp_index
+    @building_units = BuildingUnit.joins(:building).where(buildings: {competitor: true})
   end
 
   def rent_roll
