@@ -1,0 +1,46 @@
+<%= form_for(@building_unit) do |f| %>
+    <% if @building_unit.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@building_unit.errors.count, "error") %> prohibited this building_unit from being saved:</h2>
+
+          <ul>
+            <% @building_unit.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="actions">
+      <br>
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%- if @building_unit.building_id == nil then path = root_path else path = "/rent_roll/#{@building_unit.building_id.to_i}" end  %>
+      <%= link_to "cancel", path %>
+    </div>
+    <br>
+    <div class="field">
+      <%= f.label :building_id %><br>
+      <%= f.collection_select :building_id, Building.where(competitor: true), :id, :name, include_blank: true %>
+    </div>
+    <div class="field">
+      <%= f.label :beds %><br>
+      <%= f.number_field :beds %>
+    </div>
+    <div class="field">
+      <%= f.label :baths %><br>
+      <%= f.text_field :baths %>
+    </div>
+    <div class="field">
+      <%= f.label :floor %><br>
+      <%= f.number_field :floor %>
+    </div>
+    <div class="field">
+      <%= f.label :sq_feet %><br>
+      <%= f.number_field :sq_feet %>
+    </div>
+    <div class="field">
+      <%= f.label :actual_rent %><br>
+      <%= f.text_field :actual_rent %>
+    </div>
+<br><br>
+<% end %>

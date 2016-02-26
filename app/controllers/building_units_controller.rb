@@ -1,5 +1,5 @@
 class BuildingUnitsController < ApplicationController
-  before_action :set_building_unit, only: [:show, :edit, :update, :destroy]
+  before_action :set_building_unit, only: [:show, :edit, :comp_edit, :update, :destroy]
 
   # GET /building_units
   # GET /building_units.json
@@ -30,9 +30,15 @@ class BuildingUnitsController < ApplicationController
   def new
     @building_unit = BuildingUnit.new
   end
+  def comp_new
+    @building_unit = BuildingUnit.new
+  end
 
   # GET /building_units/1/edit
   def edit
+  end
+
+  def comp_edit
   end
 
   # POST /building_units

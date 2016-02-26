@@ -17,29 +17,14 @@
       <%- if @building_unit.building_id == nil then path = root_path else path = "/rent_roll/#{@building_unit.building_id.to_i}" end  %>
       <%= link_to "cancel", path %>
     </div>
-    <br><br>
-    For Yardi uploaded data, this is the only field that needs to be manually entered...
-    <br><br>
-  <div class="field">
-    <%= f.label :floor %><br>
-    <%= f.number_field :floor %>
-  </div>
-
-  <br><br>
-  In addition to Floor, these fields need to be added for Competitor Apartment records.......(if/when we split this into two forms the Building dropdown can only include competitor names)...
-  <br><br>
+    <br>
     <div class="field">
       <%= f.label :building_id %><br>
-      <%= f.collection_select :building_id, Building.all, :id, :name, include_blank: true %>
-    </div>
-
-    <div class="field">
-      <%= f.label :actual_rent %><br>
-      <%= f.text_field :actual_rent %>
+      <%= f.collection_select :building_id, Building.where(competitor: false), :id, :name, include_blank: true %>
     </div>
     <div class="field">
-      <%= f.label :sq_feet %><br>
-      <%= f.number_field :sq_feet %>
+      <%= f.label :floor %><br>
+      <%= f.number_field :floor %>
     </div>
     <div class="field">
       <%= f.label :beds %><br>
@@ -50,49 +35,4 @@
       <%= f.text_field :baths %>
     </div>
 
-    <br><br>
-    The rest of these can probably be removed from this form...
-    <br><br>
-
-  <!--<div class="field">-->
-    <%#= f.label :unit_type_id %><br>
-    <!--<%#= f.number_field :unit_type_id %>-->
-  <!--</div>-->
-  <div class="field">
-    <%= f.label :resident_name %><br>
-    <%= f.text_area :resident_name %>
-  </div>
-  <div class="field">
-    <%= f.label :market_rent %><br>
-    <%= f.text_field :market_rent %>
-  </div>
-  <div class="field">
-    <%= f.label :resident_deposit %><br>
-    <%= f.text_field :resident_deposit %>
-  </div>
-  <div class="field">
-    <%= f.label :other_deposit %><br>
-    <%= f.text_field :other_deposit %>
-  </div>
-  <div class="field">
-    <%= f.label :move_in %><br>
-    <%= f.date_select :move_in %>
-  </div>
-  <div class="field">
-    <%= f.label :move_out %><br>
-    <%= f.date_select :move_out %>
-  </div>
-  <div class="field">
-    <%= f.label :lease_expiration %><br>
-    <%= f.date_select :lease_expiration %>
-  </div>
-  <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_area :notes %>
-  </div>
-    <div class="field">
-      <%= f.label :bed_bath %><br>
-      <%= f.text_field :bed_bath %>
-    </div>
-    <br><br>
 <% end %>
