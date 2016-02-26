@@ -1,4 +1,4 @@
-<h3><%= Building.find(@building_unit.building_id).name %> -- Edit Apartment #<%= @building_unit.number %></h3>
+<h3>Edit Apartment #<%= @building_unit.number %> @ <%= Building.find(@building_unit.building_id).name %></h3>
 
 <%= render 'form' %>
 
