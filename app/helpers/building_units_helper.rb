@@ -1,5 +1,12 @@
 module BuildingUnitsHelper
 
+  def concessions_calc(building_unit)
+    if building_unit.months_off != nil && building_unit.cash_off != nil
+      return ((building_unit.sq_feet * building_unit.months_off) + building_unit.cash_off)
+    end
+    return 0
+  end
+
   def comp_query_var(building_unit, comp_group_id, geography_id)
     BuildingUnit.joins(:building).where(buildings: {competitor: true, comp_group_id: comp_group_id, geography_id: geography_id})
   end

@@ -7,12 +7,12 @@
   <table class="scroll-table">
     <thead>
     <tr>
-      <th>Number</th>
-      <th>Floor</th>
-      <th>Beds</th>
-      <th>Baths</th>
-      <th>Sq feet</th>
+      <th></th>
+      <th></th>
       <th>Market rent</th>
+      <th>Concessions</th>
+      <th>gross/ft2</th>
+      <th>net/ft2</th>
       <%- last_comp_group = "" %>
       <%- CompGroup.all.each do |comp_group| %>
         <%- Geography.all.each do |geography| %>
@@ -29,27 +29,33 @@
 
     <tbody>
     <% @building_units.each do |building_unit| %>
+        <% concessions = concessions_calc(building_unit) %>
         <tr>
-          <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
-          <td><%= building_unit.floor %></td>
-          <td><%= building_unit.beds %></td>
-          <td><%= building_unit.baths %></td>
-          <td><%= building_unit.sq_feet %></td>
+          <td><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></td>
+          <td>
+            <%= building_unit.floor.to_s + " FL" %>
+            <%= building_unit.beds.to_s + "Bed/" + building_unit.baths.to_s + "Bath" %>
+            <%= building_unit.sq_feet.to_s + " sq. ft." %>
+          </td>
           <td><%= building_unit.market_rent %></td>
+          <td><%= concessions %></td>
+          <td><%= '%.2f' % (building_unit.market_rent / building_unit.sq_feet) %></td>
+          <td><%= '%.2f' % ((building_unit.market_rent - (concessions/12)) / building_unit.sq_feet) %></td>
             <%- CompGroup.all.each do |comp_group| %>
               <%- Geography.all.each do |geography| %>
-                <td>
+                  <td>
+                    <% concessions = concessions_calc(building_unit) %>
                     <% comps_1 = comps_query_1(building_unit, comp_group.id, geography.id) %>
                     <% comps_2 = comps_query_2(building_unit, comp_group.id, geography.id) %>
                     <% comps_1.each do |comp| %>
-                        <%= render partial: "mouseover", locals: {comp: comp} %><br>
+                        <%= render partial: "mouseover", locals: {comp: comp, concessions: concessions} %>
                     <% end.empty? and begin %>
                         nothing exact
                     <% end %>
                     <% comps_2.each do |comp| %>
-                      <%= render partial: "mouseover", locals: {comp: comp} %><br>
+                      <%= render partial: "mouseover", locals: {comp: comp, concessions: concessions} %>
                     <% end %>
-                </td>
+                  </td>
               <% end %>
             <% end %>
         </tr>

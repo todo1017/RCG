@@ -19,7 +19,7 @@
       <th>Beds</th>
       <th>Baths</th>
       <th>Sq feet</th>
-      <th>Actual rent</th>
+      <th>Market Rent</th>
       <th>Move out</th>
       <th>Lease expiration</th>
       <th>Notes</th>
@@ -30,12 +30,12 @@
     <tbody>
     <% @building_units.each do |building_unit| %>
         <tr>
-          <td><%= link_to "Unit within #{building_unit.building.name}", edit_building_unit_path(building_unit) %></td>
+          <td><%= link_to "Unit within #{building_unit.building.name}", "/comp_edit/#{building_unit.id}" %></td>
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>
           <td><%= building_unit.sq_feet %></td>
-          <td><%= building_unit.actual_rent %></td>
+          <td><%= building_unit.market_rent %></td>
           <td><%= building_unit.move_out %></td>
           <td><%= building_unit.lease_expiration %></td>
           <td><%= building_unit.notes %></td>
