@@ -14,7 +14,7 @@
     <div class="actions">
       <br>
       <%= f.submit "Save", {:class=>"btn btn-success"} %>
-      <%- if @building_unit.building_id == nil then path = root_path else path = "/rent_roll/#{@building_unit.building_id.to_i}" end  %>
+      <%- if @building_unit.building_id == nil then path = "comp_index" else path = "/rent_roll/#{@building_unit.building_id.to_i}" end  %>
       <%= link_to "cancel", path %>
     </div>
     <br>
