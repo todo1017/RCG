@@ -14,7 +14,7 @@
   <table class="scroll-table">
     <thead>
     <tr>
-      <th>Number</th>
+      <th class="extra">Unit within...</th>
       <th>Floor</th>
       <th>Beds</th>
       <th>Baths</th>
@@ -22,7 +22,7 @@
       <th>Market Rent</th>
       <th>Move out</th>
       <th>Lease expiration</th>
-      <th>Notes</th>
+      <th>Notes<br><br></th>
       <th></th>
     </tr>
     </thead>
@@ -30,7 +30,7 @@
     <tbody>
     <% @building_units.each do |building_unit| %>
         <tr>
-          <td><%= link_to "Unit within #{building_unit.building.name}", "/comp_edit/#{building_unit.id}" %></td>
+          <td><%= link_to building_unit.building.name, "/comp_edit/#{building_unit.id}" %></td>
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>

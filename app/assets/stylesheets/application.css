@@ -27,12 +27,89 @@
     overflow-y:scroll;
 }
 
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+
 .scroll-table {
+    table-layout: fixed;
     width: 700px;
-    /*height:300px;*/
+    /*height:700px;*/
 }
-th, td { min-width: 100px; }
+
+.scroll-table th {
+    width: 125px;
+}
+.scroll-table td {
+    width: 125px;
+}
+.scroll-table .extra {
+    width: 195px;
+}
+.scroll-table .smaller {
+    width: 75px;
+}
+th {
+    vertical-align: top;
+}
+
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+
+.scroll-table_comps {
+    table-layout: fixed;
+    width: 700px;
+    /*height:700px;*/
+}
+.scroll-table_comps th {
+    vertical-align: bottom;
+}
+td {
+    /*min-width: 100px;*/
+    vertical-align: top;
+}
 
 .yellow-td {
     background-color: lightgoldenrodyellow;
+}
+.grey-td {
+    background-color: #f8f8f8;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.table-top {
+    padding-top: 10px;
+}
+
+.width-75 {
+    width: 75px;
+}
+.width-100 {
+    width: 100px;
+}
+.width-150 {
+    width: 150px;
+}
+.width-175 {
+    width: 175px;
+}
+.width-200 {
+    width: 200px;
+    padding-left: 10px;
+}
+.width-225 {
+    width: 225px;
+}
+.width-250 {
+    width: 250px;
+}
+.width-300 {
+    width: 300px;
+}
+.width-400 {
+    width: 400px;
 }

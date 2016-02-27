@@ -4,29 +4,29 @@
 
 <div class="scroll-table-div">
 
-<table>
+<table class="scroll-table">
   <thead>
     <tr>
-      <th></th>
-      <th>Washer dryer</th>
+      <th class="extra"></th>
+      <th>Washer Dryer</th>
       <th>Microwave</th>
-      <th>Security alarm</th>
+      <th>Security Alarm</th>
       <th><%= link_to "Ceiling", "/amenity_ceilings" %></th>
       <th><%= link_to "Patio", "/amenity_patios" %></th>
-      <th>Oversized windows</th>
+      <th>Big Windows</th>
       <th>Other</th>
-      <th>|||||</th>
-      <th>Business center</th>
-      <th>Resident lounge</th>
-      <th>Screening room</th>
-      <th>Rooftop deck</th>
-      <th>Train station</th>
+      <th class="smaller"></th>
+      <th>Business Center</th>
+      <th>Resident Lounge</th>
+      <th>Screening Room</th>
+      <th>Rooftop Deck</th>
+      <th>Train Station</th>
       <th>Pool</th>
       <th>Gated</th>
       <th><%= link_to "Concierge", "/amenity_concierges" %></th>
       <th>Recreation</th>
       <th>Fitness</th>
-      <th>Other</th>
+      <th>Other<br><br></th>
       <!--<th>amentity 1 name</th>-->
       <!--<th>amentity 2 name</th>-->
       <!--<th>amentity 3 name</th>-->
@@ -39,7 +39,7 @@
     <% @building_amenities.each do |building_amenity| %>
         <% building_unit_amenity = BuildingUnitAmenity.where(building_id: building_amenity.building_id).first %>
       <tr>
-        <td>
+        <td class="extra">
           <%= if building_unit_amenity.building.competitor == true then raw "<b>comp</b>" end %>
           <%= link_to building_unit_amenity.building.name, edit_building_unit_amenity_path(building_unit_amenity) %>
         </td>
@@ -68,7 +68,7 @@
         <td<%=cell_color(building_unit_amenity.other)%>>
           <%= building_unit_amenity.other %>
         </td>
-        <td>|||||</td>
+        <td class="smaller"></td>
         <td<%=cell_color(building_amenity.business_center)%>>
           <%= if building_amenity.business_center == true then "Y" elsif building_amenity.business_center == false then "N" end %>
           <%= render partial: "shared/comment", locals: {comment_field: building_amenity.business_center_} %>

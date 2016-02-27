@@ -7,7 +7,7 @@
 <table class="scroll-table">
   <thead>
     <tr>
-      <th>Building</th>
+      <th class="extra">Building</th>
       <th>Parking</th>
       <th>Parking extra</th>
       <th>Security deposit</th>
@@ -17,14 +17,14 @@
       <th>Pet dog</th>
       <th>Pet cat</th>
       <th>Application fee</th>
-      <th>Minimum lease</th>
+      <th>Minimum lease<br><br></th>
     </tr>
   </thead>
 
   <tbody>
     <% @building_fee_schedules.each do |building_fee_schedule| %>
       <tr>
-        <td>
+        <td class="extra">
           <%= if building_fee_schedule.building.competitor == true then raw "<b>comp</b>" end %>
           <%= link_to building_fee_schedule.building.name, edit_building_fee_schedule_path(building_fee_schedule) %>
         </td>
