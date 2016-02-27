@@ -17,6 +17,12 @@ class BuildingUnitsController < ApplicationController
 
   def comparisons
     @building_units = BuildingUnit.where(actual_rent: nil)
+    # if params[:filter] != nil
+    #   @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
+    #   # @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0) + BuildingUnit.where("current_date - lease_expiration < interval '30 days'")
+    # else
+    #   @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
+    # end
   end
 
   def import
@@ -44,14 +50,23 @@ class BuildingUnitsController < ApplicationController
   def comp_edit
   end
 
+  def determine_path(building_id)
+    if Building.find(building_id).competitor?
+      return "/comp_index"
+    end
+    return "/rent_roll/#{building_id}"
+  end
+
   # POST /building_units
   # POST /building_units.json
   def create
     @building_unit = BuildingUnit.new(building_unit_params)
 
+    path = determine_path(building_unit_params[:building_id])
+
     respond_to do |format|
       if @building_unit.save
-        format.html { redirect_to root_path, notice: 'Building unit was successfully created.' }
+        format.html { redirect_to path, notice: 'Building unit was successfully created.' }
         format.json { render :show, status: :created, location: @building_unit }
       else
         format.html { render :new }
@@ -63,9 +78,11 @@ class BuildingUnitsController < ApplicationController
   # PATCH/PUT /building_units/1
   # PATCH/PUT /building_units/1.json
   def update
+    path = determine_path(building_unit_params[:building_id])
+
     respond_to do |format|
       if @building_unit.update(building_unit_params)
-        format.html { redirect_to "/rent_roll/#{@building_unit.building_id.to_i}", notice: 'Building unit was successfully updated.' }
+        format.html { redirect_to path, notice: 'Building unit was successfully updated.' }
         format.json { render :show, status: :ok, location: @building_unit }
       else
         format.html { render :edit }
