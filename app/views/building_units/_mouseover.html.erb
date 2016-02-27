@@ -1,6 +1,8 @@
-<span title="<%= comp.building.name %> - <%= comp.floor %>floor <%= comp.beds %> bed <%= comp.baths %> baths"><%= comp.actual_rent %></span>
--
-<%= '%.2f' % (comp.market_rent / comp.sq_feet) %>
--
-<%= '%.2f' % ((comp.market_rent - (concessions/12)) / comp.sq_feet) %>
+<span title="<%= comp.building.name %> - <%= comp.floor %>floor <%= comp.beds %> bed <%= comp.baths %> baths">
+    <%= comp.actual_rent %>
+    -
+    <%= '%.2f' % (comp.market_rent / comp.sq_feet) %>
+    -
+    <%= '%.2f' % ((comp.market_rent - (concessions/12)) / comp.sq_feet) %>
+</span>
 <br>
