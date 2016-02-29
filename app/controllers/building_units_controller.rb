@@ -16,13 +16,13 @@ class BuildingUnitsController < ApplicationController
   end
 
   def comparisons
-    @building_units = BuildingUnit.where(actual_rent: nil)
-    # if params[:filter] != nil
-    #   @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
-    #   # @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0) + BuildingUnit.where("current_date - lease_expiration < interval '30 days'")
-    # else
-    #   @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
-    # end
+    # @building_units = BuildingUnit.where(actual_rent: nil)
+    if params[:filter] != nil
+      # @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
+      @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0) + BuildingUnit.where("lease_expiration > current_date - interval '30 days'")
+    else
+      @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
+    end
   end
 
   def import

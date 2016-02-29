@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <br>
-<%#= form_tag "/comparisons", :method => 'get' do %>
-    <%#= select_tag(:filter, options_for_select([['Vacant', 1], ['Expire within 30 days', 2]])) %>
+<%= form_tag "/comparisons", :method => 'get' do %>
+    <%= select_tag(:filter, options_for_select([['Vacant', 1], ['Expire within 30 days', 2]])) %>
     &nbsp;
-    <%#= submit_tag "Filter", {:class=>"btn btn-success"} %>
-<%# end %>
+    <%= submit_tag "Filter", {:class=>"btn btn-success"} %>
+<% end %>
 <br>
 
 <div class="scroll-table-div">
