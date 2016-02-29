@@ -28,7 +28,7 @@ class BuildingUnitAmenitiesController < ApplicationController
 
     respond_to do |format|
       if @building_unit_amenity.save
-        format.html { redirect_to @building_unit_amenity, notice: 'Building unit amenity was successfully created.' }
+        format.html { redirect_to "/building_amenities", notice: 'Building unit amenity was successfully created.' }
         format.json { render :show, status: :created, location: @building_unit_amenity }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class BuildingUnitAmenitiesController < ApplicationController
   def update
     respond_to do |format|
       if @building_unit_amenity.update(building_unit_amenity_params)
-        format.html { redirect_to @building_unit_amenity, notice: 'Building unit amenity was successfully updated.' }
+        format.html { redirect_to "/building_amenities", notice: 'Building unit amenity was successfully updated.' }
         format.json { render :show, status: :ok, location: @building_unit_amenity }
       else
         format.html { render :edit }

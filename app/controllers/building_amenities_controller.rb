@@ -28,7 +28,7 @@ class BuildingAmenitiesController < ApplicationController
 
     respond_to do |format|
       if @building_amenity.save
-        format.html { redirect_to @building_amenity, notice: 'Building amenity was successfully created.' }
+        format.html { redirect_to "/building_amenities", notice: 'Building amenity was successfully created.' }
         format.json { render :show, status: :created, location: @building_amenity }
       else
         format.html { render :new }

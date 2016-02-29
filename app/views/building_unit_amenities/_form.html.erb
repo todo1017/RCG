@@ -18,19 +18,19 @@
   <div class="field">
     <br>
     <%= f.label :washer_dryer %><br>
-    <%= f.select :washer_dryer, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.washer_dryer), :include_blank => true %>
+    <%= f.select :washer_dryer, options_for_select([['Yes', true], ['No', false]], @building_unit_amenity.washer_dryer), :include_blank => true %>
     <%= f.text_area :washer_dryer_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :microwave %><br>
-    <%= f.select :microwave, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.microwave), :include_blank => true %>
+    <%= f.select :microwave, options_for_select([['Yes', true], ['No', false]], @building_unit_amenity.microwave), :include_blank => true %>
     <%= f.text_area :microwave_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :security_alarm %><br>
-    <%= f.select :security_alarm, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.security_alarm), :include_blank => true %>
+    <%= f.select :security_alarm, options_for_select([['Yes', true], ['No', false]], @building_unit_amenity.security_alarm), :include_blank => true %>
     <%= f.text_area :security_alarm_ %>
   </div>
   <div class="field">
@@ -48,7 +48,7 @@
   <div class="field">
     <br>
     <%= f.label :oversized_windows %><br>
-    <%= f.select :oversized_windows, options_for_select([['Yes', true], ['No', false], ['Not Sure', nil]], @building_unit_amenity.oversized_windows), :include_blank => true %>
+    <%= f.select :oversized_windows, options_for_select([['Yes', true], ['No', false]], @building_unit_amenity.oversized_windows), :include_blank => true %>
     <%= f.text_area :oversized_windows_ %>
   </div>
   <div class="field">
