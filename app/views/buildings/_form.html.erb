@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <%= form_for(@building) do |f| %>
   <% if @building.errors.any? %>
     <div id="error_explanation">
@@ -27,12 +29,12 @@
     <div class="field">
       <br>
       <%= f.label "Ownership" %><br>
-      <%= f.radio_button :competitor, false %>&nbsp;Owned by <%= current_user.owner.name %>&nbsp;&nbsp;
-      <%= f.radio_button :competitor, true %>&nbsp;Competitor Building
+      <%= f.radio_button :competitor, false, onClick: "document.getElementById('comp_group').style.display='none';" %>&nbsp;Owned by <%= current_user.owner.name %>&nbsp;&nbsp;
+      <%= f.radio_button :competitor, true, onClick: "document.getElementById('comp_group').style.display='';" %>&nbsp;Competitor Building
     </div>
-    <div class="field">
+    <div class="field" id="comp_group" style="display:none;">
       <br>
-      <%= f.label "Comp Group (if competitor)" %><br>
+      <%= f.label "Comp Group" %><br>
       <%= f.select :comp_group_id, options_from_collection_for_select(CompGroup.all, :id, :name, @building.comp_group_id), :include_blank => true %>
     </div>
     <div class="field">
@@ -46,28 +48,38 @@
       <%= f.text_field :manager, size: "50" %>
     </div>
     <div class="field">
+      <br>
+      <%= f.label :manager_email %><br>
+      <%= f.text_field :manager_email, size: "50" %>
+    </div>
+    <div class="field">
+      <br>
+      <%= f.label :manager_phone %><br>
+      <%= f.telephone_field :manager_phone %>
+    </div>
+    <div class="field">
+      <%= f.label "General Phone" %><br>
+      <%= f.telephone_field :phone %>
+    </div>
+    <div class="field">
       <%= f.label :website %><br>
-      <%= f.text_field :website, size: "50" %>
+      <%= f.text_field :website, size: "50" %>&nbsp;<%= if @building.website != nil && @building.website != "" then link_to "website", url_with_protocol(@building.website), :target => :_blank end %>
     </div>
   <div class="field">
     <%= f.label :description %><br>
     <%= f.text_area :description, size: "50x5" %>
   </div>
   <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.telephone_field :phone %>
-  </div>
-  <div class="field">
     <%= f.label :number_of_units %><br>
-    <%= f.number_field :number_of_units %>
+    <%= f.text_field :number_of_units, size: "10" %>
   </div>
   <div class="field">
     <%= f.label :year_built %><br>
-    <%= f.number_field :year_built %>
+    <%= f.select :year_built, (1950..Time.now.year).to_a, :include_blank => {:year_built => "Select year"} %>
   </div>
   <div class="field">
     <%= f.label :year_remodeled %><br>
-    <%= f.number_field :year_remodeled %>
+    <%= f.select :year_remodeled, (1950..Time.now.year).to_a, :include_blank => {:year_built => "Select year"} %>
   </div>
     <br>
     <%= f.submit "Submit", {:class=>"btn btn-success"} %>

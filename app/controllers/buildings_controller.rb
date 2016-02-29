@@ -37,7 +37,7 @@ class BuildingsController < ApplicationController
         building_unit_amenity = BuildingUnitAmenity.new
         building_unit_amenity.update_attribute :building_id, @building.id
         building_unit_amenity.save!
-        format.html { redirect_to root_path, notice: 'Building was successfully created.' }
+        format.html { redirect_to :back, notice: 'Building was successfully created.' }
         format.json { render :show, status: :created, location: @building }
       else
         format.html { render :new }
@@ -51,7 +51,7 @@ class BuildingsController < ApplicationController
   def update
     respond_to do |format|
       if @building.update(building_params)
-        format.html { redirect_to root_path, notice: 'Building was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Building was successfully updated.' }
         format.json { render :show, status: :ok, location: @building }
       else
         format.html { render :edit }
@@ -78,6 +78,6 @@ class BuildingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_params
-      params.require(:building).permit(:owner_id, :name, :description, :comp_group_id, :phone, :manager, :number_of_units, :website, :year_built, :year_remodeled, :geography_id, :competitor)
+      params.require(:building).permit(:owner_id, :name, :description, :comp_group_id, :phone, :manager, :manager_email, :manager_phone, :number_of_units, :website, :year_built, :year_remodeled, :geography_id, :competitor)
     end
 end
