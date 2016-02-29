@@ -2,7 +2,7 @@
 
 <br>
 <%= form_tag "/comparisons", :method => 'get' do %>
-    <%= select_tag(:filter, options_for_select([['Vacant', 1], ['Expire within 30 days', 2]])) %>
+    <%= select_tag(:filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3]], params[:filter])) %>
     &nbsp;
     <%= submit_tag "Filter", {:class=>"btn btn-success"} %>
 <% end %>
