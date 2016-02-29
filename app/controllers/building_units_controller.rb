@@ -21,7 +21,7 @@ class BuildingUnitsController < ApplicationController
     if params[:filter] != nil
       # @building_units = BuildingUnit.owned
       # @building_units = BuildingUnit.where(actual_rent: nil) + BuildingUnit.where(actual_rent: 0)
-      @building_units = BuildingUnit.owned.where(actual_rent: nil) + BuildingUnit.owned.where(actual_rent: 0) + BuildingUnit.owned.where("lease_expiration > current_date - interval '30 days'")
+      @building_units = BuildingUnit.owned.where(actual_rent: nil) + BuildingUnit.owned.where(actual_rent: 0) + BuildingUnit.owned.where("lease_expiration < current_date + interval '30 days'")
     else
       @building_units = BuildingUnit.owned.where(actual_rent: nil) + BuildingUnit.owned.where(actual_rent: 0)
     end
