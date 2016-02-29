@@ -18,61 +18,61 @@
   <div class="field">
     <br>
     <%= f.label "Parking (with an extra field for comments)" %><br>
-    <%= f.text_field :parking %>
+    $<%= f.text_field :parking, size: "7" %>/mo
     <%= f.text_area :parking_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :parking_extra %><br>
-    <%= f.text_field :parking_extra %>
+    $<%= f.text_field :parking_extra, size: "7" %>/mo
     <%= f.text_area :parking_extra_ %>
   </div>
   <div class="field">
     <br>
-    <%= f.label :security_deposit %><br>
-    <%= f.text_field :security_deposit %>
-    <%= f.text_area :security_deposit_ %>
-  </div>
-  <div class="field">
-    <br>
     <%= f.label :amenity_fee %><br>
-    <%= f.text_field :amenity_fee %>
+    $<%= f.text_field :amenity_fee, size: "7" %>/mo
     <%= f.text_area :amenity_fee_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :trash_fee %><br>
-    <%= f.text_field :trash_fee %>
+    $<%= f.text_field :trash_fee, size: "7" %>/mo
     <%= f.text_area :trash_fee_ %>
   </div>
+    <div class="field">
+      <br>
+      <%= f.label :security_deposit %><br>
+      $<%= f.text_field :security_deposit, size: "7" %>one-time
+      <%= f.text_area :security_deposit_ %>
+    </div>
   <div class="field">
     <br>
     <%= f.label :pet_deposit %><br>
-    <%= f.text_field :pet_deposit %>
+    $<%= f.text_field :pet_deposit, size: "7" %>one-time
     <%= f.text_area :pet_deposit_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :pet_dog %><br>
-    <%= f.text_field :pet_dog %>
+    $<%= f.text_field :pet_dog, size: "7" %>one-time
     <%= f.text_area :pet_dog_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :pet_cat %><br>
-    <%= f.text_field :pet_cat %>
+    $<%= f.text_field :pet_cat, size: "7" %>one-time
     <%= f.text_area :pet_cat_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :application_fee %><br>
-    <%= f.text_field :application_fee %>
+    $<%= f.text_field :application_fee, size: "7" %>one-time
     <%= f.text_area :application_fee_ %>
   </div>
   <div class="field">
     <br>
     <%= f.label :minimum_lease %><br>
-    <%= f.number_field :minimum_lease %>
+    <%= f.text_field :minimum_lease, size: "7" %>months
     <%= f.text_area :minimum_lease_ %>
   </div>
   <div class="actions">

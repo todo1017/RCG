@@ -10,9 +10,9 @@
       <th class="extra">Building</th>
       <th>Parking</th>
       <th>Parking extra</th>
-      <th>Security deposit</th>
       <th>Amenity fee</th>
       <th>Trash fee</th>
+      <th>Security deposit</th>
       <th>Pet deposit</th>
       <th>Pet dog</th>
       <th>Pet cat</th>
@@ -29,43 +29,43 @@
           <%= link_to building_fee_schedule.building.name, edit_building_fee_schedule_path(building_fee_schedule) %>
         </td>
         <td<%=cell_color(building_fee_schedule.parking)%>>
-          <%= building_fee_schedule.parking %>
+          <%= dollar_monthly(building_fee_schedule.parking) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.parking_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.parking_extra)%>>
-          <%= building_fee_schedule.parking_extra %>
+          <%= dollar_monthly(building_fee_schedule.parking_extra) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.parking_extra_} %>
         </td>
-        <td<%=cell_color(building_fee_schedule.security_deposit)%>>
-          <%= building_fee_schedule.security_deposit %>
-          <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.security_deposit_} %>
-        </td>
         <td<%=cell_color(building_fee_schedule.amenity_fee)%>>
-          <%= building_fee_schedule.amenity_fee %>
+          <%= dollar_monthly(building_fee_schedule.amenity_fee) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.amenity_fee_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.trash_fee)%>>
-          <%= building_fee_schedule.trash_fee %>
+          <%= dollar_monthly(building_fee_schedule.trash_fee) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.trash_fee_} %>
         </td>
+        <td<%=cell_color(building_fee_schedule.security_deposit)%>>
+          <%= dollar_onetime(building_fee_schedule.security_deposit) %>
+          <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.security_deposit_} %>
+        </td>
         <td<%=cell_color(building_fee_schedule.pet_deposit)%>>
-          <%= building_fee_schedule.pet_deposit %>
+          <%= dollar_onetime(building_fee_schedule.pet_deposit) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_deposit_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.pet_dog)%>>
-          <%= building_fee_schedule.pet_dog %>
+          <%= dollar_onetime(building_fee_schedule.pet_dog) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_dog_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.pet_cat)%>>
-          <%= building_fee_schedule.pet_cat %>
+          <%= dollar_onetime(building_fee_schedule.pet_cat) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_cat_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.application_fee)%>>
-          <%= building_fee_schedule.application_fee %>
+          <%= dollar_onetime(building_fee_schedule.application_fee) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.application_fee_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.minimum_lease)%>>
-          <%= building_fee_schedule.minimum_lease %>
+          <%= number_weeks(building_fee_schedule.minimum_lease) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.minimum_lease_} %>
         </td>
       </tr>
