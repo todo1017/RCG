@@ -2,6 +2,9 @@ class BuildingUnit < ActiveRecord::Base
 
   belongs_to :building
 
+  scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
+  scope :competitors, -> { joins(:building).where(buildings: {competitor: true}) }
+
   def self.import(file)
 
     xlsx = Roo::Spreadsheet.open(file)
