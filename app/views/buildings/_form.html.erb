@@ -32,7 +32,7 @@
       <%= f.radio_button :competitor, false, onClick: "document.getElementById('comp_group').style.display='none';" %>&nbsp;Owned by <%= current_user.owner.name %>&nbsp;&nbsp;
       <%= f.radio_button :competitor, true, onClick: "document.getElementById('comp_group').style.display='';" %>&nbsp;Competitor Building
     </div>
-    <div class="field" id="comp_group" style="display:none;">
+    <div class="field" id="comp_group" style="<%= if @building.competitor == false then 'display:none;' end %>">
       <br>
       <%= f.label "Comp Group" %><br>
       <%= f.select :comp_group_id, options_from_collection_for_select(CompGroup.all, :id, :name, @building.comp_group_id), :include_blank => true %>
