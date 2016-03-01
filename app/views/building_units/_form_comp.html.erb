@@ -57,5 +57,15 @@
       <%= f.label :lease_length %><br>
       <%= f.text_field :lease_length %>
     </div>
-<br><br>
+    <%- if @building_unit.created_at != nil %>
+    <br>
+    <b>Created On</b>
+    <br>
+    <%= @building_unit.created_at.strftime("%m/%d/%Y") %>
+    <br><br>
+    <b>Updated On</b>
+    <br>
+    <%= @building_unit.updated_at.strftime("%m/%d/%Y") %>
+    <%- end %>
+    <br><br><br>
 <% end %>
