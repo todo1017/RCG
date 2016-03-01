@@ -18,7 +18,7 @@
     <%#= f.label :owner %><br>
     <!--<%#= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>-->
   <!--</div>-->
-    <%= f.submit "Submit", {:class=>"btn btn-success"} %>
+    <%= f.submit "Save", {:class=>"btn btn-success"} %>
     <%= link_to 'cancel', root_path %>
     <br>
     <br>
@@ -63,7 +63,7 @@
     </div>
     <div class="field">
       <%= f.label :website %><br>
-      <%= f.text_field :website, size: "50" %>&nbsp;<%= if @building.website != nil && @building.website != "" then link_to "website", url_with_protocol(@building.website), :target => :_blank end %>
+      <%= f.text_field :website, size: "50" %>&nbsp;<%= if @building.website != nil && @building.website != "" then link_to "Take Me There", url_with_protocol(@building.website), {:target => :_blank, :class=>"btn btn-primary"} end %>
     </div>
   <div class="field">
     <%= f.label :description %><br>
