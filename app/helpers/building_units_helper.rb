@@ -45,13 +45,13 @@ module BuildingUnitsHelper
     # 4
     # 4
     # 4
-    four_a = BuildingUnit.where(beds: beds-1, baths: baths, floor: floor)
+    four_a = comp_apartments.where(beds: beds-1, baths: baths, floor: floor)
 
     if four_a.count > 2
       return four_a
     end
 
-    four_b = BuildingUnit.where(beds: beds-1, baths: baths, floor: [floor-1, floor+1, floor-2, floor+2])
+    four_b = comp_apartments.where(beds: beds-1, baths: baths, floor: [floor-1, floor+1, floor-2, floor+2])
 
     if four_a.count + four_b.count > 2
       return four_a + four_b
