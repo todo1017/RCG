@@ -26,24 +26,50 @@ module BuildingUnitsHelper
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
-
     comp_apartments = comp_query_var(building_unit, comp_group_id, geography_id)
 
+    # 1, 2 and 3
+    # 1, 2 and 3
+    # 1, 2 and 3
     first = comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
     second = comp_apartments.where(beds: beds, baths: baths, floor: [floor-2, floor+2])
-    # third
 
-    # USE the "first" query for the count but it's already been displayed so don't return it again here
-    if first.count + second.count > 0 then return second end
+    third = closet_floor_away_record(comp_apartments, beds, 0, baths, floor, 2)
 
-    four_a = BuildingUnit.where(beds: beds-1, baths: baths, floor: [floor])
+    # USE the "first" query for the count
+    # but it's already been displayed so don't return it again here
+    if first.count + second.count + third.count > 0
+      return second + third
+    end
 
-    if four_a.count > 2 then return four_a end
+    # 4
+    # 4
+    # 4
+    four_a = BuildingUnit.where(beds: beds-1, baths: baths, floor: floor)
+
+    if four_a.count > 2
+      return four_a
+    end
 
     four_b = BuildingUnit.where(beds: beds-1, baths: baths, floor: [floor-1, floor+1, floor-2, floor+2])
 
-    return four_a + four_b
+    if four_a.count + four_b.count > 2
+      return four_a + four_b
+    end
 
+    four_c = closet_floor_away_record(comp_apartments, beds, -1, baths, floor, 2)
+
+    return four_a + four_b + four_c
+
+  end
+
+  def closet_floor_away_record(comp_apartments, beds, offset, baths, floor, hurdle)
+    floor_record = comp_apartments.where(beds: beds+offset, baths: baths).order("abs(floor-#{floor})").first
+    if floor_record != nil && (floor - floor_record.floor).abs > hurdle
+      four_c = comp_apartments.where(beds: beds+offset, baths: baths, floor: floor_record.floor)
+    else
+      four_c = comp_apartments.where(beds: 101)
+    end
   end
 
 
