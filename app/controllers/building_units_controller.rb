@@ -35,7 +35,7 @@ class BuildingUnitsController < ApplicationController
 
   def import
     BuildingUnit.import(params[:file])
-    redirect_to "/rent_roll/#{params[:building_id].to_i}", notice: "Yardi data updated"
+    redirect_to :back, notice: "Yardi data updated"
   end
 
   # GET /building_units/1
