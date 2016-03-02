@@ -1,25 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing User Geographies</h1>
+<h3>Geographies for <%= User.find(params[:user_id]).email %></h3>
 
 <table>
   <thead>
     <tr>
-      <th>User</th>
       <th>Geography</th>
       <th>Access type</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% @user_geographies.each do |user_geography| %>
       <tr>
-        <td><%= user_geography.user_id %></td>
-        <td><%= user_geography.geography_id %></td>
+        <td><%= Geography.find(user_geography.geography_id).name %></td>
         <td><%= user_geography.access_type %></td>
-        <td><%= link_to 'Show', user_geography %></td>
-        <td><%= link_to 'Edit', edit_user_geography_path(user_geography) %></td>
         <td><%= link_to 'Destroy', user_geography, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -28,4 +24,5 @@
 
 <br>
 
-<%= link_to 'New User geography', new_user_geography_path %>
+<%= link_to 'New Geography Assignment', "/geographies/user/#{params[:user_id]}/new", {:class=>"btn btn-primary"} %>
+<%= link_to 'Back', "/users" %>

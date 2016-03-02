@@ -1,5 +1,3 @@
-<h1>New User Geography</h1>
+<h3>New Geography Assignment for <%= User.find(params[:user_id]).email %></h3>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', user_geographies_path %>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   get 'comp_edit/:id', to: 'building_units#comp_edit'
   get 'comp_index', to: 'building_units#comp_index'
   get 'geographies/user/:user_id', to: 'user_geographies#index'
+  get 'geographies/user/:user_id/new', to: 'user_geographies#new'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll'
 

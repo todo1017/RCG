@@ -2,7 +2,6 @@
 
 <h3>User Approvals for <%= current_user.owner.name %></h3>
 
-<i>When new users create an account (and select an Owner), they will need approval to actually start seeing that owner's buildings -- <b>however, I have not yet restricted access based on the value of this field</b></i>
 <br>
 <br>
 
@@ -14,7 +13,7 @@
     <th></th>
     <th>Super Admin</th>
     <th>Owner Admin</th>
-    <th>Geographies</th>
+    <th></th>
   </tr>
   </thead>
 
@@ -47,7 +46,7 @@
           <% end %>
 
         </td>
-        <td><%= link_to 'Permissions...', "/geographies/user/#{user.id}" %></td>
+        <td><%= link_to 'Geographies...', "/geographies/user/#{user.id}" %></td>
       </tr>
   <% end %>
   </tbody>

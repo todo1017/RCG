@@ -29,7 +29,7 @@ class UserGeographiesController < ApplicationController
 
     respond_to do |format|
       if @user_geography.save
-        format.html { redirect_to @user_geography, notice: 'User geography was successfully created.' }
+        format.html { redirect_to "/geographies/user/#{params[:user_geography][:user_id]}", notice: 'User geography was successfully created.' }
         format.json { render :show, status: :created, location: @user_geography }
       else
         format.html { render :new }
@@ -43,7 +43,7 @@ class UserGeographiesController < ApplicationController
   def update
     respond_to do |format|
       if @user_geography.update(user_geography_params)
-        format.html { redirect_to @user_geography, notice: 'User geography was successfully updated.' }
+        format.html { redirect_to "/geographies/user/#{params[:user_geography][:user_id]}", notice: 'User geography was successfully updated.' }
         format.json { render :show, status: :ok, location: @user_geography }
       else
         format.html { render :edit }
@@ -57,7 +57,7 @@ class UserGeographiesController < ApplicationController
   def destroy
     @user_geography.destroy
     respond_to do |format|
-      format.html { redirect_to user_geographies_url, notice: 'User geography was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'User geography was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
