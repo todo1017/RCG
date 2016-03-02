@@ -48,8 +48,8 @@
           </td>
           <td class="width-100"><%= building_unit.market_rent %></td>
           <td class="width-100"><%= concessions %></td>
-          <td class="width-75"><%= '%.2f' % (building_unit.actual_rent / building_unit.sq_feet) %></td>
-          <td class="width-75"><%= '%.2f' % ((building_unit.actual_rent - (concessions/12)) / building_unit.sq_feet) %></td>
+          <td class="width-75"><%= '%.2f' % (building_unit.market_rent / building_unit.sq_feet) %></td>
+          <td class="width-75"><%= '%.2f' % ((building_unit.market_rent - (concessions/12)) / building_unit.sq_feet) %></td>
             <%- CompGroup.all.each do |comp_group| %>
               <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                   <td class="width-200 grey-td">
