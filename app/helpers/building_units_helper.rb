@@ -2,7 +2,7 @@ module BuildingUnitsHelper
 
   def concessions_calc(building_unit)
     if building_unit.months_off != nil && building_unit.cash_off != nil
-      return ((building_unit.actual_rent * building_unit.months_off) + building_unit.cash_off)
+      return ((building_unit.market_rent * building_unit.months_off) + building_unit.cash_off)
     end
     return 0
   end
