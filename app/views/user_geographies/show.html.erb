@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_geography.user_id %>
+</p>
+
+<p>
+  <strong>Geography:</strong>
+  <%= @user_geography.geography_id %>
+</p>
+
+<p>
+  <strong>Access type:</strong>
+  <%= @user_geography.access_type %>
+</p>
+
+<%= link_to 'Edit', edit_user_geography_path(@user_geography) %> |
+<%= link_to 'Back', user_geographies_path %>

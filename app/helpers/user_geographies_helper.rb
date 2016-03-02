@@ -1,0 +1,2 @@
+module UserGeographiesHelper
+end

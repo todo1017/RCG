@@ -1,0 +1,29 @@
+<%= form_for(@user_geography) do |f| %>
+  <% if @user_geography.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_geography.errors.count, "error") %> prohibited this user_geography from being saved:</h2>
+
+      <ul>
+      <% @user_geography.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :geography_id %><br>
+    <%= f.number_field :geography_id %>
+  </div>
+  <div class="field">
+    <%= f.label :access_type %><br>
+    <%= f.text_field :access_type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

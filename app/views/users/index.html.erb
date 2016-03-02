@@ -12,6 +12,9 @@
     <th>Email</th>
     <th></th>
     <th></th>
+    <th>Super Admin</th>
+    <th>Owner Admin</th>
+    <th>Geographies</th>
   </tr>
   </thead>
 
@@ -20,7 +23,31 @@
       <tr>
         <td><%= user.email %></td>
         <td><%= if user.approved == true then raw "<i>Approved</i>" end %></td>
-        <td><%= link_to 'Change', edit_user_path(user) %></td>
+        <td><%= link_to 'Change...', edit_user_path(user) %></td>
+        <td>
+          <% if user.super_admin? %>
+              <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
+                  <%= f.submit "Take away Super Admin" %>
+              <% end %>
+          <% else %>
+              <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
+                  <%= f.submit "Give Super Admin" %>
+              <% end %>
+          <% end %>
+        </td>
+        <td>
+          <% if user.owner_admin? %>
+              <%= form_for(user, :url => toggle_owner_admin_user_path(user), :html => {:method => :post} ) do |f| %>
+                  <%= f.submit "Take away Owner Admin" %>
+              <% end %>
+          <% else %>
+              <%= form_for(user, :url => toggle_owner_admin_user_path(user), :html => {:method => :post} ) do |f| %>
+                  <%= f.submit "Give Owner Admin" %>
+              <% end %>
+          <% end %>
+
+        </td>
+        <td><%= link_to 'Permissions...', "/geographies/user/#{user.id}" %></td>
       </tr>
   <% end %>
   </tbody>

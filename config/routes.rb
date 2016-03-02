@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :user_geographies
   resources :comp_groups
   resources :geographies
   resources :amenity_patios
@@ -21,10 +22,16 @@ Rails.application.routes.draw do
   get 'comp_new', to: 'building_units#comp_new'
   get 'comp_edit/:id', to: 'building_units#comp_edit'
   get 'comp_index', to: 'building_units#comp_index'
+  get 'geographies/user/:user_id', to: 'user_geographies#index'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll'
 
-  resources :users
+  resources :users do
+    member do
+      post :toggle_super_admin
+      post :toggle_owner_admin
+    end
+  end
   resources :sessions
   resources :owners
   resources :buildings
