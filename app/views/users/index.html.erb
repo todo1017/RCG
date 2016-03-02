@@ -26,22 +26,22 @@
         <td>
           <% if user.super_admin? %>
               <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Take away Super Admin" %>
+                  <%= f.submit "Take away" %>
               <% end %>
           <% else %>
               <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Give Super Admin" %>
+                  <%= f.submit "Give" %>
               <% end %>
           <% end %>
         </td>
         <td>
           <% if user.owner_admin? %>
               <%= form_for(user, :url => toggle_owner_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Take away Owner Admin" %>
+                  <%= f.submit "Take away" %>
               <% end %>
           <% else %>
               <%= form_for(user, :url => toggle_owner_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Give Owner Admin" %>
+                  <%= f.submit "Give" %>
               <% end %>
           <% end %>
 
