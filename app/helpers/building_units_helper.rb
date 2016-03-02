@@ -2,31 +2,30 @@ module BuildingUnitsHelper
 
   def concessions_calc(building_unit)
     if building_unit.months_off != nil && building_unit.cash_off != nil
-      return ((building_unit.sq_feet * building_unit.months_off) + building_unit.cash_off)
+      return ((building_unit.actual_rent * building_unit.months_off) + building_unit.cash_off)
     end
     return 0
   end
 
-  def comp_query_var(building_unit, comp_group_id, geography_id)
-    BuildingUnit.joins(:building).where(buildings: {competitor: true, comp_group_id: comp_group_id, geography_id: geography_id})
-  end
+  # def comp_query_var(building_unit, comp_group_id, geography_id, comp_building_id)
+  #   BuildingUnit.joins(:building).where(buildings: {competitor: true, comp_group_id: comp_group_id, geography_id: geography_id, id: comp_building_id})
+  # end
 
-  def comps_query_1(building_unit, comp_group_id, geography_id)
+  def comps_query_1(building_unit, comp_building_id)
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
+    comp_apartments = BuildingUnit.where(building_id: comp_building_id)
 
-    comp_apartments = comp_query_var(building_unit, comp_group_id, geography_id)
-
-    first = comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
+    return comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
 
   end
 
-  def comps_query_2(building_unit, comp_group_id, geography_id)
+  def comps_query_2(building_unit, comp_building_id)
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
-    comp_apartments = comp_query_var(building_unit, comp_group_id, geography_id)
+    comp_apartments = BuildingUnit.where(building_id: comp_building_id)
 
     # 1, 2 and 3
     # 1, 2 and 3

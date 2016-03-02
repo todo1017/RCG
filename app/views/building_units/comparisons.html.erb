@@ -2,7 +2,9 @@
 
 <br>
 <%= form_tag "/comparisons", :method => 'get' do %>
-    <%= select_tag(:filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3]], params[:filter])) %>
+    <%= select_tag(:geography_filter, options_from_collection_for_select(Geography.all, :id, :name, params[:geography_filter])) %>
+    &nbsp;
+    <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3]], params[:vacancy_filter])) %>
     &nbsp;
     <%= submit_tag "Filter", {:class=>"btn btn-success"} %>
 <% end %>
@@ -21,11 +23,11 @@
       <th class="width-75">net/ft2<br><br></th>
       <%- last_comp_group = "" %>
       <%- CompGroup.all.each do |comp_group| %>
-        <%- Geography.all.each do |geography| %>
+        <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
             <th class="width-200 grey-td table-top">
                 <%= raw "<span class='uppercase'>" + comp_group.name + "</span>" if comp_group.name != last_comp_group %>
                 <br><br>
-                <%= geography.name %>
+                <%= comp_building.name %>
                 <br><br>
             </th>
             <% last_comp_group = comp_group.name %>
@@ -46,14 +48,14 @@
           </td>
           <td class="width-100"><%= building_unit.market_rent %></td>
           <td class="width-100"><%= concessions %></td>
-          <td class="width-75"><%= '%.2f' % (building_unit.market_rent / building_unit.sq_feet) %></td>
-          <td class="width-75"><%= '%.2f' % ((building_unit.market_rent - (concessions/12)) / building_unit.sq_feet) %></td>
+          <td class="width-75"><%= '%.2f' % (building_unit.actual_rent / building_unit.sq_feet) %></td>
+          <td class="width-75"><%= '%.2f' % ((building_unit.actual_rent - (concessions/12)) / building_unit.sq_feet) %></td>
             <%- CompGroup.all.each do |comp_group| %>
-              <%- Geography.all.each do |geography| %>
+              <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                   <td class="width-200 grey-td">
                     <% concessions = concessions_calc(building_unit) %>
-                    <% comps_1 = comps_query_1(building_unit, comp_group.id, geography.id) %>
-                    <% comps_2 = comps_query_2(building_unit, comp_group.id, geography.id) %>
+                    <% comps_1 = comps_query_1(building_unit, comp_building.id) %>
+                    <% comps_2 = comps_query_2(building_unit, comp_building.id) %>
                     <% comps_1.each do |comp| %>
                         <b><%= render partial: "mouseover", locals: {comp: comp, concessions: concessions} %></b>
                     <% end.empty? and begin %>
