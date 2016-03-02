@@ -36,6 +36,9 @@
       <th>Lease expiration</th>
       <th>BedBath</th>
       <th>Notes<br><br></th>
+      <th>Months Off</th>
+      <th>Cash Off</th>
+      <th>Lease Length</th>
       <th></th>
     </tr>
   </thead>
@@ -59,6 +62,9 @@
         <td><%= building_unit.lease_expiration %></td>
         <td><%= building_unit.bed_bath %></td>
         <td><%= building_unit.notes %></td>
+        <td><%= building_unit.months_off %></td>
+        <td><%= building_unit.cash_off %></td>
+        <td><%= building_unit.lease_length %></td>
         <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
