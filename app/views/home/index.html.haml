@@ -7,7 +7,7 @@
     - if current_user
       - if current_user.owner_id != nil
         %h3
-          = "#{current_user.owner.name}_Admin Only:"
+          = "#{current_user.owner.name} Director of PM Only:"
         %br
         %br
         = link_to "User Approvals", "/users"
@@ -25,7 +25,7 @@
         %br
         %br
         %h3
-          RCG_Admin Only:
+          Super Admin Only:
         %br
         %br
         = link_to "Owners", "/owners"
@@ -33,6 +33,11 @@
         = link_to "Comp Groups", "/comp_groups"
         %br
         = link_to "Geographies", "/geographies"
+        %br
+        %br
+        = link_to "Make Director of PM Assignments", "#"
+        %br
+        = link_to "Change Owner View", "#"
         %br
         %br
       - else

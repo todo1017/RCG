@@ -37,20 +37,35 @@ class UsersController < ApplicationController
 
   def toggle_super_admin
     @user = User.find(params[:id])
-    @user.toggle!(:super_admin) # if .....
+    @user.toggle!(:super_admin)
+    @user.toggle!(:owner_admin) if @user.owner_admin == true
+    @user.toggle!(:pm_admin) if @user.pm_admin == true
     if @user.save
-      redirect_to :back, notice: 'super_admin changed'
+      redirect_to :back, notice: 'Super Admin changed'
     else
-      redirect_to :back, notice: 'super_admin NOT changed'
+      redirect_to :back, notice: 'Super Admin NOT changed'
     end
   end
   def toggle_owner_admin
     @user = User.find(params[:id])
-    @user.toggle!(:owner_admin) # if .....
+    @user.toggle!(:owner_admin)
+    @user.toggle!(:super_admin) if @user.super_admin == true
+    @user.toggle!(:pm_admin) if @user.pm_admin == true
     if @user.save
-      redirect_to :back, notice: 'owner_admin changed'
+      redirect_to :back, notice: 'Admin settings changed'
     else
-      redirect_to :back, notice: 'owner_admin NOT changed'
+      redirect_to :back, notice: 'Admin settings NOT changed'
+    end
+  end
+  def toggle_pm_admin
+    @user = User.find(params[:id])
+    @user.toggle!(:pm_admin)
+    @user.toggle!(:super_admin) if @user.super_admin == true
+    @user.toggle!(:owner_admin) if @user.owner_admin == true
+    if @user.save
+      redirect_to :back, notice: 'Admin settings changed'
+    else
+      redirect_to :back, notice: 'Admin settings NOT changed'
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160302124355) do
+ActiveRecord::Schema.define(version: 20160303123154) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 20160302124355) do
     t.datetime "updated_at",      null: false
     t.boolean  "super_admin"
     t.boolean  "owner_admin"
+    t.boolean  "pm_admin"
   end
 
 end

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     member do
       post :toggle_super_admin
       post :toggle_owner_admin
+      post :toggle_pm_admin
     end
   end
   resources :sessions
