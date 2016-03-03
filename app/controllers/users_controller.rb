@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.where(owner_id: current_user.owner_id)
+    @users = User.where(owner_id: current_user.owner_id).order(:id)
   end
 
   def edit

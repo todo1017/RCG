@@ -1,0 +1,84 @@
+<% building_unit_amenity = BuildingUnitAmenity.where(building_id: building_amenity.building_id).first %>
+<tr>
+  <td class="extra">
+    <%= if building_unit_amenity.building.competitor == true then raw "<b>comp</b>" end %>
+    <%- if read_or_write == "write" %>
+        <%= link_to building_unit_amenity.building.name, edit_building_unit_amenity_path(building_unit_amenity) %>
+    <%- else %>
+        <%= building_unit_amenity.building.name %>
+    <%- end %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.washer_dryer)%>>
+    <%= if building_unit_amenity.washer_dryer == true then "Y" elsif building_unit_amenity.washer_dryer == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.washer_dryer_} %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.microwave)%>>
+    <%= if building_unit_amenity.microwave == true then "Y" elsif building_unit_amenity.microwave == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.microwave_} %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.security_alarm)%>>
+    <%= if building_unit_amenity.security_alarm == true then "Y" elsif building_unit_amenity.security_alarm == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.security_alarm_} %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.amenity_ceiling_id)%>>
+    <%= AmenityCeiling.find(building_unit_amenity.amenity_ceiling_id).name if building_unit_amenity.amenity_ceiling_id != nil %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.amenity_patio_id)%>>
+    <%= AmenityPatio.find(building_unit_amenity.amenity_patio_id).name if building_unit_amenity.amenity_patio_id != nil %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.oversized_windows)%>>
+    <%= if building_unit_amenity.oversized_windows == true then "Y" elsif building_unit_amenity.oversized_windows == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_unit_amenity.oversized_windows_} %>
+  </td>
+  <td<%=cell_color(building_unit_amenity.other)%>>
+    <%= building_unit_amenity.other %>
+  </td>
+  <td class="smaller"></td>
+  <td<%=cell_color(building_amenity.business_center)%>>
+    <%= if building_amenity.business_center == true then "Y" elsif building_amenity.business_center == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.business_center_} %>
+  </td>
+  <td<%=cell_color(building_amenity.resident_lounge)%>>
+    <%= if building_amenity.resident_lounge == true then "Y" elsif building_amenity.resident_lounge == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.resident_lounge_} %>
+  </td>
+  <td<%=cell_color(building_amenity.screening_room)%>>
+    <%= if building_amenity.screening_room == true then "Y" elsif building_amenity.screening_room == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.screening_room_} %>
+  </td>
+  <td<%=cell_color(building_amenity.rooftop_deck)%>>
+    <%= if building_amenity.rooftop_deck == true then "Y" elsif building_amenity.rooftop_deck == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.rooftop_deck_} %>
+  </td>
+  <td<%=cell_color(building_amenity.train_station)%>>
+    <%= if building_amenity.train_station == true then "Y" elsif building_amenity.train_station == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.train_station_} %>
+  </td>
+  <td<%=cell_color(building_amenity.pool)%>>
+    <%= if building_amenity.pool == true then "Y" elsif building_amenity.pool == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.pool_} %>
+  </td>
+  <td<%=cell_color(building_amenity.gated)%>>
+    <%= if building_amenity.gated == true then "Y" elsif building_amenity.gated == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.gated_} %>
+  </td>
+  <td<%=cell_color(building_amenity.amenity_concierge_id)%>>
+    <%= AmenityConcierge.find(building_amenity.amenity_concierge_id).name if building_amenity.amenity_concierge_id != nil %>
+  </td>
+  <td<%=cell_color(building_amenity.recreation)%>>
+    <%= if building_amenity.recreation == true then "Y" elsif building_amenity.recreation == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.recreation_} %>
+  </td>
+  <td<%=cell_color(building_amenity.fitness)%>>
+    <%= if building_amenity.fitness == true then "Y" elsif building_amenity.fitness == false then "N" end %>
+    <%= render partial: "shared/comment", locals: {comment_field: building_amenity.fitness_} %>
+  </td>
+  <td<%=cell_color(building_amenity.other)%>>
+    <%= building_amenity.other %>
+  </td>
+  <!--<td><%#= building_amenity.amentity_1 %></td>-->
+  <!--<td><%#= building_amenity.amentity_2 %></td>-->
+  <!--<td><%#= building_amenity.amentity_3 %></td>-->
+  <!--<td><%#= building_amenity.amentity_11 %></td>-->
+  <!--<td><%#= building_amenity.amentity_12 %></td>-->
+</tr>
