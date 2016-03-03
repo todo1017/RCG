@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Building</Data></Cell>
+        <Cell><Data ss:Type="String">Parking</Data></Cell>
+        <Cell><Data ss:Type="String">Parking Extra</Data></Cell>
+        <Cell><Data ss:Type="String">Amenity Fee</Data></Cell>
+        <Cell><Data ss:Type="String">Trash Fee</Data></Cell>
+        <Cell><Data ss:Type="String">Security Deposit</Data></Cell>
+        <Cell><Data ss:Type="String">Pet Deposit</Data></Cell>
+        <Cell><Data ss:Type="String">Pet Dog</Data></Cell>
+        <Cell><Data ss:Type="String">Pet Cat</Data></Cell>
+        <Cell><Data ss:Type="String">Application Fee</Data></Cell>
+        <Cell><Data ss:Type="String">Minimum Lease</Data></Cell>
+      </Row>
+      <% @building_fee_schedules.each do |building_fee_schedule| %>
+          <Row>
+            <Cell>
+              <Data ss:Type="String">
+                <%= if building_fee_schedule.building.competitor == true then raw "<b>comp</b>" end %>
+                <%= building_fee_schedule.building.name %>
+              </Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.parking %></Data>
+              <%- if building_fee_schedule.parking_ != nil && building_fee_schedule.parking_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.parking_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.parking_extra %></Data>
+              <%- if building_fee_schedule.parking_extra_ != nil && building_fee_schedule.parking_extra_ != "" %>
+                <Comment><ss:Data><%= building_fee_schedule.parking_extra_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.amenity_fee %></Data>
+              <%- if building_fee_schedule.amenity_fee_ != nil && building_fee_schedule.amenity_fee_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.amenity_fee_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.trash_fee %></Data>
+              <%- if building_fee_schedule.trash_fee_ != nil && building_fee_schedule.trash_fee_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.trash_fee_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.security_deposit %></Data>
+              <%- if building_fee_schedule.security_deposit_ != nil && building_fee_schedule.security_deposit_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.security_deposit_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.pet_deposit %></Data>
+              <%- if building_fee_schedule.pet_deposit_ != nil && building_fee_schedule.pet_deposit_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.pet_deposit_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.pet_dog %></Data>
+              <%- if building_fee_schedule.pet_dog_ != nil && building_fee_schedule.pet_dog_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.pet_dog_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.pet_cat %></Data>
+              <%- if building_fee_schedule.pet_cat_ != nil && building_fee_schedule.pet_cat_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.pet_cat_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.application_fee %></Data>
+              <%- if building_fee_schedule.application_fee_ != nil && building_fee_schedule.application_fee_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.application_fee_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_fee_schedule.minimum_lease %></Data>
+              <%- if building_fee_schedule.minimum_lease_ != nil && building_fee_schedule.minimum_lease_ != "" %>
+                  <Comment><ss:Data><%= building_fee_schedule.minimum_lease_ %></ss:Data></Comment>
+              <%- end %>
+            </Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

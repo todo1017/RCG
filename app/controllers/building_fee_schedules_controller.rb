@@ -5,6 +5,10 @@ class BuildingFeeSchedulesController < ApplicationController
   # GET /building_fee_schedules.json
   def index
     @building_fee_schedules = BuildingFeeSchedule.all
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   # GET /building_fee_schedules/1
