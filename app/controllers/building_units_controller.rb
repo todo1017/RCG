@@ -70,7 +70,7 @@ class BuildingUnitsController < ApplicationController
   def create
     @building_unit = BuildingUnit.new(building_unit_params)
 
-    path = determine_path(building_unit_params[:building_unit][:building_id])
+    path = determine_path(params[:building_id])
 
     respond_to do |format|
       if @building_unit.save
@@ -86,7 +86,7 @@ class BuildingUnitsController < ApplicationController
   # PATCH/PUT /building_units/1
   # PATCH/PUT /building_units/1.json
   def update
-    path = determine_path(building_unit_params[:building_unit][:building_id])
+    path = determine_path(params[:building_id])
 
     respond_to do |format|
       if @building_unit.update(building_unit_params)
