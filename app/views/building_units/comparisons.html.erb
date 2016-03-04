@@ -19,6 +19,7 @@
     <tr>
       <th class="width-175"></th>
       <th class="width-225"></th>
+      <th class="width-100">Available<br><br></th>
       <th class="width-100">Market Rent<br><br></th>
       <th class="width-100">Concessions<br><br></th>
       <th class="width-75">gross/ft2<br><br></th>
@@ -55,6 +56,15 @@
             <%= building_unit.floor.to_s + " FL" %>
             <%= building_unit.beds.to_s + "Bed/" + building_unit.baths.to_s + "Bath" %>
             <%= building_unit.sq_feet.to_s + " sq. ft." %>
+          </td>
+          <td class="width-100">
+            <% if building_unit.actual_rent == 0 %>
+                now
+            <% else %>
+                <%- available_date = building_unit.lease_expiration %>
+                <%- available_date += 1 %>
+                <%= available_date.strftime("%B %d") %>
+            <% end %>
           </td>
           <td class="width-100"><%= building_unit.market_rent %></td>
           <td class="width-100"><%= concessions %></td>
