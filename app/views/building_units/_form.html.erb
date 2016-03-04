@@ -11,6 +11,7 @@
     </div>
   <% end %>
 
+    <%= f.hidden_field :building_id, value: @building_unit.building_id %>
     <%= f.hidden_field :bed_bath, value: "owner_record" %>
     <div class="actions">
       <br>
@@ -19,22 +20,6 @@
       <%= link_to "cancel", path %>
     </div>
     <br>
-    <div class="field">
-      <%= f.label :building_id %><br>
-      <%= f.collection_select :building_id, Building.where(competitor: false), :id, :name, include_blank: true %>
-    </div>
-    <div class="field">
-      <%= f.label :floor %><br>
-      <%= f.number_field :floor %>
-    </div>
-    <div class="field">
-      <%= f.label :beds %><br>
-      <%= f.number_field :beds %>
-    </div>
-    <div class="field">
-      <%= f.label :baths %><br>
-      <%= f.text_field :baths %>
-    </div>
     <div class="field">
       <br>
       <i>Concessions...</i>

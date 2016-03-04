@@ -67,7 +67,7 @@ class BuildingUnitsController < ApplicationController
     if params[:building_unit][:bed_bath] == "competitor_record"
       return "/comp_index"
     else
-      return "/rent_roll/#{Building.find(params[:building_unit][:building_id])}"
+      return "/rent_roll/#{params[:building_unit][:building_id]}"
     end
   end
 
