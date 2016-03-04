@@ -1,13 +1,13 @@
 <%= form_for(@building_unit) do |f| %>
     <% if @building_unit.errors.any? %>
         <div id="error_explanation">
-          <h5><%= pluralize(@building_unit.errors.count, "error") %> prohibited this Market Comparison from being saved:</h5>
+          <h4>Please enter values for the <%= pluralize(@building_unit.errors.count, "field") %> you missed</h4>
 
-          <ul>
-            <% @building_unit.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
+          <!--<ul>-->
+            <!--<%# @building_unit.errors.full_messages.each do |message| %>-->
+                <!--<li><%#= message %></li>-->
+            <!--<%# end %>-->
+          <!--</ul>-->
         </div>
     <% end %>
 
