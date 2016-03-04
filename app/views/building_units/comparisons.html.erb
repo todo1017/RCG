@@ -63,7 +63,7 @@
             <% else %>
                 <%- available_date = building_unit.lease_expiration %>
                 <%- available_date += 1 %>
-                <%= available_date.strftime("%B %d") %>
+                <%= available_date.strftime("%B %e") %>
             <% end %>
           </td>
           <td class="width-100"><%= building_unit.market_rent %></td>

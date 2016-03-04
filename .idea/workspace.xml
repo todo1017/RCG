@@ -29,8 +29,8 @@
       <file leaf-file-name="comparisons.html.erb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/building_units/comparisons.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4524648" vertical-offset="703" max-vertical-offset="1590">
-              <caret line="64" column="42" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.47887325" vertical-offset="703" max-vertical-offset="1590">
+              <caret line="65" column="55" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -109,8 +109,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="218" />
-    <option name="y" value="153" />
+    <option name="x" value="200" />
+    <option name="y" value="142" />
     <option name="width" value="1208" />
     <option name="height" value="696" />
   </component>
@@ -360,7 +360,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="218" y="153" width="1208" height="696" extended-state="0" />
+    <frame x="200" y="142" width="1208" height="696" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -800,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/building_units/comparisons.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4524648" vertical-offset="703" max-vertical-offset="1590">
-          <caret line="64" column="42" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.47887325" vertical-offset="703" max-vertical-offset="1590">
+          <caret line="65" column="55" selection-start-line="65" selection-start-column="55" selection-end-line="65" selection-end-column="55" />
           <folding />
         </state>
       </provider>
