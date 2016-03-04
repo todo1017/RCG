@@ -36,7 +36,11 @@ class BuildingUnitsController < ApplicationController
 
   def import
     BuildingUnit.import(params[:file])
-    redirect_to :back, notice: "Yardi data updated"
+    redirect_to :back, notice: "Building data imported"
+  end
+  def import_yardi_1
+    BuildingUnit.import_yardi_1(params[:file])
+    redirect_to :back, notice: "Yardi data imported"
   end
 
   # GET /building_units/1

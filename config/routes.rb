@@ -38,7 +38,10 @@ Rails.application.routes.draw do
   resources :owners
   resources :buildings
   resources :building_units do
-    collection { post :import }
+    collection {
+      post :import
+      post :import_yardi_1
+    }
   end
   resources :unit_types
 

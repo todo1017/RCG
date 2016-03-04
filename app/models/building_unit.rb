@@ -7,38 +7,84 @@ class BuildingUnit < ActiveRecord::Base
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
   scope :competitors, -> { joins(:building).where(buildings: {competitor: true}) }
 
+  # THIS initializes the Building...
   def self.import(file)
 
     xlsx = Roo::Spreadsheet.open(file)
 
-    xlsx.each_with_pagename do |name, sheet|
-      header = sheet.row(1)
+    # header = sheet.row(1)
+    #   row = Hash[[header, sheet.row(i)].transpose]
 
+    xlsx.each_with_pagename do |building_name, sheet|
+      puts building_name
+      puts building_name
+      puts building_name
+
+      counter = 0
       (2..sheet.last_row).each do |i|
-        row = Hash[[header, sheet.row(i)].transpose]
+        bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
 
-        bulding_unit = find_or_initialize_by(building_id: Building.where(name: name).first.id, number: row["number"].to_s)
+        bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+        bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
+        bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
+        bulding_unit.update sq_feet: 0
+        bulding_unit.update actual_rent: 0
 
-        bulding_unit.update bed_bath: row["unit_type"].to_s if row["unit_type"] != nil
-
-        # bulding_unit.update
-        bulding_unit.update sq_feet: row["sq_feet"].to_i if row["sq_feet"] != nil
-        bulding_unit.update resident_name: row["resident_name"].to_s if row["resident_name"] != nil
-
-        bulding_unit.update market_rent: row["market_rent"].to_f if row["market_rent"] != nil
-        bulding_unit.update actual_rent: row["actual_rent"].to_f if row["actual_rent"] != nil
-        bulding_unit.update resident_deposit: row["resident_deposit"].to_f if row["resident_deposit"] != nil
-        bulding_unit.update other_deposit: row["other_deposit"].to_f if row["other_deposit"] != nil
-        bulding_unit.update move_in: Date.strptime(row["move_in"], "%m/%d/%Y") if row["move_in"] != nil
-        bulding_unit.update lease_expiration: Date.strptime(row["lease_expiration"], "%m/%d/%Y") if row["lease_expiration"] != nil
-        bulding_unit.update move_out: Date.strptime(row["move_out"], "%m/%d/%Y") if row["move_out"] != nil
-        bulding_unit.update notes: row["notes"].to_s if row["notes"] != nil
-        bulding_unit.update resident_id: row["resident_id"].to_s if row["resident_id"] != nil
         bulding_unit.save!
+        counter = counter +1
       end
-
+      puts counter.to_s
+      puts counter.to_s
+      puts counter.to_s
     end
+  end
 
+  def self.import_yardi_1(file)
+
+    sheet = Roo::Spreadsheet.open(file)
+
+    # xlsx.each_with_pagename do |name, sheet|
+    # end
+    # header = sheet.row(1)
+    #   row = Hash[[header, sheet.row(i)].transpose]
+
+    building_name = sheet.cell("A", 2).to_s
+    puts building_name
+    puts building_name
+    puts building_name
+
+    counter = 0
+    (8..sheet.last_row).each do |i|
+      if sheet.cell("A", i) != nil
+        # TODO -- convert this to find_by
+        bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
+
+        bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+
+        bulding_unit.update sq_feet: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
+        bulding_unit.update resident_id: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
+        bulding_unit.update resident_name: sheet.cell("E", i).to_s if sheet.cell("E", i) != nil
+
+        bulding_unit.update market_rent: sheet.cell("F", i).to_f if sheet.cell("F", i) != nil
+        if sheet.cell("G", i) == nil
+          bulding_unit.update actual_rent: 0
+        else
+          bulding_unit.update actual_rent: sheet.cell("G", i).to_f
+        end
+        bulding_unit.update resident_deposit: sheet.cell("H", i).to_f if sheet.cell("H", i) != nil
+        bulding_unit.update other_deposit: sheet.cell("I", i).to_f if sheet.cell("I", i) != nil
+        bulding_unit.update move_in: Date.strptime(sheet.cell("J", i), "%m/%d/%Y") if sheet.cell("J", i) != nil
+        bulding_unit.update lease_expiration: Date.strptime(sheet.cell("K", i), "%m/%d/%Y") if sheet.cell("K", i) != nil
+        bulding_unit.update move_out: Date.strptime(sheet.cell("L", i), "%m/%d/%Y") if sheet.cell("L", i) != nil
+        bulding_unit.update notes: sheet.cell("M", i).to_s if sheet.cell("M", i) != nil
+
+        bulding_unit.save!
+        counter = counter +1
+      end
+    end
+    puts counter.to_s
+    puts counter.to_s
+    puts counter.to_s
   end
 
 end
