@@ -6,7 +6,7 @@
 <%= form_tag "/comparisons", :method => 'get' do %>
     <%= select_tag(:geography_filter, options_from_collection_for_select(Geography.all, :id, :name, params[:geography_filter])) %>
     &nbsp;
-    <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3]], params[:vacancy_filter])) %>
+    <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3], ['Lease ending in the next 90 days', 4], ['Lease ending in the next 120 days', 5]], params[:vacancy_filter])) %>
     &nbsp;
     <%= submit_tag "Filter", {:class=>"btn btn-success"} %>
 <% end %>
