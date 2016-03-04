@@ -30,7 +30,7 @@ class BuildingUnitsController < ApplicationController
     elsif  params[:vacancy_filter] == "3"
       @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '60 days' AND lease_expiration < current_date + interval '60 days'")
     else
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '60 days'")
+      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '60 days' AND lease_expiration < current_date")
     end
   end
 
