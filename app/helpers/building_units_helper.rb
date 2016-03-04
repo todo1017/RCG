@@ -58,7 +58,28 @@ module BuildingUnitsHelper
 
     four_c = closet_floor_away_record(comp_apartments, beds, -1, baths, floor, 2)
 
-    return four_a + four_b + four_c
+    if four_a.count + four_b.count + four_c.count > 2
+      return four_a + four_b + four_c
+    end
+
+    # 5
+    # 5
+    # 5
+    five_a = comp_apartments.where(beds: beds+1, baths: baths, floor: floor)
+
+    if five_a.count > 2
+      return four_a + four_b + four_c + five_a
+    end
+
+    five_b = comp_apartments.where(beds: beds+1, baths: baths, floor: [floor-1, floor+1, floor-2, floor+2])
+
+    if five_a.count + five_b.count > 2
+      return four_a + four_b + four_c + five_a + five_b
+    end
+
+    five_c = closet_floor_away_record(comp_apartments, beds, +1, baths, floor, 2)
+
+    return four_a + four_b + four_c + five_a + five_b + five_c
 
   end
 
