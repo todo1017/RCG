@@ -20,6 +20,17 @@
 #notice {
     color: orange;
 }
+#error_explanation {
+    color: orange;
+}
+
+
+.field_with_errors {
+    padding: 2px;
+    background-color: orange;
+    display: table;
+}
+
 
 .scroll-table-div {
     /*border:1px solid grey;*/

@@ -58,11 +58,12 @@ class BuildingUnitsController < ApplicationController
   def comp_edit
   end
 
-  def determine_path(building_id)
-    if Building.find(building_id).competitor?
+  def determine_path
+    if params[:building_unit][:bed_bath] == "competitor_record"
       return "/comp_index"
+    else
+      return "/rent_roll/#{Building.find(params[:building_unit][:building_id])}"
     end
-    return "/rent_roll/#{building_id}"
   end
 
   # POST /building_units
@@ -70,14 +71,14 @@ class BuildingUnitsController < ApplicationController
   def create
     @building_unit = BuildingUnit.new(building_unit_params)
 
-    path = determine_path(params[:building_unit][:building_id])
+    path = determine_path
 
     respond_to do |format|
       if @building_unit.save
         format.html { redirect_to path, notice: 'Building unit was successfully created.' }
         format.json { render :show, status: :created, location: @building_unit }
       else
-        format.html { render :new }
+        format.html { render :comp_new }
         format.json { render json: @building_unit.errors, status: :unprocessable_entity }
       end
     end
@@ -86,14 +87,14 @@ class BuildingUnitsController < ApplicationController
   # PATCH/PUT /building_units/1
   # PATCH/PUT /building_units/1.json
   def update
-    path = determine_path(params[:building_unit][:building_id])
+    path = determine_path
 
     respond_to do |format|
       if @building_unit.update(building_unit_params)
         format.html { redirect_to path, notice: 'Building unit was successfully updated.' }
         format.json { render :show, status: :ok, location: @building_unit }
       else
-        format.html { render :edit }
+        format.html { render :comp_edit }
         format.json { render json: @building_unit.errors, status: :unprocessable_entity }
       end
     end

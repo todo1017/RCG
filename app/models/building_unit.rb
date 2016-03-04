@@ -1,5 +1,7 @@
 class BuildingUnit < ActiveRecord::Base
 
+  validates :building_id, :floor, :beds, :baths, :sq_feet, :actual_rent, presence: true
+
   belongs_to :building
 
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
