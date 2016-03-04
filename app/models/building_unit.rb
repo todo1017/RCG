@@ -28,6 +28,7 @@ class BuildingUnit < ActiveRecord::Base
         bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
         bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
         bulding_unit.update sq_feet: 0
+        bulding_unit.update market_rent: 0
         bulding_unit.update actual_rent: 0
 
         bulding_unit.save!
