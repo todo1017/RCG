@@ -5,14 +5,15 @@
       = notice
     %br
     - if current_user
-      - if current_user.owner_id != nil
+      - if current_user.owner_id != nil && current_user.owner_admin
         %h3
-          = "#{current_user.owner.name} Director of PM Only:"
+          = "Director of PM only:"
+          -#= "#{current_user.owner.name} Director of PM Only:"
         %br
-        %br
-        = link_to "User Approvals", "/users"
-        %br
-        %br
+        -#%br
+        -#= link_to "User Approvals", "/users"
+        -#%br
+        -#%br
         %br
         %b
           Import floor/beds/baths Building Data - insert and/or update
@@ -30,9 +31,12 @@
         %br
         %br
         %br
-        %br
+      - if current_user.id == 1 or current_user.id == 3
         %h3
-          Super Admin Only:
+          Ronan Admin Only:
+          -#Super Admin Only:
+        %br
+        = link_to "Make Director of PM Assignments", "/users"
         %br
         %br
         = link_to "Owners", "/owners"
@@ -40,15 +44,14 @@
         = link_to "Comp Groups", "/comp_groups"
         %br
         = link_to "Geographies", "/geographies"
+        -#%br
+        -#= link_to "Change Owner View", "#"
         %br
         %br
-        = link_to "Make Director of PM Assignments", "#"
-        %br
-        = link_to "Change Owner View", "#"
-        %br
-        %br
-      - else
-        Please request approval to see your buildings
+
+
+      -#- else
+        -#Please request approval to see your buildings
       %br
       %br
       %br

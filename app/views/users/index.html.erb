@@ -11,10 +11,10 @@
     <th>Email</th>
     <!--<th></th>-->
     <!--<th></th>-->
-    <th>Super Admin</th>
+    <!--<th>Super Admin</th>-->
     <th>Director Of PM</th>
-    <th>Property Manager</th>
-    <th></th>
+    <!--<th>Property Manager</th>-->
+    <!--<th></th>-->
   </tr>
   </thead>
 
@@ -24,17 +24,17 @@
         <td><%= user.email %></td>
         <!--<td><%#= if user.approved == true then raw "<i>Approved</i>" end %></td>-->
         <!--<td><%#= link_to 'Change...', edit_user_path(user) %></td>-->
-        <td>
-          <% if user.super_admin? %>
-              <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Take away" %>
-              <% end %>
-          <% else %>
-              <%= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Give" %>
-              <% end %>
-          <% end %>
-        </td>
+        <!--<td>-->
+          <!--<%# if user.super_admin? %>-->
+              <!--<%#= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>-->
+                  <!--<%#= f.submit "Take away" %>-->
+              <!--<%# end %>-->
+          <!--<%# else %>-->
+              <!--<%#= form_for(user, :url => toggle_super_admin_user_path(user), :html => {:method => :post} ) do |f| %>-->
+                  <!--<%#= f.submit "Give" %>-->
+              <!--<%# end %>-->
+          <!--<%# end %>-->
+        <!--</td>-->
         <td>
           <% if user.owner_admin? %>
               <%= form_for(user, :url => toggle_owner_admin_user_path(user), :html => {:method => :post} ) do |f| %>
@@ -47,19 +47,19 @@
           <% end %>
 
         </td>
-        <td>
-          <% if user.pm_admin? %>
-              <%= form_for(user, :url => toggle_pm_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Take away" %>
-              <% end %>
-          <% else %>
-              <%= form_for(user, :url => toggle_pm_admin_user_path(user), :html => {:method => :post} ) do |f| %>
-                  <%= f.submit "Give" %>
-              <% end %>
-          <% end %>
+        <!--<td>-->
+          <!--<%# if user.pm_admin? %>-->
+              <!--<%#= form_for(user, :url => toggle_pm_admin_user_path(user), :html => {:method => :post} ) do |f| %>-->
+                  <!--<%#= f.submit "Take away" %>-->
+              <!--<%# end %>-->
+          <!--<%# else %>-->
+              <!--<%#= form_for(user, :url => toggle_pm_admin_user_path(user), :html => {:method => :post} ) do |f| %>-->
+                  <!--<%#= f.submit "Give" %>-->
+              <!--<%# end %>-->
+          <!--<%# end %>-->
 
-        </td>
-        <td><%= link_to 'Geographies...', "/geographies/user/#{user.id}" %></td>
+        <!--</td>-->
+        <!--<td><%#= link_to 'Geographies...', "/geographies/user/#{user.id}" %></td>-->
       </tr>
   <% end %>
   </tbody>
