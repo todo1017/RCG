@@ -4,23 +4,25 @@ class BuildingAmenitiesController < ApplicationController
   # GET /building_amenities
   # GET /building_amenities.json
   def index
-    if current_user.super_admin == true
-      @building_amenities_write = BuildingAmenity.all
-      @building_amenities_read =[]
-      return
-    elsif current_user.owner_admin == true
-      @building_amenities_write = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id })
-      @building_amenities_read =[]
-      return
-    elsif current_user.pm_admin == true
-      @building_amenities_write = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "write").select(:geography_id) })
-      @building_amenities_read = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "read").select(:geography_id) })
-      return
-    else
-      @building_amenities_write =[]
-      @building_amenities_read = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "read").select(:geography_id) })
-      return
-    end
+    @building_amenities_write = BuildingAmenity.all
+    @building_amenities_read =[]
+    # if current_user.super_admin == true
+    #   @building_amenities_write = BuildingAmenity.all
+    #   @building_amenities_read =[]
+    #   return
+    # elsif current_user.owner_admin == true
+    #   @building_amenities_write = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id })
+    #   @building_amenities_read =[]
+    #   return
+    # elsif current_user.pm_admin == true
+    #   @building_amenities_write = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "write").select(:geography_id) })
+    #   @building_amenities_read = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "read").select(:geography_id) })
+    #   return
+    # else
+    #   @building_amenities_write =[]
+    #   @building_amenities_read = BuildingAmenity.joins(:building).where(buildings: { owner_id: current_user.owner_id, geography_id: UserGeography.where(user_id: current_user.id, access_type: "read").select(:geography_id) })
+    #   return
+    # end
   end
 
   # GET /building_amenities/1
