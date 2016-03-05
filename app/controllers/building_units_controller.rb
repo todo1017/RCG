@@ -39,8 +39,8 @@ class BuildingUnitsController < ApplicationController
   end
 
   def import
-    BuildingUnit.import(params[:file])
-    redirect_to :back, notice: "Building data imported"
+    message = BuildingUnit.import(params[:file])
+    redirect_to :back, notice: message
   end
   def import_yardi_1
     message = BuildingUnit.import_yardi_1(params[:file])

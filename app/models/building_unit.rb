@@ -16,27 +16,34 @@ class BuildingUnit < ActiveRecord::Base
     xlsx = Roo::Spreadsheet.open(file)
 
     xlsx.each_with_pagename do |building_name, sheet|
-      puts building_name
-      puts building_name
-      puts building_name
+
+      if Building.where(name: building_name).blank?
+        return "Building Import - sorry, misnamed Building: " + building_name
+      end
+
+      message_to_display = "Building Import - "
 
       counter = 0
       (2..sheet.last_row).each do |i|
-        bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
+        begin
+          bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
 
-        bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
-        bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
-        bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
-        bulding_unit.update sq_feet: 0
-        bulding_unit.update market_rent: 0
-        bulding_unit.update actual_rent: 0
+          bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+          bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
+          bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
+          bulding_unit.update sq_feet: 0
+          bulding_unit.update market_rent: 0
+          bulding_unit.update actual_rent: 0
 
-        bulding_unit.save!
-        counter = counter +1
+          bulding_unit.save!
+          counter = counter +1
+        rescue
+          message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
+          next
+        end
       end
-      puts counter.to_s
-      puts counter.to_s
-      puts counter.to_s
+      message_to_display = message_to_display + "Total Rows Created/Updated: " + counter.to_s
+      return message_to_display
     end
   end
 
