@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Building Fee Schedules for <%= current_user.owner.name %> & Competitors</h2>
+<h2>Building Fee Schedules</h2>
 
 <div class="scroll-table-div">
 
@@ -17,12 +17,23 @@
       <th>Pet Dog</th>
       <th>Pet Cat</th>
       <th>Application Fee</th>
-      <th>Minimum Lease<br><br></th>
+      <th>Minimum Lease<br></th>
     </tr>
   </thead>
 
   <tbody>
+  <%- last_geography_id = 0 %>
     <% @building_fee_schedules.each do |building_fee_schedule| %>
+      <%- if building_fee_schedule.building.geography_id != last_geography_id %>
+          <tr><td colspan='11'><br><b><i>
+            <% if building_fee_schedule.building.geography_id == nil %>
+                No Geography Assigned
+            <% else %>
+                <%= Geography.find(building_fee_schedule.building.geography_id).name %>
+            <% end %>
+          </i></b></td></tr>
+      <%- end %>
+      <%- last_geography_id = building_fee_schedule.building.geography_id %>
       <tr>
         <td class="extra">
           <%= if building_fee_schedule.building.competitor == true then raw "<b>comp</b>" end %>

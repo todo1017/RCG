@@ -4,7 +4,7 @@ class BuildingFeeSchedulesController < ApplicationController
   # GET /building_fee_schedules
   # GET /building_fee_schedules.json
   def index
-    @building_fee_schedules = BuildingFeeSchedule.all
+    @building_fee_schedules = BuildingFeeSchedule.joins(:building).order("buildings.geography_id, buildings.competitor asc")
     respond_to do |format|
       format.html
       format.xls

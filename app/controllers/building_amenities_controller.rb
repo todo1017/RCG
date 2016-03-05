@@ -4,7 +4,7 @@ class BuildingAmenitiesController < ApplicationController
   # GET /building_amenities
   # GET /building_amenities.json
   def index
-    @building_amenities_write = BuildingAmenity.all
+    @building_amenities_write = BuildingAmenity.joins(:building).order("buildings.geography_id, buildings.competitor asc")
     @building_amenities_read =[]
     # if current_user.super_admin == true
     #   @building_amenities_write = BuildingAmenity.all

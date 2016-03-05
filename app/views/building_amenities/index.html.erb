@@ -7,7 +7,7 @@
 <table class="scroll-table">
   <thead>
     <tr>
-      <th class="extra"></th>
+      <th class="extra">Building</th>
       <th>Washer Dryer</th>
       <th>Microwave</th>
       <th>Security Alarm</th>
@@ -26,7 +26,7 @@
       <th><%= link_to "Concierge", "/amenity_concierges" %></th>
       <th>Recreation</th>
       <th>Fitness</th>
-      <th>Other<br><br></th>
+      <th>Other<br></th>
       <!--<th>amentity 1 name</th>-->
       <!--<th>amentity 2 name</th>-->
       <!--<th>amentity 3 name</th>-->
@@ -36,7 +36,18 @@
   </thead>
 
   <tbody>
+    <%- last_geography_id = 0 %>
     <% @building_amenities_write.each do |building_amenity| %>
+        <%- if building_amenity.building.geography_id != last_geography_id %>
+          <tr><td colspan='20'><br><b><i>
+            <% if building_amenity.building.geography_id == nil %>
+                No Geography Assigned
+            <% else %>
+                <%= Geography.find(building_amenity.building.geography_id).name %>
+            <% end %>
+          </i></b></td></tr>
+        <%- end %>
+        <%- last_geography_id = building_amenity.building.geography_id %>
         <%= render partial: "index_row", locals: { building_amenity: building_amenity, read_or_write: "write" } %>
     <% end %>
     <% @building_amenities_read.each do |building_amenity| %>

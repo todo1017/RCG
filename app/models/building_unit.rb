@@ -5,7 +5,7 @@ class BuildingUnit < ActiveRecord::Base
   belongs_to :building
 
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
-  scope :competitors, -> { joins(:building).where(buildings: {competitor: true}) }
+  scope :competitors, -> { joins(:building).where(buildings: {competitor: true}).order(:building_id, :floor, :beds, :baths) }
 
 
   # THIS initializes the Building...

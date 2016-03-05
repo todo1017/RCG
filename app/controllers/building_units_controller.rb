@@ -12,7 +12,7 @@ class BuildingUnitsController < ApplicationController
   end
 
   def rent_roll
-    @building_units = BuildingUnit.where(building_id: params[:building_id].to_i)
+    @building_units = BuildingUnit.where(building_id: params[:building_id].to_i).order(:number)
     render :index
   end
 
