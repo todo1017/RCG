@@ -4,7 +4,7 @@
     </td><td class="second-col">
     <%= '%.2f' % (comp.actual_rent / comp.sq_feet) %>
     </td><td class="third-col">
-    <%= '%.2f' % ((comp.actual_rent - (concessions_calc(comp)/12)) / comp.sq_feet) %>
+    <%= '%.2f' % ((comp.actual_rent - (concessions_calc(comp, "comp")/12)) / comp.sq_feet) %>
     </td></tr></table>
 </span>
 <br>
