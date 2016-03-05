@@ -26,21 +26,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="building_amenities_controller.rb" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/controllers/building_amenities_controller.rb">
+      <file leaf-file-name="_form.html.erb" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/_form.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21428572" vertical-offset="0" max-vertical-offset="1470">
-              <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.7178218" vertical-offset="495" max-vertical-offset="1335">
+              <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.html.erb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/building_amenities/index.html.erb">
+        <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.291666" vertical-offset="206" max-vertical-offset="825">
-              <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
+            <state vertical-scroll-proportion="-16.875" vertical-offset="480" max-vertical-offset="1305">
+              <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -64,7 +64,6 @@
         <option value="$PROJECT_DIR$/app/views/amenity_concierges/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/amenity_patios/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/owners/index.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/building_fee_schedules/_form.html.erb" />
         <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
         <option value="$PROJECT_DIR$/app/views/shared/_comment.html.haml" />
         <option value="$PROJECT_DIR$/app/views/building_unit_amenities/_form.html.erb" />
@@ -82,7 +81,6 @@
         <option value="$PROJECT_DIR$/app/views/building_amenities/_index_row.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/building_fee_schedules_controller.rb" />
         <option value="$PROJECT_DIR$/config/initializers/mime_types.rb" />
-        <option value="$PROJECT_DIR$/app/views/building_fee_schedules/index.html.erb" />
         <option value="$PROJECT_DIR$/app/views/building_fee_schedules/index.xls.erb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/building_units/_mouseover.html.erb" />
@@ -102,6 +100,8 @@
         <option value="$PROJECT_DIR$/app/models/building_unit.rb" />
         <option value="$PROJECT_DIR$/app/controllers/building_amenities_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/building_amenities/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/building_fee_schedules/index.html.erb" />
+        <option value="$PROJECT_DIR$/app/views/building_fee_schedules/_form.html.erb" />
       </list>
     </option>
   </component>
@@ -109,8 +109,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="141" />
-    <option name="y" value="74" />
+    <option name="x" value="111" />
+    <option name="y" value="70" />
     <option name="width" value="1300" />
     <option name="height" value="734" />
   </component>
@@ -174,28 +174,6 @@
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="users" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rcg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rcg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -215,29 +193,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rcg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rcg" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="building_amenities" />
+              <option name="myItemId" value="building_fee_schedules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -404,7 +360,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="141" y="74" width="1300" height="734" extended-state="0" />
+    <frame x="111" y="70" width="1300" height="734" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -472,13 +428,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/amenity_patios/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="495">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/shared/_comment.html.haml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07908612" vertical-offset="0" max-vertical-offset="569">
@@ -630,13 +579,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/index.xls.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7956318" vertical-offset="780" max-vertical-offset="1485">
-          <caret line="86" column="76" selection-start-line="86" selection-start-column="76" selection-end-line="86" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1232449" vertical-offset="0" max-vertical-offset="1275">
@@ -678,13 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04587156" vertical-offset="0" max-vertical-offset="654">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02293578" vertical-offset="0" max-vertical-offset="1305">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -830,14 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/building_amenities/index.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.291666" vertical-offset="206" max-vertical-offset="825">
-          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/building_fee_schedules_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0952381" vertical-offset="0" max-vertical-offset="1260">
@@ -846,10 +773,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/building_amenities/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7092084" vertical-offset="206" max-vertical-offset="825">
+          <caret line="43" column="4" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/building_amenities_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21428572" vertical-offset="0" max-vertical-offset="1470">
           <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/index.xls.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.187399" vertical-offset="555" max-vertical-offset="1485">
+          <caret line="86" column="76" selection-start-line="86" selection-start-column="76" selection-end-line="86" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/index.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.875" vertical-offset="480" max-vertical-offset="1305">
+          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/building_fee_schedules/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7178218" vertical-offset="495" max-vertical-offset="1335">
+          <caret line="62" column="47" selection-start-line="62" selection-start-column="47" selection-end-line="62" selection-end-column="47" />
           <folding />
         </state>
       </provider>

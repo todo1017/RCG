@@ -53,11 +53,11 @@
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_deposit_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.pet_dog)%>>
-          <%= dollar_onetime(building_fee_schedule.pet_dog) %>
+          <%= dollar_monthly(building_fee_schedule.pet_dog) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_dog_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.pet_cat)%>>
-          <%= dollar_onetime(building_fee_schedule.pet_cat) %>
+          <%= dollar_monthly(building_fee_schedule.pet_cat) %>
           <%= render partial: "shared/comment", locals: {comment_field: building_fee_schedule.pet_cat_} %>
         </td>
         <td<%=cell_color(building_fee_schedule.application_fee)%>>
