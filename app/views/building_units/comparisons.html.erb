@@ -73,16 +73,15 @@
             <%- CompGroup.all.each do |comp_group| %>
               <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                   <td class="width-250 grey-td">
-                    <% concessions = concessions_calc(building_unit) %>
                     <% comps_1 = comps_query_1(building_unit, comp_building.id) %>
                     <% comps_2 = comps_query_2(building_unit, comp_building.id) %>
                     <% comps_1.each do |comp| %>
-                        <b><%= render partial: "mouseover", locals: {comp: comp, concessions: concessions} %></b>
+                        <b><%= render partial: "mouseover", locals: {comp: comp} %></b>
                     <% end.empty? and begin %>
                         nothing exact<br>
                     <% end %>
                     <% comps_2.each do |comp| %>
-                      <%= render partial: "mouseover", locals: {comp: comp, concessions: concessions} %>
+                      <%= render partial: "mouseover", locals: {comp: comp} %>
                     <% end %>
                     <br>
                   </td>

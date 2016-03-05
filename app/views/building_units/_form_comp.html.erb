@@ -43,6 +43,22 @@
       <b>Actual Rent</b><br>
       <%= f.text_field :actual_rent %>
     </div>
+    <div class="field">
+      <br>
+      <i>Concessions...</i>
+      <br>
+      <br>
+      <%= f.label :months_off %><br>
+      <%= f.text_field :months_off %>
+    </div>
+    <div class="field">
+      <%= f.label :cash_off %><br>
+      <%= f.text_field :cash_off %>
+    </div>
+    <div class="field">
+      <%= f.label :lease_length %><br>
+      <%= f.text_field :lease_length %>
+    </div>
     <%- if @building_unit.created_at != nil %>
     <br>
     <b>Created On</b>

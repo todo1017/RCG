@@ -20,6 +20,9 @@
       <th>Baths</th>
       <th>Sq feet</th>
       <th>Actual Rent</th>
+      <th>Months Off</th>
+      <th>Cash Off</th>
+      <th>Lease Length</th>
       <th>Created On</th>
       <th>Updated On<br><br></th>
       <th></th>
@@ -35,6 +38,9 @@
           <td><%= building_unit.baths %></td>
           <td><%= building_unit.sq_feet %></td>
           <td><%= building_unit.actual_rent %></td>
+          <td><%= building_unit.months_off %></td>
+          <td><%= building_unit.cash_off %></td>
+          <td><%= building_unit.lease_length %></td>
           <td><%= building_unit.created_at.strftime("%m-%d-%Y") %></td>
           <td><%= building_unit.updated_at.strftime("%m-%d-%Y") %></td>
           <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
