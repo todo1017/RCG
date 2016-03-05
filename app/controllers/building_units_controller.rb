@@ -114,7 +114,7 @@ class BuildingUnitsController < ApplicationController
   def destroy
     @building_unit.destroy
     respond_to do |format|
-      format.html { redirect_to building_units_url, notice: 'Building unit was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Building unit was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
