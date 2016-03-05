@@ -7,13 +7,13 @@ class BuildingUnit < ActiveRecord::Base
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
   scope :competitors, -> { joins(:building).where(buildings: {competitor: true}) }
 
+
+  # THIS initializes the Building...
+  # THIS initializes the Building...
   # THIS initializes the Building...
   def self.import(file)
 
     xlsx = Roo::Spreadsheet.open(file)
-
-    # header = sheet.row(1)
-    #   row = Hash[[header, sheet.row(i)].transpose]
 
     xlsx.each_with_pagename do |building_name, sheet|
       puts building_name
@@ -40,11 +40,9 @@ class BuildingUnit < ActiveRecord::Base
     end
   end
 
-  # xlsx.each_with_pagename do |name, sheet|
-  # end
-  # header = sheet.row(1)
-  #   row = Hash[[header, sheet.row(i)].transpose]
-
+  # Yardi Import...
+  # Yardi Import...
+  # Yardi Import...
   def self.import_yardi_1(file)
 
     sheet = Roo::Spreadsheet.open(file)
@@ -52,17 +50,16 @@ class BuildingUnit < ActiveRecord::Base
     building_name = sheet.cell("A", 2).to_s
 
     if Building.where(name: building_name).blank?
-      return "Sorry, misnamed Building: " + building_name
+      return "Yardi Import - sorry, misnamed Building: " + building_name
     end
 
-    message_to_display = ""
+    message_to_display = "Yardi Import - "
 
     counter = 0
     (8..sheet.last_row).each do |i|
       begin
         if sheet.cell("A", i) != nil
           counter = counter +1
-          # TODO -- convert this to find_by
           bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
 
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
@@ -112,5 +109,8 @@ class BuildingUnit < ActiveRecord::Base
     message_to_display = message_to_display + "Total Rows Updated: " + counter.to_s
     return message_to_display
   end
+
+  # header = sheet.row(1)
+  #   row = Hash[[header, sheet.row(i)].transpose]
 
 end

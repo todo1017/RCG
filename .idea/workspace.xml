@@ -29,8 +29,8 @@
       <file leaf-file-name="building_unit.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/building_unit.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.5238096" vertical-offset="570" max-vertical-offset="1830">
-              <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
+            <state vertical-scroll-proportion="1.0476191" vertical-offset="255" max-vertical-offset="1830">
+              <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -841,8 +841,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/building_unit.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5238096" vertical-offset="570" max-vertical-offset="1830">
-          <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
+        <state vertical-scroll-proportion="1.0476191" vertical-offset="255" max-vertical-offset="1830">
+          <caret line="61" column="30" selection-start-line="61" selection-start-column="30" selection-end-line="61" selection-end-column="30" />
           <folding />
         </state>
       </provider>
