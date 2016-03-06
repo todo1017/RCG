@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303123154) do
+ActiveRecord::Schema.define(version: 20160306015848) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -220,11 +220,14 @@ ActiveRecord::Schema.define(version: 20160303123154) do
     t.string   "password_digest"
     t.integer  "owner_id"
     t.boolean  "approved"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.boolean  "super_admin"
     t.boolean  "owner_admin"
     t.boolean  "pm_admin"
+    t.string   "auth_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
 end
