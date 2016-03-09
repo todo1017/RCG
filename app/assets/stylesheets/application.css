@@ -31,6 +31,10 @@
     display: table;
 }
 
+.small-text {
+    font-size: x-small;
+}
+
 
 .scroll-table-div {
     /*border:1px solid grey;*/

@@ -69,7 +69,11 @@ class BuildingUnitsController < ApplicationController
 
   def determine_path
     if params[:building_unit][:bed_bath] == "competitor_record"
-      return "/comp_index"
+      if params[:building_unit][:move_in] == "1"
+        return "/comp_new"
+      else
+        return "/comp_index"
+      end
     else
       return "/rent_roll/#{params[:building_unit][:building_id]}"
     end

@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <%= form_for(@building_unit) do |f| %>
     <% if @building_unit.errors.any? %>
         <div id="error_explanation">
@@ -17,6 +19,8 @@
       <br>
       <%= f.submit "Save", {:class=>"btn btn-success"} %>
       <%= link_to "cancel", "/comp_index" %>
+      <br>
+      <%= f.check_box :move_in %>&nbsp;&nbsp;<span class="small-text">ADD ANOTHER</span>
     </div>
     <br>
     <div class="field">
