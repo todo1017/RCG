@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Property</Data></Cell>
+        <Cell><Data ss:Type="String">Floor</Data></Cell>
+        <Cell><Data ss:Type="String">Beds</Data></Cell>
+        <Cell><Data ss:Type="String">Baths</Data></Cell>
+        <Cell><Data ss:Type="String">Sq Feet</Data></Cell>
+        <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+        <Cell><Data ss:Type="String">Months Off</Data></Cell>
+        <Cell><Data ss:Type="String">Cash Off</Data></Cell>
+        <Cell><Data ss:Type="String">Lease Length</Data></Cell>
+        <Cell><Data ss:Type="String">Created On</Data></Cell>
+        <Cell><Data ss:Type="String">Updated On</Data></Cell>
+      </Row>
+      <% @building_units.each do |building_unit| %>
+          <Row>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.building.name %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.floor %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.beds %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.baths %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.sq_feet %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.actual_rent %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.months_off %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.cash_off %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.lease_length %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.created_at.strftime("%m-%d-%Y") %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.updated_at.strftime("%m-%d-%Y") %></Data>
+            </Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -9,6 +9,10 @@ class BuildingUnitsController < ApplicationController
   end
   def comp_index
     @building_units = BuildingUnit.competitors
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   def rent_roll
@@ -25,6 +29,7 @@ class BuildingUnitsController < ApplicationController
 
     # TODO -- needs to take the owner Id!!!!!!!!
     building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
+    # @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0)
     if params[:vacancy_filter] == "2"
       @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '30 days'")
     elsif  params[:vacancy_filter] == "3"
