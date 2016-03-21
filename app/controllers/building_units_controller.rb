@@ -41,6 +41,10 @@ class BuildingUnitsController < ApplicationController
     else
       @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date")
     end
+    respond_to do |format|
+      format.html
+      format.xls
+    end
   end
 
   def import

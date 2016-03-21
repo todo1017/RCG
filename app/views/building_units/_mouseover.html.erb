@@ -1,10 +1,8 @@
-<span title="<%= comp.building.name %> - <%= comp.floor %>floor <%= comp.beds %> bed <%= comp.baths %> baths">
-    <table><tr><td class="first-col">
-    <%= comp.actual_rent %>
-    </td><td class="second-col">
-    <%= '%.2f' % (comp.actual_rent / comp.sq_feet) %>
-    </td><td class="third-col">
-    <%= '%.2f' % ((comp.actual_rent - (concessions_calc(comp, "comp")/12)) / comp.sq_feet) %>
-    </td></tr></table>
+<span title="<%= comp.building.name %> - <%= unit_type(comp) %>">
+    <table><tr>
+      <td class="first-col"><%= comp.actual_rent %></td>
+      <td class="second-col"><%= gross_sq_foot(comp, "comp") %></td>
+      <td class="third-col"><%= net_sq_foot(comp, "comp") %></td>
+    </tr></table>
 </span>
 <br>

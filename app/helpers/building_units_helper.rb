@@ -1,5 +1,43 @@
 module BuildingUnitsHelper
 
+  # Simple column values -- used by HTML and XLS
+  # Simple column values -- used by HTML and XLS
+  # Simple column values -- used by HTML and XLS
+
+  def unit_type(building_unit)
+    return building_unit.floor.to_s + " FL " + building_unit.beds.to_s + "Bed/" + building_unit.baths.to_s + "Bath " + building_unit.sq_feet.to_s + " sq. ft."
+  end
+
+  def available(building_unit)
+    if building_unit.actual_rent == 0
+      return "now"
+    else
+      available_date = building_unit.lease_expiration
+      available_date += 1
+      return available_date.strftime("%B %e")
+    end
+  end
+
+  def gross_sq_foot(building_unit, apt_type="")
+    if apt_type == "comp"
+      return '%.2f' % (building_unit.actual_rent / building_unit.sq_feet)
+    else
+      return '%.2f' % (building_unit.market_rent / building_unit.sq_feet)
+    end
+  end
+
+  def net_sq_foot(building_unit, apt_type="")
+    if apt_type == "comp"
+      return '%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/12)) / building_unit.sq_feet)
+    else
+      return '%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/12)) / building_unit.sq_feet)
+    end
+  end
+
+  # More complex calculations
+  # More complex calculations
+  # More complex calculations
+
   def concessions_calc(building_unit, type)
     if building_unit.months_off != nil && building_unit.cash_off != nil
       if type == "comp"
