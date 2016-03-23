@@ -9,6 +9,11 @@
       <Row>
         <Cell><Data ss:Type="String"></Data></Cell>
         <Cell><Data ss:Type="String">Unit Type</Data></Cell>
+        <Cell><Data ss:Type="String">Available</Data></Cell>
+        <Cell><Data ss:Type="String">Market Rent</Data></Cell>
+        <Cell><Data ss:Type="String">Concessions</Data></Cell>
+        <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+        <Cell><Data ss:Type="String">net/ft2</Data></Cell>
       </Row>
       <% @building_units.each do |building_unit| %>
           <Row>
@@ -17,6 +22,21 @@
             </Cell>
             <Cell>
               <Data ss:Type="String"><%= unit_type(building_unit) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= available(building_unit) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= building_unit.market_rent %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data>
             </Cell>
           </Row>
       <% end %>

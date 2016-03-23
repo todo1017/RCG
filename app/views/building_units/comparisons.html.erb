@@ -28,7 +28,7 @@
       <%- CompGroup.all.each do |comp_group| %>
         <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
             <th class="width-250 grey-td table-top">
-                <%= raw "<span class='uppercase'>" + comp_group.name + "</span>" if comp_group.name != last_comp_group %>
+                <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
                 <br>
                 <%= comp_building.name %>
                 <br><br>
