@@ -1,0 +1,148 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require bootstrap.min
+ *= require_tree .
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require_self
+ */
+
+ /* Override Bootstrap 3 font locations */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('<%= asset_path("glyphicons-halflings-regular.eot") %>');
+  src: url('<%= asset_path("glyphicons-halflings-regular.eot?#iefix") %>') format('embedded-opentype'),
+  url('<%= asset_path("glyphicons-halflings-regular.woff") %>') format('woff'),
+  url('<%= asset_path("glyphicons-halflings-regular.ttf") %>') format('truetype'),
+  url('<%= asset_path("glyphicons-halflings-regular.svg#glyphicons_halflingsregular") %>') format('svg');
+}
+
+#notice {
+    color: orange;
+}
+#error_explanation {
+    color: orange;
+}
+
+
+.field_with_errors {
+    padding: 2px;
+    background-color: orange;
+    display: table;
+}
+
+.small-text {
+    font-size: x-small;
+}
+
+
+.scroll-table-div {
+    /*border:1px solid grey;*/
+    overflow-x:scroll;
+    overflow-y:scroll;
+}
+
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+
+.scroll-table {
+    table-layout: fixed;
+    width: 700px;
+    /*height:700px;*/
+}
+
+.scroll-table th {
+    width: 125px;
+}
+.scroll-table td {
+    width: 125px;
+}
+.scroll-table .extra {
+    width: 195px;
+}
+.scroll-table .smaller {
+    width: 75px;
+}
+th {
+    vertical-align: top;
+}
+
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+
+.scroll-table_comps {
+    table-layout: fixed;
+    width: 700px;
+    /*height:700px;*/
+}
+.scroll-table_comps th {
+    vertical-align: bottom;
+}
+td {
+    /*min-width: 100px;*/
+    vertical-align: top;
+}
+
+.yellow-td {
+    background-color: lightgoldenrodyellow;
+}
+.grey-td {
+    background-color: #f8f8f8;
+}
+
+
+.table-top {
+    padding-top: 10px;
+}
+
+.width-75 {
+    width: 75px;
+}
+.width-100 {
+    width: 100px;
+}
+.width-150 {
+    width: 150px;
+}
+.width-175 {
+    width: 175px;
+}
+.width-200 {
+    width: 200px;
+}
+.width-225 {
+    width: 225px;
+}
+.width-250 {
+    width: 250px;
+    padding-left: 10px;
+}
+.width-300 {
+    width: 300px;
+}
+.width-400 {
+    width: 400px;
+}
+
+
+
+.first-col {
+    width: 95px;
+}
+.second-col {
+    width: 75px;
+}
+.third-col {
+    width: 55px;
+}
