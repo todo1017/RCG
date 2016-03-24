@@ -17,6 +17,8 @@ gem 'haml'
 gem 'roo'
 gem 'roo-xls'
 
+gem 'jquery-datatables-rails', '~> 3.3.0'
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
