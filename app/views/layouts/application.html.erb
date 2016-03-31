@@ -23,13 +23,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<%= root_path %>"><%= application_name %>
+      <a class="navbar-brand" href="<%= root_path %>"><%= image_tag "lygato_logo_symbol.jpg", class: 'logo' %><span class="app-name"><%= application_name %></span>
       </a>
     </div>
     <%- if current_user && current_user.owner_id != nil %>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><a href="<%= root_path %>">Home</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Properties&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">

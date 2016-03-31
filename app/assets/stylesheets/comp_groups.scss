@@ -1,3 +1,44 @@
 // Place all the styles related to the comp_groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$border-color: #ccc;
+%base-column {
+  padding-left: 0.5%;
+  vertical-align: middle;
+}
+
+.dataTable {
+  th {
+    @extend %base-column;
+  }
+}
+
+#comp-table {
+  > tbody {
+    > tr {
+      border-bottom: 1px solid $border-color;
+
+      &:first-child {
+        border-top: 1px solid $border-color;
+      }
+
+      &.even {
+        background: #f9f9f9;
+      }
+
+      > td {
+        @extend %base-column;
+        border-right: 1px solid $border-color;
+      }
+    }
+  }
+}
+
+.comp-group-shade {
+  background-color: #f8f8f8;
+}
+
+th.comp-group-shade {
+  border-left: 1px solid $border-color;
+}

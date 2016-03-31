@@ -13,17 +13,17 @@
  *= require bootstrap.min
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require dataTables/extras/dataTables.fixedHeader
  *= require_self
  */
 
- /* Override Bootstrap 3 font locations */
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('<%= asset_path("glyphicons-halflings-regular.eot") %>');
-  src: url('<%= asset_path("glyphicons-halflings-regular.eot?#iefix") %>') format('embedded-opentype'),
-  url('<%= asset_path("glyphicons-halflings-regular.woff") %>') format('woff'),
-  url('<%= asset_path("glyphicons-halflings-regular.ttf") %>') format('truetype'),
-  url('<%= asset_path("glyphicons-halflings-regular.svg#glyphicons_halflingsregular") %>') format('svg');
+@import 'fonts';
+
+$primaryColor: #002060;
+$secondaryColor: #4e81be;
+
+body {
+    font-family: 'Montserrat', sans-serif;
 }
 
 #notice {
@@ -47,8 +47,105 @@
 
 .scroll-table-div {
     /*border:1px solid grey;*/
-    overflow-x:scroll;
-    overflow-y:scroll;
+    margin: 20px 0 0;
+    /*overflow-x:scroll;*/
+    /*overflow-y:scroll;*/
+}
+
+/*
+ * Buttons
+ */
+.btn-primary,
+.btn-success {
+    background-color: $primaryColor;
+    border-color: $primaryColor;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $primaryColor;
+        border-color: $primaryColor;
+        opacity: 0.8;
+    }
+}
+
+.btn-secondary {
+    background-color: $secondaryColor;
+    border-color: $secondaryColor;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $secondaryColor;
+        border-color: $secondaryColor;
+        opacity: 0.8;
+    }
+}
+
+.btn-medium {
+    padding: 3px 8px;
+    font-size: 12px;
+}
+
+/*
+ * Navigation
+ */
+$navbarHeight: 80px;
+.navbar-default {
+    background: #fff;
+    margin-bottom: 10px;
+
+    .navbar-nav {
+        > li {
+            > a {
+                color: #444;
+                transition: opacity 0.2s ease-in-out;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    .logo {
+        height: $navbarHeight;
+        padding: 5px 0;
+        float: left;
+    }
+
+    .navbar-brand {
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .app-name {
+            float: left;
+            line-height: $navbarHeight;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.navbar-nav {
+    float: right;
+
+    > li {
+        > a {
+            line-height: $navbarHeight;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
+/*
+ * Headings
+ */
+.page-h2 {
+    text-align: center;
+    margin-top: 0;
 }
 
 /* GENERIC TABLE */
@@ -96,9 +193,6 @@ td {
 
 .yellow-td {
     background-color: lightgoldenrodyellow;
-}
-.grey-td {
-    background-color: #f8f8f8;
 }
 
 
