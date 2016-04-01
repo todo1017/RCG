@@ -1,33 +1,35 @@
-<h2>Create Account</h2>
+<div class="session-form">
+  <h2>Create Account</h2>
 
-<%= form_for @user do |f| %>
-    <% if @user.errors.any? %>
-        <div class="error_messages">
-          <h2>Form is invalid</h2>
-          <ul>
-            <% @user.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
+  <%= form_for @user do |f| %>
+      <% if @user.errors.any? %>
+          <div class="error_messages">
+            <h2>Form is invalid</h2>
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
 
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.text_field :email, size: "30" %>
-    </div>
-    <div class="field">
-      <%= f.label :owner %><br>
-      <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>
-    </div>
-    <div class="field">
-      <%= f.label :password %><br />
-      <%= f.password_field :password, size: "30" %>
-    </div>
-    <div class="field">
-      <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, size: "30" %>
-    </div>
-    <br>
-    <div class="actions"><%= f.submit "Create Account", {:class=>"btn btn-primary"} %></div>
-<% end %>
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.text_field :email, size: "30" %>
+      </div>
+      <div class="field">
+        <%= f.label :owner %><br>
+        <%= f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true %>
+      </div>
+      <div class="field">
+        <%= f.label :password %><br />
+        <%= f.password_field :password, size: "30" %>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, size: "30" %>
+      </div>
+      <br>
+      <div class="actions"><%= f.submit "Create Account", {:class=>"btn btn-primary"} %></div>
+  <% end %>
+</div>

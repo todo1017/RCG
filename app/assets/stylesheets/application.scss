@@ -1,0 +1,261 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require bootstrap.min
+ *= require_tree .
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require dataTables/extras/dataTables.fixedHeader
+ *= require_self
+ */
+
+@import 'fonts';
+
+$primaryColor: #002060;
+$secondaryColor: #4e81be;
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+#notice {
+    color: orange;
+}
+#error_explanation {
+    color: orange;
+}
+
+
+.field_with_errors {
+    padding: 2px;
+    background-color: orange;
+    display: table;
+}
+
+.small-text {
+    font-size: x-small;
+}
+
+
+.scroll-table-div {
+    /*border:1px solid grey;*/
+    margin: 20px 0 0;
+    /*overflow-x:scroll;*/
+    /*overflow-y:scroll;*/
+}
+
+/*
+ * Buttons
+ */
+.btn-primary,
+.btn-success {
+    background-color: $primaryColor;
+    border-color: $primaryColor;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $primaryColor;
+        border-color: $primaryColor;
+        opacity: 0.8;
+    }
+
+    &:focus,
+    &:active {
+        background-color: $primaryColor;
+        border-color: $primaryColor;
+        opacity: 1;
+    }
+}
+
+.btn-secondary {
+    background-color: $secondaryColor;
+    border-color: $secondaryColor;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        background-color: $secondaryColor;
+        border-color: $secondaryColor;
+        opacity: 0.8;
+    }
+}
+
+.btn-cancel {
+    border-color: #bbb;
+    background: none;
+    color: #444;
+
+    &:hover,
+    &:active {
+        background: none;
+    }
+}
+
+.btn-medium {
+    padding: 3px 8px;
+    font-size: 12px;
+}
+
+/*
+ * Navigation
+ */
+$navbarHeight: 80px;
+.navbar-default {
+    background: #fff;
+    margin-bottom: 10px;
+
+    .navbar-nav {
+        > li {
+            > a {
+                color: #444;
+                transition: opacity 0.2s ease-in-out;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    .logo {
+        height: $navbarHeight;
+        padding: 5px 0;
+        float: left;
+    }
+
+    .navbar-brand {
+        padding-top: 0;
+        padding-bottom: 0;
+        height: auto;
+
+        .app-name {
+            float: left;
+            line-height: $navbarHeight;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+    }
+}
+
+.navbar-nav {
+    float: right;
+
+    > li {
+        > a {
+            line-height: $navbarHeight;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    }
+}
+
+/*
+ * Headings
+ */
+.page-h2 {
+    text-align: center;
+    margin-top: 0;
+}
+
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+/* GENERIC TABLE */
+
+.scroll-table {
+    table-layout: fixed;
+    width: 700px;
+    /*height:700px;*/
+}
+
+.scroll-table th {
+    width: 125px;
+}
+.scroll-table td {
+    width: 125px;
+}
+.scroll-table .extra {
+    width: 195px;
+}
+.scroll-table .smaller {
+    width: 75px;
+}
+th {
+    vertical-align: top;
+}
+
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+/* COMPARISONS TABLE */
+
+.scroll-table_comps {
+    table-layout: fixed;
+    width: 700px;
+    /*height:700px;*/
+}
+.scroll-table_comps th {
+    vertical-align: bottom;
+}
+td {
+    /*min-width: 100px;*/
+    vertical-align: top;
+}
+
+.yellow-td {
+    background-color: lightgoldenrodyellow;
+}
+
+
+.table-top {
+    padding-top: 10px;
+}
+
+.width-75 {
+    width: 75px;
+}
+.width-100 {
+    width: 100px;
+}
+.width-150 {
+    width: 150px;
+}
+.width-175 {
+    width: 175px;
+}
+.width-200 {
+    width: 200px;
+}
+.width-225 {
+    width: 225px;
+}
+.width-250 {
+    width: 250px;
+    padding-left: 10px;
+}
+.width-300 {
+    width: 300px;
+}
+.width-400 {
+    width: 400px;
+}
+
+
+
+.first-col {
+    width: 95px;
+}
+.second-col {
+    width: 75px;
+}
+.third-col {
+    width: 55px;
+}

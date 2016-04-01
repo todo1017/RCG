@@ -1,0 +1,51 @@
+%base-form-container {
+	width: 100%;
+	max-width: 640px;
+	margin: 20px auto;
+	border: 1px solid #eee;
+	padding: 20px;
+	border-radius: 4px;
+
+	h1, h3 {
+		margin-top: 0;
+	}
+
+	h4 {
+		margin-top: 20px;
+	}
+
+	.field {
+		margin: 0 0 10px;
+
+		select {
+			display: block;
+			width: 100%;
+			font-size: 16px;
+		}
+
+		input[type='text'],
+		input[type='tel'],
+		textarea {
+			@extend select;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			-webkit-appearance: none;
+
+			&:focus {
+				outline: none;
+				border-color: #aaa;
+			}
+		}
+	}
+
+	.actions {
+		margin: 5px 0 0;
+		padding: 15px 0 0;
+		border-top: 1px solid #f0f0f0;
+
+		.btn {
+			margin-right: 10px;
+		}
+	}
+}

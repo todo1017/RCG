@@ -1,14 +1,8 @@
-<h1><%= @building.name %></h1>
+<div class="building-form">
 
-<%= render 'form' %>
-<br>
-<br>
-<br>
-<br>
-<br>
-<%= link_to 'Delete this Building and all of its apartments and related data', @building, method: :delete, data: { confirm: 'Are you sure?' } %>
-<br>
-<br>
-<br>
+	<h1><%= @building.name %></h1>
 
-
+	<%= render 'form' %>
+	<br>
+	<%= link_to 'Delete this Building and all of its apartments and related data', @building, method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
