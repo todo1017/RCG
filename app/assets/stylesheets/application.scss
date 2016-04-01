@@ -67,6 +67,13 @@ body {
         border-color: $primaryColor;
         opacity: 0.8;
     }
+
+    &:focus,
+    &:active {
+        background-color: $primaryColor;
+        border-color: $primaryColor;
+        opacity: 1;
+    }
 }
 
 .btn-secondary {
@@ -80,6 +87,17 @@ body {
         background-color: $secondaryColor;
         border-color: $secondaryColor;
         opacity: 0.8;
+    }
+}
+
+.btn-cancel {
+    border-color: #bbb;
+    background: none;
+    color: #444;
+
+    &:hover,
+    &:active {
+        background: none;
     }
 }
 
@@ -118,6 +136,7 @@ $navbarHeight: 80px;
     .navbar-brand {
         padding-top: 0;
         padding-bottom: 0;
+        height: auto;
 
         .app-name {
             float: left;

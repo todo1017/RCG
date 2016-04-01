@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require turbolinks
 //= require dataTables/jquery.dataTables
 //= require dataTables/extras/dataTables.fixedHeader
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap

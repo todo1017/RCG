@@ -1,3 +1,42 @@
 // Place all the styles related to the sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.session-form {
+	width: 100%;
+	max-width: 400px;
+	margin: 20px auto;
+	border: 1px solid #eee;
+	padding: 20px;
+	border-radius: 4px;
+
+	h2 {
+		text-align: center;
+		margin-top: 0;
+	}
+
+	.field {
+		margin: 0 0 10px;
+	}
+
+	input[type='text'],
+	input[type='password'] {
+		display: block;
+		width: 100%;
+		font-size: 14px;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		-webkit-appearance: none;
+
+		&:focus {
+			outline: none;
+			border-color: #aaa;
+		}
+	}
+
+	.btn {
+		display: block;
+		width: 100%;
+	}
+}

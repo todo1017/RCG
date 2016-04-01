@@ -4,6 +4,10 @@
   }
 
   window.addEventListener('load', function(){
+    if (!$('#comp-table').length) {
+      return;
+    };
+
     var compDatatable = $('#comp-table').dataTable({
       paging: false,
       scrollY: _getDatatableScrollHeight(),

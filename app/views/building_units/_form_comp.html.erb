@@ -15,53 +15,48 @@
 
     <%= f.hidden_field :building_id, value: params[:building_id] %>
     <%= f.hidden_field :bed_bath, value: "competitor_record" %>
-    <div class="actions">
-      <br>
-      <%= f.submit "Save", {:class=>"btn btn-success"} %>
-      <%= link_to "cancel", "/comp_index" %>
-      <br>
-      <%= f.check_box :move_in %>&nbsp;&nbsp;<span class="small-text">ADD ANOTHER</span>
-    </div>
-    <br>
     <div class="field">
       <b>Building</b><br>
       <%= f.collection_select :building_id, Building.where(competitor: true), :id, :name, include_blank: true %>
     </div>
-    <div class="field">
-      <b>Floor</b><br>
-      <%= f.text_field :floor %>
+    <div class="row">
+      <div class="col-sm-4 field">
+        <b>Floor</b><br>
+        <%= f.text_field :floor %>
+      </div>
+      <div class="col-sm-4 field">
+        <b>Beds</b><br>
+        <%= f.text_field :beds %>
+      </div>
+      <div class="col-sm-4 field">
+        <b>Baths</b><br>
+        <%= f.text_field :baths %>
+      </div>
     </div>
-    <div class="field">
-      <b>Beds</b><br>
-      <%= f.text_field :beds %>
+    <div class="row">
+      <div class="col-sm-4 field">
+        <b>Square Feet</b><br>
+        <%= f.text_field :sq_feet %>
+      </div>
+      <div class="col-sm-8 field">
+        <b>Actual Rent</b><br>
+        <%= f.text_field :actual_rent %>
+      </div>
     </div>
-    <div class="field">
-      <b>Baths</b><br>
-      <%= f.text_field :baths %>
-    </div>
-    <div class="field">
-      <b>Square Feet</b><br>
-      <%= f.text_field :sq_feet %>
-    </div>
-    <div class="field">
-      <b>Actual Rent</b><br>
-      <%= f.text_field :actual_rent %>
-    </div>
-    <div class="field">
-      <br>
-      <i>Concessions...</i>
-      <br>
-      <br>
-      <%= f.label :months_off %><br>
-      <%= f.text_field :months_off %>
-    </div>
-    <div class="field">
-      <%= f.label :cash_off %><br>
-      <%= f.text_field :cash_off %>
-    </div>
-    <div class="field">
-      <%= f.label :lease_length %><br>
-      <%= f.text_field :lease_length %>
+    <h4>Concessions...</h4>
+    <div class="row">
+      <div class="field col-sm-4">
+        <%= f.label :months_off %><br>
+        <%= f.text_field :months_off %>
+      </div>
+      <div class="field col-sm-4">
+        <%= f.label :cash_off %><br>
+        <%= f.text_field :cash_off %>
+      </div>
+      <div class="field col-sm-4">
+        <%= f.label :lease_length %><br>
+        <%= f.text_field :lease_length %>
+      </div>
     </div>
     <%- if @building_unit.created_at != nil %>
     <br>
@@ -73,5 +68,10 @@
     <br>
     <%= @building_unit.updated_at.strftime("%m/%d/%Y") %>
     <%- end %>
-    <br><br><br>
+    <div class="actions">
+      <%= link_to "cancel", "/comp_index", {:class=>"btn btn-cancel"} %>
+      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= f.button "Save & Add Another", {:class=>"btn btn-success", :id=>"js-save-and-add"} %>
+      <span class="hidden"><%= f.check_box :move_in %>&nbsp;&nbsp;<span class="small-text">ADD ANOTHER</span></span>
+    </div>
 <% end %>
