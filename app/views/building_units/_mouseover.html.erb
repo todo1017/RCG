@@ -1,8 +1,7 @@
-<span title="<%= comp.building.name %> - <%= unit_type(comp) %>">
-    <table><tr>
-      <td class="first-col"><%= comp.actual_rent %></td>
-      <td class="second-col"><%= gross_sq_foot(comp, "comp") %></td>
-      <td class="third-col"><%= net_sq_foot(comp, "comp") %></td>
-    </tr></table>
-</span>
-<br>
+<td class="width-175 comp-group-shade">
+  <span title="<%= comp.building.name %> - <%= unit_type(comp) %>">
+    <%= comp.actual_rent %>
+  </span>
+</td>
+<td class="width-75 comp-group-shade"><%= gross_sq_foot(comp, "comp") %></td>
+<td class="width-75 comp-group-shade"><%= net_sq_foot(comp, "comp") %></td>
