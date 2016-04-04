@@ -31,7 +31,7 @@
         %br
         %br
         %br
-      - if current_user.id == 1 or current_user.id == 3
+      - if [1, 2, 3].include? current_user.id
         %h3
           Ronan Admin Only:
           -#Super Admin Only:
