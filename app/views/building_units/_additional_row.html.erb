@@ -1,0 +1,15 @@
+<% additional_row_data_temp = additional_row_data - [nil] %>
+<% if !additional_row_data_temp.empty? %>
+    <tr>
+      <td colspan="7">&nbsp;</td>
+      <% additional_row_data.each do |comp| %>
+          <% if comp == nil %>
+              <td class="width-175 comp-group-shade">&nbsp;</td>
+              <td class="width-75 comp-group-shade">&nbsp;</td>
+              <td class="width-75 comp-group-shade">&nbsp;</td>
+          <% else %>
+              <%= render partial: "three_fields", locals: {comp: comp} %>
+          <% end %>
+      <% end %>
+    </tr>
+<% end %>

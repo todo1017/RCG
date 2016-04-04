@@ -1,5 +1,19 @@
 module BuildingUnitsHelper
 
+  def add_to_array(counter, comp)
+    if counter == 0
+      @additional_row_0 << comp
+    elsif counter == 1
+      @additional_row_1 << comp
+    elsif counter == 2
+      @additional_row_2 << comp
+    elsif counter == 3
+      @additional_row_3 << comp
+    elsif counter == 4
+      @additional_row_4 << comp
+    end
+  end
+
   # Simple column values -- used by HTML and XLS
   # Simple column values -- used by HTML and XLS
   # Simple column values -- used by HTML and XLS
