@@ -35,10 +35,7 @@
       <th colspan="7">&nbsp;</th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="width-325 comp-group-shade" colspan="3">
-                <%= comp_building.name %>
-                <br><br>
-              </th>
+              <th class="width-325 comp-group-shade" colspan="3"><%= comp_building.name %><br><br></th>
           <% end %>
       <% end %>
     </tr>
@@ -52,10 +49,7 @@
       <th class="width-75">net/ft2<br><br></th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="width-175 comp-group-shade">
-                Actual Rent
-                <br><br>
-              </th>
+              <th class="width-175 comp-group-shade">Actual Rent<br><br></th>
               <th class="width-75 comp-group-shade">gross/ft2<br><br></th>
               <th class="width-75 comp-group-shade">net/ft2<br><br></th>
           <% end %>

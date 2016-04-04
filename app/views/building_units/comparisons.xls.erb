@@ -7,6 +7,27 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
+        <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+        <%- last_comp_group = "" %>
+        <%- @compgroups.each do |comp_group| %>
+            <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
+            <%- if building_count > 0 %>
+                <Cell ss:MergeAcross="<%= (building_count*3)-1 %>"><Data ss:Type="String">
+                  <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
+                </Data></Cell>
+                <% last_comp_group = comp_group.name %>
+            <% end %>
+        <% end %>
+      </Row>
+      <Row>
+        <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+        <%- @compgroups.each do |comp_group| %>
+            <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                <Cell ss:MergeAcross="2"><Data ss:Type="String"><%= comp_building.name %></Data></Cell>
+            <% end %>
+        <% end %>
+      </Row>
+      <Row>
         <Cell><Data ss:Type="String"></Data></Cell>
         <Cell><Data ss:Type="String">Unit Type</Data></Cell>
         <Cell><Data ss:Type="String">Available</Data></Cell>
@@ -14,31 +35,63 @@
         <Cell><Data ss:Type="String">Concessions</Data></Cell>
         <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
         <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+        <%- @compgroups.each do |comp_group| %>
+            <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+                <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+                <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+            <% end %>
+        <% end %>
       </Row>
       <% @building_units.each do |building_unit| %>
+          <% @additional_row_0 = Array.new %>
+          <% @additional_row_1 = Array.new %>
+          <% @additional_row_2 = Array.new %>
+          <% @additional_row_3 = Array.new %>
+          <% @additional_row_4 = Array.new %>
           <Row>
             <Cell>
               <Data ss:Type="String"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></Data>
             </Cell>
-            <Cell>
-              <Data ss:Type="String"><%= unit_type(building_unit) %></Data>
-            </Cell>
-            <Cell>
-              <Data ss:Type="String"><%= available(building_unit) %></Data>
-            </Cell>
-            <Cell>
-              <Data ss:Type="Number"><%= building_unit.market_rent %></Data>
-            </Cell>
-            <Cell>
-              <Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data>
-            </Cell>
-            <Cell>
-              <Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data>
-            </Cell>
-            <Cell>
-              <Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data>
-            </Cell>
+            <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= available(building_unit) %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data></Cell>
+              <%- CompGroup.all.each do |comp_group| %>
+                  <% additional_row = Array.new %>
+                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                      <% counter = 0 %>
+                      <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
+                          <% if counter == 0 %>
+                              <%= render partial: "three_fields", locals: {comp: comp} %>
+                          <% else %>
+                              <% add_to_array(counter, comp) %>
+                          <% end %>
+                          <% counter = counter + 1 %>
+                      <% end.empty? and begin %>
+                          <Cell><Data ss:Type="String">nothing exact</Data></Cell>
+                          <Cell><Data ss:Type="String"></Data></Cell>
+                          <Cell><Data ss:Type="String"></Data></Cell>
+                          <% counter = counter + 1 %>
+                      <% end %>
+                      <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
+                          <% add_to_array(counter, comp) %>
+                          <% counter = counter + 1 %>
+                      <% end %>
+                      <% while counter < 5 do  %>
+                          <% add_to_array(counter, nil) %>
+                          <% counter = counter + 1 %>
+                      <% end %>
+                  <% end %>
+              <% end %>
           </Row>
+          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
+          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
+          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
+          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
+          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
       <% end %>
     </Table>
   </Worksheet>

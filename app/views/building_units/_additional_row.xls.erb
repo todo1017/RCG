@@ -1,0 +1,15 @@
+<% additional_row_data_temp = additional_row_data - [nil] %>
+<% if !additional_row_data_temp.empty? %>
+    <Row>
+      <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+      <% additional_row_data.each do |comp| %>
+          <% if comp == nil %>
+              <Cell><Data ss:Type="String"></Data></Cell>
+              <Cell><Data ss:Type="String"></Data></Cell>
+              <Cell><Data ss:Type="String"></Data></Cell>
+          <% else %>
+              <%= render partial: "three_fields", locals: {comp: comp} %>
+          <% end %>
+      <% end %>
+    </Row>
+<% end %>
