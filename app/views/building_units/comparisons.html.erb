@@ -19,6 +19,30 @@
   <table class="scroll-table_comps" id="comp-table">
     <thead>
     <tr>
+      <th colspan="7">&nbsp;</th>
+      <%- last_comp_group = "" %>
+      <%- @compgroups.each do |comp_group| %>
+          <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
+          <%- if building_count > 0 %>
+              <%= raw "<th class='width-#{building_count*325} comp-group-shade' colspan='#{building_count*3}'>" %>
+              <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
+              <%= raw "</th>" %>
+              <% last_comp_group = comp_group.name %>
+          <% end %>
+      <% end %>
+    </tr>
+    <tr>
+      <th colspan="7">&nbsp;</th>
+      <%- @compgroups.each do |comp_group| %>
+          <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+              <th class="width-325 comp-group-shade" colspan="3">
+                <%= comp_building.name %>
+                <br><br>
+              </th>
+          <% end %>
+      <% end %>
+    </tr>
+    <tr>
       <th class="width-175"></th>
       <th class="width-225"></th>
       <th class="width-100">Available<br><br></th>
@@ -26,20 +50,14 @@
       <th class="width-100">Concessions<br><br></th>
       <th class="width-75">gross/ft2<br><br></th>
       <th class="width-75">net/ft2<br><br></th>
-      <%- last_comp_group = "" %>
-      <%- CompGroup.all.each do |comp_group| %>
+      <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
               <th class="width-175 comp-group-shade">
-                <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
-                <br>
-                <%= comp_building.name %>
-                <br><br>
                 Actual Rent
                 <br><br>
               </th>
               <th class="width-75 comp-group-shade">gross/ft2<br><br></th>
               <th class="width-75 comp-group-shade">net/ft2<br><br></th>
-              <% last_comp_group = comp_group.name %>
           <% end %>
       <% end %>
     </tr>

@@ -26,6 +26,7 @@ class BuildingUnitsController < ApplicationController
     else
       @geography_id = Geography.first
     end
+    @compgroups = CompGroup.all
 
     # TODO -- needs to take the owner Id!!!!!!!!
     building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
