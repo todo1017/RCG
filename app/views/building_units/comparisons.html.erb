@@ -63,8 +63,8 @@
           <td class="width-75"><%= net_sq_foot(building_unit) %></td>
           <%- CompGroup.all.each do |comp_group| %>
               <% additional_row = Array.new %>
-              <% counter = 0 %>
               <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                  <% counter = 0 %>
                   <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                       <% if counter == 0 %>
                           <%= render partial: "three_fields", locals: {comp: comp} %>
@@ -82,10 +82,10 @@
                       <% add_to_array(counter, comp) %>
                       <% counter = counter + 1 %>
                   <% end %>
-              <% end %>
-              <% while counter < 5 do  %>
-                  <% add_to_array(counter, nil) %>
-                  <% counter = counter + 1 %>
+                  <% while counter < 5 do  %>
+                      <% add_to_array(counter, nil) %>
+                      <% counter = counter + 1 %>
+                  <% end %>
               <% end %>
           <% end %>
         </tr>
