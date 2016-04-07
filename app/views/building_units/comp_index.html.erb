@@ -11,7 +11,7 @@
 
 <div class="scroll-table-div">
 
-  <table class="scroll-table">
+  <table class="scroll-table comp-table">
     <thead>
     <tr>
       <th class="extra">Property</th>
@@ -30,8 +30,8 @@
     </thead>
 
     <tbody>
-    <% @building_units.each do |building_unit| %>
-        <tr>
+    <% @building_units.each_with_index do |building_unit, index| %>
+        <tr class="<%= (index % 2 == 0) ? 'odd' : 'even' %>">
           <td><%= link_to building_unit.building.name, "/comp_edit/#{building_unit.id}" %></td>
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
