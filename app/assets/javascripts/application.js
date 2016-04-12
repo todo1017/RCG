@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require dataTables/jquery.dataTables
-//= require dataTables/extras/dataTables.fixedHeader
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+//= require jquery.dataTables.1.9.4
+//= require dataTables.fixedColumns.3.0.4
+//= require dataTables.fixedHeader.2.1.2
 //= require_tree .
 

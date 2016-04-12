@@ -4,7 +4,7 @@
 
 $border-color: #ccc;
 %base-column {
-  padding-left: 0.5%;
+  padding-left: 10px;
   vertical-align: middle;
 }
 
@@ -12,6 +12,10 @@ $border-color: #ccc;
   th {
     @extend %base-column;
   }
+}
+
+.DTFC_LeftBodyLiner {
+  background: #fff;
 }
 
 .comp-table {

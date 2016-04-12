@@ -65,7 +65,7 @@
         <% @additional_row_3 = Array.new %>
         <% @additional_row_4 = Array.new %>
         <%# all_additional_rows = Array.new %>
-        <tr>
+        <tr class="unit-row">
           <td class="width-175"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></td>
           <td class="width-225"><%= unit_type(building_unit) %></td>
           <td class="width-100"><%= available(building_unit) %></td>

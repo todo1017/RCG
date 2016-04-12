@@ -13,7 +13,7 @@
  *= require bootstrap.min
  *= require_tree .
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
- *= require dataTables/extras/dataTables.fixedHeader
+ *= require dataTables.fixedColumns.3.0.4
  *= require_self
  */
 
@@ -48,8 +48,8 @@ body {
 .scroll-table-div {
     /*border:1px solid grey;*/
     margin: 20px 0 0;
-    /*overflow-x:scroll;*/
-    /*overflow-y:scroll;*/
+    /*overflow-x:scroll;
+    overflow-y:scroll;*/
 }
 
 /*
@@ -173,7 +173,6 @@ $navbarHeight: 80px;
 
 .scroll-table {
     table-layout: fixed;
-    width: 700px;
     /*height:700px;*/
 }
 
@@ -199,8 +198,6 @@ th {
 
 .scroll-table_comps {
     table-layout: fixed;
-    width: 700px;
-    /*height:700px;*/
 }
 .scroll-table_comps th {
     vertical-align: bottom;
