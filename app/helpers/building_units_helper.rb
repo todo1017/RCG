@@ -34,17 +34,17 @@ module BuildingUnitsHelper
 
   def gross_sq_foot(building_unit, apt_type="")
     if apt_type == "comp"
-      return '%.2f' % (building_unit.actual_rent / building_unit.sq_feet)
+      return number_to_currency('%.2f' % (building_unit.actual_rent / building_unit.sq_feet))
     else
-      return '%.2f' % (building_unit.market_rent / building_unit.sq_feet)
+      return number_to_currency('%.2f' % (building_unit.market_rent / building_unit.sq_feet))
     end
   end
 
   def net_sq_foot(building_unit, apt_type="")
     if apt_type == "comp"
-      return '%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/12)) / building_unit.sq_feet)
+      return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/12)) / building_unit.sq_feet))
     else
-      return '%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/12)) / building_unit.sq_feet)
+      return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/12)) / building_unit.sq_feet))
     end
   end
 
@@ -61,6 +61,10 @@ module BuildingUnitsHelper
       end
     end
     return 0
+  end
+
+  def concessions_currency(building_unit, type)
+    return number_to_currency(concessions_calc(building_unit, type))
   end
 
   # def comp_query_var(building_unit, comp_group_id, geography_id, comp_building_id)

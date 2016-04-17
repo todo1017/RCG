@@ -83,8 +83,8 @@
           <td class="width-175"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></td>
           <td class="width-225"><%= unit_type(building_unit) %></td>
           <td class="width-100"><%= available(building_unit) %></td>
-          <td class="width-100"><%= building_unit.market_rent %></td>
-          <td class="width-100"><%= concessions_calc(building_unit, "owned") %></td>
+          <td class="width-100"><%= number_to_currency(building_unit.market_rent) %></td>
+          <td class="width-100"><%= concessions_currency(building_unit, "owned") %></td>
           <td class="width-75"><%= gross_sq_foot(building_unit) %></td>
           <td class="width-75"><%= net_sq_foot(building_unit) %></td>
           <%- CompGroup.all.each do |comp_group| %>

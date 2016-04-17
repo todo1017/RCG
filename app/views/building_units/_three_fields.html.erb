@@ -1,6 +1,6 @@
 <td class="width-175 comp-group-shade">
   <span title="<%= comp.building.name %> - <%= unit_type(comp) %>">
-    <%= comp.actual_rent %>
+    <%= number_to_currency(comp.actual_rent) %>
   </span>
 </td>
 <td class="width-75 comp-group-shade"><%= gross_sq_foot(comp, "comp") %></td>
