@@ -22,7 +22,7 @@
       }
     });
 
-    new $.fn.dataTable.FixedColumns(compDatatable);
+    new $.fn.dataTable.FixedColumns(compDatatable, { "iLeftColumns": 4 });
 
     window.addEventListener('resize', function(){
       $('.dataTables_scrollBody').css('height', _getDatatableScrollHeight());
