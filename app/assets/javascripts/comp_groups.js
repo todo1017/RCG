@@ -12,7 +12,7 @@
       aaSorting: [],
       bPaginate: false,
       sScrollX: "100%",
-      sScrollXInner: "300%",
+      sScrollXInner: "200%",
       sScrollY: _getDatatableScrollHeight(),
       bInfo: false,
       bSort: false,
