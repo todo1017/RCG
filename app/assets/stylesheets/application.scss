@@ -211,6 +211,22 @@ td {
     overflow-x: hidden;
 }
 
+.number-only-container {
+    position: relative;
+
+    i {
+        font-style: normal;
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        font-size: 16px;
+    }
+
+    input {
+        padding-left: 18px !important;
+    }
+}
+
 .yellow-td {
     background-color: lightgoldenrodyellow;
 }

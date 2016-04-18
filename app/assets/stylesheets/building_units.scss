@@ -3,7 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'forms';
+@import 'tables';
 
 .comp-form {
 	@extend %base-form-container;
+}
+
+.rent-roll {
+	@extend %banded-table;
 }

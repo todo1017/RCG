@@ -38,9 +38,9 @@
         <b>Square Feet</b><br>
         <%= f.text_field :sq_feet %>
       </div>
-      <div class="col-sm-8 field">
+      <div class="col-sm-4 field">
         <b>Actual Rent</b><br>
-        <%= f.text_field :actual_rent %>
+        <div class="number-only-container"><i>$</i><%= f.text_field :actual_rent, class: 'js-only-number' %></div>
       </div>
     </div>
     <h4>Concessions...</h4>

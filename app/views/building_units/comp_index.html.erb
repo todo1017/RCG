@@ -37,9 +37,9 @@
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>
           <td><%= building_unit.sq_feet %></td>
-          <td><%= building_unit.actual_rent %></td>
+          <td><%= number_to_currency(building_unit.actual_rent) %></td>
           <td><%= building_unit.months_off %></td>
-          <td><%= building_unit.cash_off %></td>
+          <td><%= number_to_currency(building_unit.cash_off) %></td>
           <td><%= building_unit.lease_length %></td>
           <td><%= building_unit.created_at.strftime("%m-%d-%Y") %></td>
           <td><%= building_unit.updated_at.strftime("%m-%d-%Y") %></td>

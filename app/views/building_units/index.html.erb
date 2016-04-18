@@ -5,50 +5,46 @@
 
 <div class="scroll-table-div">
 
-<table class="scroll-table">
-  <thead>
-    <tr>
-      <th>Number</th>
-      <th>Floor</th>
-      <th>Beds</th>
-      <th>Baths</th>
-      <th>Sq feet</th>
-      <th>Market rent</th>
-      <th>Actual rent</th>
-      <th>Lease expiration</th>
-      <th>Move out</th>
-      <th>Notes<br><br></th>
-      <th>Months Off</th>
-      <th>Cash Off</th>
-      <th>Lease Length</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @building_units.each do |building_unit| %>
+  <table class="scroll-table rent-roll">
+    <thead>
       <tr>
-        <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
-        <td><%= building_unit.floor %></td>
-        <td><%= building_unit.beds %></td>
-        <td><%= building_unit.baths %></td>
-        <td><%= building_unit.sq_feet %></td>
-        <td><%= building_unit.market_rent %></td>
-        <td><%= building_unit.actual_rent %></td>
-        <td><%= building_unit.lease_expiration %></td>
-        <td><%= building_unit.move_out %></td>
-        <td><%= building_unit.notes %></td>
-        <td><%= building_unit.months_off %></td>
-        <td><%= building_unit.cash_off %></td>
-        <td><%= building_unit.lease_length %></td>
-        <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Number</th>
+        <th>Floor</th>
+        <th>Beds</th>
+        <th>Baths</th>
+        <th>Sq feet</th>
+        <th>Market rent</th>
+        <th>Actual rent</th>
+        <th>Lease expiration</th>
+        <th>Move out</th>
+        <th>Notes<br><br></th>
+        <th>Months Off</th>
+        <th>Cash Off</th>
+        <th>Lease Length</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @building_units.each_with_index do |building_unit, index| %>
+        <tr class="<%= (index % 2 == 0) ? 'odd' : 'even' %>">
+          <td><%= link_to building_unit.number, edit_building_unit_path(building_unit) %></td>
+          <td><%= building_unit.floor %></td>
+          <td><%= building_unit.beds %></td>
+          <td><%= building_unit.baths %></td>
+          <td><%= building_unit.sq_feet %></td>
+          <td><%= building_unit.market_rent %></td>
+          <td><%= building_unit.actual_rent %></td>
+          <td><%= building_unit.lease_expiration %></td>
+          <td><%= building_unit.move_out %></td>
+          <td><%= building_unit.notes %></td>
+          <td><%= building_unit.months_off %></td>
+          <td><%= building_unit.cash_off %></td>
+          <td><%= building_unit.lease_length %></td>
+          <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
 </div>
-
-<br>
-<br>
-

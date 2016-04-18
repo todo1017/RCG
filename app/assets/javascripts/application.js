@@ -15,5 +15,6 @@
 //= require bootstrap.min
 //= require jquery.dataTables.1.9.4
 //= require dataTables.fixedColumns.3.0.4
+//= require accounting
 //= require_tree .
 

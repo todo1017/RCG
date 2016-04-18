@@ -2,11 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import 'tables';
+
 $border-color: #ccc;
-%base-column {
-  padding-left: 10px;
-  vertical-align: middle;
-}
 
 .dataTable {
   th {
@@ -19,24 +17,7 @@ $border-color: #ccc;
 }
 
 .comp-table {
-  > tbody {
-    > tr {
-      border-bottom: 1px solid $border-color;
-
-      &:first-child {
-        border-top: 1px solid $border-color;
-      }
-
-      &.even {
-        background: #f9f9f9;
-      }
-
-      > td {
-        @extend %base-column;
-        border-right: 1px solid $border-color;
-      }
-    }
-  }
+  @extend %banded-table;
 }
 
 .comp-group-shade {
