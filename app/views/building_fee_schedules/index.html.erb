@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h2>Building Fee Schedules</h2>
+<div class="clearfix">
+  <h2 class="pull-left reset-margin">Building Fee Schedules</h2>
+
+  <%= link_to "Download in Excel", building_fee_schedules_path(format: "xls"), {class: 'btn btn-medium btn-secondary pull-right'} %>
+</div>
 
 <div class="scroll-table-div">
 
@@ -85,9 +89,3 @@
 </table>
 
 </div>
-
-<br>
-
-<%= link_to "Download in Excel", building_fee_schedules_path(format: "xls") %>
-<br>
-<br>
