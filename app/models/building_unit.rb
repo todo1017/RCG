@@ -35,6 +35,9 @@ class BuildingUnit < ActiveRecord::Base
           bulding_unit.update market_rent: 0
           bulding_unit.update actual_rent: 0
 
+          # TODO what happens if this is the 2-3 update?
+          bulding_unit.update import_number: 1
+
           bulding_unit.save!
           counter = counter +1
         rescue
@@ -60,6 +63,8 @@ class BuildingUnit < ActiveRecord::Base
       return "Yardi Import - sorry, misnamed Building: " + building_name
     end
 
+    previous_import_number = where(building_id: Building.where(name: building_name).first.id).order("import_number").last.import_number
+
     message_to_display = "Yardi Import - "
 
     counter = 0
@@ -67,7 +72,7 @@ class BuildingUnit < ActiveRecord::Base
       begin
         if sheet.cell("A", i) != nil
           counter = counter +1
-          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
+          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s, import_number: previous_import_number).dup
 
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
 
@@ -106,6 +111,7 @@ class BuildingUnit < ActiveRecord::Base
           end
           bulding_unit.update notes: sheet.cell("M", i).to_s if sheet.cell("M", i) != nil
 
+          bulding_unit.update import_number: previous_import_number+1
           bulding_unit.save!
         end
       rescue

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306015848) do
+ActiveRecord::Schema.define(version: 20160422234447) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20160306015848) do
     t.integer  "months_off"
     t.integer  "cash_off"
     t.integer  "lease_length"
+    t.integer  "import_number"
   end
 
   create_table "buildings", force: :cascade do |t|
