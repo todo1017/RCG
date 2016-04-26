@@ -19,7 +19,7 @@ class BuildingUnitsController < ApplicationController
     if BuildingUnit.where(building_id: params[:building_id].to_i).count == 0
       @building_units = []
     else
-      last_import_number = BuildingUnit.order("import_number").last.import_number
+      last_import_number = BuildingUnit.where(building_id: params[:building_id].to_i).order("import_number").last.import_number
       @building_units = BuildingUnit.where(import_number: last_import_number, building_id: params[:building_id].to_i).order(:number)
     end
     render :index
