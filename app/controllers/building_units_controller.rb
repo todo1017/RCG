@@ -16,8 +16,12 @@ class BuildingUnitsController < ApplicationController
   end
 
   def rent_roll
-    last_import_number = BuildingUnit.order("import_number").last.import_number
-    @building_units = BuildingUnit.where(import_number: last_import_number, building_id: params[:building_id].to_i).order(:number)
+    if BuildingUnit.where(building_id: params[:building_id].to_i).count == 0
+      @building_units = nil
+    else
+      last_import_number = BuildingUnit.order("import_number").last.import_number
+      @building_units = BuildingUnit.where(import_number: last_import_number, building_id: params[:building_id].to_i).order(:number)
+    end
     render :index
   end
 
