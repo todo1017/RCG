@@ -71,53 +71,56 @@
 
     <tbody>
     <% @building_units.each do |building_unit| %>
-        <% @additional_row_0 = Array.new %>
-        <% @additional_row_1 = Array.new %>
-        <% @additional_row_2 = Array.new %>
-        <% @additional_row_3 = Array.new %>
-        <% @additional_row_4 = Array.new %>
-        <%# all_additional_rows = Array.new %>
-        <tr class="unit-row">
-          <td class="width-175"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></td>
-          <td class="width-225"><%= unit_type(building_unit) %></td>
-          <td class="width-100"><%= available(building_unit) %></td>
-          <td class="width-100"><%= number_to_currency(building_unit.market_rent) %></td>
-          <td class="width-100"><%= concessions_currency(building_unit, "owned") %></td>
-          <td class="width-75"><%= gross_sq_foot(building_unit) %></td>
-          <td class="width-75"><%= net_sq_foot(building_unit) %></td>
-          <%- CompGroup.all.each do |comp_group| %>
-              <% additional_row = Array.new %>
-              <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-                  <% counter = 0 %>
-                  <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
-                      <% if counter == 0 %>
-                          <%= render partial: "three_fields", locals: {comp: comp} %>
-                      <% else %>
-                          <% add_to_array(counter, comp) %>
+        <% last_import_number = BuildingUnit.where(building_id: building_unit.building_id).order("import_number").last.import_number %>
+        <% if building_unit.import_number == last_import_number %>
+            <% @additional_row_0 = Array.new %>
+            <% @additional_row_1 = Array.new %>
+            <% @additional_row_2 = Array.new %>
+            <% @additional_row_3 = Array.new %>
+            <% @additional_row_4 = Array.new %>
+            <%# all_additional_rows = Array.new %>
+            <tr class="unit-row">
+              <td class="width-175"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></td>
+              <td class="width-225"><%= unit_type(building_unit) %></td>
+              <td class="width-100"><%= available(building_unit) %></td>
+              <td class="width-100"><%= number_to_currency(building_unit.market_rent) %></td>
+              <td class="width-100"><%= concessions_currency(building_unit, "owned") %></td>
+              <td class="width-75"><%= gross_sq_foot(building_unit) %></td>
+              <td class="width-75"><%= net_sq_foot(building_unit) %></td>
+              <%- CompGroup.all.each do |comp_group| %>
+                  <% additional_row = Array.new %>
+                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                      <% counter = 0 %>
+                      <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
+                          <% if counter == 0 %>
+                              <%= render partial: "three_fields", locals: {comp: comp} %>
+                          <% else %>
+                              <% add_to_array(counter, comp) %>
+                          <% end %>
+                          <% counter = counter + 1 %>
+                      <% end.empty? and begin %>
+                          <td class="width-175 border-separator">nothing exact</td>
+                          <td class="width-75">&nbsp;</td>
+                          <td class="width-75">&nbsp;</td>
+                          <% counter = counter + 1 %>
                       <% end %>
-                      <% counter = counter + 1 %>
-                  <% end.empty? and begin %>
-                      <td class="width-175 border-separator">nothing exact</td>
-                      <td class="width-75">&nbsp;</td>
-                      <td class="width-75">&nbsp;</td>
-                      <% counter = counter + 1 %>
-                  <% end %>
-                  <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
-                      <% add_to_array(counter, comp) %>
-                      <% counter = counter + 1 %>
-                  <% end %>
-                  <% while counter < 5 do  %>
-                      <% add_to_array(counter, nil) %>
-                      <% counter = counter + 1 %>
+                      <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
+                          <% add_to_array(counter, comp) %>
+                          <% counter = counter + 1 %>
+                      <% end %>
+                      <% while counter < 5 do  %>
+                          <% add_to_array(counter, nil) %>
+                          <% counter = counter + 1 %>
+                      <% end %>
                   <% end %>
               <% end %>
-          <% end %>
-        </tr>
-        <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
-        <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
-        <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
-        <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
-        <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+            </tr>
+            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
+            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
+            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
+            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
+            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+        <% end %>
     <% end %>
     </tbody>
   </table>
