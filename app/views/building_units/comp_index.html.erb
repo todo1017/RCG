@@ -34,7 +34,7 @@
     <tbody>
     <% @building_units.each_with_index do |building_unit, index| %>
         <tr class="<%= (index % 2 == 0) ? 'odd' : 'even' %>">
-          <td><%= link_to building_unit.building.name, "/comp_edit/#{building_unit.id}" %></td>
+          <td class="width-200"><%= link_to building_unit.building.name, "/comp_edit/#{building_unit.id}" %></td>
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>

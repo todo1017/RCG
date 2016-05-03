@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-
 <h2>Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
 
 <div class="scroll-table-div">
@@ -15,7 +14,7 @@
         <th>Sq feet</th>
         <th>Market rent</th>
         <th>Actual rent</th>
-        <th>Lease expiration</th>
+        <th class="wide-column">Lease expiration</th>
         <th>Move out</th>
         <th>Notes<br><br></th>
         <th>Months Off</th>
@@ -33,13 +32,13 @@
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>
           <td><%= building_unit.sq_feet %></td>
-          <td><%= building_unit.market_rent %></td>
-          <td><%= building_unit.actual_rent %></td>
-          <td><%= building_unit.lease_expiration %></td>
+          <td><%= number_to_currency(building_unit.market_rent) %></td>
+          <td><%= number_to_currency(building_unit.actual_rent) %></td>
+          <td class="wide-column"><%= building_unit.lease_expiration.try(:strftime, "%m-%d-%Y") %></td>
           <td><%= building_unit.move_out %></td>
           <td><%= building_unit.notes %></td>
           <td><%= building_unit.months_off %></td>
-          <td><%= building_unit.cash_off %></td>
+          <td><%= number_to_currency(building_unit.cash_off) %></td>
           <td><%= building_unit.lease_length %></td>
           <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>

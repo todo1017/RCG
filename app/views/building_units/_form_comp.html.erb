@@ -22,40 +22,40 @@
     <div class="row">
       <div class="col-sm-4 field">
         <b>Floor</b><br>
-        <%= f.text_field :floor %>
+        <%= f.text_field :floor, {:class => 'js-numbers-only'} %>
       </div>
       <div class="col-sm-4 field">
         <b>Beds</b><br>
-        <%= f.text_field :beds %>
+        <%= f.text_field :beds, {:class => 'js-numbers-only'} %>
       </div>
       <div class="col-sm-4 field">
         <b>Baths</b><br>
-        <%= f.text_field :baths %>
+        <%= f.text_field :baths, {:class => 'js-numbers-only'} %>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4 field">
         <b>Square Feet</b><br>
-        <%= f.text_field :sq_feet %>
+        <%= f.text_field :sq_feet, {:class => 'js-numbers-only'} %>
       </div>
       <div class="col-sm-4 field">
         <b>Actual Rent</b><br>
-        <div class="number-only-container"><i>$</i><%= f.text_field :actual_rent, class: 'js-only-number' %></div>
+        <div class="dollar-input-container"><i>$</i><%= f.text_field :actual_rent, {:class => 'js-numbers-only'} %></div>
       </div>
     </div>
     <h4>Concessions...</h4>
     <div class="row">
       <div class="field col-sm-4">
         <%= f.label :months_off %><br>
-        <%= f.text_field :months_off %>
+        <%= f.text_field :months_off, {:class => 'js-numbers-only'} %>
       </div>
       <div class="field col-sm-4">
         <%= f.label :cash_off %><br>
-        <%= f.text_field :cash_off %>
+        <div class="dollar-input-container"><i>$</i><%= f.text_field :cash_off, {:class => 'js-numbers-only'} %></div>
       </div>
       <div class="field col-sm-4">
         <%= f.label :lease_length %><br>
-        <%= f.text_field :lease_length %>
+        <%= f.text_field :lease_length, {:class => 'js-numbers-only'} %>
       </div>
     </div>
     <%- if @building_unit.created_at != nil %>

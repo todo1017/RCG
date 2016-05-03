@@ -57,8 +57,8 @@ body {
  */
 .btn-primary,
 .btn-success {
-    background-color: $primaryColor;
-    border-color: $primaryColor;
+    background-color: $primaryColor !important;
+    border-color: $primaryColor !important;
     opacity: 1;
     transition: opacity 0.2s ease-in-out;
 
@@ -72,7 +72,7 @@ body {
     &:active {
         background-color: $primaryColor;
         border-color: $primaryColor;
-        opacity: 1;
+        opacity: 0.8;
     }
 }
 
@@ -84,6 +84,7 @@ body {
     transition: opacity 0.2s ease-in-out;
 
     &:hover {
+        color: #fff;
         background-color: $secondaryColor;
         border-color: $secondaryColor;
         opacity: 0.8;
@@ -215,7 +216,7 @@ td {
     overflow-x: hidden;
 }
 
-.number-only-container {
+.dollar-input-container {
     position: relative;
 
     i {

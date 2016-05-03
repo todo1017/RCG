@@ -1,3 +1,14 @@
 // Place all the styles related to the building_fee_schedules controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'forms';
+@import 'tables';
+
+#fee_schedule_table {
+	@extend %banded-table;
+
+	> tbody > tr:first-child {
+		border-top: 0;
+	}
+}

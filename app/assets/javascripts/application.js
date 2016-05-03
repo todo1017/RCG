@@ -15,6 +15,16 @@
 //= require bootstrap.min
 //= require jquery.dataTables.1.9.4
 //= require dataTables.fixedColumns.3.0.4
+//= require jquery.formatter
 //= require accounting
 //= require_tree .
 
+window.addEventListener('load', function(argument) {
+  $('.js-phone-formatter').formatter({
+    'pattern': '({{999}}) {{999}}-{{9999}}'
+  });
+
+  $('.js-numbers-only').formatter({
+    'pattern': '{{9999999999}}'
+  });
+});

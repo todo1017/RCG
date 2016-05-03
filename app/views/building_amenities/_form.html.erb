@@ -11,69 +11,105 @@
     </div>
   <% end %>
 
-    <div class="actions">
-      <%= f.submit "Save", {:class=>"btn btn-success"} %>
-      <%= link_to "cancel", "/building_amenities" %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label "Business Center" %><br>
+      <%= f.select :business_center, options_for_select([['Yes', true], ['No', false]], @building_amenity.business_center), :include_blank => true %>
     </div>
-  <div class="field">
-    <br>
-    <%= f.label "Business Center (with a field for comments)" %><br>
-    <%= f.select :business_center, options_for_select([['Yes', true], ['No', false]], @building_amenity.business_center), :include_blank => true %>
-    <%= f.text_area :business_center_ %>
+    <div class="field col-sm-8">
+      <label><%= f.label :business_center %> Notes</label>
+      <%= f.text_area :business_center_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :resident_lounge %><br>
-    <%= f.select :resident_lounge, options_for_select([['Yes', true], ['No', false]], @building_amenity.resident_lounge), :include_blank => true %>
-    <%= f.text_area :resident_lounge_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :resident_lounge %><br>
+      <%= f.select :resident_lounge, options_for_select([['Yes', true], ['No', false]], @building_amenity.resident_lounge), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :resident_lounge %> Notes</label>
+      <%= f.text_area :resident_lounge_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :screening_room %><br>
-    <%= f.select :screening_room, options_for_select([['Yes', true], ['No', false]], @building_amenity.screening_room), :include_blank => true %>
-    <%= f.text_area :screening_room_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :screening_room %><br>
+      <%= f.select :screening_room, options_for_select([['Yes', true], ['No', false]], @building_amenity.screening_room), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :screening_room %> Notes</label>
+      <%= f.text_area :screening_room_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :rooftop_deck %><br>
-    <%= f.select :rooftop_deck, options_for_select([['Yes', true], ['No', false]], @building_amenity.rooftop_deck), :include_blank => true %>
-    <%= f.text_area :rooftop_deck_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :rooftop_deck %><br>
+      <%= f.select :rooftop_deck, options_for_select([['Yes', true], ['No', false]], @building_amenity.rooftop_deck), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :rooftop_deck %> Notes</label>
+      <%= f.text_area :rooftop_deck_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :train_station %><br>
-    <%= f.select :train_station, options_for_select([['Yes', true], ['No', false]], @building_amenity.train_station), :include_blank => true %>
-    <%= f.text_area :train_station_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :train_station %><br>
+      <%= f.select :train_station, options_for_select([['Yes', true], ['No', false]], @building_amenity.train_station), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :train_station %> Notes</label>
+      <%= f.text_area :train_station_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :pool %><br>
-    <%= f.select :pool, options_for_select([['Yes', true], ['No', false]], @building_amenity.pool), :include_blank => true %>
-    <%= f.text_area :pool_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :pool %><br>
+      <%= f.select :pool, options_for_select([['Yes', true], ['No', false]], @building_amenity.pool), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :pool %> Notes</label>
+      <%= f.text_area :pool_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :gated %><br>
-    <%= f.select :gated, options_for_select([['Yes', true], ['No', false]], @building_amenity.gated), :include_blank => true %>
-    <%= f.text_area :gated_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :gated %><br>
+      <%= f.select :gated, options_for_select([['Yes', true], ['No', false]], @building_amenity.gated), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :gated %> Notes</label>
+      <%= f.text_area :gated_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :amenity_concierge_id %><br>
-    <%= f.select :amenity_concierge_id, options_from_collection_for_select(AmenityConcierge.all, :id, :name, @building_amenity.amenity_concierge_id), :include_blank => true %>
-    <%= f.text_area :concierge_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :amenity_concierge_id %><br>
+      <%= f.select :amenity_concierge_id, options_from_collection_for_select(AmenityConcierge.all, :id, :name, @building_amenity.amenity_concierge_id), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :amenity_concierge_id %> Notes</label>
+      <%= f.text_area :concierge_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :recreation %><br>
-    <%= f.select :recreation, options_for_select([['Yes', true], ['No', false]], @building_amenity.recreation), :include_blank => true %>
-    <%= f.text_area :recreation_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :recreation %><br>
+      <%= f.select :recreation, options_for_select([['Yes', true], ['No', false]], @building_amenity.recreation), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :recreation %> Notes</label>
+      <%= f.text_area :recreation_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :fitness %><br>
-    <%= f.select :fitness, options_for_select([['Yes', true], ['No', false]], @building_amenity.fitness), :include_blank => true %>
-    <%= f.text_area :fitness_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :fitness %><br>
+      <%= f.select :fitness, options_for_select([['Yes', true], ['No', false]], @building_amenity.fitness), :include_blank => true %>
+    </div>
+    <div class="field col-sm-8">
+      <label><%= f.label :fitness %> Notes</label>
+      <%= f.text_area :fitness_ %>
+    </div>
   </div>
   <div class="field">
     <br>

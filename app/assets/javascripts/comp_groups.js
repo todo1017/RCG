@@ -9,13 +9,15 @@
     };
 
     var compDatatable = $('#comp-table').dataTable({
-      aaSorting: [],
+      bSort: false,
+      aoColumnDefs: [
+        { bSortable: false, aTargets: [ 'no-sort' ] }
+      ],
       bPaginate: false,
       sScrollX: "100%",
       sScrollXInner: "200%",
       sScrollY: _getDatatableScrollHeight(),
       bInfo: false,
-      bSort: false,
       bFilter: false,
       fnInitComplete: function(settings, json) {
         $('.dataTables_scrollBody').css('height', _getDatatableScrollHeight());

@@ -8,6 +8,7 @@ $border-color: #ccc;
 %banded-table {
   > tbody {
     > tr {
+      line-height: 2em;
       border-bottom: 1px solid $border-color;
 
       &:first-child {
@@ -15,7 +16,7 @@ $border-color: #ccc;
       }
 
       &.even {
-        background: #f9f9f9;
+        background: #f9f9f9 !important;
       }
 
       > td {
@@ -23,5 +24,9 @@ $border-color: #ccc;
         border-right: 1px solid $border-color;
       }
     }
+  }
+
+  .border-separator {
+    border-left: 2px solid $border-color;
   }
 }

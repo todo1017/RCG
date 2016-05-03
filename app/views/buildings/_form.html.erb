@@ -24,7 +24,7 @@
   </div>
     <div class="field">
       <%= f.label "Ownership" %><br>
-      <%= f.radio_button :competitor, false, onClick: "document.getElementById('comp_group').style.display='none';" %>&nbsp;Owned by <%= current_user.owner.name %>&nbsp;&nbsp;
+      <%= f.radio_button :competitor, false, onClick: "document.getElementById('comp_group').style.display='none';" %>&nbsp;Company Owned&nbsp;&nbsp;
       <%= f.radio_button :competitor, true, onClick: "document.getElementById('comp_group').style.display='';" %>&nbsp;Competitor Building
     </div>
     <div class="field" id="comp_group" style="<%= if @building.competitor == false then 'display:none;' end %>">
@@ -47,11 +47,11 @@
     <div class="row">
       <div class="field col-sm-6">
         <%= f.label :manager_phone %><br>
-        <%= f.telephone_field :manager_phone %>
+        <%= f.telephone_field :manager_phone, {:class => 'js-phone-formatter'} %>
       </div>
       <div class="field col-sm-6">
         <%= f.label "General Phone" %><br>
-        <%= f.telephone_field :phone %>
+        <%= f.telephone_field :phone, {:class => 'js-phone-formatter'} %>
       </div>
     </div>
     <div class="field">
@@ -65,7 +65,7 @@
   <div class="row">
     <div class="field col-sm-4">
       <%= f.label :number_of_units %><br>
-      <%= f.text_field :number_of_units, size: "10" %>
+      <%= f.text_field :number_of_units, size: "10", :class => 'js-numbers-only' %>
     </div>
     <div class="field col-sm-4">
       <%= f.label :year_built %><br>

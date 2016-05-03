@@ -1,3 +1,13 @@
 // Place all the styles related to the building_amenities controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'forms';
+
+.building-amenity-form {
+	@extend %base-form-container;
+
+	h2 {
+		margin: 0;
+	}
+}

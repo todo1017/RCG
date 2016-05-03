@@ -17,16 +17,20 @@
         %br
         %b
           Import floor/beds/baths Building Data - insert and/or update
+          %br
         = form_tag import_building_units_path, multipart: true do
           = file_field_tag :file
+          %br
           = submit_tag "Import", {:class=>"btn btn-success"}
         %br
         %br
         %b
           Import Yardi Data - update only
+          %br
         = form_tag import_yardi_1_building_units_path, multipart: true do
           = file_field_tag :file
           = hidden_field_tag :building_id, params[:building_id]
+          %br
           = submit_tag "Import", {:class=>"btn btn-success"}
         %br
         %br

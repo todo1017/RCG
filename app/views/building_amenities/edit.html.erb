@@ -1,10 +1,12 @@
-<h2>Edit Amenities for <%= @building_amenity.building.name %></h2>
+<div class="building-amenity-form">
 
-<h4>
-  <%= link_to "Apartment Features", "/building_unit_amenities/#{BuildingUnitAmenity.where(building_id: @building_amenity.building_id).first.id}/edit" %> |
-  Community Features
-</h4>
-<br>
-<br>
-<%= render 'form' %>
-<br><br>
+	<h2>Edit Amenities for <%= @building_amenity.building.name %></h2>
+
+	<h4>
+	  <%= link_to "Apartment Features", "/building_unit_amenities/#{BuildingUnitAmenity.where(building_id: @building_amenity.building_id).first.id}/edit" %> |
+	  Community Features
+	</h4>
+
+	<%= render 'form' %>
+
+</div>

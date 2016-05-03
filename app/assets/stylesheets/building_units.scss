@@ -5,10 +5,19 @@
 @import 'forms';
 @import 'tables';
 
-.comp-form {
+.comp-form,
+.building-unit-form {
 	@extend %base-form-container;
+
+	h2 {
+		margin: 0;
+	}
 }
 
 .rent-roll {
 	@extend %banded-table;
+
+	td.wide-column {
+		min-width: 150px;
+	}
 }

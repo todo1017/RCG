@@ -14,9 +14,11 @@
 
     if (document.getElementById('comp-index-table')) {
       $('#comp-index-table').dataTable({
-        "aoColumnDefs": [
-          { "bSortable": false, "aTargets": [ 1, 2, 3, 4, 5, 6, 7, 8, 11 ] }
+        aoColumnDefs: [
+          { sWidth: "20%", aTargets: [ 0 ] },
+          { bSortable: false, aTargets: [ 1, 2, 3, 4, 5, 6, 7, 8, 11 ] }
         ],
+        bAutoWidth: false,
         bPaginate: false,
         bInfo: false,
         bFilter: false
