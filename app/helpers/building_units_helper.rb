@@ -41,10 +41,15 @@ module BuildingUnitsHelper
   end
 
   def net_sq_foot(building_unit, apt_type="")
-    if apt_type == "comp"
-      return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/12)) / building_unit.sq_feet))
+    if building_unit.lease_length != nil && building_unit.lease_length > 0
+      demoninator = building_unit.lease_length
     else
-      return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/12)) / building_unit.sq_feet))
+      demoninator = 12
+    end
+    if apt_type == "comp"
+      return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/demoninator)) / building_unit.sq_feet))
+    else
+      return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/demoninator)) / building_unit.sq_feet))
     end
   end
 
@@ -53,12 +58,12 @@ module BuildingUnitsHelper
   # More complex calculations
 
   def concessions_calc(building_unit, type)
-    if building_unit.months_off != nil && building_unit.cash_off != nil
-      if type == "comp"
-        return ((building_unit.actual_rent * building_unit.months_off) + building_unit.cash_off)
-      else
-        return ((building_unit.market_rent * building_unit.months_off) + building_unit.cash_off)
-      end
+    if building_unit.months_off == nil then building_unit.months_off = 0 end
+    if building_unit.cash_off == nil then building_unit.cash_off = 0 end
+    if type == "comp"
+      return ((building_unit.actual_rent * building_unit.months_off) + building_unit.cash_off)
+    else
+      return ((building_unit.market_rent * building_unit.months_off) + building_unit.cash_off)
     end
     return 0
   end
