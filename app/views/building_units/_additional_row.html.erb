@@ -10,9 +10,9 @@
       <td style="border-right-width: 0;">&nbsp;</td>
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
-              <td class="width-175 border-separator">&nbsp;</td>
-              <td class="width-75">&nbsp;</td>
-              <td class="width-75">&nbsp;</td>
+              <td class="border-separator">&nbsp;</td>
+              <td class="">&nbsp;</td>
+              <td class="">&nbsp;</td>
           <% else %>
               <%= render partial: "three_fields", locals: {comp: comp} %>
           <% end %>
