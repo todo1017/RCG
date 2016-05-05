@@ -15,7 +15,7 @@
       ],
       bPaginate: false,
       sScrollX: "100%",
-      sScrollXInner: "200%",
+      // sScrollXInner: "200%",
       sScrollY: _getDatatableScrollHeight(),
       bInfo: false,
       bFilter: false,
