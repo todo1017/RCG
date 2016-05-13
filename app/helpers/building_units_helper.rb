@@ -33,7 +33,9 @@ module BuildingUnitsHelper
   end
 
   def gross_sq_foot(building_unit, apt_type="")
-    if apt_type == "comp"
+    if building_unit.sq_feet == 0
+      return 0
+    elsif apt_type == "comp"
       return number_to_currency('%.2f' % (building_unit.actual_rent / building_unit.sq_feet))
     else
       return number_to_currency('%.2f' % (building_unit.market_rent / building_unit.sq_feet))
@@ -46,7 +48,9 @@ module BuildingUnitsHelper
     else
       demoninator = 12
     end
-    if apt_type == "comp"
+    if building_unit.sq_feet == 0
+      return 0
+    elsif apt_type == "comp"
       return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/demoninator)) / building_unit.sq_feet))
     else
       return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/demoninator)) / building_unit.sq_feet))
