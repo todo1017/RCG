@@ -114,8 +114,8 @@ class BuildingUnit < ActiveRecord::Base
           bulding_unit.update import_number: previous_import_number+1
           bulding_unit.save!
         end
-      rescue
-        message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
+      rescue StandardError => error
+        message_to_display = message_to_display + "problem - #{error.message} - with row #" + counter.to_s + " (partially updated)..."
         next
       end
     end
