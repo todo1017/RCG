@@ -115,7 +115,7 @@ class BuildingUnit < ActiveRecord::Base
           bulding_unit.save!
         end
       rescue StandardError => error
-        message_to_display = message_to_display + "problem - #{error.message} - with row #" + counter.to_s + " (partially updated)..."
+        message_to_display = message_to_display + "problem with unit ##{sheet.cell("A", i).to_s.strip} (#{error.message})........"
         next
       end
     end
