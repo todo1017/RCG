@@ -72,7 +72,11 @@ class BuildingUnit < ActiveRecord::Base
       begin
         if sheet.cell("A", i) != nil
           counter = counter +1
-          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s.strip, import_number: previous_import_number).dup
+          apartment_number = sheet.cell("A", i).to_s.strip
+          if apartment_number.include?(".")
+            apartment_number = apartment_number.chomp(".0")
+          end
+          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number).dup
 
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
 
@@ -88,6 +92,7 @@ class BuildingUnit < ActiveRecord::Base
           end
           bulding_unit.update resident_deposit: sheet.cell("H", i).to_f if sheet.cell("H", i) != nil
           bulding_unit.update other_deposit: sheet.cell("I", i).to_f if sheet.cell("I", i) != nil
+          bulding_unit.update notes: sheet.cell("M", i).to_s if sheet.cell("M", i) != nil
           if sheet.cell("J", i) != nil
             if sheet.cell("J", i).is_a?(Date)
               bulding_unit.update move_in: sheet.cell("J", i)
@@ -109,13 +114,14 @@ class BuildingUnit < ActiveRecord::Base
               bulding_unit.update move_out: Date.strptime(sheet.cell("L", i), "%m/%d/%Y")
             end
           end
-          bulding_unit.update notes: sheet.cell("M", i).to_s if sheet.cell("M", i) != nil
 
           bulding_unit.update import_number: previous_import_number+1
           bulding_unit.save!
         end
       rescue StandardError => error
         message_to_display = message_to_display + "problem with unit ##{sheet.cell("A", i).to_s.strip} (#{error.message})........"
+        bulding_unit.update import_number: previous_import_number+1
+        bulding_unit.save!
         next
       end
     end
