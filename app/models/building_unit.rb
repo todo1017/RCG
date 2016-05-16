@@ -26,7 +26,7 @@ class BuildingUnit < ActiveRecord::Base
       counter = 0
       (2..sheet.last_row).each do |i|
         begin
-          bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s)
+          bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s.strip)
 
           bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
           bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
@@ -72,7 +72,7 @@ class BuildingUnit < ActiveRecord::Base
       begin
         if sheet.cell("A", i) != nil
           counter = counter +1
-          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s, import_number: previous_import_number).dup
+          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s.strip, import_number: previous_import_number).dup
 
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
 
