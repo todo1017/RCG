@@ -85,8 +85,8 @@
               <td class=""><%= available(building_unit) %></td>
               <td class=""><%= number_to_currency(building_unit.market_rent) %></td>
               <td class=""><%= concessions_currency(building_unit, "owned") %></td>
-              <td class=""><%= gross_sq_foot(building_unit) %></td>
-              <td class=""><%= net_sq_foot(building_unit) %></td>
+              <td class=""><%= number_to_currency(gross_sq_foot(building_unit)) %></td>
+              <td class=""><%= number_to_currency(net_sq_foot(building_unit)) %></td>
               <%- CompGroup.all.each do |comp_group| %>
                   <% additional_row = Array.new %>
                   <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>

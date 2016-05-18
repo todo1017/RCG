@@ -36,9 +36,11 @@ module BuildingUnitsHelper
     if building_unit.sq_feet == 0
       return 0
     elsif apt_type == "comp"
-      return number_to_currency('%.2f' % (building_unit.actual_rent / building_unit.sq_feet))
+      return ('%.2f' % (building_unit.actual_rent / building_unit.sq_feet))
+      # return number_to_currency('%.2f' % (building_unit.actual_rent / building_unit.sq_feet))
     else
-      return number_to_currency('%.2f' % (building_unit.market_rent / building_unit.sq_feet))
+      return ('%.2f' % (building_unit.market_rent / building_unit.sq_feet))
+      # return number_to_currency('%.2f' % (building_unit.market_rent / building_unit.sq_feet))
     end
   end
 
@@ -51,9 +53,11 @@ module BuildingUnitsHelper
     if building_unit.sq_feet == 0
       return 0
     elsif apt_type == "comp"
-      return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/demoninator)) / building_unit.sq_feet))
+      return ('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/demoninator)) / building_unit.sq_feet))
+      # return number_to_currency('%.2f' % ((building_unit.actual_rent - (concessions_calc(building_unit, "comp")/demoninator)) / building_unit.sq_feet))
     else
-      return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/demoninator)) / building_unit.sq_feet))
+      return ('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/demoninator)) / building_unit.sq_feet))
+      # return number_to_currency('%.2f' % ((building_unit.market_rent - (concessions_calc(building_unit, "owned")/demoninator)) / building_unit.sq_feet))
     end
   end
 

@@ -2,5 +2,5 @@
   <Data ss:Type="Number"><%= comp.actual_rent %></Data>
   <Comment><ss:Data><%= comp.building.name %> - <%= unit_type(comp) %></ss:Data></Comment>
 </Cell>
-<Cell><Data ss:Type="Currency"><%= gross_sq_foot(comp, "comp") %></Data></Cell>
-<Cell><Data ss:Type="Currency"><%= net_sq_foot(comp, "comp") %></Data></Cell>
+<Cell><Data ss:Type="Number"><%= gross_sq_foot(comp, "comp") %></Data></Cell>
+<Cell><Data ss:Type="Number"><%= net_sq_foot(comp, "comp") %></Data></Cell>

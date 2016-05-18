@@ -3,5 +3,5 @@
     <%= number_to_currency(comp.actual_rent) %>
   </span>
 </td>
-<td class=""><%= gross_sq_foot(comp, "comp") %></td>
-<td class=""><%= net_sq_foot(comp, "comp") %></td>
+<td class=""><%= number_to_currency(gross_sq_foot(comp, "comp")) %></td>
+<td class=""><%= number_to_currency(net_sq_foot(comp, "comp")) %></td>
