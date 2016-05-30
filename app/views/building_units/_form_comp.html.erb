@@ -21,10 +21,6 @@
     </div>
     <div class="row">
       <div class="col-sm-4 field">
-        <b>Floor</b><br>
-        <%= f.text_field :floor, {:class => 'js-numbers-only'} %>
-      </div>
-      <div class="col-sm-4 field">
         <b>Beds</b><br>
         <%= f.text_field :beds, {:class => 'js-numbers-only'} %>
       </div>
@@ -32,8 +28,16 @@
         <b>Baths</b><br>
         <%= f.text_field :baths, {:class => 'js-numbers-only'} %>
       </div>
+      <div class="col-sm-4 field">
+        <b>Additional Room</b><br>
+        <%= f.check_box :add_room %>
+      </div>
     </div>
     <div class="row">
+      <div class="col-sm-4 field">
+        <b>Floor</b><br>
+        <%= f.text_field :floor, {:class => 'js-numbers-only'} %>
+      </div>
       <div class="col-sm-4 field">
         <b>Square Feet</b><br>
         <%= f.text_field :sq_feet, {:class => 'js-numbers-only'} %>
