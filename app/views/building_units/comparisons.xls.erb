@@ -44,54 +44,57 @@
         <% end %>
       </Row>
       <% @building_units.each do |building_unit| %>
-          <% @additional_row_0 = Array.new %>
-          <% @additional_row_1 = Array.new %>
-          <% @additional_row_2 = Array.new %>
-          <% @additional_row_3 = Array.new %>
-          <% @additional_row_4 = Array.new %>
-          <Row>
-            <Cell>
-              <Data ss:Type="String"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></Data>
-            </Cell>
-            <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data></Cell>
-            <Cell><Data ss:Type="String"><%= available(building_unit) %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data></Cell>
-            <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data></Cell>
-              <%- CompGroup.all.each do |comp_group| %>
-                  <% additional_row = Array.new %>
-                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-                      <% counter = 0 %>
-                      <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
-                          <% if counter == 0 %>
-                              <%= render partial: "three_fields", locals: {comp: comp} %>
-                          <% else %>
-                              <% add_to_array(counter, comp) %>
+          <% last_import_number = BuildingUnit.where(building_id: building_unit.building_id).order("import_number").last.import_number %>
+          <% if building_unit.import_number == last_import_number %>
+              <% @additional_row_0 = Array.new %>
+              <% @additional_row_1 = Array.new %>
+              <% @additional_row_2 = Array.new %>
+              <% @additional_row_3 = Array.new %>
+              <% @additional_row_4 = Array.new %>
+              <Row>
+                <Cell>
+                  <Data ss:Type="String"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></Data>
+                </Cell>
+                <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= available(building_unit) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data></Cell>
+                  <%- CompGroup.all.each do |comp_group| %>
+                      <% additional_row = Array.new %>
+                      <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                          <% counter = 0 %>
+                          <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
+                              <% if counter == 0 %>
+                                  <%= render partial: "three_fields", locals: {comp: comp} %>
+                              <% else %>
+                                  <% add_to_array(counter, comp) %>
+                              <% end %>
+                              <% counter = counter + 1 %>
+                          <% end.empty? and begin %>
+                              <Cell><Data ss:Type="String">nothing exact</Data></Cell>
+                              <Cell><Data ss:Type="String"></Data></Cell>
+                              <Cell><Data ss:Type="String"></Data></Cell>
+                              <% counter = counter + 1 %>
                           <% end %>
-                          <% counter = counter + 1 %>
-                      <% end.empty? and begin %>
-                          <Cell><Data ss:Type="String">nothing exact</Data></Cell>
-                          <Cell><Data ss:Type="String"></Data></Cell>
-                          <Cell><Data ss:Type="String"></Data></Cell>
-                          <% counter = counter + 1 %>
-                      <% end %>
-                      <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
-                          <% add_to_array(counter, comp) %>
-                          <% counter = counter + 1 %>
-                      <% end %>
-                      <% while counter < 5 do  %>
-                          <% add_to_array(counter, nil) %>
-                          <% counter = counter + 1 %>
+                          <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
+                              <% add_to_array(counter, comp) %>
+                              <% counter = counter + 1 %>
+                          <% end %>
+                          <% while counter < 5 do  %>
+                              <% add_to_array(counter, nil) %>
+                              <% counter = counter + 1 %>
+                          <% end %>
                       <% end %>
                   <% end %>
-              <% end %>
-          </Row>
-          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
-          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
-          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
-          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
-          <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+              </Row>
+              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
+              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
+              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
+              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
+              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+          <% end %>
       <% end %>
     </Table>
   </Worksheet>
