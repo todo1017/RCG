@@ -16,15 +16,21 @@
 //= require jquery.dataTables.1.9.4
 //= require dataTables.fixedColumns.3.0.4
 //= require jquery.formatter
+//= require jquery.numeric.min
 //= require accounting
 //= require_tree .
 
 window.addEventListener('load', function(argument) {
+  var numbersOnlyInputs = $('.js-numbers-only');
+  var decimalInputs = numbersOnlyInputs.filter(function(){
+    return this.getAttribute('data-allow-decimal') == 'true';
+  });
+
   $('.js-phone-formatter').formatter({
     'pattern': '({{999}}) {{999}}-{{9999}}'
   });
 
-  $('.js-numbers-only').formatter({
-    'pattern': '{{9999999999}}'
-  });
+  $('.js-numbers-only').numeric({decimal: false});
+
+  decimalInputs.numeric({decimal: '.'});
 });
