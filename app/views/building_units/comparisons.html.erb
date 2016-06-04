@@ -10,8 +10,11 @@
       &nbsp;
       <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
   <% end %>
-
-  <%= link_to "Download in Excel", comparisons_path(format: "xls"), {class: 'pull-right btn btn-medium btn-secondary'} %>
+  <%= form_tag comparisons_path(format: "xls"), :method => 'get', :class => ['pull-right'] do %>
+      <%= hidden_field_tag :geography_filter, params[:geography_filter] %>
+      <%= hidden_field_tag :vacancy_filter, params[:vacancy_filter] %>
+      <%= submit_tag "Download in Excel", {:class=>"pull-right btn btn-medium btn-secondary"} %>
+  <% end %>
 </div>
 
 <div class="scroll-table-div">

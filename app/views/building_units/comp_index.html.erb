@@ -20,6 +20,7 @@
       <th>Floor</th>
       <th>Beds</th>
       <th>Baths</th>
+      <th>Add Room</th>
       <th>Sq Feet</th>
       <th>Actual Rent</th>
       <th>Months Off</th>
@@ -38,6 +39,7 @@
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>
+          <td><%= if building_unit.add_room == true then "Y" end %></td>
           <td><%= building_unit.sq_feet %></td>
           <td><%= number_to_currency(building_unit.actual_rent) %></td>
           <td><%= building_unit.months_off %></td>

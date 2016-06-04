@@ -146,6 +146,6 @@ class BuildingUnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_unit_params
-      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes, :resident_id, :floor, :bed_bath, :beds, :baths, :months_off, :cash_off, :lease_length)
+      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes, :resident_id, :floor, :bed_bath, :beds, :baths, :add_room, :months_off, :cash_off, :lease_length)
     end
 end
