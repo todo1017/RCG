@@ -20,6 +20,20 @@
 //= require accounting
 //= require_tree .
 
+
+// For the main_nav submenus
+(function($){
+    $(document).ready(function(){
+        $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).parent().siblings().removeClass('open');
+            $(this).parent().toggleClass('open');
+        });
+    });
+})(jQuery);
+
+
 window.addEventListener('load', function(argument) {
   var numbersOnlyInputs = $('.js-numbers-only');
   var decimalInputs = numbersOnlyInputs.filter(function(){
@@ -34,3 +48,5 @@ window.addEventListener('load', function(argument) {
 
   decimalInputs.numeric({decimal: '.'});
 });
+
+
