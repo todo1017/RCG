@@ -17,7 +17,7 @@
     <%= f.hidden_field :bed_bath, value: "competitor_record" %>
     <div class="field">
       <b>Building</b><br>
-      <%= f.collection_select :building_id, Building.where(competitor: true), :id, :name, include_blank: true %>
+      <%= f.collection_select :building_id, Building.where(competitor: true).order('name ASC'), :id, :name, include_blank: true %>
     </div>
     <div class="row">
       <div class="col-sm-4 field">
