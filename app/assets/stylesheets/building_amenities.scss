@@ -3,11 +3,20 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'forms';
+@import 'tables';
 
 .building-amenity-form {
 	@extend %base-form-container;
 
 	h2 {
 		margin: 0;
+	}
+}
+
+#amenities_table {
+	@extend %banded-table;
+
+	> tbody > tr:first-child {
+		border-top: 0;
 	}
 }
