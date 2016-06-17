@@ -12,3 +12,26 @@
 		border-top: 0;
 	}
 }
+
+.edit_building_fee_schedule {
+	margin: 20px 0 0;
+
+	.field {
+		.trailing-label {
+			position: relative;
+			top: 0px;
+			left: 5px;
+		}
+	}
+}
+
+.building-fee-schedule-form {
+	@extend %base-form-container;
+
+	.field {
+		input[type='text'] {
+			display: inline;
+			width: 110px;
+		}
+	}
+}

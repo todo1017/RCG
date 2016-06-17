@@ -11,69 +11,132 @@
     </div>
   <% end %>
 
-    <div class="actions">
-      <%= f.submit "Save", {:class=>"btn btn-success"} %>
-      <%= link_to "cancel", "/building_fee_schedules" %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label "Parking" %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :parking, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
     </div>
-  <div class="field">
-    <br>
-    <%= f.label "Parking (with an extra field for comments)" %><br>
-    $<%= f.text_field :parking, size: "7" %>/mo
-    <%= f.text_area :parking_ %>
+    <div class="field field col-sm-8">
+      <%= f.label "Parking Comments" %>
+      <%= f.text_area :parking_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :parking_extra %><br>
-    $<%= f.text_field :parking_extra, size: "7" %>/mo
-    <%= f.text_area :parking_extra_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :parking_extra %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :parking_extra, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:parking_extra} Notes" %>
+      <%= f.text_area :parking_extra_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :amenity_fee %><br>
-    $<%= f.text_field :amenity_fee, size: "7" %>/mo
-    <%= f.text_area :amenity_fee_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :amenity_fee %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :amenity_fee, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:amenity_fee} Notes" %>
+      <%= f.text_area :amenity_fee_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :trash_fee %><br>
-    $<%= f.text_field :trash_fee, size: "7" %>/mo
-    <%= f.text_area :trash_fee_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :trash_fee %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :trash_fee, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:trash_fee} Notes" %>
+      <%= f.text_area :trash_fee_ %>
+    </div>
   </div>
-    <div class="field">
-      <br>
-      <%= f.label :security_deposit %><br>
-      $<%= f.text_field :security_deposit, size: "7" %>one-time
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :security_deposit %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :security_deposit, {:class => 'js-numbers-only'} %><span class="trailing-label">one-time</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:security_deposit} Notes" %>
       <%= f.text_area :security_deposit_ %>
     </div>
-  <div class="field">
-    <br>
-    <%= f.label :pet_deposit %><br>
-    $<%= f.text_field :pet_deposit, size: "7" %>one-time
-    <%= f.text_area :pet_deposit_ %>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :pet_dog %><br>
-    $<%= f.text_field :pet_dog, size: "7" %>/mo
-    <%= f.text_area :pet_dog_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :pet_deposit %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :pet_deposit, {:class => 'js-numbers-only'} %><span class="trailing-label">one-time</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:pet_deposit} Notes" %>
+      <%= f.text_area :pet_deposit_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :pet_cat %><br>
-    $<%= f.text_field :pet_cat, size: "7" %>/mo
-    <%= f.text_area :pet_cat_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :pet_dog %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :pet_dog, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:pet_dog} Notes" %>
+      <%= f.text_area :pet_dog_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :application_fee %><br>
-    $<%= f.text_field :application_fee, size: "7" %>one-time
-    <%= f.text_area :application_fee_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :pet_cat %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :pet_cat, {:class => 'js-numbers-only'} %><span class="trailing-label">/mo</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:pet_cat} Notes" %>
+      <%= f.text_area :pet_cat_ %>
+    </div>
   </div>
-  <div class="field">
-    <br>
-    <%= f.label :minimum_lease %><br>
-    <%= f.text_field :minimum_lease, size: "7" %>months
-    <%= f.text_area :minimum_lease_ %>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :application_fee %>
+      <div class="dollar-input-container">
+        <i>$</i>
+        <%= f.text_field :application_fee, {:class => 'js-numbers-only'} %><span class="trailing-label">one-time</span>
+      </div>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:application_fee} Notes" %>
+      <%= f.text_area :application_fee_ %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="field col-sm-4">
+      <%= f.label :minimum_lease %>
+      <%= f.text_field :minimum_lease, {:class => 'js-numbers-only'} %><span class="trailing-label">months</span>
+    </div>
+    <div class="field field col-sm-8">
+      <%= f.label "#{:minimum_lease} Notes" %>
+      <%= f.text_area :minimum_lease_ %>
+    </div>
   </div>
   <div class="actions">
     <br>
