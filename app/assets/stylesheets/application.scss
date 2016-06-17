@@ -128,7 +128,8 @@ body {
 $navbarHeight: 80px;
 .navbar-default {
     background: #fff;
-    margin-bottom: 10px;
+    position: fixed;
+    width: 100%;
 
     .navbar-nav {
         > li {
@@ -173,6 +174,10 @@ $navbarHeight: 80px;
             padding-bottom: 0;
         }
     }
+}
+
+.main-wrapper {
+    padding-top: $navbarHeight + 10px;
 }
 
 .reset-margin {
