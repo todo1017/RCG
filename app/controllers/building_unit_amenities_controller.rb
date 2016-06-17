@@ -42,6 +42,9 @@ class BuildingUnitAmenitiesController < ApplicationController
   def update
     respond_to do |format|
       if @building_unit_amenity.update(building_unit_amenity_params)
+        if params[:redirect] == "false"
+          format.html { redirect_to "/building_unit_amenities/#{params[:id]}/edit", notice: 'Building unit amenity was successfully updated.' }
+        end
         format.html { redirect_to "/building_amenities", notice: 'Building unit amenity was successfully updated.' }
         format.json { render :show, status: :ok, location: @building_unit_amenity }
       else

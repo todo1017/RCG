@@ -77,7 +77,8 @@
     <%= f.text_area :other %>
   </div>
     <div class="actions">
-      <%= f.submit "Save", {:class=>"btn btn-success"} %>
+      <%= f.submit "Save & Close", {:class=>"btn btn-success"} %>
+      <%= f.button "Save & Continue", {:class=>"btn btn-success", :id=>"js-save-building-unit-amenities"} %>
       <%= link_to "cancel", "/building_amenities" %>
     </div>
 <% end %>
