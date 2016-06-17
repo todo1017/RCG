@@ -72,7 +72,7 @@ class BuildingUnitsController < ApplicationController
     @building_unit = BuildingUnit.new
   end
   def comp_new
-    @building_unit = BuildingUnit.new
+    @building_unit = BuildingUnit.new(:building_id => params[:building_id])
   end
 
   # GET /building_units/1/edit
@@ -85,7 +85,7 @@ class BuildingUnitsController < ApplicationController
   def determine_path
     if params[:building_unit][:bed_bath] == "competitor_record"
       if params[:building_unit][:move_in] == "1"
-        return "/comp_new"
+        return "/comp_new?building_id=#{params[:building_unit][:building_id]}"
       else
         return "/comp_index"
       end
