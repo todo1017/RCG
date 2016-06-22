@@ -1,5 +1,7 @@
 class BuildingUnit < ActiveRecord::Base
 
+  require 'date'
+
   validates :building_id, :floor, :beds, :baths, :sq_feet, :actual_rent, presence: true
 
   belongs_to :building
@@ -69,9 +71,13 @@ class BuildingUnit < ActiveRecord::Base
     message_to_display = "Yardi Import - "
 
     counter = 0
+    future_records = "no"
     (8..sheet.last_row).each do |i|
+      if sheet.cell("A", i) != nil && sheet.cell("A", i) == "Future Residents/Applicants"
+        future_records = "yes"
+      end
       begin
-        if sheet.cell("A", i) != nil
+        if sheet.cell("A", i) != nil && sheet.cell("A", i) != "Future Residents/Applicants"
           counter = counter +1
           apartment_number = sheet.cell("A", i).to_s.strip
           if apartment_number.include?(".")
@@ -114,6 +120,23 @@ class BuildingUnit < ActiveRecord::Base
             else
               bulding_unit.update move_out: Date.strptime(sheet.cell("L", i), "%m/%d/%Y")
             end
+          end
+          if future_records == "no"
+            bulding_unit.update relevant_start_date: Date.strptime("01/01/1910", "%m/%d/%Y")
+            bulding_unit.update relevant_end_date: Date.strptime("12/31/2090", "%m/%d/%Y")
+          elsif future_records == "yes"
+            if sheet.cell("J", i) != nil
+              if sheet.cell("J", i).is_a?(Date)
+                future_move_in_date = sheet.cell("J", i)
+              else
+                future_move_in_date = Date.strptime(sheet.cell("J", i), "%m/%d/%Y")
+              end
+            end
+            bulding_unit.update relevant_start_date: future_move_in_date
+            bulding_unit.update relevant_end_date: Date.strptime("12/31/2090", "%m/%d/%Y")
+            expiring_record_for_the_building_unit = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number+1)
+            expiring_record_for_the_building_unit.update relevant_end_date: future_move_in_date - 1
+            expiring_record_for_the_building_unit.save
           end
 
           bulding_unit.update import_number: previous_import_number+1

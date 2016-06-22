@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530122003) do
+ActiveRecord::Schema.define(version: 20160622150610) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -144,8 +144,8 @@ ActiveRecord::Schema.define(version: 20160530122003) do
     t.date     "move_out"
     t.date     "lease_expiration"
     t.text     "notes"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "resident_id"
     t.integer  "floor"
     t.string   "bed_bath"
@@ -156,6 +156,8 @@ ActiveRecord::Schema.define(version: 20160530122003) do
     t.integer  "lease_length"
     t.integer  "import_number"
     t.boolean  "add_room"
+    t.date     "relevant_start_date"
+    t.date     "relevant_end_date"
   end
 
   create_table "buildings", force: :cascade do |t|

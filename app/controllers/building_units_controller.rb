@@ -34,18 +34,18 @@ class BuildingUnitsController < ApplicationController
     @compgroups = CompGroup.all
 
     # TODO -- needs to take the owner Id!!!!!!!!
-    building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
-    # @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0)
+    building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).where("relevant_start_date = ? AND relevant_end_date = ?", Date.strptime("01/01/1910", "%m/%d/%Y"), Date.strptime("12/31/2090", "%m/%d/%Y")).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
+    # @building_units = building_units_owned_in_geography.where(actual_rent: 0)
     if params[:vacancy_filter] == "2"
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '30 days'")
+      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '30 days'")
     elsif  params[:vacancy_filter] == "3"
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '60 days'")
+      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '60 days'")
     elsif  params[:vacancy_filter] == "4"
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '90 days'")
+      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '90 days'")
     elsif  params[:vacancy_filter] == "5"
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '120 days'")
+      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '120 days'")
     else
-      @building_units = building_units_owned_in_geography.where(actual_rent: nil) + building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date")
+      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date")
     end
     respond_to do |format|
       format.html
