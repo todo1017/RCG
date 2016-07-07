@@ -28,6 +28,8 @@
       <%= f.radio_button :competitor, true, onClick: "document.getElementById('comp_group').style.display='';" %>&nbsp;Competitor Building
     </div>
     <div class="field" id="comp_group" style="<%= if @building.competitor == false then 'display:none;' end %>">
+      <%= f.label :owned_by, "Owned By Company" %><br>
+      <%= f.text_field :owned_by, size: "50" %>
       <br>
       <%= f.label "Comp Group" %><br>
       <%= f.select :comp_group_id, options_from_collection_for_select(CompGroup.all, :id, :name, @building.comp_group_id), :include_blank => true %>
@@ -37,7 +39,33 @@
       <%= f.select :geography_id, options_from_collection_for_select(Geography.all, :id, :name, @building.geography_id), :include_blank => true %>
     </div>
     <div class="field">
-      <%= f.label :manager %><br>
+      <%= f.label :address1, "Address 1" %><br>
+      <%= f.text_field :address1, size: "50" %>
+    </div>
+    <div class="field">
+      <%= f.label :address2, "Address 2" %><br>
+      <%= f.text_field :address2, size: "50" %>
+    </div>
+    <div class="row">
+        <div class="field col-sm-6">
+          <%= f.label :city %><br>
+          <%= f.text_field :city %>
+        </div>
+      <div class="field col-sm-4">
+        <%= f.label :state %><br>
+        <%= f.select :state, options_for_select(us_states, @building.state) %>
+      </div>
+      <div class="field col-sm-2">
+        <%= f.label :zip %><br>
+        <%= f.text_field :zip, placeholder: "", maxlength: 5, :class => 'js-numbers-only' %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :managed_by, "Managed By Company" %><br>
+      <%= f.text_field :managed_by, size: "50" %>
+    </div>
+    <div class="field">
+      <%= f.label :manager, "Manager Name" %><br>
       <%= f.text_field :manager, size: "50" %>
     </div>
     <div class="field">
