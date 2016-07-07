@@ -1,0 +1,2 @@
+module BuildingOccupanciesHelper
+end

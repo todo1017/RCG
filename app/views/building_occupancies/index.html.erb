@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Building Occupancies</h3>
+
+<%= link_to 'Add New', "/building_occupancies/new", {:class=>"btn btn-success"} %>
+<%= link_to 'Add New for Competitor', "/building_occupancies/new?competitor=true", {:class=>"btn btn-success"} %>
+<br>
+<br>
+<br>
+<%= render partial: "/building_occupancies/list", locals: { building_occupancies: @building_occupancies_owned } %>
+<br>
+<br>
+<%= render partial: "/building_occupancies/list", locals: { building_occupancies: @building_occupancies_comp } %>
+
+

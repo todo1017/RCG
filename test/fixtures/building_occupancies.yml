@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  building_id: 1
+  occupancy_rate: 1.5
+  leased_rate: 1.5
+  as_of_date: 2016-07-07
+
+two:
+  building_id: 1
+  occupancy_rate: 1.5
+  leased_rate: 1.5
+  as_of_date: 2016-07-07

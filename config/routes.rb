@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :building_occupancies
   resources :user_geographies
   resources :comp_groups
   resources :geographies

@@ -1,0 +1,24 @@
+<table>
+  <thead>
+  <tr>
+    <th>Building</th>
+    <th>Occupancy rate</th>
+    <th>Leased rate</th>
+    <th>As of date</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% building_occupancies.each do |building_occupancy| %>
+      <tr>
+        <td><%= link_to building_occupancy.building.name, edit_building_occupancy_path(building_occupancy) %></td>
+        <td><%= number_to_percentage(building_occupancy.occupancy_rate, precision:1) %></td>
+        <td><%= number_to_percentage(building_occupancy.leased_rate, precision:1) %></td>
+        <td><%= building_occupancy.as_of_date %></td>
+        <td></td>
+        <td><%= link_to 'Delete', building_occupancy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

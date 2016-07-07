@@ -75,6 +75,17 @@
                 <%- end %>
               </ul>
             </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Occupancy&nbsp;<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "View Occupancy Report", "/occupancy" %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "View Occupancy Rates", building_occupancies_path %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to 'Add New', "/building_occupancies/new" %></li>
+                <li><%= link_to 'Add New for Competitor', "/building_occupancies/new?competitor=true" %></li>
+              </ul>
+            </li>
             <li><a href="/building_fee_schedules">Fee Schedules</a></li>
             <li><a href="/building_amenities">Amenities</a></li>
             <!--<li><a href="/analytics">Analytics</a></li>-->

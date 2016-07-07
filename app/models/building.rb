@@ -6,5 +6,6 @@ class Building < ActiveRecord::Base
   has_one :building_amenity, dependent: :destroy
   has_one :building_unit_amenity, dependent: :destroy
   has_many :building_units, dependent: :destroy
+  has_many :building_occupancies, dependent: :destroy
 
 end

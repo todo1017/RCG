@@ -19,6 +19,7 @@ class BuildingsController < ApplicationController
 
   # GET /buildings/1/edit
   def edit
+    @building_occupancies = BuildingOccupancy.where(building_id: params[:id]).order("as_of_date DESC")
   end
 
   # POST /buildings
