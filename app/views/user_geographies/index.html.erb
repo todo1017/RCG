@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Geographies for <%= User.find(params[:user_id]).email %></h3>
+<h4>Geographies for <%= User.find(params[:user_id]).email %></h4>
 
 <table>
   <thead>
     <tr>
-      <th>Geography</th>
-      <th>Access type</th>
+      <th></th>
+      <th></th>
       <th></th>
     </tr>
   </thead>
@@ -15,7 +15,7 @@
     <% @user_geographies.each do |user_geography| %>
       <tr>
         <td><%= Geography.find(user_geography.geography_id).name %></td>
-        <td><%= user_geography.access_type %></td>
+        <td><%#= user_geography.access_type %></td>
         <td><%= link_to 'Destroy', user_geography, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -25,4 +25,4 @@
 <br>
 
 <%= link_to 'New Geography Assignment', "/geographies/user/#{params[:user_id]}/new", {:class=>"btn btn-primary"} %>
-<%= link_to 'Back', "/users" %>
+<%= link_to 'Back', "/user_assignments" %>

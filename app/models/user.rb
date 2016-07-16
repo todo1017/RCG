@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   belongs_to :owner
+  has_many :owner_users
+  has_many :user_geographies
 
   validates_uniqueness_of :email
 
