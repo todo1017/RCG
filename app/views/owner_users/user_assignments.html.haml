@@ -38,11 +38,11 @@
         = f.submit "Add New", {:class=>"btn btn-primary"}
       %td
         &nbsp;&nbsp;
-        = f.collection_select :owner_id, User.all, :id, :email, include_blank: true
+        = f.collection_select :user_id, User.all, :id, :email, include_blank: true
       %td
         &nbsp;&nbsp;&nbsp;
       %td
-        = f.collection_select :user_id, Owner.all, :id, :name, include_blank: true
+        = f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true
       %td
         &nbsp;
       %td
