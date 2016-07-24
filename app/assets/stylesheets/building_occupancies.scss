@@ -20,4 +20,10 @@
 	td {
 		min-width: 200px;
 	}
+
+	.building-form & {
+		td {
+			min-width: auto;
+		}
+	}
 }
