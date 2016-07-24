@@ -10,6 +10,7 @@ $border-color: #ccc;
     > tr {
       line-height: 2em;
       border-bottom: 1px solid $border-color;
+      transition: background 0.1s ease-in-out;
 
       &:first-child {
         border-top: 1px solid $border-color;
@@ -17,6 +18,10 @@ $border-color: #ccc;
 
       &.even {
         background: #f9f9f9 !important;
+      }
+
+      &:hover {
+        background: rgb(173, 202, 230) !important;
       }
 
       > td {

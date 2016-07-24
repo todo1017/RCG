@@ -3,11 +3,21 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'forms';
+@import 'tables';
 
 .occupancy-form {
 	@extend %base-form-container;
 
 	h2 {
 		margin: 0;
+	}
+}
+
+.building-occupancy-table {
+	@extend %banded-table;
+	width: 100%;
+
+	td {
+		min-width: 200px;
 	}
 }
