@@ -17,6 +17,7 @@
 //= require dataTables.fixedColumns.3.0.4
 //= require jquery.formatter
 //= require jquery.numeric.min
+//= require jquery-ui/datepicker
 //= require accounting
 //= require_tree .
 

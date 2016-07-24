@@ -23,12 +23,21 @@ class BuildingOccupanciesController < ApplicationController
     end
   end
 
+  def get_redirect_path
+    logger.debug params
+    if params[:add_another] == "1"
+      return new_building_occupancy_path
+    else
+      return building_occupancies_path
+    end
+  end
+
   def create
     @building_occupancy = BuildingOccupancy.new(building_occupancy_params)
 
     respond_to do |format|
       if @building_occupancy.save
-        format.html { redirect_to building_occupancies_path, notice: 'Building occupancy was successfully created.' }
+        format.html { redirect_to get_redirect_path, notice: 'Building occupancy was successfully created.' }
         format.json { render :show, status: :created, location: @building_occupancy }
       else
         format.html { render :new }
