@@ -25,6 +25,13 @@
 			display: block;
 			width: 100%;
 			font-size: 16px;
+
+			&.year,
+			&.month,
+			&.day {
+				width: auto;
+				display: inline;
+			}
 		}
 
 		input[type='text'],

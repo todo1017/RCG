@@ -1,0 +1,89 @@
+%h3
+  User Assignments
+
+%p#notice
+  = notice
+
+= form_for(@owner_user) do |f|
+  %table
+    %tr
+      %td
+        &nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
+        %b
+          User
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;
+        %b
+          Owner
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;
+        %b
+          Role
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;
+        %b
+          Geographies
+      %td
+        &nbsp;&nbsp;&nbsp;
+    %tr
+      %td
+        = f.submit "Add New", {:class=>"btn btn-primary"}
+      %td
+        &nbsp;&nbsp;
+        = f.collection_select :user_id, User.all, :id, :email, include_blank: true
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        = f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true
+      %td
+        &nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
+    - @owner_users.each do |owner_user|
+      %tr
+        %td
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          = link_to 'delete', owner_user, method: :delete, data: { confirm: 'Are you sure?' }
+        %td
+          &nbsp;&nbsp;
+          = owner_user.user.email
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td
+          &nbsp;
+          = owner_user.owner.name
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td
+          - if owner_user.dpm_admin == true
+            DPM
+          - else
+            PM
+          = link_to "change", "/toggle_dpm_admin?owner_id=#{owner_user.owner_id.to_s}&user_id=#{owner_user.user_id.to_s}"
+        %td
+          &nbsp;&nbsp;&nbsp;
+        %td
+          - unless owner_user.dpm_admin == true
+            - UserGeography.where(user_id:owner_user.user_id).each do |user_geography|
+              = user_geography.geography.name + " "
+            = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
+        %td
+          &nbsp;&nbsp;&nbsp;
+
+%br
+%br
+%br

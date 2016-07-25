@@ -83,7 +83,11 @@ class BuildingUnit < ActiveRecord::Base
           if apartment_number.include?(".")
             apartment_number = apartment_number.chomp(".0")
           end
-          bulding_unit = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number).dup
+          bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number)
+          if bulding_unit_ == nil
+            bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number-1)
+          end
+          bulding_unit = bulding_unit_.dup
 
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
 

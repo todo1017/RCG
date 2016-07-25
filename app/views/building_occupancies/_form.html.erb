@@ -12,22 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :building_id %><br>
+    <%= f.label :building_id %>
     <%= f.collection_select :building_id, @buildings, :id, :name, include_blank: true %>
   </div>
-  <div class="field">
-    <%= f.label :occupancy_rate %><br>
-    <%= f.text_field :occupancy_rate %>
+  <div class="row">
+    <div class="col-sm-4 field">
+      <%= f.label :occupancy_rate %>
+      <%= f.text_field :occupancy_rate, {:class => 'js-numbers-only'} %>
+    </div>
+    <div class="col-sm-4 field">
+      <%= f.label :leased_rate %>
+      <%= f.text_field :leased_rate, {:class => 'js-numbers-only'} %>
+    </div>
+    <div class="col-sm-4 field">
+      <%= f.label :as_of_date %>
+      <%= f.text_field :as_of_date, {:class => 'datepicker'} %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :leased_rate %><br>
-    <%= f.text_field :leased_rate %>
-  </div>
-  <div class="field">
-    <%= f.label :as_of_date %><br>
-    <%= f.date_select :as_of_date %>
-  </div>
-  <div class="actions"><br>
-    <%= f.submit "Save", {:class=>"btn btn-success"} %>
+  <div class="actions">
+    <span class="hidden"><input type="checkbox" name="add_another" id="add_another" value="1" /></span>
+    <%= f.submit "Save & Exit", {:class=>"btn btn-success"} %>
+    <%= f.button "Save & Continue", {:class=>"btn btn-success btn-save-continue"} %>
+    <%= link_to 'Cancel', building_occupancies_path, {:class=>"btn btn-cancel"} %>
   </div>
 <% end %>

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :owner_users
   resources :building_occupancies
   resources :user_geographies
   resources :comp_groups
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
   get 'geographies/user/:user_id', to: 'user_geographies#index'
   get 'geographies/user/:user_id/new', to: 'user_geographies#new'
   get 'analytics', to: 'building_units#analytics'
+  get 'user_assignments', to: 'owner_users#user_assignments'
+  get 'toggle_dpm_admin', to: 'owner_users#toggle_dpm_admin'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll'
 
