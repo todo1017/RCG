@@ -33,6 +33,11 @@ class BuildingUnitsController < ApplicationController
     else
       @geography_id = Geography.first
     end
+    if params[:comp_filter].present?
+      @comp_filter = params[:comp_filter]
+    else
+      @comp_filter = "29"
+    end
     @compgroups = CompGroup.all
 
     # TODO -- needs to take the owner Id!!!!!!!!
