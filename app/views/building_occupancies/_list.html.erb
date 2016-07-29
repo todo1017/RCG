@@ -1,6 +1,7 @@
 <table class="building-occupancy-table">
   <thead>
   <tr>
+    <th>Geography</th>
     <th>Building</th>
     <th>Occupancy rate</th>
     <th>Leased rate</th>
@@ -12,6 +13,7 @@
   <tbody>
   <% building_occupancies.each_with_index do |building_occupancy, index| %>
       <tr class="<%= (index % 2 == 0) ? 'odd' : 'even' %>">
+        <td><% if building_occupancy.building.geography_id == nil %>No Geography Assigned<% else %><%= Geography.find(building_occupancy.building.geography_id).name %><% end %></td>
         <td><%= link_to building_occupancy.building.name, edit_building_occupancy_path(building_occupancy) %></td>
         <td><%= number_to_percentage(building_occupancy.occupancy_rate, precision:1) %></td>
         <td><%= number_to_percentage(building_occupancy.leased_rate, precision:1) %></td>
