@@ -18,11 +18,11 @@
   <div class="row">
     <div class="col-sm-4 field">
       <%= f.label :occupancy_rate %>
-      <%= f.text_field :occupancy_rate, {:class => 'js-numbers-only'} %>
+      <%= f.text_field :occupancy_rate, {:class => 'js-numbers-only', :data => {'allow-decimal' => 'true'}} %>
     </div>
     <div class="col-sm-4 field">
       <%= f.label :leased_rate %>
-      <%= f.text_field :leased_rate, {:class => 'js-numbers-only'} %>
+      <%= f.text_field :leased_rate, {:class => 'js-numbers-only', :data => {'allow-decimal' => 'true'}} %>
     </div>
     <div class="col-sm-4 field">
       <%= f.label :as_of_date %>
