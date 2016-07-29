@@ -94,7 +94,7 @@
               <td class=""><%= number_to_currency(net_sq_foot(building_unit)) %></td>
               <%- CompGroup.all.each do |comp_group| %>
                   <% additional_row = Array.new %>
-                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).where("updated_at > current_date - interval '10 days' AND updated_at < current_date + interval '" + @comp_filter + " days'").each do |comp_building| %>
+                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                       <% counter = 0 %>
                       <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                           <% if counter == 0 %>

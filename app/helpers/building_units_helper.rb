@@ -88,7 +88,7 @@ module BuildingUnitsHelper
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
-    comp_apartments = BuildingUnit.where(building_id: comp_building_id)
+    comp_apartments = BuildingUnit.where(building_id: comp_building_id).where("updated_at > current_date - interval '10 days' AND updated_at < current_date + interval '" + @comp_filter + " days'")
 
     return comp_apartments.where(beds: beds, baths: baths, floor: [floor-1, floor, floor+1])
 
@@ -98,7 +98,7 @@ module BuildingUnitsHelper
     beds = building_unit.beds
     baths = building_unit.baths
     floor = building_unit.floor
-    comp_apartments = BuildingUnit.where(building_id: comp_building_id)
+    comp_apartments = BuildingUnit.where(building_id: comp_building_id).where("updated_at > current_date - interval '10 days' AND updated_at < current_date + interval '" + @comp_filter + " days'")
 
     # 1, 2 and 3
     # 1, 2 and 3
