@@ -8,6 +8,8 @@
       &nbsp;
       <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3], ['Lease ending in the next 90 days', 4], ['Lease ending in the next 120 days', 5]], params[:vacancy_filter]), prompt: 'Show apartments with:') %>
       &nbsp;
+      <%= select_tag(:comp_filter, options_for_select([['5', 5], ['29', 29], ['500', 500]], params[:comp_filter]), prompt: 'Show comps within x days:') %>
+      &nbsp;
       <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
   <% end %>
   <%= form_tag comparisons_path(format: "xls"), :method => 'get', :class => ['pull-right'] do %>
@@ -92,7 +94,7 @@
               <td class=""><%= number_to_currency(net_sq_foot(building_unit)) %></td>
               <%- CompGroup.all.each do |comp_group| %>
                   <% additional_row = Array.new %>
-                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
+                  <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).where("updated_at > current_date - interval '10 days' AND updated_at < current_date + interval '" + params[:comp_filter] + " days'").each do |comp_building| %>
                       <% counter = 0 %>
                       <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                           <% if counter == 0 %>
