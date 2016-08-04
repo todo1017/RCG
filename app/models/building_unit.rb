@@ -13,44 +13,35 @@ class BuildingUnit < ActiveRecord::Base
   # THIS initializes the Building...
   # THIS initializes the Building...
   # THIS initializes the Building...
-  def self.import(file)
+  def self.import(file, building_id)
 
-    xlsx = Roo::Spreadsheet.open(file)
+    sheet = Roo::Spreadsheet.open(file)
 
-    xlsx.each_with_pagename do |building_name, sheet|
+    message_to_display = "Building Setup Import - "
 
-      if Building.where(name: building_name).blank?
-        return "Building Import - sorry, misnamed Building: " + building_name
+    counter = 0
+    (2..sheet.last_row).each do |i|
+      begin
+        bulding_unit = find_or_initialize_by(building_id: building_id, number: sheet.cell("A", i).to_s.strip)
+
+        bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+        bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
+        bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
+        bulding_unit.update add_room: true if sheet.cell("E", i) == "Y"
+        bulding_unit.update sq_feet: 0
+        bulding_unit.update market_rent: 0
+        bulding_unit.update actual_rent: 0
+        bulding_unit.update import_number: 1
+
+        bulding_unit.save!
+        counter = counter +1
+      rescue
+        message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
+        next
       end
-
-      message_to_display = "Building Import - "
-
-      counter = 0
-      (2..sheet.last_row).each do |i|
-        begin
-          bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s.strip)
-
-          bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
-          bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
-          bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
-          bulding_unit.update add_room: true if sheet.cell("E", i) == "Y"
-          bulding_unit.update sq_feet: 0
-          bulding_unit.update market_rent: 0
-          bulding_unit.update actual_rent: 0
-
-          # TODO what happens if this is the 2-3 update?
-          bulding_unit.update import_number: 1
-
-          bulding_unit.save!
-          counter = counter +1
-        rescue
-          message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
-          next
-        end
-      end
-      message_to_display = message_to_display + "Total Rows Created/Updated: " + counter.to_s
-      return message_to_display
     end
+    message_to_display = message_to_display + "Total Rows Created/Updated: " + counter.to_s
+    return message_to_display
   end
 
   # Yardi Import...

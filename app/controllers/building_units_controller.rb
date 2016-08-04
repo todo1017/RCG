@@ -63,7 +63,7 @@ class BuildingUnitsController < ApplicationController
   end
 
   def import
-    message = BuildingUnit.import(params[:file])
+    message = BuildingUnit.import(params[:file], params[:building_id])
     redirect_to :back, notice: message
   end
   def import_yardi_1
