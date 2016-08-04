@@ -75,7 +75,7 @@
     </thead>
 
     <tbody>
-    <% @building_units.each do |building_unit| %>
+    <% @building_units.sort_by(&:building_id).each do |building_unit| %>
         <% last_import_number = BuildingUnit.where(building_id: building_unit.building_id).order("import_number").last.import_number %>
         <% if building_unit.import_number == last_import_number %>
             <% @additional_row_0 = Array.new %>
