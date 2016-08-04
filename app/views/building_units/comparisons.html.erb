@@ -66,9 +66,17 @@
       <th class="no-sort">Net/ft<sup>2</sup><br><br></th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="no-sort text-center border-separator">Actual Rent<br><br></th>
-              <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
-              <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% if params[:details].present? %>
+                  <th class="no-sort text-center border-separator">Unit Type<br><br></th>
+                  <th class="no-sort text-center">Actual Rent<br><br></th>
+                  <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
+                  <th class="no-sort text-center">Concessions<br><br></th>
+                  <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% else %>
+                  <th class="no-sort text-center border-separator">Actual Rent<br><br></th>
+                  <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
+                  <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% end %>
           <% end %>
       <% end %>
     </tr>
