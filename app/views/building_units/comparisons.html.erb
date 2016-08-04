@@ -98,15 +98,21 @@
                       <% counter = 0 %>
                       <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                           <% if counter == 0 %>
-                              <%= render partial: "three_fields", locals: {comp: comp} %>
+                              <% if params[:details].present? %>
+                                  <%= render partial: "three_field_details", locals: {comp: comp} %>
+                              <% else %>
+                                  <%= render partial: "three_fields", locals: {comp: comp} %>
+                              <% end %>
                           <% else %>
                               <% add_to_array(counter, comp) %>
                           <% end %>
                           <% counter = counter + 1 %>
                       <% end.empty? and begin %>
-                          <td class="border-separator">nothing exact</td>
-                          <td class="">&nbsp;</td>
-                          <td class="">&nbsp;</td>
+                          <% if params[:details].present? %>
+                              <td colspan="5" class="border-separator">nothing exact</td>
+                          <% else %>
+                              <td colspan="3" class="border-separator">nothing exact</td>
+                          <% end %>
                           <% counter = counter + 1 %>
                       <% end %>
                       <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
@@ -120,11 +126,19 @@
                   <% end %>
               <% end %>
             </tr>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+            <% if params[:details].present? %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "yes"} %>
+            <% else %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "no"} %>
+            <% end %>
         <% end %>
     <% end %>
     </tbody>

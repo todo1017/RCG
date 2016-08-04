@@ -11,10 +11,17 @@
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
               <td class="border-separator">&nbsp;</td>
-              <td class="">&nbsp;</td>
-              <td class="">&nbsp;</td>
+              <% if details == "yes" %>
+                  <td colspan="5" class="border-separator">nothing exact</td>
+              <% else %>
+                  <td colspan="3" class="border-separator">nothing exact</td>
+              <% end %>
           <% else %>
-              <%= render partial: "three_fields", locals: {comp: comp} %>
+              <% if details == "yes" %>
+                  <%= render partial: "three_field_details", locals: {comp: comp} %>
+              <% else %>
+                  <%= render partial: "three_fields", locals: {comp: comp} %>
+              <% end %>
           <% end %>
       <% end %>
     </tr>

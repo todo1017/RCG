@@ -1,0 +1,9 @@
+<td class=""><%= unit_type(comp) %></td>
+<td class="border-separator">
+  <span title="<%= comp.building.name %> - <%= unit_type(comp) %>">
+    <%= number_to_currency(comp.actual_rent) %>
+  </span>
+</td>
+<td class=""><%= number_to_currency(gross_sq_foot(comp, "comp")) %></td>
+<td class="">&nbsp;</td>
+<td class=""><%= number_to_currency(net_sq_foot(comp, "comp")) %></td>
