@@ -67,7 +67,11 @@ class BuildingUnitsController < ApplicationController
     redirect_to :back, notice: message
   end
   def import_yardi_1
-    message = BuildingUnit.import_yardi_1(params[:file])
+    if params[:building][:id].present?
+      message = BuildingUnit.import_yardi_1(params[:file], params[:building][:id])
+    else
+      message = "Yardi Import - Please select a Building"
+    end
     redirect_to :back, notice: message
   end
 

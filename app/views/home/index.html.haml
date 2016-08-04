@@ -29,7 +29,8 @@
           %br
         = form_tag import_yardi_1_building_units_path, multipart: true do
           = file_field_tag :file
-          = hidden_field_tag :building_id, params[:building_id]
+          = collection_select :building, :id, Building.where(competitor: false).order('name ASC'), :id, :name, include_blank: true
+
           %br
           = submit_tag "Import", {:class=>"btn btn-success"}
         %br

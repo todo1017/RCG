@@ -56,17 +56,11 @@ class BuildingUnit < ActiveRecord::Base
   # Yardi Import...
   # Yardi Import...
   # Yardi Import...
-  def self.import_yardi_1(file)
+  def self.import_yardi_1(file, building_id)
 
     sheet = Roo::Spreadsheet.open(file)
 
-    building_name = sheet.cell("A", 2).to_s
-
-    if Building.where(name: building_name).blank?
-      return "Yardi Import - sorry, misnamed Building: " + building_name
-    end
-
-    previous_import_number = where(building_id: Building.where(name: building_name).first.id).order("import_number").last.import_number
+    previous_import_number = where(building_id: building_id).order("import_number").last.import_number
 
     message_to_display = "Yardi Import - "
 
@@ -83,9 +77,9 @@ class BuildingUnit < ActiveRecord::Base
           if apartment_number.include?(".")
             apartment_number = apartment_number.chomp(".0")
           end
-          bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number)
+          bulding_unit_ = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number)
           if bulding_unit_ == nil
-            bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number-1)
+            bulding_unit_ = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number-1)
           end
           bulding_unit = bulding_unit_.dup
 
@@ -138,7 +132,7 @@ class BuildingUnit < ActiveRecord::Base
             end
             bulding_unit.update relevant_start_date: future_move_in_date
             bulding_unit.update relevant_end_date: Date.strptime("12/31/2090", "%m/%d/%Y")
-            expiring_record_for_the_building_unit = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number+1)
+            expiring_record_for_the_building_unit = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number+1)
             expiring_record_for_the_building_unit.update relevant_end_date: future_move_in_date - 1
             expiring_record_for_the_building_unit.save
           end
