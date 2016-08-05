@@ -1,3 +1,9 @@
+<% if params[:details].present? %>
+    <%= colspan_value = 5 %>
+<% else %>
+    <%= colspan_value = 3 %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <h2 class="page-h2">Market Comparison Report</h2>
@@ -38,7 +44,7 @@
       <%- @compgroups.each do |comp_group| %>
           <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
           <%- if building_count > 0 %>
-              <%= raw "<th class='no-sort text-center' colspan='#{building_count*3}'>" %>
+              <%= raw "<th class='no-sort text-center' colspan='#{building_count*colspan_value}'>" %>
               <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
               <%= raw "</th>" %>
               <% last_comp_group = comp_group.name %>
@@ -55,7 +61,7 @@
       <th>&nbsp;</th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="no-sort text-center" colspan="3"><%= comp_building.name %><br><br></th>
+              <th class="no-sort text-center" colspan="<%=colspan_value.to_s%>"><%= comp_building.name %><br><br></th>
           <% end %>
       <% end %>
     </tr>
