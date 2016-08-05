@@ -1,8 +1,8 @@
-<Cell><Data ss:Type="Number"><%= unit_type(comp) %></Data></Cell>
+<Cell><Data ss:Type="String"><%= unit_type(comp) %></Data></Cell>
 <Cell>
   <Data ss:Type="Number"><%= comp.actual_rent %></Data>
   <Comment><ss:Data><%= comp.building.name %> - <%= unit_type(comp) %></ss:Data></Comment>
 </Cell>
 <Cell><Data ss:Type="Number"><%= gross_sq_foot(comp, "comp") %></Data></Cell>
-<Cell><Data ss:Type="Number"><%= concessions_currency(comp, "comp") %></Data></Cell>
+<Cell><Data ss:Type="Number"><%= concessions_calc(comp, "comp") %></Data></Cell>
 <Cell><Data ss:Type="Number"><%= net_sq_foot(comp, "comp") %></Data></Cell>
