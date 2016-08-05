@@ -24,6 +24,9 @@
   <%= form_tag comparisons_path(format: "xls"), :method => 'get', :class => ['pull-right'] do %>
       <%= hidden_field_tag :geography_filter, params[:geography_filter] %>
       <%= hidden_field_tag :vacancy_filter, params[:vacancy_filter] %>
+      <% if params[:details].present? %>
+          <%= hidden_field_tag :details, "1" %>
+      <% end %>
       <%= submit_tag "Download in Excel", {:class=>"pull-right btn btn-medium btn-secondary"} %>
   <% end %>
 </div>

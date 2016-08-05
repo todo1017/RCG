@@ -4,12 +4,26 @@
       <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
-              <Cell><Data ss:Type="String"></Data></Cell>
-              <Cell><Data ss:Type="String"></Data></Cell>
-              <Cell><Data ss:Type="String"></Data></Cell>
+              <% if details == "yes" %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+              <% else %>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+                  <Cell><Data ss:Type="String"></Data></Cell>
+              <% end %>
           <% else %>
-              <%= render partial: "three_fields", locals: {comp: comp} %>
+              <% if details == "yes" %>
+                  <%= render partial: "three_field_details", locals: {comp: comp} %>
+              <% else %>
+                  <%= render partial: "three_fields", locals: {comp: comp} %>
+              <% end %>
           <% end %>
       <% end %>
     </Row>
 <% end %>
+
+

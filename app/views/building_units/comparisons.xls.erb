@@ -1,3 +1,9 @@
+<% if params[:details].present? %>
+    <% colspan_value = 5 %>
+<% else %>
+    <% colspan_value = 3 %>
+<% end %>
+
 <?xml version="1.0"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
           xmlns:o="urn:schemas-microsoft-com:office:office"
@@ -12,7 +18,7 @@
         <%- @compgroups.each do |comp_group| %>
             <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
             <%- if building_count > 0 %>
-                <Cell ss:MergeAcross="<%= (building_count*3)-1 %>"><Data ss:Type="String">
+                <Cell ss:MergeAcross="<%= (building_count*colspan_value)-1 %>"><Data ss:Type="String">
                   <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
                 </Data></Cell>
                 <% last_comp_group = comp_group.name %>
@@ -23,7 +29,7 @@
         <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-                <Cell ss:MergeAcross="2"><Data ss:Type="String"><%= comp_building.name %></Data></Cell>
+                <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"><%= comp_building.name %></Data></Cell>
             <% end %>
         <% end %>
       </Row>
@@ -32,14 +38,22 @@
         <Cell><Data ss:Type="String">Unit Type</Data></Cell>
         <Cell><Data ss:Type="String">Available</Data></Cell>
         <Cell><Data ss:Type="String">Market Rent</Data></Cell>
-        <Cell><Data ss:Type="String">Concessions</Data></Cell>
+        <Cell><Data ss:Type="String">Concession</Data></Cell>
         <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
         <Cell><Data ss:Type="String">net/ft2</Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-                <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
-                <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                <% if params[:details].present? %>
+                    <Cell><Data ss:Type="String">Unit Type</Data></Cell>
+                    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Concession</Data></Cell>
+                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                <% else %>
+                    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                <% end %>
             <% end %>
         <% end %>
       </Row>
@@ -67,15 +81,27 @@
                           <% counter = 0 %>
                           <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                               <% if counter == 0 %>
-                                  <%= render partial: "three_fields", locals: {comp: comp} %>
+                                  <% if params[:details].present? %>
+                                    <%= render partial: "three_field_details", locals: {comp: comp} %>
+                                  <% else %>
+                                    <%= render partial: "three_fields", locals: {comp: comp} %>
+                                  <% end %>
                               <% else %>
                                   <% add_to_array(counter, comp) %>
                               <% end %>
                               <% counter = counter + 1 %>
                           <% end.empty? and begin %>
-                              <Cell><Data ss:Type="String">nothing exact</Data></Cell>
-                              <Cell><Data ss:Type="String"></Data></Cell>
-                              <Cell><Data ss:Type="String"></Data></Cell>
+                              <% if params[:details].present? %>
+                                <Cell><Data ss:Type="String">nothing exact</Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                              <% else %>
+                                <Cell><Data ss:Type="String">nothing exact</Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                                <Cell><Data ss:Type="String"></Data></Cell>
+                              <% end %>
                               <% counter = counter + 1 %>
                           <% end %>
                           <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
@@ -89,11 +115,19 @@
                       <% end %>
                   <% end %>
               </Row>
-              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
-              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
-              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
-              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
-              <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+              <% if params[:details].present? %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "yes"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "yes"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "yes"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "yes"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "yes"} %>
+              <% else %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "no"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "no"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "no"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "no"} %>
+                  <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "no"} %>
+              <% end %>
           <% end %>
       <% end %>
     </Table>
