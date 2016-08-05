@@ -55,7 +55,7 @@ class BuildingUnitsController < ApplicationController
     end
     # @building_units = building_units_owned_in_geography.where(actual_rent: 0)
     @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date" + interval)
-    @building_units.sort_by!{|x| [x.building_id, x.lease_expiration, x.number]}
+    @building_units.sort_by!{|x| [x.building_id, x.lease_expiration]}
     respond_to do |format|
       format.html
       format.xls
