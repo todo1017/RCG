@@ -10,6 +10,9 @@
       &nbsp;
       <%= select_tag(:comp_filter, options_for_select([['5', 5], ['29', 29], ['500', 500]], params[:comp_filter]), prompt: 'Show comps within x days:') %>
       &nbsp;
+      <% if params[:details].present? %>
+          <%= hidden_field_tag :details, "1" %>
+      <% end %>
       <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
   <% end %>
   <%= form_tag comparisons_path(format: "xls"), :method => 'get', :class => ['pull-right'] do %>
