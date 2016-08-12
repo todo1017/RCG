@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Number</Data></Cell>
+        <Cell><Data ss:Type="String">Floor</Data></Cell>
+        <Cell><Data ss:Type="String">Beds</Data></Cell>
+        <Cell><Data ss:Type="String">Baths</Data></Cell>
+        <Cell><Data ss:Type="String">Add Room</Data></Cell>
+        <Cell><Data ss:Type="String">Sq Feet</Data></Cell>
+        <Cell><Data ss:Type="String">Market Rent</Data></Cell>
+        <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+        <Cell><Data ss:Type="String">Lease Expiration</Data></Cell>
+        <Cell><Data ss:Type="String">Move Out</Data></Cell>
+        <Cell><Data ss:Type="String">Notes</Data></Cell>
+        <Cell><Data ss:Type="String">Months Off</Data></Cell>
+        <Cell><Data ss:Type="String">Cash Off</Data></Cell>
+        <Cell><Data ss:Type="String">Lease Length</Data></Cell>
+      </Row>
+      <% @building_units.each do |building_unit| %>
+          <Row>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.number %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.floor %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.beds %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.baths %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= if building_unit.add_room == true then "Y" end %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.sq_feet %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= number_to_currency(building_unit.market_rent) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= number_to_currency(building_unit.actual_rent) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.lease_expiration.try(:strftime, "%m-%d-%Y") %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.move_out %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.notes %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.months_off %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= number_to_currency(building_unit.cash_off) %></Data>
+            </Cell>
+            <Cell>
+              <Data ss:Type="String"><%= building_unit.lease_length %></Data>
+            </Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

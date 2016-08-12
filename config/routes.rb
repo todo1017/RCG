@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   get 'user_assignments', to: 'owner_users#user_assignments'
   get 'toggle_dpm_admin', to: 'owner_users#toggle_dpm_admin'
 
-  get 'rent_roll/:building_id', to: 'building_units#rent_roll'
+  get 'rent_roll/:building_id', to: 'building_units#rent_roll', as: "rent_roll"
 
   resources :users do
     member do
