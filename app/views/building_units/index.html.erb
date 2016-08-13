@@ -5,7 +5,7 @@
 
 <div class="clearfix">
   <%= form_tag "/rent_roll/#{params[:building_id]}", :method => 'get', :class => ['pull-left', 'table-filter'] do %>
-      <%= select_tag(:import_number_filter, options_from_collection_for_select(BuildingUnit.select(:building_id, :import_number).where(building_id: params[:building_id]).distinct, :import_number, :import_number_with_date, @import_number), prompt: 'Upload # and Date') %>
+      <%= select_tag(:import_number_filter, options_from_collection_for_select(BuildingUnit.select(:building_id, :import_number).where(building_id: params[:building_id]).order(:import_number).distinct, :import_number, :import_number_with_date, @import_number), prompt: 'Upload # and Date') %>
       <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
   <% end %>
   <%= form_tag rent_roll_path(params[:building_id], format: "xls"), :method => 'get', :class => ['pull-right'] do %>
