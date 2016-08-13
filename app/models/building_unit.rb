@@ -9,6 +9,11 @@ class BuildingUnit < ActiveRecord::Base
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
   scope :competitors, -> { joins(:building).where(buildings: {competitor: true}).order(:building_id, :floor, :beds, :baths) }
 
+  def import_number_with_date
+    # TODO -- change this to use As-of Date
+    return "#" + self.import_number.to_s + " on " + BuildingUnit.where(building_id: self.building_id, import_number: self.import_number).first.created_at.try(:strftime, "%m-%d-%Y")
+  end
+
 
   # THIS initializes the Building...
   # THIS initializes the Building...

@@ -1,9 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<div class="clearfix">
-  <h2 class="pull-left reset-margin">Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
 
-  <%= link_to "Download in Excel", rent_roll_path(params[:building_id], format: "xls"), {class: 'btn btn-medium btn-secondary pull-right'} %>
+<h2 class="page-h2">Rent Roll for <%= Building.find(params[:building_id]).name %></h2>
+
+<div class="clearfix">
+  <%= form_tag "/rent_roll/#{params[:building_id]}", :method => 'get', :class => ['pull-left', 'table-filter'] do %>
+      <%= select_tag(:import_number_filter, options_from_collection_for_select(BuildingUnit.select(:building_id, :import_number).where(building_id: params[:building_id]).distinct, :import_number, :import_number_with_date, @import_number), prompt: 'Upload # and Date') %>
+      <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
+  <% end %>
+  <%= form_tag rent_roll_path(params[:building_id], format: "xls"), :method => 'get', :class => ['pull-right'] do %>
+      <%= hidden_field_tag :import_number_filter, @import_number %>
+      <%= submit_tag "Download in Excel", {:class=>"pull-right btn btn-medium btn-secondary"} %>
+  <% end %>
 </div>
 
 <div class="scroll-table-div">

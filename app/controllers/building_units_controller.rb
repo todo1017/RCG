@@ -19,10 +19,14 @@ class BuildingUnitsController < ApplicationController
     if BuildingUnit.where(building_id: params[:building_id].to_i).count == 0
       @building_units = []
     else
-      last_import_number = BuildingUnit.where(building_id: params[:building_id].to_i).order("import_number").last.import_number
+      if params[:import_number_filter].present?
+        @import_number = params[:import_number_filter]
+      else
+        @import_number = BuildingUnit.where(building_id: params[:building_id].to_i).order("import_number").last.import_number
+      end
       # Sort method incluenced by:
       # http://stackoverflow.com/questions/6277127/sort-string-containing-numbers-in-ruby-rails/6277274#6277274
-      @building_units = BuildingUnit.where(import_number: last_import_number, building_id: params[:building_id].to_i).sort{|a, b| a.number.to_i <=> b.number.to_i}
+      @building_units = BuildingUnit.where(import_number: @import_number, building_id: params[:building_id].to_i).sort{|a, b| a.number.to_i <=> b.number.to_i}
     end
     render :index
   end
