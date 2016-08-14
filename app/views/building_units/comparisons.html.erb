@@ -1,3 +1,9 @@
+<% if params[:details].present? %>
+    <% colspan_value = 5 %>
+<% else %>
+    <% colspan_value = 3 %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <h2 class="page-h2">Market Comparison Report</h2>
@@ -8,11 +14,19 @@
       &nbsp;
       <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3], ['Lease ending in the next 90 days', 4], ['Lease ending in the next 120 days', 5]], params[:vacancy_filter]), prompt: 'Show apartments with:') %>
       &nbsp;
+      <%= select_tag(:comp_filter, options_for_select([['5', 5], ['29', 29], ['500', 500]], params[:comp_filter]), prompt: 'Show comps within x days:') %>
+      &nbsp;
+      <% if params[:details].present? %>
+          <%= hidden_field_tag :details, "1" %>
+      <% end %>
       <%= submit_tag "Filter", {:class=>"btn btn-filter btn-medium btn-secondary"} %>
   <% end %>
   <%= form_tag comparisons_path(format: "xls"), :method => 'get', :class => ['pull-right'] do %>
       <%= hidden_field_tag :geography_filter, params[:geography_filter] %>
       <%= hidden_field_tag :vacancy_filter, params[:vacancy_filter] %>
+      <% if params[:details].present? %>
+          <%= hidden_field_tag :details, "1" %>
+      <% end %>
       <%= submit_tag "Download in Excel", {:class=>"pull-right btn btn-medium btn-secondary"} %>
   <% end %>
 </div>
@@ -33,7 +47,7 @@
       <%- @compgroups.each do |comp_group| %>
           <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
           <%- if building_count > 0 %>
-              <%= raw "<th class='no-sort text-center' colspan='#{building_count*3}'>" %>
+              <%= raw "<th class='no-sort text-center' colspan='#{building_count*colspan_value}'>" %>
               <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
               <%= raw "</th>" %>
               <% last_comp_group = comp_group.name %>
@@ -50,7 +64,7 @@
       <th>&nbsp;</th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="no-sort text-center" colspan="3"><%= comp_building.name %><br><br></th>
+              <th class="no-sort text-center" colspan="<%=colspan_value.to_s%>"><%= comp_building.name %><br><br></th>
           <% end %>
       <% end %>
     </tr>
@@ -59,14 +73,22 @@
       <th class="no-sort">Unit Type<br><br></th>
       <th class="">Available<br><br></th>
       <th class="no-sort">Market Rent<br><br></th>
-      <th class="no-sort">Concessions<br><br></th>
+      <th class="no-sort">Concession<br><br></th>
       <th class="no-sort">Gross/ft<sup>2</sup><br><br></th>
       <th class="no-sort">Net/ft<sup>2</sup><br><br></th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-              <th class="no-sort text-center border-separator">Actual Rent<br><br></th>
-              <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
-              <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% if params[:details].present? %>
+                  <th class="no-sort text-center border-separator">Unit Type<br><br></th>
+                  <th class="no-sort text-center">Actual Rent<br><br></th>
+                  <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
+                  <th class="no-sort text-center">Concession<br><br></th>
+                  <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% else %>
+                  <th class="no-sort text-center border-separator">Actual Rent<br><br></th>
+                  <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
+                  <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
+              <% end %>
           <% end %>
       <% end %>
     </tr>
@@ -96,15 +118,21 @@
                       <% counter = 0 %>
                       <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                           <% if counter == 0 %>
-                              <%= render partial: "three_fields", locals: {comp: comp} %>
+                              <% if params[:details].present? %>
+                                  <%= render partial: "three_field_details", locals: {comp: comp} %>
+                              <% else %>
+                                  <%= render partial: "three_fields", locals: {comp: comp} %>
+                              <% end %>
                           <% else %>
                               <% add_to_array(counter, comp) %>
                           <% end %>
                           <% counter = counter + 1 %>
                       <% end.empty? and begin %>
-                          <td class="border-separator">nothing exact</td>
-                          <td class="">&nbsp;</td>
-                          <td class="">&nbsp;</td>
+                          <% if params[:details].present? %>
+                              <td colspan="5" class="border-separator">nothing exact</td>
+                          <% else %>
+                              <td colspan="3" class="border-separator">nothing exact</td>
+                          <% end %>
                           <% counter = counter + 1 %>
                       <% end %>
                       <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
@@ -118,11 +146,19 @@
                   <% end %>
               <% end %>
             </tr>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3} %>
-            <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4} %>
+            <% if params[:details].present? %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "yes"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "yes"} %>
+            <% else %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_0, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_1, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_2, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_3, details: "no"} %>
+                <%= render partial: "additional_row", locals: {additional_row_data: @additional_row_4, details: "no"} %>
+            <% end %>
         <% end %>
     <% end %>
     </tbody>

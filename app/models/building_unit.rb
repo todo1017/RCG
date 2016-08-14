@@ -9,64 +9,54 @@ class BuildingUnit < ActiveRecord::Base
   scope :owned, -> { joins(:building).where(buildings: {competitor: false}) }
   scope :competitors, -> { joins(:building).where(buildings: {competitor: true}).order(:building_id, :floor, :beds, :baths) }
 
+  def import_number_with_date
+    # TODO -- change this to use As-of Date
+    return "#" + self.import_number.to_s + " on " + BuildingUnit.where(building_id: self.building_id, import_number: self.import_number).first.created_at.try(:strftime, "%m-%d-%Y")
+  end
+
 
   # THIS initializes the Building...
   # THIS initializes the Building...
   # THIS initializes the Building...
-  def self.import(file)
+  def self.import(file, building_id)
 
-    xlsx = Roo::Spreadsheet.open(file)
+    sheet = Roo::Spreadsheet.open(file)
 
-    xlsx.each_with_pagename do |building_name, sheet|
+    message_to_display = "Building Setup Import - "
 
-      if Building.where(name: building_name).blank?
-        return "Building Import - sorry, misnamed Building: " + building_name
+    counter = 0
+    (2..sheet.last_row).each do |i|
+      begin
+        bulding_unit = find_or_initialize_by(building_id: building_id, number: sheet.cell("A", i).to_s.strip)
+
+        bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+        bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
+        bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
+        bulding_unit.update add_room: true if sheet.cell("E", i) == "Y"
+        bulding_unit.update sq_feet: 0
+        bulding_unit.update market_rent: 0
+        bulding_unit.update actual_rent: 0
+        bulding_unit.update import_number: 1
+
+        bulding_unit.save!
+        counter = counter +1
+      rescue
+        message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
+        next
       end
-
-      message_to_display = "Building Import - "
-
-      counter = 0
-      (2..sheet.last_row).each do |i|
-        begin
-          bulding_unit = find_or_initialize_by(building_id: Building.where(name: building_name).first.id, number: sheet.cell("A", i).to_s.strip)
-
-          bulding_unit.update floor: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
-          bulding_unit.update beds: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
-          bulding_unit.update baths: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
-          bulding_unit.update add_room: true if sheet.cell("E", i) == "Y"
-          bulding_unit.update sq_feet: 0
-          bulding_unit.update market_rent: 0
-          bulding_unit.update actual_rent: 0
-
-          # TODO what happens if this is the 2-3 update?
-          bulding_unit.update import_number: 1
-
-          bulding_unit.save!
-          counter = counter +1
-        rescue
-          message_to_display = message_to_display + "problem with row #" + counter.to_s + " (partially updated)..."
-          next
-        end
-      end
-      message_to_display = message_to_display + "Total Rows Created/Updated: " + counter.to_s
-      return message_to_display
     end
+    message_to_display = message_to_display + "Total Rows Created/Updated: " + counter.to_s
+    return message_to_display
   end
 
   # Yardi Import...
   # Yardi Import...
   # Yardi Import...
-  def self.import_yardi_1(file)
+  def self.import_yardi_1(file, building_id)
 
     sheet = Roo::Spreadsheet.open(file)
 
-    building_name = sheet.cell("A", 2).to_s
-
-    if Building.where(name: building_name).blank?
-      return "Yardi Import - sorry, misnamed Building: " + building_name
-    end
-
-    previous_import_number = where(building_id: Building.where(name: building_name).first.id).order("import_number").last.import_number
+    previous_import_number = where(building_id: building_id).order("import_number").last.import_number
 
     message_to_display = "Yardi Import - "
 
@@ -83,9 +73,9 @@ class BuildingUnit < ActiveRecord::Base
           if apartment_number.include?(".")
             apartment_number = apartment_number.chomp(".0")
           end
-          bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number)
+          bulding_unit_ = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number)
           if bulding_unit_ == nil
-            bulding_unit_ = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number-1)
+            bulding_unit_ = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number-1)
           end
           bulding_unit = bulding_unit_.dup
 
@@ -138,7 +128,7 @@ class BuildingUnit < ActiveRecord::Base
             end
             bulding_unit.update relevant_start_date: future_move_in_date
             bulding_unit.update relevant_end_date: Date.strptime("12/31/2090", "%m/%d/%Y")
-            expiring_record_for_the_building_unit = find_by(building_id: Building.where(name: building_name).first.id, number: apartment_number, import_number: previous_import_number+1)
+            expiring_record_for_the_building_unit = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number+1)
             expiring_record_for_the_building_unit.update relevant_end_date: future_move_in_date - 1
             expiring_record_for_the_building_unit.save
           end

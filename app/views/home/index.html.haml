@@ -8,31 +8,37 @@
       - if current_user.owner_id != nil && current_user.owner_admin
         %h3
           = "Director of PM only:"
-          -#= "#{current_user.owner.name} Director of PM Only:"
-        %br
-        -#%br
         -#= link_to "User Approvals", "/users"
-        -#%br
-        -#%br
         %br
-        %b
-          Import floor/beds/baths Building Data - insert and/or update
+        - counter = 0
+        -# TODO - query needs to filter by owner
+        - Building.where(competitor: false).order('name ASC').each do |building|
+          - if BuildingUnit.where(building_id: building.id).count == 0
+            - counter = 1
+            %h4
+              = "Building Setup for #{building.name}"
+              %br
+            = form_tag import_building_units_path, multipart: true do
+              = file_field_tag :file
+              = hidden_field_tag :building_id, building.id
+              %br
+              = submit_tag "Import", {:class=>"btn btn-success"}
+              %br
+              %br
+        - if counter == 0
+          %i
+            All Buildings have Setup data
           %br
-        = form_tag import_building_units_path, multipart: true do
-          = file_field_tag :file
-          %br
-          = submit_tag "Import", {:class=>"btn btn-success"}
         %br
-        %br
-        %b
-          Import Yardi Data - update only
+        %h4
+          Yardi Data Import
           %br
         = form_tag import_yardi_1_building_units_path, multipart: true do
           = file_field_tag :file
-          = hidden_field_tag :building_id, params[:building_id]
+          = collection_select :building, :id, Building.where(competitor: false).order('name ASC'), :id, :name, include_blank: true
+          %br
           %br
           = submit_tag "Import", {:class=>"btn btn-success"}
-        %br
         %br
         %br
       - if [1, 2, 3].include? current_user.id

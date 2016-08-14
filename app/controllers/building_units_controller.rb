@@ -19,10 +19,14 @@ class BuildingUnitsController < ApplicationController
     if BuildingUnit.where(building_id: params[:building_id].to_i).count == 0
       @building_units = []
     else
-      last_import_number = BuildingUnit.where(building_id: params[:building_id].to_i).order("import_number").last.import_number
+      if params[:import_number_filter].present?
+        @import_number = params[:import_number_filter]
+      else
+        @import_number = BuildingUnit.where(building_id: params[:building_id].to_i).order("import_number").last.import_number
+      end
       # Sort method incluenced by:
       # http://stackoverflow.com/questions/6277127/sort-string-containing-numbers-in-ruby-rails/6277274#6277274
-      @building_units = BuildingUnit.where(import_number: last_import_number, building_id: params[:building_id].to_i).sort{|a, b| a.number.to_i <=> b.number.to_i}
+      @building_units = BuildingUnit.where(import_number: @import_number, building_id: params[:building_id].to_i).sort{|a, b| a.number.to_i <=> b.number.to_i}
     end
     render :index
   end
@@ -33,21 +37,35 @@ class BuildingUnitsController < ApplicationController
     else
       @geography_id = Geography.first
     end
+    if params[:comp_filter].present?
+      @comp_filter = params[:comp_filter]
+    else
+      @comp_filter = "29"
+    end
     @compgroups = CompGroup.all
 
     # TODO -- needs to take the owner Id!!!!!!!!
     building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).where("relevant_start_date = ? AND relevant_end_date = ?", Date.strptime("01/01/1910", "%m/%d/%Y"), Date.strptime("12/31/2090", "%m/%d/%Y")).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
-    # @building_units = building_units_owned_in_geography.where(actual_rent: 0)
     if params[:vacancy_filter] == "2"
-      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '30 days'")
+      interval =  " + interval '30 days'"
     elsif  params[:vacancy_filter] == "3"
-      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '60 days'")
+      interval =  " + interval '60 days'"
     elsif  params[:vacancy_filter] == "4"
-      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '90 days'")
+      interval =  " + interval '90 days'"
     elsif  params[:vacancy_filter] == "5"
-      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date + interval '120 days'")
+      interval =  " + interval '120 days'"
     else
-      @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date")
+      interval = ""
+    end
+    # @building_units = building_units_owned_in_geography.where(actual_rent: 0).to_a
+    @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date" + interval)
+    @building_units.sort_by! do |x|
+      date = if x.lease_expiration == nil || x.actual_rent == 0
+               Date.today
+             else
+               x.lease_expiration
+             end
+      [x.building_id, date]
     end
     respond_to do |format|
       format.html
@@ -56,11 +74,15 @@ class BuildingUnitsController < ApplicationController
   end
 
   def import
-    message = BuildingUnit.import(params[:file])
+    message = BuildingUnit.import(params[:file], params[:building_id])
     redirect_to :back, notice: message
   end
   def import_yardi_1
-    message = BuildingUnit.import_yardi_1(params[:file])
+    if params[:building][:id].present?
+      message = BuildingUnit.import_yardi_1(params[:file], params[:building][:id])
+    else
+      message = "Yardi Import - Please select a Building"
+    end
     redirect_to :back, notice: message
   end
 
