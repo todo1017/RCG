@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  property: MyString
+  sq_feet: MyString
+  act_rent: MyString
+  months_off: MyString
+  cash_off: MyString
+  lease_length: MyString
+  date: MyString
+
+two:
+  property: MyString
+  sq_feet: MyString
+  act_rent: MyString
+  months_off: MyString
+  cash_off: MyString
+  lease_length: MyString
+  date: MyString

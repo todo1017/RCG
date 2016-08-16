@@ -1,0 +1,31 @@
+<p>
+	<strong>Property : </strong>
+	<%= @analysis.property %>
+</p>
+<p>
+	<strong>Square Feet : </strong>
+	<%= @analysis.sq_feet %>
+</p>
+<p>
+	<strong>Actual Rent : </strong>
+	<%= @analysis.act_rent %>
+</p>
+<p>
+	<strong>Months Off : </strong>
+	<%= @analysis.months_off %>
+</p>
+<p>
+	<strong>Cash Off : </strong>
+	<%= @analysis.cash_off %>
+</p>
+<p>
+	<strong>Lease Length : </strong>
+	<%= @analysis.lease_length %>
+</p>
+<p>
+	<strong>Date : </strong>
+	<%= @analysis.date %>
+</p>
+<%= link_to 'Edit', edit_analysis_path(@analysis) %>
+<br/>
+<%= link_to 'Back', analyses_path %>

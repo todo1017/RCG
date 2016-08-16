@@ -1,0 +1,37 @@
+<h1> Edit New Data </h1>
+
+<%= form_for :analysis, url: analysis_path(@analysis), method: :patch do |f| %>
+  <p>
+    <%= f.label :property %><br>
+    <%= f.text_field :property %>
+  </p>
+  <p>
+    <%= f.label :sq_feet %><br>
+    <%= f.text_field :sq_feet %>
+  </p>
+  <p>
+    <%= f.label :act_rent %><br>
+    <%= f.text_field :act_rent %>
+  </p>
+  <p>
+    <%= f.label :months_off %><br>
+    <%= f.text_field :months_off %>
+  </p>
+  <p>
+    <%= f.label :cash_off %><br>
+    <%= f.text_field :cash_off %>
+  </p>
+  <p>
+    <%= f.label :lease_length %><br>
+    <%= f.text_field :lease_length %>
+  </p>
+  <p>
+    <%= f.label :date %><br>
+    <%= f.text_field :date %>
+  </p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', analyses_path %>

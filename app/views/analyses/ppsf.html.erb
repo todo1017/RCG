@@ -1,0 +1,123 @@
+<div id="analyses-ppsf">
+	<div class="row">
+		<div class="analyses-title">
+			<h1 class="text-center">Price per Square Foot</h1>
+		</div>
+	</div>
+	<ul class="nav nav-pills nav-justified">
+		<li class="active"><a data-toggle="pill" href="#rental_price_trend_over_time">Rental Price Trend Over Time</a></li>
+		<li><a data-toggle="pill" href="#clustered_building_rent">Clustered Building Rent</a></li>
+	</ul>
+	<div class="tab-content">
+		<div id="rental_price_trend_over_time" class="tab-pane fade in active">
+			<div class="col-xs-4">
+				<div>
+					<h3>Show</h3>
+					<div class="show-content row">
+						<ul class="nav nav-pills nav-justified pill-color-1">
+							<li class="active set_by_year"><a data-toggle="pill">By Year</a></li>
+							<li class="set_by_quarter"><a data-toggle="pill">By Quarter</a></li>
+							<li class="set_by_month"><a data-toggle="pill">By Month</a></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<h3>Alternative</h3>
+					<div class="alternative-content row">
+						<ul class="nav nav-pills nav-justified pill-color-1">
+							<li class="active set_gross"><a data-toggle="pill">Gross Rent</a></li>
+							<li class="set_net"><a data-toggle="pill">Net Rent</a></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<h3>Filter</h3>
+					<div class="filter-content row">
+						<div class="row">
+							<div class="col-xs-6">
+								<h5>- Geography</h5>
+								<ul id="geographies" class="nav nav-pills nav-stacked pill-color-1">
+									<% @geographies.each do |geography| %>
+									  	<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '') %>"><%= geography.name %></a></li>
+								  	<% end %>
+								</ul>
+							</div>
+							<div id="comp_groups" class="col-xs-6 tab-content">
+								<h5>- Group</h5>
+								<% @geographies.each do |geography| %>
+									<div id="<%= geography.name.gsub(/\s+/, '') %>" class="tab-pane fade in">
+										<% @comp_groups.each do |comp_group| %>
+											<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+										<% end %>
+									</div>
+								<% end %>
+							</div>
+						</div>
+						<h4>
+							<button type="button" class="btn btn-default apply-filter">Apply Filter</button>
+						</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-8">
+				<div class="chart-container">
+					<canvas width="400" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+		<div id="clustered_building_rent" class="tab-pane fade">
+			<div class="col-xs-4">
+				<div>
+					<h3>Alternative</h3>
+					<div class="alternative-content row">
+						<ul class="nav nav-pills nav-justified pill-color-1">
+							<li class="set_gross active"><a data-toggle="pill">Gross Rent</a></li>
+							<li class="set_net"><a data-toggle="pill">Net Rent</a></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<h3>Filter</h3>
+					<div class="filter-content row">
+						<div class="form-group">
+							<label for="from">From</label>
+							<input class="form-control" type="text" id="from" name="from">
+						</div>
+						<div class="form-group">
+							<label for="to">To</label>
+							<input class="form-control" type="text" id="to" name="to">
+						</div>
+						<div class="row">
+							<div class="col-xs-6">
+								<h5>- Geography</h5>
+								<ul class="nav nav-pills nav-stacked pill-color-1">
+									<% @geographies.each do |geography| %>
+									  	<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '')+"_" %>"><%= geography.name %></a></li>
+								  	<% end %>
+								</ul>
+							</div>
+							<div class="col-xs-6 tab-content">
+								<h5>- Group</h5>
+								<% @geographies.each do |geography| %>
+									<div id="<%= geography.name.gsub(/\s+/, '')+"_" %>" class="tab-pane fade in">
+										<% @comp_groups.each do |comp_group| %>
+											<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+										<% end %>
+									</div>
+								<% end %>
+							</div>
+						</div>
+						<h4>
+							<button type="button" class="btn btn-default apply-filter">Apply Filter</button>
+						</h4>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-8">
+				<div class="chart-container">
+					<canvas id="barChart" width="400" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

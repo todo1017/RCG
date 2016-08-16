@@ -1,0 +1,71 @@
+// Place all the styles related to the Analyses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#analyses-ppsf {
+	padding : 0 20px;
+
+	.pill-color-1 {
+		cursor : pointer;
+	}
+	.pill-color-1 .active a,
+	.pill-color-1 .active a:hover{
+		background-color : #5cb85c;
+	}
+
+	.analyses-title {
+		padding-bottom : 20px;
+	}
+	.tab-content {
+		padding-top : 50px;
+	}
+	.chart-container {
+		padding : 20px;
+		box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	#rental_price_trend_over_time {
+		.tab-content {
+			padding : 0;
+		}
+		.show-content {
+			padding-left : 20px;
+			border-left : 3px solid #ddd;
+			margin : 0;
+		}
+		.alternative-content {
+			padding-left : 20px;
+			border-left : 3px solid #ddd;
+			margin : 0;
+		}
+		.filter-content {
+			padding-left : 20px;
+			border-left : 3px solid #ddd;
+			margin : 0;
+		}
+		
+		#comp_groups {
+			label {
+				color : #337ab7;
+			}
+		}
+	}
+
+	#clustered_building_rent {
+		.tab-content {
+			padding : 0;
+		}
+
+		.alternative-content {
+			padding-left : 20px;
+			border-left : 3px solid #ddd;
+			margin : 0;
+		}
+
+		.filter-content {
+			padding-left : 20px;
+			border-left : 3px solid #ddd;
+			margin : 0;
+		}
+	}
+}

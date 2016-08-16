@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   get 'analytics', to: 'building_units#analytics'
   get 'user_assignments', to: 'owner_users#user_assignments'
   get 'toggle_dpm_admin', to: 'owner_users#toggle_dpm_admin'
+  get 'analyses/csv', to: 'analyses#csv'
+  get 'analyses/ppsf', to: 'analyses#ppsf'
+  get 'analyses/ppsf_filter1', to: 'analyses#ppsf_filter1'
+  get 'analyses/ppsf_filter2', to: 'analyses#ppsf_filter2'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll', as: "rent_roll"
 
@@ -48,6 +52,9 @@ Rails.application.routes.draw do
       post :import
       post :import_yardi_1
     }
+  end
+  resources :analyses do
+    collection { post :import }
   end
   resources :unit_types
 

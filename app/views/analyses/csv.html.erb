@@ -1,0 +1,6 @@
+<h1>Import CSV</h1>
+<%= flash[:notice] %>
+<%= form_tag import_analyses_path, multipart: true do %>
+	<%= file_field_tag :file %>
+	<%= submit_tag "Import CSV" %>
+<% end %>

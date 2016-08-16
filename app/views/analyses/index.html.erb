@@ -1,0 +1,48 @@
+<h1> All Data </h1>
+
+<table id="analysis-data" class="table table-striped table-hover table-responsive">
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Square Feet</th>
+			<th>Actual Rent</th>
+			<th>Months Off</th>
+			<th>Cash Off</th>
+			<th>Lease Length</th>
+			<th>Date</th>
+			<th>TimeStamp</th>
+			<th>year</th>
+			<th>quarter</th>
+			<th>month</th>
+			<th>gross rent</th>
+			<th>net rent</th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @analyses.each do |analysis| %>
+			<tr>
+				<td><%= analysis.property %></td>
+				<td><%= analysis.sq_feet %></td>
+				<td><%= analysis.act_rent %></td>
+				<td><%= analysis.months_off %></td>
+				<td><%= analysis.cash_off %></td>
+				<td><%= analysis.lease_length %></td>
+				<td><%= analysis.date %></td>
+				<td><%= analysis.timestamp %></td>
+				<td><%= analysis.year %></td>
+				<td><%= analysis.quarter %></td>
+				<td><%= analysis.month %></td>
+				<td><%= analysis.gross_rent %></td>
+				<td><%= analysis.net_rent %></td>
+				<td><%= link_to 'Show', analysis_path(analysis) %></td>
+				<td><%= link_to 'Edit', edit_analysis_path(analysis) %></td>
+				<td><%= link_to 'Destroy', analysis_path(analysis), method: :delete, data: {confirm: 'Are you sure?' } %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= link_to 'New Data', new_analysis_path %>
