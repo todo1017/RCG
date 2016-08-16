@@ -19,6 +19,8 @@
 //= require jquery.numeric.min
 //= require jquery-ui/datepicker
 //= require accounting
+//= require Chart
+//= require jquery-ui
 //= require_tree .
 
 

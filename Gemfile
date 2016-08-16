@@ -23,6 +23,7 @@ gem 'jquery-datatables-rails', '~> 3.3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'chart-js-rails'
 gem 'activerecord-session_store'
 
 # Use Unicorn as the app server
