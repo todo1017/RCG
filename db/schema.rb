@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715184356) do
+ActiveRecord::Schema.define(version: 20160725003253) do
 
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +30,22 @@ ActiveRecord::Schema.define(version: 20160715184356) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "analyses", force: :cascade do |t|
+    t.integer  "building_unit_id"
+    t.datetime "date"
+    t.string   "property"
+    t.string   "year"
+    t.string   "quarter"
+    t.string   "month"
+    t.float    "gross_rent",       default: 0.0, null: false
+    t.float    "net_rent",         default: 0.0, null: false
+    t.integer  "timestamp"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "analyses", ["building_unit_id"], name: "index_analyses_on_building_unit_id"
 
   create_table "building_amenities", force: :cascade do |t|
     t.integer  "building_id"

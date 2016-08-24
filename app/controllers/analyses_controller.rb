@@ -1,45 +1,100 @@
 class AnalysesController < ApplicationController
 	
-	def new
-	end
-
-	def create
-		@analysis = Analysis.new(analysis_params)
-
-		@analysis.save
-		redirect_to @analysis
-	end
-
 	def index
 		@analyses = Analysis.all
 	end
-	
-	def show
-		@analysis = Analysis.find(params[:id])
-	end
-	
-	def edit
-		@analysis = Analysis.find(params[:id])
-	end
-	
-	def update
-		@analysis = Analysis.find(params[:id])
 
-		if @analysis.update(analysis_params)
-			redirect_to @analysis
-		else
-			render 'edit'
+	def update
+		$analyses_count = Analysis.all.count
+		$competitors_count = BuildingUnit.competitors.all.count
+		$same_date_count = 0
+		$same_id_count   = 0
+		if $analyses_count > 0
+			$same_date_count = ActiveRecord::Base.connection.execute('SELECT a.id FROM analyses a, building_units b WHERE a.building_unit = b.id').count
+			$same_id_count = ActiveRecord::Base.connection.execute('SELECT a.id FROM analyses a, building_units b WHERE a.building_unit = b.id and a.date = b.updated_at').count
+		end
+
+		$new_count     = $competitors_count - $same_id_count
+		$updated_count = $same_id_count - $same_date_count
+		$deleted_count = $analyses_count - $same_id_count
+		flash[:info] = ''
+		flash[:success] = ''
+
+		if $new_count + $updated_count + $deleted_count > 0
+			flash[:info] = "Your database need update"
+			flash[:success] = ''
+		end
+		
+		if !$message.blank?
+			flash[:info] = ''
+			flash[:success] = $message
+			$message = ''
 		end
 	end
-	
-	def destroy
-		@analysis = Analysis.find(params[:id])
-		@analysis.destroy
 
-		redirect_to analyses_path
-	end
+	def update_data
+		Analysis.destroy_all
 
-	def csv
+		competitors = BuildingUnit.competitors.all
+		counter = 0
+		error = ''
+		for competitor in competitors
+			begin
+				analysis = Analysis.new
+				analysis.date = competitor.updated_at if competitor.updated_at
+				analysis.building_unit = competitor.id
+				analysis.property = competitor.building.name
+
+				date = analysis.date
+				quarter = 1 + date.month / 4
+
+				analysis.timestamp = date.to_time.to_i
+				analysis.year    = date.year
+				analysis.quarter = "Q" + quarter.to_s + "-" + date.year.to_s
+				analysis.month   = date.year.to_s + "-" + date.month.to_s
+
+				months_off   = 0.0
+				act_rent     = 0.0
+				cash_off     = 0.0
+				lease_length = 12.0
+
+				if !competitor.months_off.blank?
+					months_off = competitor.months_off.to_f 
+				end
+				if !competitor.actual_rent.blank?
+					act_rent = competitor.actual_rent 
+				end
+				if !competitor.cash_off.blank?
+					cash_off     = competitor.cash_off.to_f 
+				end
+				if !competitor.lease_length.blank?
+					lease_length = competitor.lease_length.to_f 
+				end
+				
+				
+				sq_feet = competitor.sq_feet.to_f
+
+				analysis.gross_rent = (act_rent / sq_feet).round(2)
+
+				if(months_off)
+					analysis.net_rent = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
+				else
+					analysis.net_rent = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
+				end
+
+				analysis.save!
+			rescue
+				error = error + "< error >"
+				next
+			end
+		end
+		if !error.blank?
+			$message = 'errors are occured'
+		else
+			$message = error#'Successfully updated'
+		end
+		
+		redirect_to :back
 	end
 
 	def import
@@ -70,19 +125,14 @@ class AnalysesController < ApplicationController
 		net_month     = {}
 
 		for building in buildings
-			gross_year_sql    = 'select year as label,    avg(gross_rent) as val from analyses where property = "' + building + '"  group by year;'
-			gross_quarter_sql = 'select quarter as label, avg(gross_rent) as val from analyses where property = "' + building + '"  group by quarter;'
-			gross_month_sql   = 'select month as label,   avg(gross_rent) as val from analyses where property = "' + building + '"  group by month;'
-			net_year_sql      = 'select year as label,    avg(net_rent)   as val from analyses where property = "' + building + '"  group by year;'
-			net_quarter_sql   = 'select quarter as label, avg(net_rent)   as val from analyses where property = "' + building + '"  group by quarter;'
-			net_month_sql     = 'select month as label,   avg(net_rent)   as val from analyses where property = "' + building + '"  group by month;'
 
-			gross_year_res    = ActiveRecord::Base.connection.execute(gross_year_sql)
-			gross_quarter_res = ActiveRecord::Base.connection.execute(gross_quarter_sql)
-			gross_month_res   = ActiveRecord::Base.connection.execute(gross_month_sql)
-			net_year_res      = ActiveRecord::Base.connection.execute(net_year_sql)
-			net_quarter_res   = ActiveRecord::Base.connection.execute(net_quarter_sql)
-			net_month_res     = ActiveRecord::Base.connection.execute(net_month_sql)
+			gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year')
+			gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter')
+			gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month')
+			net_year_res      = Analysis.select("year as label,    avg(net_rent)   as val").where("property = ?", building).group('year')
+			net_quarter_res   = Analysis.select("quarter as label, avg(net_rent)   as val").where("property = ?", building).group('quarter')
+			net_month_res     = Analysis.select("month as label,   avg(net_rent)   as val").where("property = ?", building).group('month')
+			
 
 			gross_year[building]    = gross_year_res
 			gross_quarter[building] = gross_quarter_res
@@ -90,6 +140,7 @@ class AnalysesController < ApplicationController
 			net_year[building]      = net_year_res
 			net_quarter[building]   = net_quarter_res
 			net_month[building]     = net_month_res
+
 		end
 
 		result = {
@@ -106,7 +157,6 @@ class AnalysesController < ApplicationController
 		}
 
 		render json: { data: result}
-		# render json: { status: 'success'}
 	end
 
 	def ppsf_filter2
@@ -117,12 +167,12 @@ class AnalysesController < ApplicationController
 		buildings = []
 		for filter in params[:filter_list]
 			ids = filter.split("_")
-			sql = 'select b.name, g.name from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
+			sql = 'select b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
 			res = ActiveRecord::Base.connection.execute(sql)
 			for r in res
 				buildings.push({
-					'name' => r[0],
-					'geography' => r[1]
+					'name' => r["bname"],
+					'geography' => r["gname"]
 				})
 			end
 		end
@@ -131,20 +181,17 @@ class AnalysesController < ApplicationController
 		net   = []
 
 		for building in buildings
-			gross_sql = 'select avg(gross_rent) as val from analyses where property = "'+building["name"]+'" and timestamp >='+from_date.to_s+' and timestamp <= '+to_date.to_s
-			net_sql   = 'select avg(net_rent) as val from analyses where property = "'+building["name"]+'" and timestamp >='+from_date.to_s+' and timestamp <= '+to_date.to_s
-
-			gross_res = ActiveRecord::Base.connection.execute(gross_sql)
-			net_res   = ActiveRecord::Base.connection.execute(net_sql)
+			gross_res = Analysis.select('avg(gross_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
+			net_res   = Analysis.select('avg(net_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
 
 			gross.push({
-				'val'      => gross_res[0][0],
+				'val'      => gross_res[0]["val"],
 				'building' => building["name"],
 				'geo'      => building["geography"]
 			})
 
 			net.push({
-				'val'      => net_res[0][0],
+				'val'      => net_res[0]["val"],
 				'building' => building["name"],
 				'geo'      => building["geography"]
 			})
@@ -159,8 +206,4 @@ class AnalysesController < ApplicationController
 		# render json: { data: buildings }
 	end
 
-	private
-		def analysis_params
-			params.require(:analysis).permit(:property, :sq_feet, :act_rent, :months_off, :cash_off, :lease_length, :date)
-		end
 end

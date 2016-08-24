@@ -68,4 +68,5 @@ class Analysis < ActiveRecord::Base
 			return message
 		end
 	end
+	
 end

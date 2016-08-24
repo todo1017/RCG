@@ -48,7 +48,6 @@ $(document).ready(function() {
 					filter_list.push(this.value)
 				}
 			});
-			console.log(filter_list);
 
 			if(filter_list.length) {
 				$.get( "/analyses/ppsf_filter1",
@@ -68,7 +67,6 @@ $(document).ready(function() {
 		function draw_chart1() {
 			$("#rental_price_trend_over_time .chart-container").html('<canvas width="400" height="200"></canvas>');
 			var ctx = $("#rental_price_trend_over_time canvas");
-			console.log(ctx);
 			var data;
 			var chart_data = {
 				labels: [],
@@ -101,36 +99,42 @@ $(document).ready(function() {
 						chart_data.labels.push("2016-" + i);
 					}
 					break;
-			}					
-			console.log(data);
-			$.each(data, function(building_name, value_list){
-				var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
-				var dataset = {
-		            label: building_name,
-		            fill: false,
-		            backgroundColor: random_color,
-		            lineTension: 0.3,
-		            borderWidth: 1,
-		            borderColor: random_color,
-		            data: []
-		        };
+			}
 
-		        $.each(chart_data.labels, function(key, label){
-		        	y = 0;
-		        	$.each(value_list, function(key, item){
-		        		if(label == item.label) {
-		        			y = item.val;
-		        		}
-		        	})
-		        	dataset.data.push(y);
-		        });
-		        chart_data.datasets.push(dataset);
-			});
-			var lineChart = new Chart(ctx, {
-			    type: "line",
-			    data: chart_data,
-			    options: {}
-			});
+			if (!jQuery.isEmptyObject(data)) {
+
+				$.each(data, function(building_name, value_list){
+					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+					var dataset = {
+			            label: building_name,
+			            fill: false,
+			            backgroundColor: random_color,
+			            lineTension: 0.3,
+			            borderWidth: 1,
+			            borderColor: random_color,
+			            data: []
+			        };
+
+			        $.each(chart_data.labels, function(key, label){
+			        	y = 0;
+			        	$.each(value_list, function(key, item){
+			        		if(label == item.label) {
+			        			y = item.val;
+			        		}
+			        	})
+			        	dataset.data.push(y);
+			        });
+			        chart_data.datasets.push(dataset);
+				});
+				var lineChart = new Chart(ctx, {
+				    type: "line",
+				    data: chart_data,
+				    options: {}
+				});
+			} else {
+				init_chart1();
+			}
+			
 		}
 
 		function init_chart1() {
@@ -197,6 +201,7 @@ $(document).ready(function() {
 				},
 				function( result ) {
 					all_data2 = result;
+					console.log(result);
 					draw_chart2();
 				}
 			);
@@ -306,36 +311,42 @@ $(document).ready(function() {
 					data = all_data2.data.net
 					break;
 			}
-
 			console.log(data);
-			$.each(data, function(index, item){
+			console.log(data.length);
 
-				chart_data.labels.push(item.geo);
+			if(data.length) {
+				$.each(data, function(index, item){
 
-				var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
-				chart_data.datasets[0].backgroundColor.push(random_color);
-				chart_data.datasets[0].data.push(item.val);
-			});
+					chart_data.labels.push(item.geo);
 
-			var barOptions = {
-				scaleStartValue : 0,
-				scales: {
-		            xAxes: [{
-		                    barPercentage: 0.8
-		            }],
-		            yAxes: [{
-		            	ticks: {
-		                    min: 0
-		            	}
-		            }]
-		        }
-			};
+					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+					chart_data.datasets[0].backgroundColor.push(random_color);
+					chart_data.datasets[0].data.push(item.val);
+				});
 
-			var barChart = new Chart(ctx, {
-			    type: 'bar',
-			    data: chart_data,
-			    options: barOptions
-			});
+				var barOptions = {
+					scaleStartValue : 0,
+					scales: {
+			            xAxes: [{
+			                    barPercentage: 0.8
+			            }],
+			            yAxes: [{
+			            	ticks: {
+			                    min: 0
+			            	}
+			            }]
+			        }
+				};
+
+				var barChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: chart_data,
+				    options: barOptions
+				});
+			} else {
+				init_chart2();
+			}
+
 		}
 	}
 } );

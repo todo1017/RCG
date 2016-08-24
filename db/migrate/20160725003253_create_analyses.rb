@@ -1,13 +1,16 @@
 class CreateAnalyses < ActiveRecord::Migration
   def change
     create_table :analyses do |t|
-      t.string :property
-      t.string :sq_feet
-      t.string :act_rent
-      t.string :months_off
-      t.string :cash_off
-      t.string :lease_length
-      t.string :date
+      t.integer :building_unit
+      t.datetime :date
+
+      t.string  :property
+      t.string  :year
+      t.string  :quarter
+      t.string  :month
+      t.float   :gross_rent, :null => false, :default => 0.00
+      t.float   :net_rent, :null => false, :default => 0.00
+      t.integer :timestamp
 
       t.timestamps null: false
     end
