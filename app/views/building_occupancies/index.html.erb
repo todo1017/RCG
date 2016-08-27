@@ -1,6 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h3>Building Occupancies</h3>
+
+<h2 class="page-h2">Building Occupancies</h2>
+
+<div class="clearfix">
+  <%= form_tag building_occupancies_path(params[:building_id], format: "xls"), :method => 'get', :class => ['pull-right'] do %>
+      <%= hidden_field_tag :import_number_filter, @import_number %>
+      <%= submit_tag "Download in Excel", {:class=>"pull-right btn btn-medium btn-secondary"} %>
+  <% end %>
+</div>
 
 <%= link_to 'Add New', "/building_occupancies/new", {:class=>"btn btn-success"} %>
 <%= link_to 'Add New for Competitor', "/building_occupancies/new?competitor=true", {:class=>"btn btn-success"} %>

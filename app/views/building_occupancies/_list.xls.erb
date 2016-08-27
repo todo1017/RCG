@@ -1,0 +1,17 @@
+<Row>
+  <Cell>
+    <Data ss:Type="String"><% if building_occupancy.building.geography_id == nil %>No Geography Assigned<% else %><%= Geography.find(building_occupancy.building.geography_id).name %><% end %></Data>
+  </Cell>
+  <Cell>
+    <Data ss:Type="String"><%= building_occupancy.building.name %></Data>
+  </Cell>
+  <Cell>
+    <Data ss:Type="String"><%= number_to_percentage(building_occupancy.occupancy_rate, precision:1) %></Data>
+  </Cell>
+  <Cell>
+    <Data ss:Type="String"><%= number_to_percentage(building_occupancy.leased_rate, precision:1) %></Data>
+  </Cell>
+  <Cell>
+    <Data ss:Type="String"><%= building_occupancy.as_of_date %></Data>
+  </Cell>
+</Row>

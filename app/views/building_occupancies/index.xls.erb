@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Owned Buildings</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Geography</Data></Cell>
+        <Cell><Data ss:Type="String">Building</Data></Cell>
+        <Cell><Data ss:Type="String">Occupancy rate</Data></Cell>
+        <Cell><Data ss:Type="String">Leased rate</Data></Cell>
+        <Cell><Data ss:Type="String">As of date</Data></Cell>
+      </Row>
+      <% @building_occupancies_owned.each do |building_occupancy| %>
+        <%= render partial: "list", locals: { building_occupancy: building_occupancy }  %>
+      <% end %>
+      <Row>
+        <Cell><Data ss:Type="String"></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Competitors</Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Geography</Data></Cell>
+        <Cell><Data ss:Type="String">Building</Data></Cell>
+        <Cell><Data ss:Type="String">Occupancy rate</Data></Cell>
+        <Cell><Data ss:Type="String">Leased rate</Data></Cell>
+        <Cell><Data ss:Type="String">As of date</Data></Cell>
+      </Row>
+      <% @building_occupancies_comp.each do |building_occupancy| %>
+          <%= render partial: "list", locals: { building_occupancy: building_occupancy }  %>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
+
