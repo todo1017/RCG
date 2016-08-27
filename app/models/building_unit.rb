@@ -10,8 +10,7 @@ class BuildingUnit < ActiveRecord::Base
   scope :competitors, -> { joins(:building).where(buildings: {competitor: true}).order(:building_id, :floor, :beds, :baths) }
 
   def import_number_with_date
-    # TODO -- change this to use As-of Date
-    return "#" + self.import_number.to_s + " on " + BuildingUnit.where(building_id: self.building_id, import_number: self.import_number).first.created_at.try(:strftime, "%m-%d-%Y")
+    return BuildingUnit.where(building_id: self.building_id, import_number: self.import_number).first.as_of_date.try(:strftime, "%m-%d-%Y")
   end
 
 
@@ -52,7 +51,7 @@ class BuildingUnit < ActiveRecord::Base
   # Yardi Import...
   # Yardi Import...
   # Yardi Import...
-  def self.import_yardi_1(file, building_id)
+  def self.import_yardi_1(file, building_id, as_of_date, months_off, cash_off, lease_length, lease_end_date)
 
     sheet = Roo::Spreadsheet.open(file)
 
@@ -79,8 +78,13 @@ class BuildingUnit < ActiveRecord::Base
           end
           bulding_unit = bulding_unit_.dup
 
-          bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
+          bulding_unit.update as_of_date: as_of_date
+          bulding_unit.update months_off: months_off
+          bulding_unit.update cash_off: cash_off
+          bulding_unit.update lease_length: lease_length
+          bulding_unit.update lease_end_date: lease_end_date
 
+          bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
           bulding_unit.update sq_feet: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
           bulding_unit.update resident_id: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
           bulding_unit.update resident_name: sheet.cell("E", i).to_s if sheet.cell("E", i) != nil

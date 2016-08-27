@@ -79,7 +79,7 @@ class BuildingUnitsController < ApplicationController
   end
   def import_yardi_1
     if params[:building][:id].present?
-      message = BuildingUnit.import_yardi_1(params[:file], params[:building][:id])
+      message = BuildingUnit.import_yardi_1(params[:file], params[:building][:id], params[:as_of_date], params[:months_off], params[:cash_off], params[:lease_length], params[:lease_end_date])
     else
       message = "Yardi Import - Please select a Building"
     end
@@ -170,6 +170,6 @@ class BuildingUnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def building_unit_params
-      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes, :resident_id, :floor, :bed_bath, :beds, :baths, :add_room, :months_off, :cash_off, :lease_length)
+      params.require(:building_unit).permit(:number, :building_id, :unit_type_id, :sq_feet, :resident_name, :market_rent, :actual_rent, :resident_deposit, :other_deposit, :move_in, :move_out, :lease_expiration, :notes, :resident_id, :floor, :bed_bath, :beds, :baths, :add_room, :months_off, :cash_off, :lease_length, :as_of_date, :lease_end_date)
     end
 end

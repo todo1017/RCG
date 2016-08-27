@@ -183,6 +183,8 @@ ActiveRecord::Schema.define(version: 20160725003253) do
     t.boolean  "add_room"
     t.date     "relevant_start_date"
     t.date     "relevant_end_date"
+    t.date     "as_of_date"
+    t.date     "lease_end_date"
   end
 
   create_table "buildings", force: :cascade do |t|

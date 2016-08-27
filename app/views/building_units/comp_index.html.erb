@@ -17,6 +17,7 @@
     <thead>
     <tr>
       <th class="extra">Property</th>
+      <th>As Of Date</th>
       <th>Floor</th>
       <th>Beds</th>
       <th>Baths</th>
@@ -26,8 +27,7 @@
       <th>Months Off</th>
       <th>Cash Off</th>
       <th>Lease Length</th>
-      <th>Created On</th>
-      <th>Updated On<br><br></th>
+      <th>Lease End-date</th>
       <th></th>
     </tr>
     </thead>
@@ -36,6 +36,7 @@
     <% @building_units.each_with_index do |building_unit, index| %>
         <tr>
           <td class="width-200"><%= link_to building_unit.building.name, "/comp_edit/#{building_unit.id}" %></td>
+          <td><%= building_unit.as_of_date.strftime("%m-%d-%Y") if building_unit.as_of_date != nil %></td>
           <td><%= building_unit.floor %></td>
           <td><%= building_unit.beds %></td>
           <td><%= building_unit.baths %></td>
@@ -45,8 +46,7 @@
           <td><%= building_unit.months_off %></td>
           <td><%= number_to_currency(building_unit.cash_off) %></td>
           <td><%= building_unit.lease_length %></td>
-          <td><%= building_unit.created_at.strftime("%m-%d-%Y") %></td>
-          <td><%= building_unit.updated_at.strftime("%m-%d-%Y") %></td>
+          <td><%= building_unit.lease_end_date.strftime("%m-%d-%Y") if building_unit.lease_end_date != nil %></td>
           <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
     <% end %>

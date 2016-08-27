@@ -15,9 +15,15 @@
 
     <%= f.hidden_field :building_id, value: params[:building_id] %>
     <%= f.hidden_field :bed_bath, value: "competitor_record" %>
-    <div class="field">
-      <b>Building</b><br>
-      <%= f.collection_select :building_id, Building.where(competitor: true).order('name ASC'), :id, :name, include_blank: true %>
+    <div class="row">
+      <div class="col-sm-4 field">
+        <b>As Of Date</b><br>
+        <%= f.date_field :as_of_date %>
+      </div>
+      <div class="col-sm-8 field">
+          <b>Building</b><br>
+          <%= f.collection_select :building_id, Building.where(competitor: true).order('name ASC'), :id, :name, include_blank: true %>
+      </div>
     </div>
     <div class="row">
       <div class="col-sm-4 field">
@@ -49,17 +55,21 @@
     </div>
     <h4>Concessions...</h4>
     <div class="row">
-      <div class="field col-sm-4">
-        <%= f.label :months_off %><br>
+      <div class="field col-sm-2">
+        <%= f.label :months_off, "Months" %><br>
         <%= f.text_field :months_off, {:class => 'js-numbers-only'} %>
       </div>
-      <div class="field col-sm-4">
+      <div class="field col-sm-3">
         <%= f.label :cash_off %><br>
         <div class="dollar-input-container"><i>$</i><%= f.text_field :cash_off, {:class => 'js-numbers-only'} %></div>
       </div>
-      <div class="field col-sm-4">
+      <div class="field col-sm-3">
         <%= f.label :lease_length %><br>
         <%= f.text_field :lease_length, {:class => 'js-numbers-only'} %>
+      </div>
+      <div class="col-sm-4 field">
+        <b>Lease End-date</b><br>
+        <%= f.date_field :lease_end_date %>
       </div>
     </div>
     <%- if @building_unit.created_at != nil %>
