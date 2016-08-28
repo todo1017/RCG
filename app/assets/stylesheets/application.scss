@@ -180,6 +180,23 @@ $navbarHeight: 80px;
 
 .main-wrapper {
     padding-top: $navbarHeight + 10px;
+
+    fieldset {
+        padding: .75em;
+        margin: 0 2px;
+        border: 1px solid #ccc;
+    }
+
+    legend {
+        display: inherit;
+        width: auto;
+        padding: 0;
+        margin-bottom: 0;
+        font-size: 14px;
+        line-height: inherit;
+        color: inherit;
+        border: 0;
+    }
 }
 
 .reset-margin {
