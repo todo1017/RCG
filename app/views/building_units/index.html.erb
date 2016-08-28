@@ -33,6 +33,7 @@
         <th>Months Off</th>
         <th>Cash Off</th>
         <th>Lease Length</th>
+        <th>Lease End Date</th>
         <th></th>
       </tr>
     </thead>
@@ -54,6 +55,7 @@
           <td><%= building_unit.months_off %></td>
           <td><%= number_to_currency(building_unit.cash_off) %></td>
           <td><%= building_unit.lease_length %></td>
+          <td class="wide-column"><%= building_unit.lease_end_date.try(:strftime, "%m-%d-%Y") %></td>
           <td><%= link_to 'Delete', building_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
