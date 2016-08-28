@@ -13,7 +13,7 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body <% if params[:controller] == 'sessions' && params[:action] == 'new' %>class="page--login"<% end %>>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">

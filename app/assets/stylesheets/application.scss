@@ -23,6 +23,11 @@
 $primaryColor: #002060;
 $secondaryColor: #4e81be;
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
 }
