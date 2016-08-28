@@ -2,6 +2,11 @@
   background: url(image_path('login-background-1.jpg'));
   background-size: cover;
 
+  .navbar-default {
+    background: rgba(255, 255, 255, 0.9);
+    border: 0;
+  }
+
   .main-wrapper {
     display: table;
     height: 100%;
@@ -17,7 +22,6 @@
   width: 100%;
   max-width: 400px;
   margin: 20px auto;
-  border: 1px solid #eee;
   background: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 4px;
