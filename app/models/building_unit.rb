@@ -76,19 +76,14 @@ class BuildingUnit < ActiveRecord::Base
           if bulding_unit_ == nil
             bulding_unit_ = find_by(building_id: building_id, number: apartment_number, import_number: previous_import_number-1)
           end
+          # TODO --"dup" may be propagating some values that we do not want (see mid way down I am setting a few fields to nil)
           bulding_unit = bulding_unit_.dup
 
           bulding_unit.update as_of_date: as_of_date
-          bulding_unit.update months_off: months_off
-          bulding_unit.update cash_off: cash_off
-          bulding_unit.update lease_length: lease_length
-          bulding_unit.update lease_end_date: lease_end_date
-
           bulding_unit.update bed_bath: sheet.cell("B", i).to_s if sheet.cell("B", i) != nil
           bulding_unit.update sq_feet: sheet.cell("C", i).to_i if sheet.cell("C", i) != nil
           bulding_unit.update resident_id: sheet.cell("D", i).to_s if sheet.cell("D", i) != nil
           bulding_unit.update resident_name: sheet.cell("E", i).to_s if sheet.cell("E", i) != nil
-
           bulding_unit.update market_rent: sheet.cell("F", i).to_f if sheet.cell("F", i) != nil
           if sheet.cell("G", i) == nil
             bulding_unit.update actual_rent: 0
@@ -119,6 +114,20 @@ class BuildingUnit < ActiveRecord::Base
               bulding_unit.update move_out: Date.strptime(sheet.cell("L", i), "%m/%d/%Y")
             end
           end
+
+          if bulding_unit.lease_expiration != nil && lease_end_date != nil && bulding_unit.lease_expiration < Date.strptime(lease_end_date, "%Y-%m-%d")
+            bulding_unit.update months_off: months_off
+            bulding_unit.update cash_off: cash_off
+            bulding_unit.update lease_length: lease_length
+            bulding_unit.update lease_end_date: lease_end_date
+          else
+            bulding_unit.update months_off: nil
+            bulding_unit.update cash_off: nil
+            bulding_unit.update lease_length: nil
+            bulding_unit.update lease_end_date: nil
+          end
+
+
           if future_records == "no"
             bulding_unit.update relevant_start_date: Date.strptime("01/01/1910", "%m/%d/%Y")
             bulding_unit.update relevant_end_date: Date.strptime("12/31/2090", "%m/%d/%Y")
@@ -149,6 +158,17 @@ class BuildingUnit < ActiveRecord::Base
     end
     message_to_display = message_to_display + "Total Rows Updated: " + counter.to_s
     return message_to_display
+  end
+
+  # TODO -- use this method in the above
+  def self.save_date(field_name, field_value)
+    if field_value != nil
+      if field_value.is_a?(Date)
+        @building_unit.update field_name.to_sym => field_value
+      else
+        @building_unit.update field_name.to_sym => Date.strptime(field_value, "%m/%d/%Y")
+      end
+    end
   end
 
   # header = sheet.row(1)
