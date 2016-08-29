@@ -31,6 +31,7 @@
   </div>
   <div class="actions">
     <span class="hidden"><input type="checkbox" name="add_another" id="add_another" value="1" /></span>
+    <%= f.hidden_field :competitor, value: "true" if params[:competitor] == "true" %>
     <%= f.submit "Save & Exit", {:class=>"btn btn-success"} %>
     <%= f.button "Save & Continue", {:class=>"btn btn-success btn-save-continue"} %>
     <%= link_to 'Cancel', building_occupancies_path, {:class=>"btn btn-cancel"} %>
