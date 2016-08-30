@@ -26,7 +26,11 @@ class BuildingOccupanciesController < ApplicationController
   def get_redirect_path
     logger.debug params
     if params[:add_another] == "1"
-      return new_building_occupancy_path
+      if params[:building_occupancy][:competitor] == "true"
+        return new_building_occupancy_path(competitor: "true")
+      else
+        return new_building_occupancy_path
+      end
     else
       return building_occupancies_path
     end
