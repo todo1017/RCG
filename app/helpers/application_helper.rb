@@ -5,8 +5,8 @@ module ApplicationHelper
   end
 
   def get_random_background
-    backgrounds = [image_path('login-background-1.jpg'), image_path('login-background-2.jpg'), image_path('login-background-3.jpg')]
-    return backgrounds[rand(0..2)]
+    backgrounds = ['login-background-1.jpg', 'login-background-2.jpg', 'login-background-3.jpg', 'login-background-4.jpg', 'login-background-5.jpg', 'login-background-6.jpg']
+    return image_path(backgrounds[rand(0..5)])
   end
 
   def url_with_protocol(url)
