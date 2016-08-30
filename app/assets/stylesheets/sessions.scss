@@ -1,13 +1,11 @@
 .page--login {
-  background: url(image_path('login-background-1.jpg'));
-  background-size: cover;
-
   .navbar-default {
     background: rgba(255, 255, 255, 0.9);
     border: 0;
   }
 
   .main-wrapper {
+    position: relative;
     display: table;
     height: 100%;
 

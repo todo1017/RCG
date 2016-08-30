@@ -30,14 +30,14 @@
             All Buildings have Setup data
           %br
         %br
-        = form_tag import_yardi_1_building_units_path, multipart: true do
+        = form_tag import_yardi_1_building_units_path, multipart: true, class: 'index-import-form' do
           %fieldset
             %legend
               %h4
                 Import Rent Roll
             = file_field_tag :file
             %br
-            %table
+            %table{:cellpadding => 5}
               %tr
                 %td
                   Building
@@ -46,48 +46,45 @@
                   = collection_select :building, :id, Building.where(competitor: false).order('name ASC'), :id, :name, include_blank: true
               %tr
                 %td
-                  &nbsp;
-                %td
-              %tr
-                %td
                   As Of Date
                 %td
                   &nbsp;
                   = date_field_tag :as_of_date
               %tr
-                %td
-                  &nbsp;
-                %td
-              %tr
-                %td
-                  Add Concessions
-              %tr
-                %td
-                  Months Off
-                %td
-                  &nbsp;
-                  = text_field_tag :months_off
-              %tr
-                %td
-                  Cash Off
-                %td
-                  &nbsp;
-                  = text_field_tag :cash_off
-              %tr
-                %td
-                  Lease Length
-                %td
-                  &nbsp;
-                  = text_field_tag :lease_length
-              %tr
-                %td
-                  Apply concession to leases through
-                %td
-                  &nbsp;
-                  = date_field_tag :lease_end_date
+                %td{:colspan => 2}
+                  %fieldset
+                    %legend
+                      %h4
+                        Add Concessions (optional)
+                    %table
+                      %tr
+                        %td
+                          Months Off
+                        %td
+                          &nbsp;
+                          = text_field_tag :months_off
+                      %tr
+                        %td
+                          Cash Off
+                        %td
+                          %div{:class => 'dollar-input-container'}
+                            %i $
+                            = text_field_tag :cash_off, '', class: 'js-numbers-only', data: { 'allow-decimal': true }
+                      %tr
+                        %td
+                          Lease Length
+                        %td
+                          &nbsp;
+                          = text_field_tag :lease_length
+                      %tr
+                        %td
+                          Apply concession to leases through
+                        %td
+                          &nbsp;
+                          = date_field_tag :lease_end_date
               %tr
             %br
-            = submit_tag "Import Yardi", {:class=>"btn btn-success"}
+            = submit_tag "Import Rent Roll", {:class=>"btn btn-success"}
         %br
         %br
       - if [1, 2, 3].include? current_user.id

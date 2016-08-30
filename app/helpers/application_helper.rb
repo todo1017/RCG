@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+  def is_login
+    return (params[:controller] == 'sessions' && (params[:action] == 'new' || params[:action] == 'create')) ? true : false
+  end
+
+  def get_random_background
+    backgrounds = [image_path('login-background-1.jpg'), image_path('login-background-2.jpg'), image_path('login-background-3.jpg')]
+    return backgrounds[rand(0..2)]
+  end
+
   def url_with_protocol(url)
     /^http/i.match(url) ? url : "http://#{url}"
   end
