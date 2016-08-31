@@ -115,7 +115,7 @@ class BuildingUnit < ActiveRecord::Base
             end
           end
 
-          if bulding_unit.lease_expiration != nil && lease_end_date != nil && bulding_unit.lease_expiration < Date.strptime(lease_end_date, "%Y-%m-%d")+1
+          if bulding_unit.actual_rent == 0 || (bulding_unit.lease_expiration != nil && lease_end_date != nil && bulding_unit.lease_expiration < Date.strptime(lease_end_date, "%Y-%m-%d")+1)
             bulding_unit.update months_off: months_off
             bulding_unit.update cash_off: cash_off
             bulding_unit.update lease_length: lease_length
