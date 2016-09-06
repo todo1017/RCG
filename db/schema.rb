@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160819001330) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -247,8 +250,8 @@ ActiveRecord::Schema.define(version: 20160819001330) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "unit_types", force: :cascade do |t|
     t.text     "description"

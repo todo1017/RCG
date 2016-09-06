@@ -1,0 +1,315 @@
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyuizaz4I3YKup2sxgLT0-18M-rwVA8-Q" ></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<style type="text/css">
+	path:hover {
+		/*fill: #fcc !important;*/
+		/*fill-opacity: .8;*/
+	}
+	.tooltip {
+	 	position: absolute;
+		text-align: center;               
+		padding: 20px;
+		font: 12px sans-serif;
+		background: white;
+		border: 0px;
+		border-radius: 4px;
+		pointer-events: none;
+		min-width: 200px;
+		text-align: left;
+	}
+	.tooltip .row {
+		padding: 5px;
+	}
+	.tooltip .title {
+		font-size: 24px;
+		text-align: center;
+		padding-bottom: 10px
+	}
+	.tooltip .sub-title {
+		font-size: 18px
+	}
+	.tooltip .info {
+		font-size: 18px
+	}
+	.tooltip b{
+		color: blue
+	}
+</style>
+<div id="analyses-map">
+	<h1 class="text-center"> Map Overview</h1>
+	<div id="analyses-mapview">
+		
+	</div>
+</div>
+
+<script>
+	var width  = document.getElementById('analyses-mapview').offsetWidth;
+	var height = width / 2;
+
+	var zoom   = d3.behavior.zoom()
+		.scaleExtent([1, 200])
+		.on("zoom", zoompan_all);
+	var mapdata, building_data, topo, projection, path, svg, g;
+	var tooltip   = d3.select("#analyses-mapview").append("div").attr("class", "tooltip hidden");
+	var geocoder = new google.maps.Geocoder();
+
+	$.get("/analyses/usdata", function(response){
+		mapdata = response.mapdata
+		building_data = response.building_data;
+		topo = mapdata.features;
+		draw_all();
+	});
+
+	// All states map view
+	function draw_all() {
+
+		// init SVG elements
+		projection = d3.geo.mercator()
+			.translate([(width/2), (height/2)])
+			.center([-106, 37.5])
+			.scale( 300 );
+		path = d3.geo.path().projection(projection);
+		svg  = d3.select("#analyses-mapview").append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.style("background", "#a3ccff")
+			.call(zoom)
+			.append("g");
+		g    = svg.append("g");
+
+		zoom   = d3.behavior.zoom()
+			.scaleExtent([1, 200])
+			.on("zoom", zoompan_all);
+		d3.select(window).on("resize", redraw_all);
+
+		// Map View
+		var region = g.selectAll(".region").data(topo);
+		region.enter().insert("path")
+			.attr("class", "region")
+			.attr("d", path)
+			.attr("id", function(d,i) { return d.id; })
+			// .attr("title", function(d,i) { return d.properties.name; })
+			.style("fill", "#f3f1ed")
+			.attr("stroke", "#aaa")
+			.attr("stroke-width", 0.5);
+		g.append("g")
+			.attr("class", "states-names")
+			.selectAll("text")
+			.data(topo)
+			.enter()
+			.append("svg:text")
+			.text(function(d){
+				return d.properties.name;
+			})
+			.attr("x", function(d){
+				return path.centroid(d)[0];
+			})
+			.attr("y", function(d){
+				return  path.centroid(d)[1];
+			})
+			.attr("text-anchor","middle")
+			.attr('fill', "#888")
+			.style('font-size', '1px');
+		$.each(building_data, function(i, building){
+			var address = building.addr + "," + building.city + "," + building.state;
+			geocoder.geocode({address: address}, function(results, status) {
+				addpoint(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
+			});
+		});
+	}
+
+	function redraw_all() {
+		width = document.getElementById('analyses-mapview').offsetWidth;
+		height = width / 2;
+		d3.select('svg').remove();
+		draw_all();
+	}
+
+	function zoompan_all() {
+
+		var t = d3.event.translate;
+		var s = d3.event.scale; 
+		zscale = s;
+		var h = height/4;
+
+
+		t[0] = Math.min(
+			(width/height)  * (s - 1), 
+			Math.max( width * (1 - s), t[0] )
+		);
+
+		t[1] = Math.min(
+			h * (s - 1) + h * s, 
+			Math.max(height  * (1 - s) - h * s, t[1])
+		);
+
+		zoom.translate(t);
+		g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+		d3.selectAll(".region").style("stroke-width", 0.5 / s);
+		d3.selectAll("g.gpoint circle").attr("r", (1/s));
+		if(s > 12) {
+			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
+		} else {
+			d3.selectAll(".states-names text").style("font-size", "1px");
+		}
+		if(s > 102) {
+			d3.selectAll("g.gpoint circle").attr("r", (5/s));
+		}
+	}
+
+	function addpoint(lon,lat,building) {
+		var gpoint = g.append("g").attr("class", "gpoint");
+		var x = projection([lon,lat])[0];
+		var y = projection([lon,lat])[1];
+
+		console.log(building);
+
+		gpoint.append("svg:circle")
+			.attr("cx", x)
+			.attr("cy", y)
+			.attr("class","point")
+			.attr("r", 1)
+			.style("opacity", 0.7)
+			.style("fill", function(d){
+				if(building.competitor) {
+					return "blue";
+				} else {
+					return "red";
+				}
+			})
+			.on("mousemove", function(d,i) {
+				var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+				var html = ' \
+					<div> \
+						<div class="title">' + building.name +'</div>\
+						<div class="sub-title row">' +
+							'<div class="pull-left"><b>' + building.units + '</b> units,</div> \
+							<div class="pull-right"> Built in <b>' + building.year + '</b></div> \
+						</div>' +
+						'<div class="info row"> Occupancy <b>' + building.occupancy_rate +'%</b> </div> \
+						<div class="info row"> Leased <b>' + building.leased_rate +'%</b> </div> \
+					</div>';
+				tooltip.classed("hidden", false)
+					.style("left", (d3.event.pageX + 10) + "px")
+					.style("top", (d3.event.pageY -10) + "px")
+					.html(html)
+					.transition() 
+					.duration(500)
+					.style("opacity", 0.9);
+			})
+			.on("mouseout",  function(d,i) {
+				tooltip.classed("hidden", true).style("opacity",0);
+			}); 
+	}
+
+
+	// States detail view
+	function draw_detail() {
+
+		// init SVG elements
+		projection = d3.geo.mercator()
+			.translate([(width/2), (height/2)])
+			.center([-106, 37.5])
+			.scale( 300 );
+		path = d3.geo.path().projection(projection);
+		svg  = d3.select("#analyses-mapview").append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.style("background", "#a3ccff")
+			.call(zoom)
+			.append("g");
+		g    = svg.append("g");
+
+		zoom   = d3.behavior.zoom()
+			.scaleExtent([1, 200])
+			.on("zoom", zoompan_detail);
+		d3.select(window).on("resize", redraw_detail);
+
+		// Map View
+		var region = g.selectAll(".region").data(topo);
+		region.enter().insert("path")
+			.attr("class", "region")
+			.attr("d", path)
+			.attr("id", function(d,i) { return d.id; })
+			// .attr("title", function(d,i) { return d.properties.name; })
+			.style("fill", "#f3f1ed")
+			.attr("stroke", "#aaa")
+			.attr("stroke-width", 0.5);
+		 g.append("g")
+			.attr("class", "states-names")
+			.selectAll("text")
+			.data(topo)
+			.enter()
+			.append("svg:text")
+			.text(function(d){
+				return d.properties.name;
+			})
+			.attr("x", function(d){
+				return path.centroid(d)[0];
+			})
+			.attr("y", function(d){
+				return  path.centroid(d)[1];
+			})
+			.attr("text-anchor","middle")
+			.attr('fill', "#888")
+			.style('font-size', '1px');
+		//offsets for tooltips
+		var offsetL = document.getElementById('analyses-mapview').offsetLeft+20;
+		var offsetT = document.getElementById('analyses-mapview').offsetTop+10;
+		//tooltips
+		// region
+		// 	.on("mousemove", function(d,i) {
+		// 		var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+		// 		tooltip.classed("hidden", false)
+		// 			.attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+		// 			.html(d.properties.name);
+		// 	})
+		// 	.on("mouseout",  function(d,i) {
+		// 		tooltip.classed("hidden", true);
+		// 	}); 
+		// d3.csv("data/region-capitals.csv", function(err, capitals) {
+		  //   capitals.forEach(function(i){
+		  //     	addpoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName );
+		  //   });
+		// });
+	}
+
+	function redraw_detail() {
+		width = document.getElementById('analyses-mapview').offsetWidth;
+		height = width / 2;
+		d3.select('svg').remove();
+		draw_detail();
+	}
+
+	function zoompan_detail() {
+
+		var t = d3.event.translate;
+		var s = d3.event.scale; 
+		zscale = s;
+		var h = height/4;
+
+
+		t[0] = Math.min(
+			(width/height)  * (s - 1), 
+			Math.max( width * (1 - s), t[0] )
+		);
+
+		t[1] = Math.min(
+			h * (s - 1) + h * s, 
+			Math.max(height  * (1 - s) - h * s, t[1])
+		);
+
+		zoom.translate(t);
+		g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+		d3.selectAll("g.gpoint circle").attr("r", (2/s));
+		d3.selectAll("g.gpoint text").style("font-size", (14/s)+"px");
+		d3.selectAll(".region").style("stroke-width", 0.5 / s);
+		if(s > 12) {
+			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
+		} else {
+			d3.selectAll(".states-names text").style("font-size", "1px");
+		}	
+	}
+
+</script>

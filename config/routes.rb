@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get 'analyses/ppsf', to: 'analyses#ppsf'
   get 'analyses/ppsf_filter1', to: 'analyses#ppsf_filter1'
   get 'analyses/ppsf_filter2', to: 'analyses#ppsf_filter2'
+  get 'analyses/map', to: 'analyses#map'
+  get 'analyses/usdata', to: 'analyses#usdata'
 
   get 'rent_roll/:building_id', to: 'building_units#rent_roll', as: "rent_roll"
 

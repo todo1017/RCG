@@ -183,16 +183,6 @@ $navbarHeight: 80px;
     }
 }
 
-.page-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-
 .main-wrapper {
     padding-top: $navbarHeight + 10px;
 
@@ -224,27 +214,6 @@ $navbarHeight: 80px;
 .page-h2 {
     text-align: center;
     margin-top: 0;
-}
-
-.index-import-form {
-    td {
-        padding: 5px 0;
-        input[type='text'] {
-            width: 160px;
-        }
-    }
-
-    .dollar-input-container {
-        input {
-            margin-left: 7px;
-        }
-
-        i {
-            font-size: 14px;
-            left: 13px;
-            top: 3px;
-        }
-    }
 }
 
 /* GENERIC TABLE */

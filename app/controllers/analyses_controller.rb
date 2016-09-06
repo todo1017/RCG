@@ -11,12 +11,12 @@ class AnalysesController < ApplicationController
 		$same_id_count   = 0
 		if $analyses_count > 0
 			$same_date_count = ActiveRecord::Base.connection.execute('SELECT a.id FROM analyses a, building_units b WHERE a.building_unit = b.id').count
-			$same_id_count = ActiveRecord::Base.connection.execute('SELECT a.id FROM analyses a, building_units b WHERE a.building_unit = b.id and a.date = b.updated_at').count
+			$same_id_count = ActiveRecord::Base.connection.execute('SELECT a.id FROM analyses a, building_units b WHERE a.building_unit = b.id and a.date = b.as_of_date').count
 		end
 
-		$new_count     = $competitors_count - $same_id_count
-		$updated_count = $same_id_count - $same_date_count
-		$deleted_count = $analyses_count - $same_id_count
+		$new_count     = $competitors_count - $same_date_count
+		$updated_count = $same_date_count - $same_id_count
+		$deleted_count = $analyses_count - $same_date_count
 		flash[:info] = ''
 		flash[:success] = ''
 
@@ -41,7 +41,7 @@ class AnalysesController < ApplicationController
 		for competitor in competitors
 			begin
 				analysis = Analysis.new
-				analysis.date = competitor.updated_at if competitor.updated_at
+				analysis.date = competitor.as_of_date if competitor.as_of_date
 				analysis.building_unit = competitor.id
 				analysis.property = competitor.building.name
 
@@ -50,7 +50,7 @@ class AnalysesController < ApplicationController
 
 				analysis.timestamp = date.to_time.to_i
 				analysis.year    = date.year
-				analysis.quarter = "Q" + quarter.to_s + "-" + date.year.to_s
+				analysis.quarter = date.year.to_s + "-Q" + quarter.to_s
 				analysis.month   = date.year.to_s + "-" + date.month.to_s
 
 				months_off   = 0.0
@@ -82,6 +82,11 @@ class AnalysesController < ApplicationController
 					analysis.net_rent = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
 				end
 
+				if sq_feet == 0
+					analysis.gross_rent = 0
+					analysis.net_rent = 0
+				end
+
 				analysis.save!
 			rescue
 				error = error + "< error >"
@@ -91,15 +96,10 @@ class AnalysesController < ApplicationController
 		if !error.blank?
 			$message = 'errors are occured'
 		else
-			$message = error#'Successfully updated'
+			$message = 'Successfully updated'
 		end
 		
 		redirect_to :back
-	end
-
-	def import
-		message = Analysis.import(params[:file])
-		redirect_to :back, notice: message
 	end
 
 	def ppsf
@@ -126,12 +126,12 @@ class AnalysesController < ApplicationController
 
 		for building in buildings
 
-			gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year')
-			gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter')
-			gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month')
-			net_year_res      = Analysis.select("year as label,    avg(net_rent)   as val").where("property = ?", building).group('year')
-			net_quarter_res   = Analysis.select("quarter as label, avg(net_rent)   as val").where("property = ?", building).group('quarter')
-			net_month_res     = Analysis.select("month as label,   avg(net_rent)   as val").where("property = ?", building).group('month')
+			gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year').order('year')
+			gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter').order('quarter')
+			gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month').order('month')
+			net_year_res      = Analysis.select("year as label,    avg(net_rent)   as val").where("property = ?", building).group('year').order('year')
+			net_quarter_res   = Analysis.select("quarter as label, avg(net_rent)   as val").where("property = ?", building).group('quarter').order('quarter')
+			net_month_res     = Analysis.select("month as label,   avg(net_rent)   as val").where("property = ?", building).group('month').order('month')
 			
 
 			gross_year[building]    = gross_year_res
@@ -206,4 +206,26 @@ class AnalysesController < ApplicationController
 		# render json: { data: buildings }
 	end
 
+	def map
+	end
+
+	def usdata
+		mapdata = JSON.parse(File.read('app/assets/json/us2.json'))
+
+		building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where as_of_date is not null and building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id and b.address1 is not null and b.state is not null) b where a.building_id = b.id')
+
+
+
+		# building_data = BuildingOccupancy.joins(:building)
+		# 	.select('buildings.name as "name", 
+		# 		buildings.number_of_units as "units",
+		# 		buildings.year_built as "year", 
+		# 		building_occupancies.occupancy_rate as "occupancy_rate",
+		# 		building_occupancies.leased_rate as "leased_rate"'
+		# 	)
+		# 	.order('building_occupancies.as_of_date DESC')
+		# 	.group('building_occupancies.building_id')
+		render json: {mapdata: mapdata , building_data: building_data}
+		# render json: {mapdata: mapdata}
+	end
 end

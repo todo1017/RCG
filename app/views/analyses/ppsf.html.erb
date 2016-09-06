@@ -1,3 +1,7 @@
+<link href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+<script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.js"></script>
+
 <div id="analyses-ppsf">
 	<div class="row">
 		<div class="analyses-title">
@@ -5,19 +9,19 @@
 		</div>
 	</div>
 	<ul class="nav nav-pills nav-justified">
-		<li class="active"><a data-toggle="pill" href="#rental_price_trend_over_time">Rental Price Trend Over Time</a></li>
+		<li class="active"><a data-toggle="pill" href="#rental_price_trend">Rental Price Trend Over Time</a></li>
 		<li><a data-toggle="pill" href="#clustered_building_rent">Clustered Building Rent</a></li>
 	</ul>
 	<div class="tab-content">
-		<div id="rental_price_trend_over_time" class="tab-pane fade in active">
+		<div id="rental_price_trend" class="tab-pane fade in active">
 			<div class="col-xs-4">
 				<div>
 					<h3>Show</h3>
 					<div class="show-content row">
-						<ul class="nav nav-pills pill-color-1">
-							<li class="active set_by_year col-xs-4"><a data-toggle="pill">By Year</a></li>
-							<li class="set_by_quarter col-xs-4"><a data-toggle="pill">By Quarter</a></li>
-							<li class="set_by_month col-xs-4"><a data-toggle="pill">By Month</a></li>
+						<ul class="nav nav-pills nav-justified pill-color-1">
+							<li class="active set_by_year"><a data-toggle="pill">By Year</a></li>
+							<li class="set_by_quarter"><a data-toggle="pill">By Quarter</a></li>
+							<li class="set_by_month"><a data-toggle="pill">By Month</a></li>
 						</ul>
 					</div>
 				</div>
@@ -25,8 +29,8 @@
 					<h3>Alternative</h3>
 					<div class="alternative-content row">
 						<ul class="nav nav-pills nav-justified pill-color-1">
-							<li class="active set_gross col-xs-4"><a data-toggle="pill">Gross Rent</a></li>
-							<li class="set_net col-xs-4"><a data-toggle="pill">Net Rent</a></li>
+							<li class="active set_gross"><a data-toggle="pill">Gross Rent</a></li>
+							<li class="set_net"><a data-toggle="pill">Net Rent</a></li>
 						</ul>
 					</div>
 				</div>
@@ -38,8 +42,8 @@
 								<h5>- Geography</h5>
 								<ul id="geographies" class="nav nav-pills nav-stacked pill-color-1">
 									<% @geographies.each do |geography| %>
-									  	<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '') %>"><%= geography.name %></a></li>
-								  	<% end %>
+										<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '') %>"><%= geography.name %></a></li>
+									<% end %>
 								</ul>
 							</div>
 							<div id="comp_groups" class="col-xs-6 tab-content">
@@ -60,8 +64,8 @@
 				</div>
 			</div>
 			<div class="col-xs-8">
-				<div class="chart-container">
-					<canvas width="400" height="200"></canvas>
+				<div id="rpt-chart" style="height: 500px">
+					<!-- <canvas style="width: 400px;height: 200px"></canvas> -->
 				</div>
 			</div>
 		</div>
@@ -92,8 +96,8 @@
 								<h5>- Geography</h5>
 								<ul class="nav nav-pills nav-stacked pill-color-1">
 									<% @geographies.each do |geography| %>
-									  	<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '')+"_" %>"><%= geography.name %></a></li>
-								  	<% end %>
+										<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '')+"_" %>"><%= geography.name %></a></li>
+									<% end %>
 								</ul>
 							</div>
 							<div class="col-xs-6 tab-content">
@@ -114,10 +118,924 @@
 				</div>
 			</div>
 			<div class="col-xs-8">
-				<div class="chart-container">
-					<canvas id="barChart" width="400" height="200"></canvas>
+				<div id="cbr-chart" style="height: 500px">
+					<svg style="width:100%; height:100%"></svg>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+
+	// NVD3 Chart
+	var rpt_filter1 = "year";
+	var rpt_filter2 = "gross";
+	var rpt_data    = {};
+	var rpt_chart;
+
+	rpt_init();
+
+	//init checkbox unchecked
+	$("#rental_price_trend input").attr("checked", false);
+
+	// update rpt chart by filter
+	$("#rental_price_trend .set_by_year").on("click", function(e){
+		rpt_filter1 = "year";
+		update_rpt_chart();
+	});
+	$("#rental_price_trend .set_by_quarter").on("click", function(e){
+		rpt_filter1 = "quarter";
+		update_rpt_chart();
+	});
+	$("#rental_price_trend .set_by_month").on("click", function(e){
+		rpt_filter1 = "month";
+		update_rpt_chart();
+	});
+	$("#rental_price_trend .set_gross").on("click", function(e){
+		rpt_filter2 = "gross";
+		update_rpt_chart();
+	});
+	$("#rental_price_trend .set_net").on("click", function(e){
+		rpt_filter2 = "net";
+		update_rpt_chart();
+	});
+
+	// apply filter
+	$('#rental_price_trend .apply-filter').on("click", function(e){
+		var filter_list = [];
+		$("#rental_price_trend input").each(function(){
+			if(this.checked){
+				filter_list.push(this.value)
+			}
+		});
+
+		if(filter_list.length) {
+			$.get( "/analyses/ppsf_filter1",
+				{
+					filter_list : filter_list
+				},
+				function( result ) {
+					rpt_data = result;
+					update_rpt_chart();
+				}
+			);
+		} else {
+			rpt_init();
+		}
+	});
+
+	function update_rpt_chart() {
+		
+		var rawdata = rpt_data.data[rpt_filter2][rpt_filter1];
+
+		if (!jQuery.isEmptyObject(rawdata)) {
+
+			var tickValues = [], tickIndex = [];
+			$.each(rawdata, function(name, values){
+				if(values.length) {
+					$.each(values, function(index, value){
+						if(tickValues.indexOf(value.label) == -1){
+							tickValues.push(value.label);
+							tickIndex.push(tickValues.length - 1);
+						}
+					});
+				}
+			});
+			tickValues.sort();
+			
+			rpt_chart.xAxis
+				.tickValues(tickIndex)
+				.tickFormat(function(d){
+					return tickValues[d];
+				});
+
+			var data = [];
+
+			var chart_values = [];
+			for(i = 0 ; i < tickIndex.length ; i ++) {
+				maxValue = 0;
+				$.each(rawdata, function(name, values){
+					if(values.length) {
+						$.each(values, function(index, value){
+							if(value.label == tickValues[i]){
+								if(value.val > maxValue) {
+									maxValue = value.val;
+								}
+							}
+						});
+					}
+				});
+				chart_values.push({x: i, y: maxValue});
+			}
+			data.push({
+				values: chart_values,
+				key: "Max",
+				color: "white"
+			});
+			$.each(rawdata, function(name, values){
+				if(values.length) {
+					var chart_values = [];
+					$.each(values, function(index, value){
+						chart_values.push({x: tickValues.indexOf(value.label), y: value.val});
+					});
+					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+					data.push({
+						values: chart_values,
+						key: name,
+						color: random_color
+					});
+				}
+			});
+
+			d3.select('#rpt-chart svg')
+				.datum(data)
+				.call(rpt_chart);
+
+			nv.utils.windowResize(rpt_chart.update);
+			
+		} else {
+			rpt_init();
+		}
+	}
+
+	function rpt_init() {
+		data = [
+			{
+				values: [{x: 0, y: 0},{x: 1, y: 1}],
+				key: "Empty",
+				color: "white"
+			}
+		];
+		nv.addGraph(function() {
+			rpt_chart = nv.models.lineChart()
+				.options({
+					duration: 300,
+					useInteractiveGuideline: true,
+					interpolate: "cardinal"
+				});
+
+			rpt_chart.xAxis.tickValues([0,1])
+
+			rpt_chart.yAxis
+				.tickValues([0,1])
+				.tickFormat(function(d) {
+					if (d == null) {
+						return 'N/A';
+					}
+					return "$" + d3.format(',.2f')(d);
+				});
+
+			d3.select('#rpt-chart').append('svg')
+				.datum(data)
+				.call(rpt_chart);
+
+			nv.utils.windowResize(rpt_chart.update);
+
+			return rpt_chart;
+		});
+	}
+
+	
+	// Chart.js Chart	
+	// var rpt_filter1 = "year";
+	// var rpt_filter2 = "gross";
+	// var rpt_data    = {};
+	// var rpt_chart;
+
+	// // init chart view - none
+	// rpt_init();
+
+ //    // init checkbox unchecked
+	// $("#rental_price_trend input").attr("checked", false);
+
+
+	// // immediate filter set
+	// $("#rental_price_trend .set_by_year").on("click", function(e){
+	// 	rpt_filter1 = "year";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_by_quarter").on("click", function(e){
+	// 	rpt_filter1 = "quarter";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_by_month").on("click", function(e){
+	// 	rpt_filter1 = "month";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_gross").on("click", function(e){
+	// 	rpt_filter2 = "gross";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_net").on("click", function(e){
+	// 	rpt_filter2 = "net";
+	// 	update_rpt_chart();
+	// });
+
+	// // apply filter
+	// $('#rental_price_trend .apply-filter').on("click", function(e){
+	// 	var filter_list = [];
+	// 	$("#rental_price_trend input").each(function(){
+	// 		if(this.checked){
+	// 			filter_list.push(this.value)
+	// 		}
+	// 	});
+
+	// 	if(filter_list.length) {
+	// 		$.get( "/analyses/ppsf_filter1",
+	// 			{
+	// 				filter_list : filter_list
+	// 			},
+	// 			function( result ) {
+	// 				rpt_data = result;
+	// 				update_rpt_chart();
+	// 			}
+	// 		);
+	// 	} else {
+	// 		rpt_init();
+	// 	}
+	// });
+
+	// function update_rpt_chart() {
+	// 	$("#rental_price_trend .chart-container").html('<canvas width="400" height="200"></canvas>');
+	// 	var ctx = $("#rental_price_trend canvas");
+	// 	var data = rpt_data.data[rpt_filter2][rpt_filter1];
+	// 	console.log(data);
+	// 	var chart_data = {
+	// 		labels: [],
+	// 		datasets: []
+	// 	}
+
+	// 	var labels = [];
+	// 	$.each(data, function(name, values){
+	// 		if(values.length) {
+	// 			$.each(values, function(index, value){
+	// 				if(labels.indexOf(value.label) == -1){
+	// 					labels.push(value.label);
+	// 				}
+	// 			});
+	// 		}
+	// 	});
+	// 	labels.sort();
+	// 	chart_data.labels = labels;
+
+	// 	if (!jQuery.isEmptyObject(data)) {
+
+	// 		$.each(data, function(building_name, values){
+	// 			var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+	// 			var dataset = {
+	// 	            label: building_name,
+	// 	            fill: false,
+	// 	            backgroundColor: random_color,
+	// 	            lineTension: 0.3,
+	// 	            borderWidth: 1,
+	// 	            borderColor: random_color,
+	// 	            data: []
+	// 	        };
+
+	// 	        $.each(chart_data.labels, function(key, label){
+	// 	        	y = null;
+	// 	        	$.each(values, function(key, item){
+	// 	        		if(label == item.label) {
+	// 	        			y = item.val;
+	// 	        		}
+	// 	        	})
+	// 	        	dataset.data.push(y);
+	// 	        });
+	// 	        chart_data.datasets.push(dataset);
+	// 		});
+	// 		var lineChart = new Chart(ctx, {
+	// 		    type: "line",
+	// 		    data: chart_data,
+	// 		    options: {}
+	// 		});
+	// 	} else {
+	// 		rpt_init();
+	// 	}	
+	// }
+
+	// function rpt_init() {
+	// 	var none_datasets = [{
+ //            label: "None",
+ //            fill: false,
+ //            lineTension: 0.3,
+ //            borderColor: "white",
+ //            backgroundColor: "white",
+ //            borderWidth: 1,
+ //            data: [0,1]
+ //        }];
+	// 	var line_ctx = $("#rpt-chart canvas");
+	// 	var line_data = {
+	// 	    labels: [0,1],
+	// 	    datasets: none_datasets
+	// 	};
+	// 	var lineChart = new Chart(line_ctx, {
+	// 	    type: 'line',
+	// 	    data: line_data,
+	// 	    options: {}
+	// 	});
+	// }
+
+
+	// D3.js Chart
+	// var rpt_filter1 = "year";
+	// var rpt_filter2 = "gross";
+	// var rpt_data    = {};
+	// var rpt_chart;
+
+	// rpt_init();
+
+	// //init checkbox unchecked
+	// $("#rental_price_trend input").attr("checked", false);
+
+	// // update rpt chart by filter
+	// $("#rental_price_trend .set_by_year").on("click", function(e){
+	// 	rpt_filter1 = "year";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_by_quarter").on("click", function(e){
+	// 	rpt_filter1 = "quarter";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_by_month").on("click", function(e){
+	// 	rpt_filter1 = "month";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_gross").on("click", function(e){
+	// 	rpt_filter2 = "gross";
+	// 	update_rpt_chart();
+	// });
+	// $("#rental_price_trend .set_net").on("click", function(e){
+	// 	rpt_filter2 = "net";
+	// 	update_rpt_chart();
+	// });
+
+	// // apply filter
+	// $('#rental_price_trend .apply-filter').on("click", function(e){
+	// 	var filter_list = [];
+	// 	$("#rental_price_trend input").each(function(){
+	// 		if(this.checked){
+	// 			filter_list.push(this.value)
+	// 		}
+	// 	});
+
+	// 	if(filter_list.length) {
+	// 		$.get( "/analyses/ppsf_filter1",
+	// 			{
+	// 				filter_list : filter_list
+	// 			},
+	// 			function( result ) {
+	// 				rpt_data = result;
+	// 				update_rpt_chart();
+	// 			}
+	// 		);
+	// 	} else {
+	// 		rpt_init();
+	// 	}
+	// });
+
+	// function update_rpt_chart() {
+		
+	// 	var rawdata = rpt_data.data[rpt_filter2][rpt_filter1];
+
+	// 	console.log(rawdata);
+
+	// 	if (!jQuery.isEmptyObject(rawdata)) {
+
+	// 		var tickValues = [], tickIndex = [], maxValue = 0;
+	// 		$.each(rawdata, function(name, values){
+	// 			if(values.length) {
+	// 				$.each(values, function(index, value){
+	// 					if(tickValues.indexOf(value.label) == -1){
+	// 						tickValues.push(value.label);
+	// 						tickIndex.push(tickValues.length - 1);
+	// 					}
+	// 					if(value.val > maxValue) {
+	// 						maxValue = value.val;
+	// 					}
+	// 				});
+	// 			}
+	// 		});
+	// 		tickValues.sort();
+			
+	// 		var margin = {top:40, right: 20, bottom: 20, left: 80},
+	// 			width = $('#rpt-chart').width(),
+	// 			height = $('#rpt-chart').height();
+
+	// 		var xScale = d3.scale.linear()
+	// 			.domain([0, tickIndex.length])
+	// 			.range([0, width - margin.left - margin.right]);
+
+	// 		var yScale = d3.scale.linear()
+	// 			.domain([0, maxValue])
+	// 			.range([height - margin.bottom - margin.top, 0]);
+
+	// 		var xAxis = d3.svg.axis()
+	// 			.scale(xScale)
+	// 			.orient("bottom")
+	// 			.innerTickSize(-height + margin.top + margin.bottom)
+	// 			.outerTickSize(1)
+	// 			.tickValues(tickIndex)
+	// 			.tickFormat(function(d){
+	// 				return tickValues[d];
+	// 			})
+	// 			.tickPadding(20)
+
+	// 		var yAxis = d3.svg.axis()
+	// 			.scale(yScale)
+	// 			.orient("left")
+	// 			.innerTickSize(-width + margin.left + margin.right)
+	// 			.outerTickSize(1)
+	// 			.tickFormat(function(d){
+	// 				return "$"+d.toFixed(2);
+	// 			})
+	// 			.tickPadding(10)
+
+	// 		var line = d3.svg.line()
+	// 			.x(function(d) { return xScale(d.x); })
+	// 			.y(function(d) { return yScale(d.y); })
+	// 			.interpolate("basis");
+
+	// 		var svg = d3.select("#rpt-chart svg")
+	// 			.attr("width", width)
+	// 			.attr("height", height);
+
+	// 		d3.select("#rpt-chart .x.axis").call(xAxis);
+	// 		d3.select("#rpt-chart .y.axis").call(yAxis);
+
+	// 		d3.selectAll("path.line").remove();
+
+	// 		$.each(rawdata, function(name, values){
+	// 			if(values.length) {
+	// 				var dataset = [];
+	// 				$.each(tickValues, function(i, tickvalue){
+	// 					$.each(values, function(index, value){
+	// 						if(tickvalue == value.label){
+	// 							dataset.push({x: tickValues.indexOf(value.label), y: value.val});
+	// 						}
+	// 					});
+	// 				});
+	// 				var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+	// 				svg.append("path")
+	// 					.data([dataset])
+	// 					.attr("transform", "translate(" + margin.left + ", " + margin.bottom + ")")
+	// 					.attr("class", "line")
+	// 					.attr("d", line)
+	// 					.attr("fill", "none")
+	// 					.attr("stroke-width","1px")
+	// 					.attr("stroke", "white")
+	// 					.transition()
+	// 		    		.duration(1000)
+	// 					.attr("stroke", random_color)
+	// 			}
+	// 		});
+			
+	// 	} else {
+	// 		rpt_init();
+	// 	}
+	// }
+
+	// function rpt_init() {
+
+	// 	var margin = {top:40, right: 20, bottom: 20, left: 80},
+	// 		width = $('#rpt-chart').width(),
+	// 		height = $('#rpt-chart').height();
+
+	// 	var xScale = d3.scale.linear()
+	// 		.domain([0, 1])
+	// 		.range([0, width - margin.left - margin.right]);
+
+	// 	var yScale = d3.scale.linear()
+	// 		.domain([0, 1])
+	// 		.range([height - margin.bottom - margin.top, 0]);
+
+	// 	var xAxis = d3.svg.axis()
+	// 		.scale(xScale)
+	// 		.orient("bottom")
+	// 		.innerTickSize(-height + margin.top + margin.bottom)
+	// 		.outerTickSize(1)
+	// 		.tickValues([0,1])
+	// 		.tickFormat(function(d){
+	// 			return d;
+	// 		})
+	// 		.tickPadding(20)
+
+	// 	var yAxis = d3.svg.axis()
+	// 		.scale(yScale)
+	// 		.orient("left")
+	// 		.innerTickSize(-width + margin.left + margin.right)
+	// 		.outerTickSize(1)
+	// 		.tickValues([0,1])
+	// 		.tickFormat(function(d){
+	// 			return "$"+d.toFixed(2);
+	// 		})
+	// 		.tickPadding(10)
+
+	// 	var line = d3.svg.line()
+	// 		.x(function(d) { return xScale(d.x); })
+	// 		.y(function(d) { return yScale(d.y); });
+
+	// 	var svg = d3.select("#rpt-chart").append("svg")
+	// 		.attr("width", width)
+	// 		.attr("height", height)
+	// 		.append("g")
+
+	// 	svg.append("g")
+	// 		.attr("class", "x axis")
+	// 		.attr("transform", "translate(" + margin.left + "," + (height - margin.top) + ")")
+	// 		.call(xAxis)
+
+	// 	svg.append("g")
+	// 		.attr("class", "y axis")
+	// 		.attr("transform", "translate(" + margin.left + ", " + margin.bottom + ")")
+	// 		.call(yAxis)
+
+	// 	var dataset = [
+	// 		{x:0, y:0},
+	// 		{x:1, y:1}
+	// 	];
+	// 	svg.append("path")
+	// 		.data([dataset])
+	// 		.attr("transform", "translate(" + margin.left + ", " + margin.bottom + ")")
+	// 		.attr("class", "line")
+	// 		.attr("d", line)
+	// 		.attr("stroke-width","1px")
+	// 		.attr("stroke", "white")
+	// 		.transition()
+ //    		.duration(1000)
+	// 		.attr("stroke", "black")
+	// }
+</script>
+
+<script>
+
+	// Chart.js Chart
+		// var cbr_filter = "gross";
+		// var cbr_data   = {};
+
+		// // init checkbox unchecked
+		// $("#clustered_building_rent input").attr("checked", false);
+
+		// // immediate filter set
+		// $("#clustered_building_rent .set_gross").on("click", function(e){
+		// 	cbr_filter = "gross";
+		// 	update_cbr_chart();
+		// });
+		// $("#clustered_building_rent .set_net").on("click", function(e){
+		// 	cbr_filter = "net";
+		// 	update_cbr_chart();
+		// });
+
+		// // init chart view - none
+		// cbr_init();
+
+		// // apply filter
+		// $('#clustered_building_rent .apply-filter').on("click", function(e){
+		// 	var filter_list = [];
+		// 	$("#clustered_building_rent input").each(function(){
+		// 		if(this.checked){
+		// 			filter_list.push(this.value)
+		// 		}
+		// 	});
+		// 	var from_date = $.datepicker.formatDate("dd-mm-yy",from.datepicker("getDate"));
+		// 	var to_date   = $.datepicker.formatDate("dd-mm-yy",to.datepicker("getDate"));
+
+		// 	$.get( "/analyses/ppsf_filter2",
+		// 		{
+		// 			from_date   : from_date,
+		// 			to_date     : to_date,
+		// 			filter_list : filter_list
+		// 		},
+		// 		function( result ) {
+		// 			cbr_data = result;
+		// 			update_cbr_chart();
+		// 		}
+		// 	);
+		// });
+
+		// // start - end date
+		// var dateFormat = "mm/dd/yy";
+		// var from = $("#from")
+		// 	.datepicker({
+		// 		defaultDate: "+1w",
+		// 		changeMonth: true,
+		// 		changeYear: true,
+		// 		numberOfMonths: 1
+		// 	})
+		// 	.on("change", function() {
+		// 		to.datepicker( "option", "minDate", getDate( this ) );
+		// 	});
+		// var to = $( "#to" )
+		// 	.datepicker({
+		// 		defaultDate: "+1w",
+		// 		changeMonth: true,
+		// 		changeYear: true,
+		// 		numberOfMonths: 1
+		// 	})
+		// 	.on("change", function() {
+		// 		from.datepicker( "option", "maxDate", getDate( this ) );
+		// 	});
+		// var from_day = new Date(), to_day = from_day.setDate(from_day.getDate() - 30);
+		// to.datepicker("setDate", to_day);
+		// from.datepicker("setDate", from_day);
+		// to.datepicker("option", "maxDate", new Date());
+		// from.datepicker("option", "maxDate", new Date());
+
+		// function getDate( element ) {
+		// 	var date;
+		// 	try {
+		// 		date = $.datepicker.parseDate( dateFormat, element.value );
+		// 	} catch( error ) {
+		// 		date = null;
+		// 	}
+		// 	return date;
+		// }
+
+		// function cbr_init() {
+		// 	var bar_ctx = $("#barChart");
+
+		// 	var barData = {
+		//     labels: ["Chocolate", "Vanilla", "Strawberry"],
+		// 	    datasets: [
+		// 	        {
+		// 	            label: "Blue",
+		// 	            backgroundColor: "blue",
+		// 	            data: [2,3]
+		// 	        },
+		// 	        {
+		// 	            label: "Red",
+		// 	            backgroundColor: "red",
+		// 	            data: [1]
+		// 	        },
+		// 	        {
+		// 	            label: "Green",
+		// 	            backgroundColor: "green",
+		// 	            data: [3]
+		// 	        }
+		// 	    ]
+		// 	};
+
+		// 	var barOptions = {
+		// 		scaleStartValue : 0,
+		// 		scales: {
+		//             xAxes: [{
+		//                     barPercentage: 0.8
+		//             }],
+		//             yAxes: [{
+		//             	ticks: {
+		//                     min: 0
+		//             	}
+		//             }]
+		//         }
+		// 	};
+
+		// 	var barChart = new Chart(bar_ctx, {
+		// 	    type: 'bar',
+		// 	    data: barData,
+		// 	    options: barOptions
+		// 	});
+		// }
+
+		// function update_cbr_chart() {
+		// 	$("#clustered_building_rent .chart-container").html('<canvas width="400" height="200"></canvas>');
+		// 	var ctx = $("#clustered_building_rent canvas");
+		// 	var data = cbr_data.data[cbr_filter];
+		// 	var chart_data = {
+		// 		labels: [],
+		// 		datasets: [{
+		// 			label : "hey",
+		// 			backgroundColor : [],
+		// 			data : []
+		// 		}]
+		// 	}
+			
+		// 	if(data.length) {
+		// 		$.each(data, function(index, item){
+		// 			chart_data.labels.push(item.geo);
+		// 			var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+		// 			chart_data.datasets[0].backgroundColor.push(random_color);
+		// 			chart_data.datasets[0].data.push(item.val);
+		// 		});
+
+		// 		var barOptions = {
+		// 			scaleStartValue : 0,
+		// 			scales: {
+		// 	            xAxes: [{
+		// 	                    barPercentage: 0.8
+		// 	            }],
+		// 	            yAxes: [{
+		// 	            	ticks: {
+		// 	                    min: 0
+		// 	            	}
+		// 	            }]
+		// 	        }
+		// 		};
+
+		// 		var barChart = new Chart(ctx, {
+		// 		    type: 'bar',
+		// 		    data: chart_data,
+		// 		    options: barOptions
+		// 		});
+		// 	} else {
+		// 		cbr_init();
+		// 	}
+		// }
+
+
+	// NVD3 Chart
+	var cbr_filter = "gross";
+	var cbr_data   = {};
+	var cbr_chart;
+
+	// init checkbox unchecked
+	$("#clustered_building_rent input").attr("checked", false);
+
+	// immediate filter set
+	$("#clustered_building_rent .set_gross").on("click", function(e){
+		cbr_filter = "gross";
+		update_cbr_chart();
+	});
+	$("#clustered_building_rent .set_net").on("click", function(e){
+		cbr_filter = "net";
+		update_cbr_chart();
+	});
+
+	// init chart view - none
+	cbr_init();
+	$('.analyses-title').on("click", function(e){
+		cbr_init();
+	})
+
+	// apply filter
+	$('#clustered_building_rent .apply-filter').on("click", function(e){
+		var filter_list = [];
+		$("#clustered_building_rent input").each(function(){
+			if(this.checked){
+				filter_list.push(this.value)
+			}
+		});
+		var from_date = $.datepicker.formatDate("dd-mm-yy",from.datepicker("getDate"));
+		var to_date   = $.datepicker.formatDate("dd-mm-yy",to.datepicker("getDate"));
+
+		$.get( "/analyses/ppsf_filter2",
+			{
+				from_date   : from_date,
+				to_date     : to_date,
+				filter_list : filter_list
+			},
+			function( result ) {
+				cbr_data = result;
+				update_cbr_chart();
+			}
+		);
+	});
+
+	// start - end date
+	var dateFormat = "mm/dd/yy";
+	var from = $("#from")
+		.datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			changeYear: true,
+			numberOfMonths: 1
+		})
+		.on("change", function() {
+			to.datepicker( "option", "minDate", getDate( this ) );
+		});
+	var to = $( "#to" )
+		.datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			changeYear: true,
+			numberOfMonths: 1
+		})
+		.on("change", function() {
+			from.datepicker( "option", "maxDate", getDate( this ) );
+		});
+	var from_day = new Date(), to_day = from_day.setDate(from_day.getDate() - 30);
+	to.datepicker("setDate", to_day);
+	from.datepicker("setDate", from_day);
+	to.datepicker("option", "maxDate", new Date());
+	from.datepicker("option", "maxDate", new Date());
+
+	function getDate( element ) {
+		var date;
+		try {
+			date = $.datepicker.parseDate( dateFormat, element.value );
+		} catch( error ) {
+			date = null;
+		}
+		return date;
+	}
+
+	function cbr_init() {
+
+		var data = [
+			{
+				key: "Empty",
+				values: [
+					{
+						label : "",
+						value : 0
+					}
+				]
+			}
+		];
+
+		nv.addGraph(function() {
+			cbr_chart = nv.models.discreteBarChart()
+				.color(["#fff"])
+				.x(function(d) { return d.label})
+				.y(function(d) { return d.value})
+				.duration(300);
+
+			cbr_chart.yAxis.tickFormat(function(d){
+				return '$' + d.toFixed(2);	
+			});
+
+			d3.select('#cbr-chart svg')
+				.datum(data)
+				.call(cbr_chart);
+
+			nv.utils.windowResize(cbr_chart.update);
+			return cbr_chart;
+		});
+	}
+
+	function update_cbr_chart() {
+		
+		var data = cbr_data.data[cbr_filter];
+
+		if(data.length) {
+			var chart_data = [];
+
+			var keys = [];
+			$.each(data, function(i, item){
+				if(keys.indexOf(item.geo) == -1){
+					keys.push(item.geo);
+				}
+			});
+			$.each(keys, function(i, item){
+				chart_data.push({
+					key: item,
+					values: [{
+						label: item,
+						value : null
+					}]
+				});
+			});
+			$.each(data, function(i, item){
+				if(item.val){
+					chart_data[keys.indexOf(item.geo)].values.push({
+						label : item.building,
+						value : item.val
+					})
+				}
+			});
+			var first_color = ["#fff"];
+			cbr_chart = nv.models.discreteBarChart()
+				.color(first_color.concat(d3.scale.category20().range()))
+				.x(function(d) { return d.label})
+				.y(function(d) { return d.value});
+
+			cbr_chart.xAxis.tickPadding(10);
+
+			cbr_chart.yAxis.tickFormat(function(d){
+				if(d) {
+					return '$' + d.toFixed(2);
+				}
+			});
+
+			d3.select('#cbr-chart svg')
+				.datum(chart_data)
+				.call(cbr_chart);
+
+			d3.selectAll('.nv-x.nv-axis text')
+				.style('font-size', function(d){
+					if(keys.indexOf(d) > -1) {
+						return '20px';
+					}
+				});
+
+			d3.selectAll('.nv-x.nv-axis text')
+				.style('text-anchor', function(d){
+					if(keys.indexOf(d) == -1) {
+						return 'end';
+					} else {
+						return 'middle';
+					}
+				});
+
+			d3.selectAll('.nv-x.nv-axis line')
+				.style('display', function(d){
+					if(keys.indexOf(d) == -1) {
+						return 'none';
+					}
+				});
+
+			nv.utils.windowResize(cbr_chart.update);
+		} else {
+			cbr_init();
+		}
+	}
+</script>

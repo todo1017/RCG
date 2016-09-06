@@ -19,12 +19,12 @@
 	.tab-content {
 		padding-top : 50px;
 	}
-	.chart-container {
-		padding : 20px;
-		box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-	}
-
-	#rental_price_trend_over_time {
+	
+	#rental_price_trend {
+		#rpt-chart {
+			padding : 20px;
+			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
 		.tab-content {
 			padding : 0;
 		}
@@ -52,16 +52,18 @@
 	}
 
 	#clustered_building_rent {
+		#cbr-chart {
+			padding : 20px;
+			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
 		.tab-content {
 			padding : 0;
 		}
-
 		.alternative-content {
 			padding-left : 20px;
 			border-left : 3px solid #ddd;
 			margin : 0;
 		}
-
 		.filter-content {
 			padding-left : 20px;
 			border-left : 3px solid #ddd;
@@ -72,4 +74,12 @@
 
 #analyses-update {
 	font-size: 30px;
+}
+
+#analyses-map {
+	width : 1000px;
+	margin: 0 auto;
+	#analyses-mapview {
+		box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
 }
