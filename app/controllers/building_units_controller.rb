@@ -58,7 +58,7 @@ class BuildingUnitsController < ApplicationController
       interval = ""
     end
     # @building_units = building_units_owned_in_geography.where(actual_rent: 0).to_a
-    @building_units = building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date" + interval)
+    @building_units = (building_units_owned_in_geography.where(actual_rent: 0) + building_units_owned_in_geography.where("lease_expiration > current_date - interval '100 days' AND lease_expiration < current_date" + interval)).uniq
     @building_units.sort_by! do |x|
       date = if x.lease_expiration == nil || x.actual_rent == 0
                Date.today
