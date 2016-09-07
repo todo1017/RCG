@@ -19,15 +19,6 @@ class OwnerUsersController < ApplicationController
     render "user_assignments"
   end
 
-  def toggle_dpm_admin
-    owner_user = OwnerUser.where(owner_id: params[:owner_id], user_id: params[:user_id]).first
-    owner_user.toggle(:dpm_admin)
-    owner_user.save
-
-    get_index_data
-    render "user_assignments"
-  end
-
   def destroy
     OwnerUser.find(params[:id]).destroy
     get_index_data

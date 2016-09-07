@@ -30,7 +30,9 @@
       %td
         &nbsp;
         %b
-          Geographies
+          = "# of Buildings"
+      %td
+        &nbsp;&nbsp;&nbsp;
       %td
         &nbsp;&nbsp;&nbsp;
     %tr
@@ -45,6 +47,8 @@
         = f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true
       %td
         &nbsp;
+      %td
+        &nbsp;&nbsp;&nbsp;
       %td
         &nbsp;&nbsp;&nbsp;
       %td
@@ -73,16 +77,18 @@
             DPM
           - else
             PM
-          = link_to "change", "/toggle_dpm_admin?owner_id=#{owner_user.owner_id.to_s}&user_id=#{owner_user.user_id.to_s}"
+          -#= link_to "change", "/toggle_dpm_admin?owner_id=#{owner_user.owner_id.to_s}&user_id=#{owner_user.user_id.to_s}"
         %td
           &nbsp;&nbsp;&nbsp;
         %td
-          - unless owner_user.dpm_admin == true
-            - UserGeography.where(user_id:owner_user.user_id).each do |user_geography|
-              = user_geography.geography.name + " "
-            = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
+          -#- unless owner_user.dpm_admin == true
+          -#  - UserGeography.where(user_id:owner_user.user_id).each do |user_geography|
+          -#    = user_geography.geography.name + " "
+          -#  = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
         %td
           &nbsp;&nbsp;&nbsp;
+        %td
+          = link_to "edit", "/user_buildings?owner_user_id=#{owner_user.id}&owner_id=#{owner_user.owner_id}&user_id=#{owner_user.user_id}"
 
 %br
 %br

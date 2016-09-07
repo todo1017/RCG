@@ -35,6 +35,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_buildings
+    respond_to do |format|
+      format.html{
+        @dpm_admin = OwnerUser.find(params[:owner_user_id]).dpm_admin
+      }
+      format.js{
+        if params[:owner_user_id].present?
+          owner_user = OwnerUser.find(params[:owner_user_id])
+          owner_user.toggle(:dpm_admin)
+          owner_user.save
+          render partial: "/users/geographies", locals: { owner_id: owner_user.owner_id, user_id: owner_user.user_id }
+        elsif params[:geography_id].present?
+          if params[:none] == "yes"
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "yes", disabled: "n/a" }
+          else
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "no", disabled: params[:disabled] }
+          end
+        elsif params[:building_id].present?
+        end
+      }
+    end
+  end
+
 
   def toggle_super_admin
     @user = User.find(params[:id])
