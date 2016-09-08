@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get 'geographies/user/:user_id/new', to: 'user_geographies#new'
   get 'analytics', to: 'building_units#analytics'
   get 'user_assignments', to: 'owner_users#user_assignments'
+  get 'user_buildings', to: 'users#user_buildings'
   get 'toggle_dpm_admin', to: 'owner_users#toggle_dpm_admin'
   get 'analyses/data', to: 'analyses#index'
   get 'analyses/update', to: 'analyses#update'

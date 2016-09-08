@@ -1,0 +1,1 @@
+$('#geography_container').html("#{escape_javascript(render(partial: '/users/geographies_', locals: { owner_id: owner_id, user_id: user_id })).html_safe}");

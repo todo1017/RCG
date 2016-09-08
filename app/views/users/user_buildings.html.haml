@@ -1,0 +1,15 @@
+%br
+= link_to "<-Back", user_assignments_path
+%br
+%br
+= "Geographies & Buildings for #{User.find(params[:user_id]).email} associated with #{Owner.find(params[:owner_id]).name}"
+%br
+%br
+= select_tag :dpm_admin, options_for_select([['Director Of Property Management (DPM)', 'true'], ['Property Manager (PM)', 'false']], @dpm_admin), { include_blank: true, onchange: "javascript:$.ajax('/user_buildings.js?owner_user_id=#{params[:owner_user_id]}');return false;" }
+
+%br
+%br
+
+#geography_container
+
+
