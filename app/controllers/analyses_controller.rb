@@ -210,11 +210,9 @@ class AnalysesController < ApplicationController
 	end
 
 	def usdata
-		mapdata = JSON.parse(File.read('app/assets/json/us2.json'))
+		mapdata = JSON.parse(File.read('app/assets/json/state.json'))
 
 		building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where as_of_date is not null and building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id and b.address1 is not null and b.state is not null) b where a.building_id = b.id')
-
-
 
 		# building_data = BuildingOccupancy.joins(:building)
 		# 	.select('buildings.name as "name", 

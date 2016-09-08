@@ -2,9 +2,17 @@
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
 <style type="text/css">
+	.analyses-mapview-title {
+		padding-bottom: 50px;
+	}
+	#analyses-mapview {
+		background: #a3ccff;
+	}
 	path:hover {
-		/*fill: #fcc !important;*/
-		/*fill-opacity: .8;*/
+		fill-opacity: .8;
+	}
+	g.states-names {
+		cursor: pointer;
 	}
 	.tooltip {
 	 	position: absolute;
@@ -37,7 +45,7 @@
 	}
 </style>
 <div id="analyses-map">
-	<h1 class="text-center"> Map Overview</h1>
+	<h1 class="text-center analyses-mapview-title"> Map Overview</h1>
 	<div id="analyses-mapview">
 		
 	</div>
@@ -47,29 +55,28 @@
 	var width  = document.getElementById('analyses-mapview').offsetWidth;
 	var height = width / 2;
 
-	var zoom   = d3.behavior.zoom()
-		.scaleExtent([1, 200])
-		.on("zoom", zoompan_all);
-	var mapdata, building_data, topo, projection, path, svg, g;
+	var mapdata, building_data, topo, projection, path, svg, g, zoom;
 	var tooltip   = d3.select("#analyses-mapview").append("div").attr("class", "tooltip hidden");
 	var geocoder = new google.maps.Geocoder();
 
 	$.get("/analyses/usdata", function(response){
 		mapdata = response.mapdata
 		building_data = response.building_data;
+		console.log(building_data);
 		topo = mapdata.features;
-		draw_all();
+		draw_all_states();
 	});
 
 	// All states map view
-	function draw_all() {
+	function draw_all_states() {
 
 		// init SVG elements
-		projection = d3.geo.mercator()
+		projection = d3.geo.albersUsa()
 			.translate([(width/2), (height/2)])
-			.center([-106, 37.5])
-			.scale( 300 );
+			// .center([-106, 37.5])
+			.scale( 1000 );
 		path = d3.geo.path().projection(projection);
+		zoom   = d3.behavior.zoom().on("zoom", zoompan_all_states).scaleExtent([1, 50]);
 		svg  = d3.select("#analyses-mapview").append("svg")
 			.attr("width", width)
 			.attr("height", height)
@@ -78,10 +85,7 @@
 			.append("g");
 		g    = svg.append("g");
 
-		zoom   = d3.behavior.zoom()
-			.scaleExtent([1, 200])
-			.on("zoom", zoompan_all);
-		d3.select(window).on("resize", redraw_all);
+		d3.select(window).on("resize", redraw_all_states);
 
 		// Map View
 		var region = g.selectAll(".region").data(topo);
@@ -110,23 +114,23 @@
 			})
 			.attr("text-anchor","middle")
 			.attr('fill', "#888")
-			.style('font-size', '1px');
+			.style('font-size', '5px');
 		$.each(building_data, function(i, building){
 			var address = building.addr + "," + building.city + "," + building.state;
 			geocoder.geocode({address: address}, function(results, status) {
-				addpoint(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
+				addpoint_all_states(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
 			});
 		});
 	}
 
-	function redraw_all() {
+	function redraw_all_states() {
 		width = document.getElementById('analyses-mapview').offsetWidth;
 		height = width / 2;
 		d3.select('svg').remove();
-		draw_all();
+		draw_all_states();
 	}
 
-	function zoompan_all() {
+	function zoompan_all_states() {
 
 		var t = d3.event.translate;
 		var s = d3.event.scale; 
@@ -148,22 +152,22 @@
 		g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 		d3.selectAll(".region").style("stroke-width", 0.5 / s);
 		d3.selectAll("g.gpoint circle").attr("r", (1/s));
+
+		if( s > 3) {
+			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
+		}
 		if(s > 12) {
 			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
-		} else {
-			d3.selectAll(".states-names text").style("font-size", "1px");
 		}
-		if(s > 102) {
-			d3.selectAll("g.gpoint circle").attr("r", (5/s));
+		if(s > 40) {
+			d3.selectAll("g.gpoint circle").attr("r", (3/s));
 		}
 	}
 
-	function addpoint(lon,lat,building) {
+	function addpoint_all_states(lon,lat,building) {
 		var gpoint = g.append("g").attr("class", "gpoint");
 		var x = projection([lon,lat])[0];
 		var y = projection([lon,lat])[1];
-
-		console.log(building);
 
 		gpoint.append("svg:circle")
 			.attr("cx", x)
@@ -172,7 +176,7 @@
 			.attr("r", 1)
 			.style("opacity", 0.7)
 			.style("fill", function(d){
-				if(building.competitor) {
+				if(building.competitor == 't') {
 					return "blue";
 				} else {
 					return "red";
@@ -203,15 +207,15 @@
 			}); 
 	}
 
-
 	// States detail view
 	function draw_detail() {
 
 		// init SVG elements
-		projection = d3.geo.mercator()
+		projection = d3.geo.albersUsa()
 			.translate([(width/2), (height/2)])
-			.center([-106, 37.5])
-			.scale( 300 );
+			// .center([-106, 37.5])
+			// .scale( 300 );
+			.scale( 1000 );
 		path = d3.geo.path().projection(projection);
 		svg  = d3.select("#analyses-mapview").append("svg")
 			.attr("width", width)
