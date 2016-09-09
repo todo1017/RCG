@@ -13,17 +13,24 @@
       %th
         None
     - Geography.all.each do |geography|
-      - already_selected = true if UserGeography.where(user_id: user_id, geography_id: geography.id).count > 0
+      - already_selected_all = true if UserGeography.where(access_type: "all", user_id: user_id, geography_id: geography.id).count > 0
+      - already_selected_partial = true if UserGeography.where(access_type: "partial", user_id: user_id, geography_id: geography.id).count > 0
       %tr
         %td
           = geography.name
         %td
-          = radio_button_tag geography.name, 'all', already_selected, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=all');return true;"
+          = radio_button_tag geography.name, 'all', already_selected_all, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=all');return true;"
         %td
-          = radio_button_tag geography.name, 'partial', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=partial');return true;"
+          = radio_button_tag geography.name, 'partial', already_selected_partial, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=partial');return true;"
         %td
           = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=none');return true;"
 
   %br
   - Geography.all.each do |geography|
-    = raw "<div id='#{geography.id}'></div>"
+    %div{ id: geography.id }
+      - user_geography = UserGeography.find_by(user_id: params[:user_id], geography_id: geography.id)
+      - if user_geography != nil
+        - access_type = user_geography.access_type
+        = render partial: "/users/buildings_", locals: { user_id: params[:user_id], geography_id: geography.id, access_type: access_type }
+
+

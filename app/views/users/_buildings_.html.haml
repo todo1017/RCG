@@ -1,11 +1,12 @@
-
-- unless selection == "none"
-  - selection=="all" ? disabled=true : disabled=false
+- unless access_type == "none"
+  - access_type=="all" ? disabled=true : disabled=false
   %b
     = "Buildings for #{Geography.find(geography_id).name}"
   %br
   - Building.where(geography_id: geography_id).each do |building|
-    = check_box_tag building.name, building.name, disabled, { disabled: disabled, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
+    - user_buildings = UserBuilding.find_by(user_id: params[:user_id], building_id: building.id)
+    - user_buildings==nil && access_type=="partial" ? checked=false : checked=true
+    = check_box_tag building.name, building.name, checked, { disabled: disabled, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
     = label_tag building.name, building.name
     %br
   %br
