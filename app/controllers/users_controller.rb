@@ -45,7 +45,7 @@ class UsersController < ApplicationController
           owner_user = OwnerUser.find(params[:owner_user_id])
           owner_user.toggle(:dpm_admin)
           owner_user.save
-          render partial: "/users/geographies", locals: { owner_id: owner_user.owner_id, user_id: owner_user.user_id }
+          render partial: "/users/geographies", locals: { dpm_admin: owner_user.dpm_admin, owner_id: owner_user.owner_id, user_id: owner_user.user_id }
         elsif params[:geography_id].present?
           if params[:none] == "yes"
             render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "yes", disabled: "n/a" }

@@ -1,25 +1,28 @@
--#TODO - also filter by owner_id
-%table
-  %tr
-    %th
-      Geography&nbsp;
-    %th
-      All&nbsp;&nbsp;&nbsp;
-    %th
-      Some&nbsp;
-    %th
-      None
-  - Geography.all.each do |geography|
+- if dpm_admin
+  can see everything
+- else
+  -#TODO - also filter by owner_id
+  %table
     %tr
-      %td
-        = geography.name
-      %td
-        = radio_button_tag geography.name, 'all', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=true');return true;"
-      %td
-        = radio_button_tag geography.name, 'partial', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=false');return true;"
-      %td
-        = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&none=yes');return true;"
+      %th
+        Geography&nbsp;
+      %th
+        All&nbsp;&nbsp;&nbsp;
+      %th
+        Some&nbsp;
+      %th
+        None
+    - Geography.all.each do |geography|
+      %tr
+        %td
+          = geography.name
+        %td
+          = radio_button_tag geography.name, 'all', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=true');return true;"
+        %td
+          = radio_button_tag geography.name, 'partial', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=false');return true;"
+        %td
+          = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&none=yes');return true;"
 
-%br
-- Geography.all.each do |geography|
-  = raw "<div id='#{geography.id}'></div>"
+  %br
+  - Geography.all.each do |geography|
+    = raw "<div id='#{geography.id}'></div>"
