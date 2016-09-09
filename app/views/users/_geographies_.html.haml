@@ -13,15 +13,16 @@
       %th
         None
     - Geography.all.each do |geography|
+      - already_selected = true if UserGeography.where(user_id: user_id, geography_id: geography.id).count > 0
       %tr
         %td
           = geography.name
         %td
-          = radio_button_tag geography.name, 'all', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=true');return true;"
+          = radio_button_tag geography.name, 'all', already_selected, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=all');return true;"
         %td
-          = radio_button_tag geography.name, 'partial', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&disabled=false');return true;"
+          = radio_button_tag geography.name, 'partial', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=partial');return true;"
         %td
-          = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&none=yes');return true;"
+          = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=none');return true;"
 
   %br
   - Geography.all.each do |geography|

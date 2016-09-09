@@ -47,10 +47,15 @@ class UsersController < ApplicationController
           owner_user.save
           render partial: "/users/geographies", locals: { dpm_admin: owner_user.dpm_admin, owner_id: owner_user.owner_id, user_id: owner_user.user_id }
         elsif params[:geography_id].present?
-          if params[:none] == "yes"
-            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "yes", disabled: "n/a" }
-          else
-            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "no", disabled: params[:disabled] }
+          if params[:selection] == "none"
+            UserGeography.destroy_all(user_id: params[:user_id], geography_id: params[:geography_id])
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], selection: "none" }
+          elsif params[:selection] == "partial"
+            UserGeography.destroy_all(user_id: params[:user_id], geography_id: params[:geography_id])
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], selection: "partial" }
+          elsif params[:selection] == "all"
+            UserGeography.find_or_create_by(user_id: params[:user_id], geography_id: params[:geography_id])
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], selection: "all" }
           end
         elsif params[:building_id].present?
         end

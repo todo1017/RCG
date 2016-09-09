@@ -1,11 +1,11 @@
 
-- unless none == "yes"
-  - disabled=="true" ? disabled_boolean=true : disabled_boolean=false
+- unless selection == "none"
+  - selection=="all" ? disabled=true : disabled=false
   %b
     = "Buildings for #{Geography.find(geography_id).name}"
   %br
   - Building.where(geography_id: geography_id).each do |building|
-    = check_box_tag building.name, building.name, disabled_boolean, { disabled: disabled_boolean, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
+    = check_box_tag building.name, building.name, disabled, { disabled: disabled, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
     = label_tag building.name, building.name
     %br
   %br
