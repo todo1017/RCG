@@ -24,10 +24,10 @@
 		border-radius: 4px;
 		pointer-events: none;
 		min-width: 200px;
-		text-align: left;
+		text-align: left
 	}
 	.tooltip .row {
-		padding: 5px;
+		padding: 5px
 	}
 	.tooltip .title {
 		font-size: 24px;
@@ -40,43 +40,121 @@
 	.tooltip .info {
 		font-size: 18px
 	}
-	.tooltip b{
+	.tooltip .owned, .tooltip .owned b {
+		text-align: center;
+		color: red
+	}
+	.tooltip .competitor {
+		text-align: center;
 		color: blue
+	}
+	.tooltip.owned .title{
+		color: red
+	}
+	.tooltip.competitor .title{
+		color: blue
+	}
+	.tooltip.owned .info b{
+		color: red
+	}
+	.tooltip.competitor .info b{
+		color: blue
+	}
+
+	#states_list{
+		padding: 20px 0;
+	}
+	#states_list div{
+		padding: 10px 0;
+		text-align: center;
+		float: left;
+		width: 5%;
+	}
+	#states_list div:hover {
+		cursor: pointer;
+		background: #eee
+	}
+	#states_list div.clicked {
+		background: #ccc;
 	}
 </style>
 <div id="analyses-map">
 	<h1 class="text-center analyses-mapview-title"> Map Overview</h1>
-	<div id="analyses-mapview">
-		
-	</div>
+	<div id="analyses-mapview"></div>
+	<div id="states_list"></div>
 </div>
 
 <script>
 	var width  = document.getElementById('analyses-mapview').offsetWidth;
-	var height = width / 2;
+	var height = width / 3;
 
-	var mapdata, building_data, topo, projection, path, svg, g, zoom;
+	var states_json, states_hash, states_hash_inverse, states_info, building_data, projection, path, svg, g, zoom, selected_state;
 	var tooltip   = d3.select("#analyses-mapview").append("div").attr("class", "tooltip hidden");
 	var geocoder = new google.maps.Geocoder();
 
-	$.get("/analyses/usdata", function(response){
-		mapdata = response.mapdata
-		building_data = response.building_data;
-		console.log(building_data);
-		topo = mapdata.features;
-		draw_all_states();
+	$.get("/analyses/us_states_data", function(response){
+		building_data = response["buildings"];
+		states_hash = response["hash"];
+		states_info = {};
+		states_hash_inverse = {};
+		states_list = '<div>US</div>';
+		$.each(states_hash, function(short, long){
+			states_info[short] ={
+				comp  : 0,
+				owned : 0,
+				county : null
+			};
+			states_hash_inverse[long] = short;
+			states_list +='<div>' + short + '</div>';
+		});
+		$.each(building_data, function(i, building){
+			if(building.competitor == "t") {
+				states_info[building.state].comp++;
+			} else {
+				states_info[building.state].owned++;
+			}
+		});
+		$('#states_list').html(states_list);
+		states_json = response["states"].features;
+		draw_states();
+		$('#states_list div').bind("click", function(e){
+			$('#states_list div.clicked').removeClass('clicked');
+			$(this).addClass('clicked');
+			var state_name = $(this).html();
+			if(state_name == "US") {
+				d3.select('svg').remove();
+				draw_states();
+			} else {
+				if(states_info[state_name].county) {
+					d3.select('svg').remove();
+					selected_state = state_name;
+					draw_county();
+				} else {
+					$.get("/analyses/us_county_data", { state : state_name}, function(response){
+						states_info[state_name].county = response.data;
+						if(state_name == "US"){
+							d3.select('svg').remove();
+							redraw_states();
+						} else {
+							d3.select('svg').remove();
+							selected_state = state_name;
+							draw_county();
+						}					
+					});
+				}
+			}
+		});
 	});
 
 	// All states map view
-	function draw_all_states() {
+	function draw_states() {
 
 		// init SVG elements
 		projection = d3.geo.albersUsa()
 			.translate([(width/2), (height/2)])
-			// .center([-106, 37.5])
 			.scale( 1000 );
 		path = d3.geo.path().projection(projection);
-		zoom   = d3.behavior.zoom().on("zoom", zoompan_all_states).scaleExtent([1, 50]);
+		zoom   = d3.behavior.zoom().on("zoom", zoompan_states).scaleExtent([1, 30]);
 		svg  = d3.select("#analyses-mapview").append("svg")
 			.attr("width", width)
 			.attr("height", height)
@@ -84,11 +162,10 @@
 			.call(zoom)
 			.append("g");
 		g    = svg.append("g");
-
-		d3.select(window).on("resize", redraw_all_states);
+		d3.select(window).on("resize", redraw_states);
 
 		// Map View
-		var region = g.selectAll(".region").data(topo);
+		var region = g.selectAll(".region").data(states_json);
 		region.enter().insert("path")
 			.attr("class", "region")
 			.attr("d", path)
@@ -96,41 +173,74 @@
 			// .attr("title", function(d,i) { return d.properties.name; })
 			.style("fill", "#f3f1ed")
 			.attr("stroke", "#aaa")
-			.attr("stroke-width", 0.5);
+			.attr("stroke-width", 0.5)
+			.on("mousemove", function(d,i) {
+				var html = ' \
+					<div> \
+						<div class="title">' + d.properties.name +'</div>\
+						<div class="info owned row"> Owned : <b>' + states_info[states_hash_inverse[d.properties.name]]["owned"] +'</b> </div> \
+						<div class="info competitor row"> Competitor : <b>' + states_info[states_hash_inverse[d.properties.name]]["comp"] +'</b> </div> \
+					</div>';
+				tooltip.classed("hidden", false)
+					.style("left", (d3.event.pageX + 20) + "px")
+					.style("top", (d3.event.pageY -10) + "px")
+					.html(html)
+					.transition() 
+					.duration(500)
+					.style("opacity", 0.9);
+			})
+			.on("mouseout",  function(d,i) {
+				tooltip.classed("hidden", true).style("opacity",0);
+			});
+
+		// states name
 		g.append("g")
 			.attr("class", "states-names")
 			.selectAll("text")
-			.data(topo)
+			.data(states_json)
 			.enter()
 			.append("svg:text")
-			.text(function(d){
-				return d.properties.name;
-			})
-			.attr("x", function(d){
-				return path.centroid(d)[0];
-			})
-			.attr("y", function(d){
-				return  path.centroid(d)[1];
-			})
+			.text(function(d){return d.properties.name})
+			.attr("x", function(d){return path.centroid(d)[0]})
+			.attr("y", function(d){return  path.centroid(d)[1]})
 			.attr("text-anchor","middle")
 			.attr('fill', "#888")
-			.style('font-size', '5px');
+			.style('font-size', '5px')
+			.on("mousemove", function(d,i) {
+				var html = ' \
+					<div> \
+						<div class="title">' + d.properties.name +'</div>\
+						<div class="info owned row"> Owned : <b>' + states_info[states_hash_inverse[d.properties.name]]["owned"] +'</b> </div> \
+						<div class="info competitor row"> Competitor : <b>' + states_info[states_hash_inverse[d.properties.name]]["comp"] +'</b> </div> \
+					</div>';
+				tooltip.classed("hidden", false)
+					.style("left", (d3.event.pageX + 20) + "px")
+					.style("top", (d3.event.pageY -10) + "px")
+					.html(html)
+					.transition() 
+					.duration(500)
+					.style("opacity", 0.9);
+			})
+			.on("mouseout",  function(d,i) {
+				tooltip.classed("hidden", true).style("opacity",0);
+			});
+
 		$.each(building_data, function(i, building){
 			var address = building.addr + "," + building.city + "," + building.state;
 			geocoder.geocode({address: address}, function(results, status) {
-				addpoint_all_states(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
+				addpoint_states(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
 			});
 		});
 	}
 
-	function redraw_all_states() {
+	function redraw_states() {
 		width = document.getElementById('analyses-mapview').offsetWidth;
 		height = width / 2;
 		d3.select('svg').remove();
-		draw_all_states();
+		draw_states();
 	}
 
-	function zoompan_all_states() {
+	function zoompan_states() {
 
 		var t = d3.event.translate;
 		var s = d3.event.scale; 
@@ -159,12 +269,10 @@
 		if(s > 12) {
 			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
 		}
-		if(s > 40) {
-			d3.selectAll("g.gpoint circle").attr("r", (3/s));
-		}
+		d3.selectAll("g.gpoint circle").attr("r", 2/s);
 	}
 
-	function addpoint_all_states(lon,lat,building) {
+	function addpoint_states(lon,lat,building) {
 		var gpoint = g.append("g").attr("class", "gpoint");
 		var x = projection([lon,lat])[0];
 		var y = projection([lon,lat])[1];
@@ -172,51 +280,34 @@
 		gpoint.append("svg:circle")
 			.attr("cx", x)
 			.attr("cy", y)
-			.attr("class","point")
-			.attr("r", 1)
-			.style("opacity", 0.7)
+			.attr("r", 2)
 			.style("fill", function(d){
 				if(building.competitor == 't') {
 					return "blue";
 				} else {
 					return "red";
 				}
-			})
-			.on("mousemove", function(d,i) {
-				var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-				var html = ' \
-					<div> \
-						<div class="title">' + building.name +'</div>\
-						<div class="sub-title row">' +
-							'<div class="pull-left"><b>' + building.units + '</b> units,</div> \
-							<div class="pull-right"> Built in <b>' + building.year + '</b></div> \
-						</div>' +
-						'<div class="info row"> Occupancy <b>' + building.occupancy_rate +'%</b> </div> \
-						<div class="info row"> Leased <b>' + building.leased_rate +'%</b> </div> \
-					</div>';
-				tooltip.classed("hidden", false)
-					.style("left", (d3.event.pageX + 10) + "px")
-					.style("top", (d3.event.pageY -10) + "px")
-					.html(html)
-					.transition() 
-					.duration(500)
-					.style("opacity", 0.9);
-			})
-			.on("mouseout",  function(d,i) {
-				tooltip.classed("hidden", true).style("opacity",0);
-			}); 
+			});
 	}
 
-	// States detail view
-	function draw_detail() {
+	// County View
+	function draw_county() {
 
 		// init SVG elements
-		projection = d3.geo.albersUsa()
-			.translate([(width/2), (height/2)])
-			// .center([-106, 37.5])
-			// .scale( 300 );
-			.scale( 1000 );
+		var json = states_info[selected_state].county;
+		var topo = topojson.feature(json, json.objects.counties);
+		var center = d3.geo.centroid(topo);
+		var bound = d3.geo.bounds(topo);
+		var scale = Math.max(bound[1][1]-bound[0][1], bound[1][0] - bound[0][0]);
+		projection = d3.geo.mercator()
+			.scale(30000 / scale)
+			.center(center)
+			.translate([width/2, height/2]);
+			
 		path = d3.geo.path().projection(projection);
+		zoom = d3.behavior.zoom()
+			.scaleExtent([1, 20])
+			.on("zoom", zoompan_county);
 		svg  = d3.select("#analyses-mapview").append("svg")
 			.attr("width", width)
 			.attr("height", height)
@@ -225,72 +316,50 @@
 			.append("g");
 		g    = svg.append("g");
 
-		zoom   = d3.behavior.zoom()
-			.scaleExtent([1, 200])
-			.on("zoom", zoompan_detail);
-		d3.select(window).on("resize", redraw_detail);
+		d3.select(window).on("resize", redraw_county);
 
 		// Map View
-		var region = g.selectAll(".region").data(topo);
+		var region = g.selectAll(".region").data(topo.features);
 		region.enter().insert("path")
 			.attr("class", "region")
 			.attr("d", path)
-			.attr("id", function(d,i) { return d.id; })
-			// .attr("title", function(d,i) { return d.properties.name; })
+			.attr("id", function(d,i) { return d.id })
 			.style("fill", "#f3f1ed")
 			.attr("stroke", "#aaa")
 			.attr("stroke-width", 0.5);
 		 g.append("g")
-			.attr("class", "states-names")
+			.attr("class", "county-names")
 			.selectAll("text")
-			.data(topo)
+			.data(topo.features)
 			.enter()
 			.append("svg:text")
-			.text(function(d){
-				return d.properties.name;
-			})
-			.attr("x", function(d){
-				return path.centroid(d)[0];
-			})
-			.attr("y", function(d){
-				return  path.centroid(d)[1];
-			})
+			.text(function(d){ return d.properties["NAME10"] })
+			.attr("x", function(d){ return path.centroid(d)[0] })
+			.attr("y", function(d){ return  path.centroid(d)[1] })
 			.attr("text-anchor","middle")
 			.attr('fill', "#888")
-			.style('font-size', '1px');
-		//offsets for tooltips
-		var offsetL = document.getElementById('analyses-mapview').offsetLeft+20;
-		var offsetT = document.getElementById('analyses-mapview').offsetTop+10;
-		//tooltips
-		// region
-		// 	.on("mousemove", function(d,i) {
-		// 		var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-		// 		tooltip.classed("hidden", false)
-		// 			.attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-		// 			.html(d.properties.name);
-		// 	})
-		// 	.on("mouseout",  function(d,i) {
-		// 		tooltip.classed("hidden", true);
-		// 	}); 
-		// d3.csv("data/region-capitals.csv", function(err, capitals) {
-		  //   capitals.forEach(function(i){
-		  //     	addpoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName );
-		  //   });
-		// });
+			.style('font-size', '14px');
+		$.each(building_data, function(i, building){
+			if(building.state == selected_state) {
+				var address = building.addr + "," + building.city + "," + building.state;
+				geocoder.geocode({address: address}, function(results, status) {
+					console.log(results);
+					addpoint_county(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
+				});
+			}
+		});
 	}
 
-	function redraw_detail() {
+	function redraw_county() {
 		width = document.getElementById('analyses-mapview').offsetWidth;
 		height = width / 2;
 		d3.select('svg').remove();
-		draw_detail();
+		draw_county();
 	}
 
-	function zoompan_detail() {
-
+	function zoompan_county() {
 		var t = d3.event.translate;
 		var s = d3.event.scale; 
-		zscale = s;
 		var h = height/4;
 
 
@@ -306,14 +375,70 @@
 
 		zoom.translate(t);
 		g.attr("transform", "translate(" + t + ")scale(" + s + ")");
-		d3.selectAll("g.gpoint circle").attr("r", (2/s));
-		d3.selectAll("g.gpoint text").style("font-size", (14/s)+"px");
+		
+		d3.selectAll("g.gpoint circle").attr("r", (6/s));
+		d3.selectAll("g.county-names text").style("font-size", (14/s)+"px");
 		d3.selectAll(".region").style("stroke-width", 0.5 / s);
-		if(s > 12) {
-			d3.selectAll(".states-names text").style("font-size", 14/s +"px");
-		} else {
-			d3.selectAll(".states-names text").style("font-size", "1px");
-		}	
+		// if(s > 12) {
+		// 	d3.selectAll(".states-names text").style("font-size", 14/s +"px");
+		// } else {
+		// 	d3.selectAll(".states-names text").style("font-size", "1px");
+		// }	
 	}
 
+	function addpoint_county(lon,lat,building) {
+		var gpoint = g.append("g").attr("class", "gpoint");
+		var x = projection([lon,lat])[0];
+		var y = projection([lon,lat])[1];
+
+		gpoint.append("svg:circle")
+			.attr("cx", x)
+			.attr("cy", y)
+			.attr("r", 6)
+			.style("opacity", 0.5)
+			.style("fill", function(d){
+				if(building.competitor == 't') {
+					return "blue";
+				} else {
+					return "red";
+				}
+			})
+			.on("mousemove", function(d) {
+				var html = ' \
+					<div> \
+						<div class="title">' + building.name +'</div>\
+						<div class="sub-title row">' +
+							'<div class="pull-left"><b>' + building.units + '</b> units,</div> \
+							<div class="pull-right"> Built in <b>' + building.year + '</b></div> \
+						</div>' +
+						'<div class="info row"> Occupancy <b>' + building.occupancy_rate +'%</b> </div> \
+						<div class="info row"> Leased <b>' + building.leased_rate +'%</b> </div> \
+					</div>';
+				console.log();
+				tooltip.classed("hidden", false)
+					.classed("owned", function(){
+						if(building.competitor == 'f'){
+							return true
+						} else {
+							return false
+						}
+					})
+					.classed("competitor", function(){
+						if(building.competitor == 't'){
+							return true
+						} else {
+							return false
+						}
+					})
+					.style("left", (d3.event.pageX + 10) + "px")
+					.style("top", (d3.event.pageY -10) + "px")
+					.html(html)
+					.transition() 
+					.duration(500)
+					.style("opacity", 1);
+			})
+			.on("mouseout",  function(d,i) {
+				tooltip.classed("hidden", true).style("opacity",0);
+			}); 
+	}
 </script>

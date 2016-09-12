@@ -131,7 +131,7 @@ body {
 /*
  * Navigation
  */
-$navbarHeight: 80px;
+ $navbarHeight: 80px;
 .navbar-default {
     background: #fff;
     position: fixed;
@@ -336,4 +336,8 @@ td {
 }
 .third-col {
     width: 55px;
+}
+
+#bs-example-navbar-collapse-1 {
+    padding-right: 60px   
 }

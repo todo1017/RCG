@@ -5,7 +5,7 @@
 <div id="analyses-ppsf">
 	<div class="row">
 		<div class="analyses-title">
-			<h1 class="text-center">Price per Square Foot</h1>
+			<h1 class="text-center">Price per square Foot</h1>
 		</div>
 	</div>
 	<ul class="nav nav-pills nav-justified">
@@ -19,9 +19,9 @@
 					<h3>Show</h3>
 					<div class="show-content row">
 						<ul class="nav nav-pills nav-justified pill-color-1">
-							<li class="active set_by_year"><a data-toggle="pill">By Year</a></li>
+							<li class="active set_by_month"><a data-toggle="pill">By Month</a></li>
 							<li class="set_by_quarter"><a data-toggle="pill">By Quarter</a></li>
-							<li class="set_by_month"><a data-toggle="pill">By Month</a></li>
+							<li class="set_by_year"><a data-toggle="pill">By Year</a></li>
 						</ul>
 					</div>
 				</div>
@@ -38,21 +38,21 @@
 					<h3>Filter</h3>
 					<div class="filter-content row">
 						<div class="row">
-							<div class="col-xs-6">
-								<h5>- Geography</h5>
-								<ul id="geographies" class="nav nav-pills nav-stacked pill-color-1">
-									<% @geographies.each do |geography| %>
-										<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '') %>"><%= geography.name %></a></li>
-									<% end %>
-								</ul>
-							</div>
-							<div id="comp_groups" class="col-xs-6 tab-content">
-								<h5>- Group</h5>
+							<div class="panel-group">
 								<% @geographies.each do |geography| %>
-									<div id="<%= geography.name.gsub(/\s+/, '') %>" class="tab-pane fade in">
-										<% @comp_groups.each do |comp_group| %>
-											<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
-										<% end %>
+									<div class="col-xs-6" style="padding-bottom: 5px">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<%= geography.name %>
+											</div>
+											<div id="<%= geography.name.gsub(/\s+/, '') %>" >
+												<div class="panel-body">
+													<% @comp_groups.each do |comp_group| %>
+														<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+													<% end %>	
+												</div>
+											</div>
+										</div>
 									</div>
 								<% end %>
 							</div>
@@ -92,21 +92,21 @@
 							<input class="form-control" type="text" id="to" name="to">
 						</div>
 						<div class="row">
-							<div class="col-xs-6">
-								<h5>- Geography</h5>
-								<ul class="nav nav-pills nav-stacked pill-color-1">
-									<% @geographies.each do |geography| %>
-										<li><a data-toggle="pill" href="#<%= geography.name.gsub(/\s+/, '')+"_" %>"><%= geography.name %></a></li>
-									<% end %>
-								</ul>
-							</div>
-							<div class="col-xs-6 tab-content">
-								<h5>- Group</h5>
+							<div class="panel-group">
 								<% @geographies.each do |geography| %>
-									<div id="<%= geography.name.gsub(/\s+/, '')+"_" %>" class="tab-pane fade in">
-										<% @comp_groups.each do |comp_group| %>
-											<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
-										<% end %>
+									<div class="col-xs-6" style="padding-bottom: 5px">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<%= geography.name %>
+											</div>
+											<div id="<%= geography.name.gsub(/\s+/, '') %>" >
+												<div class="panel-body">
+													<% @comp_groups.each do |comp_group| %>
+														<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+													<% end %>	
+												</div>
+											</div>
+										</div>
 									</div>
 								<% end %>
 							</div>
@@ -129,7 +129,8 @@
 <script>
 
 	// NVD3 Chart
-	var rpt_filter1 = "year";
+	var building_color = {};
+	var rpt_filter1 = "month";
 	var rpt_filter2 = "gross";
 	var rpt_data    = {};
 	var rpt_chart;
@@ -137,7 +138,7 @@
 	rpt_init();
 
 	//init checkbox unchecked
-	$("#rental_price_trend input").attr("checked", false);
+	$("#rental_price_trend input").attr("checked", true);
 
 	// update rpt chart by filter
 	$("#rental_price_trend .set_by_year").on("click", function(e){
@@ -177,11 +178,12 @@
 				},
 				function( result ) {
 					rpt_data = result;
+					console.log(rpt_data)
 					update_rpt_chart();
 				}
 			);
 		} else {
-			rpt_init();
+			rpt_empty();
 		}
 	});
 
@@ -203,12 +205,6 @@
 				}
 			});
 			tickValues.sort();
-			
-			rpt_chart.xAxis
-				.tickValues(tickIndex)
-				.tickFormat(function(d){
-					return tickValues[d];
-				});
 
 			var data = [];
 
@@ -243,11 +239,24 @@
 					data.push({
 						values: chart_values,
 						key: name,
-						color: random_color
+						color: building_color[name]
 					});
 				}
 			});
 
+			if(rpt_filter1 == "month") {
+				$.each(tickValues, function(i, val){
+					var y_m = val.split('-');
+					tickValues[i] = y_m[1] + '/' + y_m[0];
+				});
+			}
+
+			rpt_chart.xAxis
+				.tickValues(tickIndex)
+				.tickFormat(function(d){
+					return tickValues[d];
+				});
+				
 			d3.select('#rpt-chart svg')
 				.datum(data)
 				.call(rpt_chart);
@@ -259,7 +268,7 @@
 		}
 	}
 
-	function rpt_init() {
+	function rpt_empty() {
 		data = [
 			{
 				values: [{x: 0, y: 0},{x: 1, y: 1}],
@@ -267,33 +276,52 @@
 				color: "white"
 			}
 		];
-		nv.addGraph(function() {
-			rpt_chart = nv.models.lineChart()
-				.options({
-					duration: 300,
-					useInteractiveGuideline: true,
-					interpolate: "cardinal"
-				});
+		
+		rpt_chart = nv.models.lineChart()
+			.options({
+				duration: 300,
+				useInteractiveGuideline: true,
+				interpolate: "cardinal"
+			});
 
-			rpt_chart.xAxis.tickValues([0,1])
+		rpt_chart.xAxis.tickValues([0,1])
 
-			rpt_chart.yAxis
-				.tickValues([0,1])
-				.tickFormat(function(d) {
-					if (d == null) {
-						return 'N/A';
-					}
-					return "$" + d3.format(',.2f')(d);
-				});
+		rpt_chart.yAxis
+			.tickValues([0,1])
+			.tickFormat(function(d) {
+				if (d == null) {
+					return 'N/A';
+				}
+				return "$" + d3.format(',.2f')(d);
+			});
 
-			d3.select('#rpt-chart').append('svg')
-				.datum(data)
-				.call(rpt_chart);
+		d3.select('#rpt-chart').append('svg')
+			.datum(data)
+			.call(rpt_chart);
 
-			nv.utils.windowResize(rpt_chart.update);
+		nv.utils.windowResize(rpt_chart.update);
+	}
 
-			return rpt_chart;
+	function rpt_init() {
+		var filter_list = [];
+		$("#rental_price_trend input").each(function(){
+			filter_list.push(this.value)
 		});
+		console.log(filter_list);
+		$.get( "/analyses/ppsf_filter1",
+			{
+				filter_list : filter_list
+			},
+			function( result ) {
+				$.each(result.data.gross.month, function(i, d){
+					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
+					building_color[i] = random_color;
+				})
+				rpt_empty();
+				rpt_data = result;
+				update_rpt_chart();
+			}
+		);
 	}
 
 	

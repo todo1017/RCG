@@ -133,7 +133,6 @@ class AnalysesController < ApplicationController
 			net_quarter_res   = Analysis.select("quarter as label, avg(net_rent)   as val").where("property = ?", building).group('quarter').order('quarter')
 			net_month_res     = Analysis.select("month as label,   avg(net_rent)   as val").where("property = ?", building).group('month').order('month')
 			
-
 			gross_year[building]    = gross_year_res
 			gross_quarter[building] = gross_quarter_res
 			gross_month[building]   = gross_month_res
@@ -209,21 +208,19 @@ class AnalysesController < ApplicationController
 	def map
 	end
 
-	def usdata
-		mapdata = JSON.parse(File.read('app/assets/json/state.json'))
-
+	def us_states_data
+		states_json = JSON.parse(File.read('app/assets/json/county/US.json'))
+		states_hash = JSON.parse(File.read('app/assets/json/states_hash.json'))
 		building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where as_of_date is not null and building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id and b.address1 is not null and b.state is not null) b where a.building_id = b.id')
+		render json: {states: states_json, buildings: building_data, hash: states_hash}
+	end
 
-		# building_data = BuildingOccupancy.joins(:building)
-		# 	.select('buildings.name as "name", 
-		# 		buildings.number_of_units as "units",
-		# 		buildings.year_built as "year", 
-		# 		building_occupancies.occupancy_rate as "occupancy_rate",
-		# 		building_occupancies.leased_rate as "leased_rate"'
-		# 	)
-		# 	.order('building_occupancies.as_of_date DESC')
-		# 	.group('building_occupancies.building_id')
-		render json: {mapdata: mapdata , building_data: building_data}
-		# render json: {mapdata: mapdata}
+	def us_county_data
+		state = params[:state]
+		county_json = {}
+		if File.exist?('app/assets/json/county/' + state +'.json')
+			county_json = JSON.parse(File.read('app/assets/json/county/' + state +'.json'))
+		end
+		render json: {data: county_json}
 	end
 end
