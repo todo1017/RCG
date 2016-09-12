@@ -1,1 +1,1 @@
-$("##{geography_id}").html("#{escape_javascript(render(partial: '/users/buildings_', locals: { user_id: user_id, geography_id: geography_id, none: none, disabled: disabled })).html_safe}");
+$("##{geography_id}").html("#{escape_javascript(render(partial: '/users/buildings_', locals: { user_id: user_id, geography_id: geography_id, access_type: access_type })).html_safe}");

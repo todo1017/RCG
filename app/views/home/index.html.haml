@@ -3,12 +3,27 @@
   .col-md-8
     %p#notice
       = notice
-    %br
     - if current_user
+      - if [1, 2, 3].include? current_user.id
+        %h3
+          Super Admin only:
+        %br
+        = link_to "Companies", "/owners"
+        %br
+        = link_to "DPM Assignments", "/users"
+        %br
+        %br
       - if current_user.owner_id != nil && current_user.owner_admin
         %h3
-          = "Director of PM only:"
-        -#= link_to "User Approvals", "/users"
+          Director of PM only:
+        %br
+        = link_to "User Setup & Authorization (not yet tied into page authorization logic)", "/user_assignments"
+        %br
+        = link_to "Comp Groups", "/comp_groups"
+        %br
+        = link_to "Geographies", "/geographies"
+        %br
+        %br
         %br
         - counter = 0
         -# TODO - query needs to filter by owner
@@ -87,30 +102,7 @@
             = submit_tag "Import Rent Roll", {:class=>"btn btn-success"}
         %br
         %br
-      - if [1, 2, 3].include? current_user.id
-        %h3
-          Ronan Admin Only:
-          -#Super Admin Only:
-        %br
-        = link_to "NEW - User Security Setup (not yet tied into page authorization logic)", "/user_assignments"
-        %br
-        %br
-        = link_to "Make Director of PM Assignments", "/users"
-        %br
-        %br
-        = link_to "Owners", "/owners"
-        %br
-        = link_to "Comp Groups", "/comp_groups"
-        %br
-        = link_to "Geographies", "/geographies"
-        -#%br
-        -#= link_to "Change Owner View", "#"
-        %br
-        %br
 
-
-      -#- else
-        -#Please request approval to see your buildings
       %br
       %br
       %br

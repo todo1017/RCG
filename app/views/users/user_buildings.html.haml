@@ -11,5 +11,6 @@
 %br
 
 #geography_container
+  = render partial: "/users/geographies_", locals: { dpm_admin: @dpm_admin, owner_id: params[:owner_id], user_id: params[:user_id] }
 
 

@@ -45,14 +45,25 @@ class UsersController < ApplicationController
           owner_user = OwnerUser.find(params[:owner_user_id])
           owner_user.toggle(:dpm_admin)
           owner_user.save
-          render partial: "/users/geographies", locals: { owner_id: owner_user.owner_id, user_id: owner_user.user_id }
+          render partial: "/users/geographies", locals: { dpm_admin: owner_user.dpm_admin, owner_id: owner_user.owner_id, user_id: owner_user.user_id }
         elsif params[:geography_id].present?
-          if params[:none] == "yes"
-            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "yes", disabled: "n/a" }
-          else
-            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], none: "no", disabled: params[:disabled] }
+          UserGeography.destroy_all(user_id: params[:user_id], geography_id: params[:geography_id])
+          if params[:selection] == "none"
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], access_type: "none" }
+          elsif params[:selection] == "partial"
+            UserGeography.find_or_create_by(user_id: params[:user_id], geography_id: params[:geography_id], access_type: "partial")
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], access_type: "partial" }
+          elsif params[:selection] == "all"
+            UserGeography.find_or_create_by(user_id: params[:user_id], geography_id: params[:geography_id], access_type: "all")
+            render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], access_type: "all" }
           end
         elsif params[:building_id].present?
+          user_buildings = UserBuilding.find_by(user_id: params[:user_id], building_id: params[:building_id])
+          if user_buildings == nil
+            UserBuilding.create(user_id: params[:user_id], building_id: params[:building_id])
+          else
+            user_buildings.destroy
+          end
         end
       }
     end
