@@ -1,6 +1,9 @@
+<!-- TODO -- make these class variables and set them within the controller-->
 <% if params[:details].present? %>
+    <% colspan_value_owned = 8 %>
     <% colspan_value = 6 %>
 <% else %>
+    <% colspan_value_owned = 7 %>
     <% colspan_value = 3 %>
 <% end %>
 
@@ -36,13 +39,7 @@
   <table class="scroll-table_comps comp-table" id="comp-table">
     <thead>
     <tr>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
+      <th colspan="<%=colspan_value_owned.to_s%>">&nbsp;</th>
       <%- last_comp_group = "" %>
       <%- @compgroups.each do |comp_group| %>
           <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
@@ -55,13 +52,7 @@
       <% end %>
     </tr>
     <tr>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
-      <th>&nbsp;</th>
+      <th colspan="<%=colspan_value_owned.to_s%>">&nbsp;</th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
               <th class="no-sort text-center" colspan="<%=colspan_value.to_s%>"><%= comp_building.name %><br><br></th>
@@ -73,8 +64,11 @@
       <th class="no-sort">Unit Type<br><br></th>
       <th class="">Available<br><br></th>
       <th class="no-sort">Market Rent<br><br></th>
-      <th class="no-sort">Concession<br><br></th>
       <th class="no-sort">Gross/ft<sup>2</sup><br><br></th>
+      <th class="no-sort">Concession<br><br></th>
+      <% if params[:details].present? %>
+          <th class="no-sort">Net Rent<br><br></th>
+      <% end %>
       <th class="no-sort">Net/ft<sup>2</sup><br><br></th>
       <%- @compgroups.each do |comp_group| %>
           <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
@@ -110,8 +104,11 @@
               <td class=""><%= unit_type(building_unit) %></td>
               <td class=""><%= available(building_unit) %></td>
               <td class=""><%= number_to_currency(building_unit.market_rent) %></td>
-              <td class=""><%= concessions_currency(building_unit, "owned") %></td>
               <td class=""><%= number_to_currency(gross_sq_foot(building_unit)) %></td>
+              <td class=""><%= concessions_currency(building_unit, "owned") %></td>
+              <% if params[:details].present? %>
+                  <td class=""><%= number_to_currency(net_rent(building_unit)) %></td>
+              <% end %>
               <td class=""><%= number_to_currency(net_sq_foot(building_unit)) %></td>
               <%- CompGroup.all.each do |comp_group| %>
                   <% additional_row = Array.new %>

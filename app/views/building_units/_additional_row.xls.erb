@@ -1,21 +1,18 @@
+<% if details == "yes" %>
+    <% colspan_value_owned = 8 %>
+    <% colspan_value = 6 %>
+<% else %>
+    <% colspan_value_owned = 7 %>
+    <% colspan_value = 3 %>
+<% end %>
+
 <% additional_row_data_temp = additional_row_data - [nil] %>
 <% if !additional_row_data_temp.empty? %>
     <Row>
-      <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+      <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
-              <% if details == "yes" %>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-              <% else %>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-                  <Cell><Data ss:Type="String"></Data></Cell>
-              <% end %>
+              <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"></Data></Cell>
           <% else %>
               <% if details == "yes" %>
                   <%= render partial: "three_field_details", locals: {comp: comp} %>
