@@ -1,4 +1,6 @@
 class PasswordResetsController < ApplicationController
+  skip_filter :require_login
+
   def new
   end
 
