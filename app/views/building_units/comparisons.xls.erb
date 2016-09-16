@@ -1,5 +1,5 @@
 <% if params[:details].present? %>
-    <% colspan_value = 5 %>
+    <% colspan_value = 6 %>
 <% else %>
     <% colspan_value = 3 %>
 <% end %>
@@ -46,13 +46,14 @@
                 <% if params[:details].present? %>
                     <Cell><Data ss:Type="String">Unit Type</Data></Cell>
                     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
                     <Cell><Data ss:Type="String">Concession</Data></Cell>
-                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Net Rent</Data></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
                 <% else %>
                     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
-                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
                 <% end %>
             <% end %>
         <% end %>

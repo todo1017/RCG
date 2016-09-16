@@ -1,5 +1,5 @@
 <% if params[:details].present? %>
-    <% colspan_value = 5 %>
+    <% colspan_value = 6 %>
 <% else %>
     <% colspan_value = 3 %>
 <% end %>
@@ -83,6 +83,7 @@
                   <th class="no-sort text-center">Actual Rent<br><br></th>
                   <th class="no-sort text-center">Gross/ft<sup>2</sup><br><br></th>
                   <th class="no-sort text-center">Concession<br><br></th>
+                  <th class="no-sort text-center">Net Rent<br><br></th>
                   <th class="no-sort text-center">Net/ft<sup>2</sup><br><br></th>
               <% else %>
                   <th class="no-sort text-center border-separator">Actual Rent<br><br></th>
@@ -129,9 +130,9 @@
                           <% counter = counter + 1 %>
                       <% end.empty? and begin %>
                           <% if params[:details].present? %>
-                              <td colspan="5" class="border-separator">nothing exact</td>
+                              <td colspan="<%=colspan_value.to_s%>" class="border-separator">nothing exact</td>
                           <% else %>
-                              <td colspan="3" class="border-separator">nothing exact</td>
+                              <td colspan="<%=colspan_value.to_s%>" class="border-separator">nothing exact</td>
                           <% end %>
                           <% counter = counter + 1 %>
                       <% end %>
