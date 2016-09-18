@@ -62,26 +62,13 @@
 	}
 
 	#states_list{
-		padding: 20px 0;
-	}
-	#states_list div{
-		padding: 10px 0;
-		text-align: center;
-		float: left;
-		width: 5%;
-	}
-	#states_list div:hover {
-		cursor: pointer;
-		background: #eee
-	}
-	#states_list div.clicked {
-		background: #ccc;
+		padding: 5px;
 	}
 </style>
 <div id="analyses-map">
 	<h1 class="text-center analyses-mapview-title"> Map Overview</h1>
+	<select id="states_list"></select>
 	<div id="analyses-mapview"></div>
-	<div id="states_list"></div>
 </div>
 
 <script>
@@ -92,12 +79,12 @@
 	var tooltip   = d3.select("#analyses-mapview").append("div").attr("class", "tooltip hidden");
 	var geocoder = new google.maps.Geocoder();
 
-	$.get("/analyses/us_states_data", function(response){
+	$.get("/analyses/api", { type : 'us_states_data'}, function(response){
 		building_data = response["buildings"];
 		states_hash = response["hash"];
 		states_info = {};
 		states_hash_inverse = {};
-		states_list = '<div>US</div>';
+		states_list = '<option value="US">All States</option>';
 		$.each(states_hash, function(short, long){
 			states_info[short] ={
 				comp  : 0,
@@ -105,7 +92,7 @@
 				county : null
 			};
 			states_hash_inverse[long] = short;
-			states_list +='<div>' + short + '</div>';
+			states_list +='<option value="' + short + '">' + long + '</option>';
 		});
 		$.each(building_data, function(i, building){
 			if(building.competitor == "t") {
@@ -117,10 +104,8 @@
 		$('#states_list').html(states_list);
 		states_json = response["states"].features;
 		draw_states();
-		$('#states_list div').bind("click", function(e){
-			$('#states_list div.clicked').removeClass('clicked');
-			$(this).addClass('clicked');
-			var state_name = $(this).html();
+		$('#states_list').bind("change", function(e){
+			var state_name = $(this).val();
 			if(state_name == "US") {
 				d3.select('svg').remove();
 				draw_states();
@@ -130,7 +115,7 @@
 					selected_state = state_name;
 					draw_county();
 				} else {
-					$.get("/analyses/us_county_data", { state : state_name}, function(response){
+					$.get("/analyses/api", { type : 'us_county_data', state : state_name}, function(response){
 						states_info[state_name].county = response.data;
 						if(state_name == "US"){
 							d3.select('svg').remove();
@@ -343,7 +328,6 @@
 			if(building.state == selected_state) {
 				var address = building.addr + "," + building.city + "," + building.state;
 				geocoder.geocode({address: address}, function(results, status) {
-					console.log(results);
 					addpoint_county(results[0].geometry.location.lng(), results[0].geometry.location.lat(), building);
 				});
 			}
@@ -379,11 +363,6 @@
 		d3.selectAll("g.gpoint circle").attr("r", (6/s));
 		d3.selectAll("g.county-names text").style("font-size", (14/s)+"px");
 		d3.selectAll(".region").style("stroke-width", 0.5 / s);
-		// if(s > 12) {
-		// 	d3.selectAll(".states-names text").style("font-size", 14/s +"px");
-		// } else {
-		// 	d3.selectAll(".states-names text").style("font-size", "1px");
-		// }	
 	}
 
 	function addpoint_county(lon,lat,building) {

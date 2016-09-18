@@ -35,12 +35,9 @@ Rails.application.routes.draw do
   get 'analyses/update', to: 'analyses#update'
   get 'analyses/update_data', to: 'analyses#update_data'
   get 'analyses/ppsf', to: 'analyses#ppsf'
-  get 'analyses/ppsf_filter1', to: 'analyses#ppsf_filter1'
-  get 'analyses/ppsf_filter2', to: 'analyses#ppsf_filter2'
+  get 'analyses/net_rent_ranking', to: 'analyses#net_rent_ranking'
   get 'analyses/map', to: 'analyses#map'
-  get 'analyses/us_states_data', to: 'analyses#us_states_data'
-  get 'analyses/us_county_data', to: 'analyses#us_county_data'
-
+  get 'analyses/api', to: 'analyses#api'
   get 'rent_roll/:building_id', to: 'building_units#rent_roll', as: "rent_roll"
 
   resources :users do

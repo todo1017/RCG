@@ -77,14 +77,16 @@ class AnalysesController < ApplicationController
 				analysis.gross_rent = (act_rent / sq_feet).round(2)
 
 				if(months_off)
-					analysis.net_rent = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
+					analysis.net_rent_sf = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
+					analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
 				else
-					analysis.net_rent = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
+					analysis.net_rent_sf = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
+					analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
 				end
 
 				if sq_feet == 0
 					analysis.gross_rent = 0
-					analysis.net_rent = 0
+					analysis.net_rent_sf = 0
 				end
 
 				analysis.save!
@@ -107,120 +109,139 @@ class AnalysesController < ApplicationController
 		@comp_groups = CompGroup.all
 	end
 
-	def ppsf_filter1
-		buildings = []
-		for filter in params[:filter_list]
-			ids    = filter.split("_")
-			result = Building.where("geography_id = ? AND comp_group_id = ?", ids[0], ids[1])
-			for r in result
-				buildings.push(r[:name])
-			end
-		end
-
-		gross_year    = {}
-		gross_quarter = {}
-		gross_month   = {}
-		net_year      = {}
-		net_quarter   = {}
-		net_month     = {}
-
-		for building in buildings
-
-			gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year').order('year')
-			gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter').order('quarter')
-			gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month').order('month')
-			net_year_res      = Analysis.select("year as label,    avg(net_rent)   as val").where("property = ?", building).group('year').order('year')
-			net_quarter_res   = Analysis.select("quarter as label, avg(net_rent)   as val").where("property = ?", building).group('quarter').order('quarter')
-			net_month_res     = Analysis.select("month as label,   avg(net_rent)   as val").where("property = ?", building).group('month').order('month')
-			
-			gross_year[building]    = gross_year_res
-			gross_quarter[building] = gross_quarter_res
-			gross_month[building]   = gross_month_res
-			net_year[building]      = net_year_res
-			net_quarter[building]   = net_quarter_res
-			net_month[building]     = net_month_res
-
-		end
-
-		result = {
-			'gross' => {
-				'year'    => gross_year,
-				'quarter' => gross_quarter,
-				'month'   => gross_month
-			},
-			'net' => {
-				'year'    => net_year,
-				'quarter' => net_quarter,
-				'month'   => net_month
-			}
-		}
-
-		render json: { data: result}
-	end
-
-	def ppsf_filter2
-
-		from_date = DateTime.parse(params[:from_date]).to_i
-		to_date   = DateTime.parse(params[:to_date]).to_i
-
-		buildings = []
-		for filter in params[:filter_list]
-			ids = filter.split("_")
-			sql = 'select b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
-			res = ActiveRecord::Base.connection.execute(sql)
-			for r in res
-				buildings.push({
-					'name' => r["bname"],
-					'geography' => r["gname"]
-				})
-			end
-		end
-
-		gross = []
-		net   = []
-
-		for building in buildings
-			gross_res = Analysis.select('avg(gross_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
-			net_res   = Analysis.select('avg(net_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
-
-			gross.push({
-				'val'      => gross_res[0]["val"],
-				'building' => building["name"],
-				'geo'      => building["geography"]
-			})
-
-			net.push({
-				'val'      => net_res[0]["val"],
-				'building' => building["name"],
-				'geo'      => building["geography"]
-			})
-		end
-
-		result = {
-			'gross' => gross,
-			'net' => net
-		}
-
-		render json: { data: result }
-		# render json: { data: buildings }
+	def net_rent_ranking
+		@geographies = Geography.all
+		@comp_groups = CompGroup.all
 	end
 
 	def map
 	end
 
-	def us_states_data
-		states_json = JSON.parse(File.read('app/assets/json/county/US.json'))
-		states_hash = JSON.parse(File.read('app/assets/json/states_hash.json'))
-		building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where as_of_date is not null and building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id and b.address1 is not null and b.state is not null) b where a.building_id = b.id')
-		render json: {states: states_json, buildings: building_data, hash: states_hash}
-	end
+	def api
+		type = params[:type]
+		case type
+		when 'ppsf_rpt'
+			buildings = []
+			for filter in params[:filter_list]
+				ids    = filter.split("_")
+				result = Building.where("geography_id = ? AND comp_group_id = ?", ids[0], ids[1])
+				for r in result
+					buildings.push(r[:name])
+				end
+			end
 
-	def us_county_data
-		state = params[:state]
-		county_json = {}
-		if File.exist?('app/assets/json/county/' + state +'.json')
-			county_json = JSON.parse(File.read('app/assets/json/county/' + state +'.json'))
+			gross_year    = {}
+			gross_quarter = {}
+			gross_month   = {}
+			net_year      = {}
+			net_quarter   = {}
+			net_month     = {}
+
+			for building in buildings
+
+				gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year').order('year')
+				gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter').order('quarter')
+				gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month').order('month')
+				net_year_res      = Analysis.select("year as label,    avg(net_rent_sf)   as val").where("property = ?", building).group('year').order('year')
+				net_quarter_res   = Analysis.select("quarter as label, avg(net_rent_sf)   as val").where("property = ?", building).group('quarter').order('quarter')
+				net_month_res     = Analysis.select("month as label,   avg(net_rent_sf)   as val").where("property = ?", building).group('month').order('month')
+				
+				gross_year[building]    = gross_year_res
+				gross_quarter[building] = gross_quarter_res
+				gross_month[building]   = gross_month_res
+				net_year[building]      = net_year_res
+				net_quarter[building]   = net_quarter_res
+				net_month[building]     = net_month_res
+
+			end
+
+			result = {
+				'gross' => {
+					'year'    => gross_year,
+					'quarter' => gross_quarter,
+					'month'   => gross_month
+				},
+				'net' => {
+					'year'    => net_year,
+					'quarter' => net_quarter,
+					'month'   => net_month
+				}
+			}
+
+			render json: { data: result}
+		when 'ppsf_cbr'
+			from_date = DateTime.parse(params[:from_date]).to_i
+			to_date   = DateTime.parse(params[:to_date]).to_i
+
+			buildings = []
+			for filter in params[:filter_list]
+				ids = filter.split("_")
+				sql = 'select b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
+				res = ActiveRecord::Base.connection.execute(sql)
+				for r in res
+					buildings.push({
+						'name' => r["bname"],
+						'geography' => r["gname"]
+					})
+				end
+			end
+
+			gross = []
+			net   = []
+
+			for building in buildings
+				gross_res = Analysis.select('avg(gross_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
+				net_res   = Analysis.select('avg(net_rent_sf) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
+
+				gross.push({
+					'val'      => gross_res[0]["val"],
+					'building' => building["name"],
+					'geo'      => building["geography"]
+				})
+
+				net.push({
+					'val'      => net_res[0]["val"],
+					'building' => building["name"],
+					'geo'      => building["geography"]
+				})
+			end
+
+			result = {
+				'gross' => gross,
+				'net' => net
+			}
+
+			render json: { data: result }
+		when 'nrr'
+			buildings = []
+			for filter in params[:filter_list]
+				ids    = filter.split("_")
+				result = Building.where("geography_id = ? AND comp_group_id = ?", ids[0], ids[1])
+				for r in result
+					buildings.push(r[:name])
+				end
+			end
+
+			data = {}
+
+			for building in buildings
+				net_rent = Analysis.select("avg(net_rent_sf) as nrsf, avg(net_rent) as nr").where("property = ?", building)
+				data[building] = net_rent
+			end
+
+			render json: { data: data}
+		when 'us_states_data'
+			states_json = JSON.parse(File.read('app/assets/json/county/US.json'))
+			states_hash = JSON.parse(File.read('app/assets/json/states_hash.json'))
+			building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where as_of_date is not null and building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id and b.address1 is not null and b.state is not null) b where a.building_id = b.id')
+			render json: {states: states_json, buildings: building_data, hash: states_hash}
+		when 'us_county_data'
+			state = params[:state]
+			county_json = {}
+			if File.exist?('app/assets/json/county/' + state +'.json')
+				county_json = JSON.parse(File.read('app/assets/json/county/' + state +'.json'))
+			end
+			render json: {data: county_json}
 		end
-		render json: {data: county_json}
 	end
 end

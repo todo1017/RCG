@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#analyses-update {
+	font-size: 30px;
+}
+
 #analyses-ppsf {
 	padding : 0 20px;
 
@@ -52,10 +56,6 @@
 	}
 
 	#clustered_building_rent {
-		#cbr-chart {
-			padding : 20px;
-			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-		}
 		.tab-content {
 			padding : 0;
 		}
@@ -69,11 +69,123 @@
 			border-left : 3px solid #ddd;
 			margin : 0;
 		}
+		#cbr-chart {
+			padding : 20px;
+			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+		#cbr-chart text{
+			font-weight: bold;
+			font: normal 12px Arial;
+		}
+		#cbr-chart text.geography{
+			fill : #aaa;
+			font: normal 30px sans-serif;
+		}
+		#cbr-chart line {
+			shape-rendering: crispEdges;
+		}
+		#cbr-chart g.y.axis path{
+			fill: none;
+			shape-rendering: crispEdges;
+		}
+		#cbr-chart g.x.axis path{
+			fill: none;
+			stroke: #ccc;
+			shape-rendering: crispEdges;
+		}
+		#cbr-chart rect.bar:hover{
+			cursor : pointer;
+			opacity : 0.8
+		}
 	}
 }
 
-#analyses-update {
-	font-size: 30px;
+#analyses-net-rent-rankings {
+	padding : 0 20px;
+	.filter-content {
+		padding-left : 20px;
+		border-left : 3px solid #ddd;
+		margin : 0;
+	}
+	.nr-view {
+		padding : 20px;
+		font: normal 12px Arial;
+	}
+	.content {
+		padding: 20px 0;
+		margin: 20px 0;
+		box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	#nrsf-chart {
+		height: 380px;
+	}
+	#nrsf-chart text{
+		font-weight: bold;
+		font: normal 12px Arial;
+	}
+	#nrsf-chart text.geography{
+		fill : #aaa;
+		font: normal 30px sans-serif;
+	}
+	#nrsf-chart line {
+		shape-rendering: crispEdges;
+	}
+	#nrsf-chart g.y.axis path{
+		fill: none;
+		shape-rendering: crispEdges;
+	}
+	#nrsf-chart g.x.axis path{
+		fill: none;
+		stroke: #ccc;
+		shape-rendering: crispEdges;
+	}
+	#nrsf-chart rect.bar {
+		opacity : 0.5;
+	}
+	#nrsf-chart rect.bar:hover{
+		cursor : pointer;
+		opacity : 1
+	}
+	#nrsf-chart rect.bar.selected{
+		cursor : pointer;
+		opacity : 1
+	}
+
+	#nr-chart {
+		height: 380px;
+	}
+	#nr-chart text{
+		font-weight: bold;
+		font: normal 12px Arial;
+	}
+	#nr-chart text.geography{
+		fill : #aaa;
+		font: normal 30px sans-serif;
+	}
+	#nr-chart line {
+		shape-rendering: crispEdges;
+	}
+	#nr-chart g.y.axis path{
+		fill: none;
+		shape-rendering: crispEdges;
+	}
+	#nr-chart g.x.axis path{
+		fill: none;
+		stroke: #ccc;
+		shape-rendering: crispEdges;
+	}
+	#nr-chart rect.bar {
+		opacity : 0.5
+	}
+	#nr-chart rect.bar:hover{
+		cursor : pointer;
+		opacity : 1
+	}
+	#nr-chart rect.bar.selected{
+		cursor : pointer;
+		opacity : 1
+	}
 }
 
 #analyses-map {
