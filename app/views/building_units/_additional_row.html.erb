@@ -1,20 +1,18 @@
+<% if details == "yes" %>
+    <% colspan_value_owned = 8 %>
+    <% colspan_value = 6 %>
+<% else %>
+    <% colspan_value_owned = 7 %>
+    <% colspan_value = 3 %>
+<% end %>
+
 <% additional_row_data_temp = additional_row_data - [nil] %>
 <% if !additional_row_data_temp.empty? %>
     <tr>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
-      <td style="border-right-width: 0;">&nbsp;</td>
+      <td style="border-right-width: 0;" colspan="<%= colspan_value_owned %>">&nbsp;</td>
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
-              <% if details == "yes" %>
-                  <td colspan="5" class="border-separator">nothing exact</td>
-              <% else %>
-                  <td colspan="3" class="border-separator">nothing exact</td>
-              <% end %>
+              <td colspan="<%= colspan_value %>" class="border-separator">nothing exact</td>
           <% else %>
               <% if details == "yes" %>
                   <%= render partial: "three_field_details", locals: {comp: comp} %>

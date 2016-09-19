@@ -1,6 +1,8 @@
 <% if params[:details].present? %>
-    <% colspan_value = 5 %>
+    <% colspan_value_owned = 8 %>
+    <% colspan_value = 6 %>
 <% else %>
+    <% colspan_value_owned = 7 %>
     <% colspan_value = 3 %>
 <% end %>
 
@@ -13,7 +15,7 @@
   <Worksheet ss:Name="Sheet1">
     <Table>
       <Row>
-        <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- last_comp_group = "" %>
         <%- @compgroups.each do |comp_group| %>
             <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
@@ -26,7 +28,7 @@
         <% end %>
       </Row>
       <Row>
-        <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                 <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"><%= comp_building.name %></Data></Cell>
@@ -38,21 +40,25 @@
         <Cell><Data ss:Type="String">Unit Type</Data></Cell>
         <Cell><Data ss:Type="String">Available</Data></Cell>
         <Cell><Data ss:Type="String">Market Rent</Data></Cell>
+        <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
         <Cell><Data ss:Type="String">Concession</Data></Cell>
-        <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
-        <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+        <% if params[:details].present? %>
+            <Cell><Data ss:Type="String">Net Rent</Data></Cell>
+        <% end %>
+        <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                 <% if params[:details].present? %>
                     <Cell><Data ss:Type="String">Unit Type</Data></Cell>
                     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
                     <Cell><Data ss:Type="String">Concession</Data></Cell>
-                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Net Rent</Data></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
                 <% else %>
                     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">gross/ft2</Data></Cell>
-                    <Cell><Data ss:Type="String">net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
                 <% end %>
             <% end %>
         <% end %>
@@ -72,8 +78,11 @@
                 <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data></Cell>
                 <Cell><Data ss:Type="String"><%= available(building_unit) %></Data></Cell>
                 <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data></Cell>
-                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
                 <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
+                <% if params[:details].present? %>
+                    <Cell><Data ss:Type="Number"><%= net_rent(building_unit) %></Data></Cell>
+                <% end %>
                 <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data></Cell>
                   <%- CompGroup.all.each do |comp_group| %>
                       <% additional_row = Array.new %>
@@ -91,17 +100,7 @@
                               <% end %>
                               <% counter = counter + 1 %>
                           <% end.empty? and begin %>
-                              <% if params[:details].present? %>
-                                <Cell><Data ss:Type="String">nothing exact</Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                              <% else %>
-                                <Cell><Data ss:Type="String">nothing exact</Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                                <Cell><Data ss:Type="String"></Data></Cell>
-                              <% end %>
+                              <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String">nothing exact</Data></Cell>
                               <% counter = counter + 1 %>
                           <% end %>
                           <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
