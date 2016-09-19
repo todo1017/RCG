@@ -39,7 +39,7 @@ class AnalysesController < ApplicationController
 		counter = 0
 		error = ''
 		for competitor in competitors
-			begin
+			# begin
 				analysis = Analysis.new
 				analysis.date = competitor.as_of_date if competitor.as_of_date
 				analysis.building_unit = competitor.id
@@ -90,10 +90,10 @@ class AnalysesController < ApplicationController
 				end
 
 				analysis.save!
-			rescue
-				error = error + "< error >"
-				next
-			end
+			# rescue
+			# 	error = error + "< error >"
+			# 	next
+			# end
 		end
 		if !error.blank?
 			$message = 'errors are occured'
