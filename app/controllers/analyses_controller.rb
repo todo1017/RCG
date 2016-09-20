@@ -39,61 +39,63 @@ class AnalysesController < ApplicationController
 		counter = 0
 		error = ''
 		for competitor in competitors
-			# begin
-				analysis = Analysis.new
-				analysis.date = competitor.as_of_date if competitor.as_of_date
-				analysis.building_unit = competitor.id
-				analysis.property = competitor.building.name
+			begin
+				if competitor.as_of_date
+					analysis = Analysis.new
+					analysis.date = competitor.as_of_date
+					analysis.building_unit = competitor.id
+					analysis.property = competitor.building.name
 
-				date = analysis.date
-				quarter = 1 + date.month / 4
+					date = analysis.date
+					quarter = 1 + date.month / 4
 
-				analysis.timestamp = date.to_time.to_i
-				analysis.year    = date.year
-				analysis.quarter = date.year.to_s + "-Q" + quarter.to_s
-				analysis.month   = date.year.to_s + "-" + date.month.to_s
+					analysis.timestamp = date.to_time.to_i
+					analysis.year    = date.year
+					analysis.quarter = date.year.to_s + "-Q" + quarter.to_s
+					analysis.month   = date.year.to_s + "-" + date.month.to_s
 
-				months_off   = 0.0
-				act_rent     = 0.0
-				cash_off     = 0.0
-				lease_length = 12.0
+					months_off   = 0.0
+					act_rent     = 0.0
+					cash_off     = 0.0
+					lease_length = 12.0
 
-				if !competitor.months_off.blank?
-					months_off = competitor.months_off.to_f 
+					if !competitor.months_off.blank?
+						months_off = competitor.months_off.to_f 
+					end
+					if !competitor.actual_rent.blank?
+						act_rent = competitor.actual_rent 
+					end
+					if !competitor.cash_off.blank?
+						cash_off     = competitor.cash_off.to_f 
+					end
+					if !competitor.lease_length.blank?
+						lease_length = competitor.lease_length.to_f 
+					end
+					
+					
+					sq_feet = competitor.sq_feet.to_f
+
+					analysis.gross_rent = (act_rent / sq_feet).round(2)
+
+					if(months_off)
+						analysis.net_rent_sf = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
+						analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
+					else
+						analysis.net_rent_sf = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
+						analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
+					end
+
+					if sq_feet == 0
+						analysis.gross_rent = 0
+						analysis.net_rent_sf = 0
+					end
+
+					analysis.save!
 				end
-				if !competitor.actual_rent.blank?
-					act_rent = competitor.actual_rent 
-				end
-				if !competitor.cash_off.blank?
-					cash_off     = competitor.cash_off.to_f 
-				end
-				if !competitor.lease_length.blank?
-					lease_length = competitor.lease_length.to_f 
-				end
-				
-				
-				sq_feet = competitor.sq_feet.to_f
-
-				analysis.gross_rent = (act_rent / sq_feet).round(2)
-
-				if(months_off)
-					analysis.net_rent_sf = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
-					analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
-				else
-					analysis.net_rent_sf = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
-					analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
-				end
-
-				if sq_feet == 0
-					analysis.gross_rent = 0
-					analysis.net_rent_sf = 0
-				end
-
-				analysis.save!
-			# rescue
-			# 	error = error + "< error >"
-			# 	next
-			# end
+			rescue
+				error = error + "< error >"
+				next
+			end
 		end
 		if !error.blank?
 			$message = 'errors are occured'
