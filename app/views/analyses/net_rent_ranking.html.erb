@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" charset="utf-8"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.12/api/page.jumpToData().js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
 <style>
 	table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after {
@@ -11,6 +12,43 @@
 	table.dataTable.display tbody tr:hover>.sorting_1{
 		background-color: #ccc;
 	}
+	table.dataTable.display tbody tr.owned:hover {
+		background-color: #4f81bd;
+		color: white;
+	}
+	table.dataTable.display tbody tr.owned:hover>.sorting_1{
+		background-color: #4f81bd;
+		color: white;
+	}
+	table.dataTable.display tbody tr.competitor.selected{
+		background-color: #ccc;
+	}
+	table.dataTable.display tbody tr.competitor.selected>.sorting_1{
+		background-color: #ccc;
+	}
+	table.dataTable.display tbody tr.owned.selected{
+		background-color: #4f81bd;
+		color: white;
+	}
+	table.dataTable.display tbody tr.owned.selected>.sorting_1{
+		background-color: #4f81bd;
+		color: white;
+	}
+	.full-width {
+		width: 100%;
+		display: inline-block;
+		margin: 0;
+	}
+	.filter-select {
+		padding-top: 20px;
+	}
+	.top-count {
+		width: 100px
+	}
+	.top-count-label {
+		font-size: 16px;
+		padding: 8px;
+	}
 </style>
 <div id="analyses-net-rent-rankings">
 	<div class="row">
@@ -20,7 +58,13 @@
 	</div>
 	<div>
 		<div class="col-xs-4">
-			<h3>Filter</h3>
+			<div class="filter-title full-width">
+				<h3 class="pull-left">Filter</h3>
+				<div class="pull-right filter-select">
+					<button type="button" class="btn btn-warning select-all">Select All</button>
+					<button type="button" class="btn btn-default select-none">Select None</button>
+				</div>
+			</div>
 			<div class="filter-content row">
 				<div class="row">
 					<div class="panel-group">
@@ -28,10 +72,11 @@
 							<div class="col-xs-6" style="padding-bottom: 5px">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<%= geography.name %>
+										<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
 									</div>
 									<div>
 										<div class="panel-body">
+											<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
 											<% @comp_groups.each do |comp_group| %>
 												<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
 											<% end %>	
@@ -55,6 +100,14 @@
 					</div>
 				</div>
 				<div class="col-xs-4">
+					<div>
+						<label class="pull-left top-count-label">Top</label>
+						<select id="nrsf-top-count" class="form-control pull-left top-count">
+							<option>10</option>
+							<option>15</option>
+						</select>
+						<label class="pull-left top-count-label">Buildings</label>
+					</div>
 					<div id="nrsf-tb"></div>
 				</div>
 			</div>
@@ -65,6 +118,14 @@
 					</div>
 				</div>
 				<div class="col-xs-4">
+					<div>
+						<label class="pull-left top-count-label">Top</label>
+						<select id="nr-top-count" class="form-control pull-left top-count">
+							<option>10</option>
+							<option>15</option>
+						</select>
+						<label class="pull-left top-count-label">Buildings</label>
+					</div>
 					<div id="nr-tb"></div>
 				</div>
 			</div>
@@ -78,13 +139,89 @@
 	var nr_table, nrsf_table;
 
 	//init checkbox unchecked
-	$(".filter-content input").attr("checked", true);
+	$(".filter-content input").prop("checked", true);
+	$(".subcheck_all").on("click", function(){
+		if(this.checked){
+			$(this).parents('.panel').eq(0).find('input').prop("checked", true);
+		} else {
+			$(this).parents('.panel').eq(0).find('input').prop("checked", false);
+		}
+	});
+	$(".filter-content .panel-body input").on("click", function(){
+		var all_unchecked = true;
+		$(this).parents('.panel-body').eq(0).find('input').each(function(){
+			if(this.checked){
+				all_unchecked = false;
+			}
+		})
+		if(all_unchecked) {
+			$(this).parents('.panel').eq(0).find('.subcheck_all').prop("checked", false);
+		} else {
+			$(this).parents('.panel').eq(0).find('.subcheck_all').prop("checked", true);
+		}
+	});
+
+	$(".filter-select .select-all").on("click", function(){
+		$(this).parents('.filter-title').parent().eq(0).find('.filter-content').find('input').prop("checked", true);
+	});
+	$(".filter-select .select-none").on("click", function(){
+		$(this).parents('.filter-title').parent().eq(0).find('.filter-content').find('input').prop("checked", false);
+	});
+
 
 	init();
 
 	$('.filter-content .apply-filter').on("click", function(e){
 		var filter_list = [];
-		$(".filter-content input").each(function(){
+		$(".filter-content .panel-body input").each(function(){
+			if(this.checked){
+				filter_list.push(this.value)
+			}
+		});
+
+		if(filter_list.length) {
+			$.get( "/analyses/api",
+				{
+					type : "nrr",
+					filter_list : filter_list
+				},
+				function( result ) {
+					data = result;
+					update();
+				}
+			);
+		} else {
+			empty();
+		}
+	});
+
+	$('#nrsf-top-count').on("change", function(){
+		var filter_list = [];
+		$(".filter-content .panel-body input").each(function(){
+			if(this.checked){
+				filter_list.push(this.value)
+			}
+		});
+
+		if(filter_list.length) {
+			$.get( "/analyses/api",
+				{
+					type : "nrr",
+					filter_list : filter_list
+				},
+				function( result ) {
+					data = result;
+					update();
+				}
+			);
+		} else {
+			empty();
+		}
+	});
+
+	$('#nr-top-count').on("change", function(){
+		var filter_list = [];
+		$(".filter-content .panel-body input").each(function(){
 			if(this.checked){
 				filter_list.push(this.value)
 			}
@@ -108,7 +245,7 @@
 
 	function init() {
 		var filter_list = [];
-		$(".filter-content input").each(function(){
+		$(".filter-content .panel-body input").each(function(){
 			filter_list.push(this.value)
 		});
 		$.get( "/analyses/api",
@@ -229,7 +366,8 @@
 			],
 			"bFilter": false,
 			"info": false,
-			"ordering": false
+			"ordering": false,
+			paging: false
 		});
 		nr_table = $('#nr-tb table').DataTable({
 			"order": [[ 1, "desc" ]],
@@ -245,37 +383,110 @@
 			],
 			"bFilter": false,
 			"info": false,
-			"ordering": false
+			"ordering": false,
+			paging: false
 		});
 	}
 
 	function update() {
 
-		var nrsf_data = [];
-		var nr_data = [];
+		var nrsf_data = [], nr_data = [];
 
 		$.each(data.data, function(i, d){
 			nrsf_data.push({
 				building : i,
-				val : d[0].nrsf
+				val      : d[0].nrsf
 			});
 			nr_data.push({
 				building : i,
-				val : d[0].nr
+				val      : d[0].nr
 			});
 		});
 
-		nrsf_data.sort(function(a, b){return b.val-a.val})
-		nr_data.sort(function(a, b){return b.val-a.val})
-		console.log(nrsf_data);
-		console.log(nr_data);
+		nrsf_data.sort(function(a, b){return b.val-a.val});
+		nr_data.sort(function(a, b){return b.val-a.val});
+
+		nrsf_topcount = $("#nrsf-top-count").val();
+		nr_topcount   = $("#nr-top-count").val();
+
+		nrsf_data = nrsf_data.slice(0,nrsf_topcount);
+		nr_data   = nr_data.slice(0,nr_topcount);
+
+		// table view
+		var nrsf_tb = '<table class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Net Rent/SF</th></tr></thead><tbody>';
+		var nr_tb   = '<table class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Net Rent</th></tr></thead><tbody>';
+
+		$.each(nrsf_data, function(i, d){
+			nrsf_tb += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>';
+		});
+		$.each(nr_data, function(i, d){
+			nr_tb   += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>'	
+		});
+
+		nrsf_tb += '</tbody></table>';
+		nr_tb   += '</tbody></table>';
+
+		$('#nrsf-tb').html(nrsf_tb);
+		$('#nr-tb').html(nr_tb);
+
+		nrsf_table = $('#nrsf-tb table').DataTable({
+			"columnDefs": [ 
+				{
+					"targets": 0,
+					"orderable": false
+				},
+				{
+					"targets": 1,
+					"orderable": false
+				}
+			],
+			"bFilter": false,
+			"info": false,
+			"ordering" : false,
+			paging: false
+		});
+		nr_table = $('#nr-tb table').DataTable({
+			"columnDefs": [ 
+				{
+					"targets": 0,
+					"orderable": false
+				},
+				{
+					"targets": 1,
+					"orderable": false
+				}
+			],
+			"bFilter": false,
+			"info": false,
+			"ordering" : false,
+			paging: false
+		});
+		$('#nrsf-tb tbody tr').each(function(i){
+			if(data.owned[nrsf_data[i].building]){
+				$(this).addClass("owned");
+			} else {
+				$(this).addClass("competitor");
+			}
+		});
+		$('#nr-tb tbody tr').each(function(i){
+			if(data.owned[nr_data[i].building]){
+				$(this).addClass("owned");
+			} else {
+				$(this).addClass("competitor");
+			}
+		});
+
+		var nrsf_tb_height = $("#nrsf-tb").height();
+		var nr_tb_height   = $("#nr-tb").height();
+		$("#nrsf-chart").height(nrsf_tb_height);
+		$("#nr-chart").height(nr_tb_height);
 
 		// chart view
 		d3.select('#nrsf-chart svg').remove();
 		d3.select('#nr-chart svg').remove();
 
 		var commasFormatter = d3.format(",.2f")
-		var nrsf_margin = {top: 20, right: 20, bottom: 20, left: 80},
+		var nrsf_margin = {top: 20, right: 20, bottom: 140, left: 100},
 			width  = $('#nrsf-chart').width() - nrsf_margin.left - nrsf_margin.right,
 			height = $('#nrsf-chart').height() - nrsf_margin.top - nrsf_margin.bottom;
 		var nrsf_xscale = d3.scale.ordinal()
@@ -312,16 +523,27 @@
 			.data(nrsf_data)
 			.enter()
 			.append("rect")
-			.style("fill", "#0f274d")
-			.attr("class", "bar")
+			.attr("class", function(d, i){
+				if(data.owned[d.building]){
+					return 'owned bar'
+				}
+				return 'bar';
+			})
 			.attr("x", function(d) { return nrsf_xscale(d.building)})
 			.attr("width", nrsf_xscale.rangeBand())
 			.attr("y", function(d) { return nrsf_yscale(d.val)})
 			.attr("height", function(d) { return height - nrsf_yscale(d.val)});
+		svg_nrsf.selectAll('.x.axis text')
+			.style("text-anchor", "end")
+			.attr("x", 10)
+			.attr("y", -10)
+			.attr("dx", -20)
+			.attr("dy", 20)
+			.attr("transform", "rotate(-50)");
 
-		var nr_margin = {top: 20, right: 20, bottom: 20, left: 80},
-			width  = $('#nrsf-chart').width() - nr_margin.left - nr_margin.right,
-			height = $('#nrsf-chart').height() - nr_margin.top - nr_margin.bottom;
+		var nr_margin = {top: 20, right: 20, bottom: 140, left: 100},
+			width  = $('#nr-chart').width() - nr_margin.left - nr_margin.right,
+			height = $('#nr-chart').height() - nr_margin.top - nr_margin.bottom;
 		var nr_xscale = d3.scale.ordinal()
 			.rangeRoundBands([0, width], .1)
 			.domain(nr_data.map(function(d) { return d.building}));
@@ -356,116 +578,55 @@
 			.data(nr_data)
 			.enter()
 			.append("rect")
-			.style("fill", "#5c5c5c")
-			.attr("class", "bar")
+			.attr("class", function(d, i){
+				if(data.owned[d.building]){
+					return 'owned bar'
+				}
+				return 'bar';
+			})
 			.attr("x", function(d) { return nr_xscale(d.building)})
 			.attr("width", nr_xscale.rangeBand())
 			.attr("y", function(d) { return nr_yscale(d.val)})
 			.attr("height", function(d) { return height - nr_yscale(d.val)});
+		svg_nr.selectAll('.x.axis text')
+			.style("text-anchor", "end")
+			.attr("x", 10)
+			.attr("y", -10)
+			.attr("dx", -20)
+			.attr("dy", 20)
+			.attr("transform", "rotate(-50)");
 
-		// table view
-		var nrsf_tb = '<table class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Net Rent/SF</th></tr></thead><tbody>';
-		var nr_tb = '<table class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Net Rent</th></tr></thead><tbody>';
-		$.each(nrsf_data, function(i, d){
-			if(d.val){
-				nrsf_tb += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>'	
-			} else {
-				nrsf_tb += '<tr><td>'+d.building+'</td><td>$0</td></tr>'
-			}
-			
-		});
-		$.each(nr_data, function(i, d){
-			if(d.val){
-				nr_tb += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>'	
-			} else {
-				nr_tb += '<tr><td>'+d.building+'</td><td>$0</td></tr>'
-			}
-			
-		});
-		nrsf_tb += '</tbody></table>';
-		nr_tb += '</tbody></table>';
-
-		$('#nrsf-tb').html(nrsf_tb);
-		$('#nr-tb').html(nr_tb);
-
-		nrsf_table = $('#nrsf-tb table').DataTable({
-			"columnDefs": [ 
-				{
-					"targets": 0,
-					"orderable": false
-				},
-				{
-					"targets": 1,
-					"orderable": false
-				}
-			],
-			"bFilter": false,
-			"info": false,
-			"ordering" : false
-		});
-		nr_table = $('#nr-tb table').DataTable({
-			"columnDefs": [ 
-				{
-					"targets": 0,
-					"orderable": false
-				},
-				{
-					"targets": 1,
-					"orderable": false
-				}
-			],
-			"bFilter": false,
-			"info": false,
-			"ordering" : false
-		});
-
-		// binding event
-		$('#analyses-net-rent-rankings #nrsf-chart rect.bar').bind("mouseover", function(){	
+		// nrsf hovering event
+		$('#analyses-net-rent-rankings #nrsf-chart rect.bar').on("mouseover", function(){	
 			var i = $(this).index();
-			$('#analyses-net-rent-rankings #nr-chart rect.bar').eq(i).addClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
+			$('#nrsf-tb tbody tr').eq(i).addClass("selected");
 		});
-		$('#analyses-net-rent-rankings #nrsf-chart rect.bar').bind("mouseout", function(){	
-			$('#analyses-net-rent-rankings #nr-chart rect.bar').removeClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').removeClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').removeClass("selected");
+		$('#analyses-net-rent-rankings #nrsf-chart rect.bar').on("mouseout", function(){	
+			$('#nrsf-tb tbody tr').removeClass("selected");
 		});
-
-		$('#analyses-net-rent-rankings #nr-chart rect.bar').bind("mouseover", function(){
+		$('#nrsf-tb tbody tr').on("mouseover",function(){
 			var i = $(this).index();
 			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').eq(i).addClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
 		});
-		$('#analyses-net-rent-rankings #nr-chart rect.bar').bind("mouseout", function(){
+		$('#nrsf-tb tbody tr').on("mouseout", function(){
 			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').removeClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').removeClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').removeClass("selected");
 		});
+		
 
-		$('#nr-tb table.dataTable.display tbody tr').bind("mouseover", function(){
+		// nr hovering event
+		$('#analyses-net-rent-rankings #nr-chart rect.bar').on("mouseover", function(){	
+			var i = $(this).index();
+			$('#nr-tb tbody tr').eq(i).addClass("selected");
+		});
+		$('#analyses-net-rent-rankings #nr-chart rect.bar').on("mouseout", function(){	
+			$('#nr-tb tbody tr').removeClass("selected");
+		});
+		$('#nr-tb tbody tr').on("mouseover",function(){
 			var i = $(this).index();
 			$('#analyses-net-rent-rankings #nr-chart rect.bar').eq(i).addClass("selected");
-			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').eq(i).addClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
 		});
-		$('#nr-tb table.dataTable.display tbody tr').bind("mouseout", function(){
+		$('#nr-tb tbody tr').on("mouseout", function(){
 			$('#analyses-net-rent-rankings #nr-chart rect.bar').removeClass("selected");
-			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').removeClass("selected");
-			$('#nrsf-tb table.dataTable.display tbody tr').removeClass("selected");
-		});
-
-		$('#nrsf-tb table.dataTable.display tbody tr').bind("mouseover", function(){
-			var i = $(this).index();
-			$('#analyses-net-rent-rankings #nr-chart rect.bar').eq(i).addClass("selected");
-			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').eq(i).addClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').eq(i).addClass("selected");
-		});
-		$('#nrsf-tb table.dataTable.display tbody tr').bind("mouseout", function(){
-			$('#analyses-net-rent-rankings #nr-chart rect.bar').removeClass("selected");
-			$('#analyses-net-rent-rankings #nrsf-chart rect.bar').removeClass("selected");
-			$('#nr-tb table.dataTable.display tbody tr').removeClass("selected");
 		});
 	}
 </script>

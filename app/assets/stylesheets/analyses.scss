@@ -26,6 +26,7 @@
 	
 	#rental_price_trend {
 		#rpt-chart {
+			height: 600px;
 			padding : 20px;
 			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		}
@@ -70,6 +71,7 @@
 			margin : 0;
 		}
 		#cbr-chart {
+			height: 600px;
 			padding : 20px;
 			box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		}
@@ -117,9 +119,6 @@
 		box-shadow : 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
-	#nrsf-chart {
-		height: 380px;
-	}
 	#nrsf-chart text{
 		font-weight: bold;
 		font: normal 12px Arial;
@@ -141,6 +140,7 @@
 		shape-rendering: crispEdges;
 	}
 	#nrsf-chart rect.bar {
+		fill : #5c5c5c;
 		opacity : 0.5;
 	}
 	#nrsf-chart rect.bar:hover{
@@ -151,10 +151,17 @@
 		cursor : pointer;
 		opacity : 1
 	}
-
-	#nr-chart {
-		height: 380px;
+	#nrsf-chart rect.owned.bar:hover{
+		cursor : pointer;
+		fill : #4f81bd;
+		opacity : 1
 	}
+	#nrsf-chart rect.owned.bar.selected{
+		cursor : pointer;
+		fill : #4f81bd;
+		opacity : 1
+	}
+
 	#nr-chart text{
 		font-weight: bold;
 		font: normal 12px Arial;
@@ -176,6 +183,7 @@
 		shape-rendering: crispEdges;
 	}
 	#nr-chart rect.bar {
+		fill : #5c5c5c;
 		opacity : 0.5
 	}
 	#nr-chart rect.bar:hover{
@@ -184,6 +192,16 @@
 	}
 	#nr-chart rect.bar.selected{
 		cursor : pointer;
+		opacity : 1
+	}
+	#nr-chart rect.owned.bar:hover{
+		cursor : pointer;
+		fill : #4f81bd;
+		opacity : 1
+	}
+	#nr-chart rect.owned.bar.selected{
+		cursor : pointer;
+		fill : #4f81bd;
 		opacity : 1
 	}
 }
