@@ -476,8 +476,15 @@
 			}
 		});
 
-		var nrsf_tb_height = $("#nrsf-tb").height();
-		var nr_tb_height   = $("#nr-tb").height();
+		var nrsf_tb_height = 400;
+		if($("#nrsf-tb").height() > 400) {
+			nrsf_tb_height = $("#nrsf-tb").height();
+		}
+		var nr_tb_height = 400;
+		if($("#nr-tb").height() > 400) {
+			nr_tb_height = $("#nr-tb").height();
+		}
+
 		$("#nrsf-chart").height(nrsf_tb_height);
 		$("#nr-chart").height(nr_tb_height);
 
