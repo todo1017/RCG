@@ -1,7 +1,12 @@
 class OwnerUsersController < ApplicationController
 
   def user_assignments
-    get_index_data
+    if current_user.super_admin
+      @users = User.all
+    elsif current_user.owner_admin
+      @users = User.where(owner_id: current_user.owner_id)
+    end
+    # get_index_data
   end
 
   def get_index_data

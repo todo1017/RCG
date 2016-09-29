@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_url, notice: "Thank you for signing up!"
+      redirect_to user_assignments_path, notice: "User Account created"
     else
       render "new"
     end
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def user_buildings
     respond_to do |format|
       format.html{
-        @dpm_admin = OwnerUser.find(params[:owner_user_id]).dpm_admin
+        @dpm_admin = User.find(params[:user_id]).owner_admin
       }
       format.js{
         if params[:owner_user_id].present?
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved)
+    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved, :owner_admin)
   end
 
 

@@ -1,95 +1,88 @@
 %h3
-  User Assignments
+  - if current_user.super_admin
+    User Setup for All Companies
+  - elsif current_user.owner_admin
+    User Setup for
+    = Owner.find(current_user.owner_id).name
+
+%br
 
 %p#notice
   = notice
 
-= form_for(@owner_user) do |f|
-  %table
+%h4
+  Existing Users
+
+%table
+  %tr
+    %th User
+    - if current_user.super_admin
+      %th
+        &nbsp;&nbsp;&nbsp;
+      %th Owner
+    %th
+      &nbsp;&nbsp;&nbsp;
+    %th Role
+    %th
+      &nbsp;&nbsp;&nbsp;
+    %th
+      = "# of Buildings"
+    %th
+      &nbsp;&nbsp;&nbsp;
+    %th
+      &nbsp;&nbsp;&nbsp;
+  - @users.each do |user|
     %tr
       %td
-        &nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-        %b
-          User
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;
-        %b
-          Owner
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;
-        %b
-          Role
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;
-        %b
-          = "# of Buildings"
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-    %tr
-      %td
-        = f.submit "Add New", {:class=>"btn btn-primary"}
-      %td
-        &nbsp;&nbsp;
-        = f.collection_select :user_id, User.all, :id, :email, include_blank: true
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        = f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true
-      %td
-        &nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-      %td
-        &nbsp;&nbsp;&nbsp;
-    - @owner_users.each do |owner_user|
-      %tr
-        %td
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          = link_to 'delete', owner_user, method: :delete, data: { confirm: 'Are you sure?' }
-        %td
-          &nbsp;&nbsp;
-          = owner_user.user.email
+        = user.email
+      - if current_user.super_admin
         %td
           &nbsp;&nbsp;&nbsp;
         %td
-          &nbsp;
-          = owner_user.owner.name
-        %td
-          &nbsp;&nbsp;&nbsp;
-        %td
-          - if owner_user.dpm_admin == true
-            DPM
-          - else
-            PM
-          -#= link_to "change", "/toggle_dpm_admin?owner_id=#{owner_user.owner_id.to_s}&user_id=#{owner_user.user_id.to_s}"
-        %td
-          &nbsp;&nbsp;&nbsp;
-        %td
-          -#- unless owner_user.dpm_admin == true
-          -#  - UserGeography.where(user_id:owner_user.user_id).each do |user_geography|
-          -#    = user_geography.geography.name + " "
-          -#  = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
-        %td
-          &nbsp;&nbsp;&nbsp;
-        %td
-          = link_to "edit", "/user_buildings?owner_user_id=#{owner_user.id}&owner_id=#{owner_user.owner_id}&user_id=#{owner_user.user_id}"
+          = Owner.find(user.owner_id).name unless user.owner_id == nil
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        - if user.super_admin
+          Super
+        - elsif user.owner_admin
+          DPM
+        - else
+          PM
+        -#= link_to "change", "/toggle_dpm_admin?owner_id=#{owner_user.owner_id.to_s}&user_id=#{owner_user.user_id.to_s}"
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        -#- unless owner_user.dpm_admin == true
+        -#  - UserGeography.where(user_id:owner_user.user_id).each do |user_geography|
+        -#    = user_geography.geography.name + " "
+        -#  = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        = link_to "edit", "/user_buildings?owner_id=#{user.owner_id}&user_id=#{user.id}"
 
 %br
-%br
-%br
+
+%h4
+  New User
+
+= form_for User.new do |f|
+  = f.hidden_field :password, value: "test"
+  = f.hidden_field :password_confirmation, value: "test"
+  = f.label :email
+  %br
+  = f.text_field :email, size: "30"
+  %br
+  - if current_user.super_admin
+    = f.label :owner, "Company"
+    %br
+    = f.collection_select :owner_id, Owner.all, :id, :name, include_blank: true
+    %br
+  - elsif current_user.owner_admin
+    = f.hidden_field :owner_id, value: current_user.owner_id
+  = f.label :owner_admin, "DPM"
+  &nbsp;
+  = f.check_box :owner_admin
+  %br
+  = f.submit "Create New User", {:class=>"btn btn-primary"}
