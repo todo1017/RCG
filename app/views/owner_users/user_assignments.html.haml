@@ -15,6 +15,7 @@
 
 %table
   %tr
+    %th
     %th User
     - if current_user.super_admin
       %th
@@ -33,6 +34,9 @@
       &nbsp;&nbsp;&nbsp;
   - @users.each do |user|
     %tr
+      %td
+        = user.id
+        &nbsp;
       %td
         = user.email
       - if current_user.super_admin
