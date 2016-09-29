@@ -16,11 +16,11 @@
 %table
   %tr
     %th
-    %th User
+    %th
     - if current_user.super_admin
       %th
         &nbsp;&nbsp;&nbsp;
-      %th Owner
+      %th Company
     %th
       &nbsp;&nbsp;&nbsp;
     %th Role
@@ -66,6 +66,7 @@
       %td
         = link_to "edit", "/user_buildings?owner_id=#{user.owner_id}&user_id=#{user.id}"
 
+%br
 %br
 
 %h4

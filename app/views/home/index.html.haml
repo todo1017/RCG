@@ -4,7 +4,7 @@
     %p#notice
       = notice
     - if current_user
-      - if [1, 2, 3].include? current_user.id
+      - if current_user.super_admin
         %h3
           Super Admin only:
         %br

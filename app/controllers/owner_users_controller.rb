@@ -2,9 +2,9 @@ class OwnerUsersController < ApplicationController
 
   def user_assignments
     if current_user.super_admin
-      @users = User.all
+      @users = User.all.order(:owner_id, :email)
     elsif current_user.owner_admin
-      @users = User.where(owner_id: current_user.owner_id)
+      @users = User.where(owner_id: current_user.owner_id).order(:email)
     end
     # get_index_data
   end
