@@ -3,10 +3,12 @@
   %b
     = "Buildings for #{Geography.find(geography_id).name}"
   %br
-  - Building.where(owner_id: User.find(params[:user_id]).owner_id, geography_id: geography_id).each do |building|
-    - user_buildings = UserBuilding.find_by(user_id: params[:user_id], building_id: building.id)
-    - user_buildings==nil && access_type=="partial" ? checked=false : checked=true
-    = check_box_tag building.name, building.name, checked, { disabled: disabled, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
-    = label_tag building.name, building.name
+  - buildings = Building.where(owner_id: User.find(params[:user_id]).owner_id, geography_id: geography_id)
+  - unless buildings.blank?
+    - buildings.each do |building|
+      - user_buildings = UserBuilding.find_by(user_id: params[:user_id], building_id: building.id)
+      - user_buildings==nil && access_type=="partial" ? checked=false : checked=true
+      = check_box_tag building.name, building.name, checked, { disabled: disabled, onclick: "javascript:$.ajax('/user_buildings.js?user_id=#{user_id}&building_id=#{building.id}');return true;" }
+      = label_tag building.name, building.name
+      %br
     %br
-  %br
