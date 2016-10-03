@@ -2,7 +2,7 @@ class BuildingOccupanciesController < ApplicationController
   before_action :set_building_occupancy, only: [:show, :edit, :update, :destroy]
 
   def index
-    @building_occupancies_owned = BuildingOccupancy.joins(:building).where("buildings.competitor = ?", false).order("building_id, as_of_date DESC")
+    @building_occupancies_owned = BuildingOccupancy.joins(:building).where("buildings.id IN (#{@current_user_buildings})").where("buildings.competitor = ?", false).order("building_id, as_of_date DESC")
     @building_occupancies_comp = BuildingOccupancy.joins(:building).where("buildings.competitor = ?", true).order("building_id, as_of_date DESC")
   end
 

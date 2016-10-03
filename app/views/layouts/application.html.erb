@@ -3,7 +3,7 @@
 <%# else %>
     <%# application_name = "RCG Apartment Application"  %>
 <%# end %>
-<% application_name = "Compsy"  %>
+<% current_user && current_user.owner ? application_name = "Compsy for #{current_user.owner.name}": application_name = "Compsy"  %>
 
 <!DOCTYPE html>
 <html>
@@ -40,10 +40,10 @@
                 <li><%= link_to "Add New Building", new_building_path %></li>
                 <li role="separator" class="divider"></li>
                 <li role="separator" class="navbar-text">Owned</li>
-                <%- Building.joins(:geography).where(owner_id: current_user.owner_id, competitor: false).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
+                <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
                     <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= geography.geography_name %></a>
                       <ul class="dropdown-menu">
-                        <%- Building.joins(:geography).where(owner_id: current_user.owner_id, competitor: false).where("geographies.id = " + geography.geography_id.to_s).select("buildings.id as building_id, buildings.name as building_name").order("buildings.name").distinct.each do |building|  %>
+                        <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).where("geographies.id = " + geography.geography_id.to_s).select("buildings.id as building_id, buildings.name as building_name").order("buildings.name").distinct.each do |building|  %>
                             <li><%= link_to building.building_name, edit_building_path(building.building_id) %></li>
                         <%- end %>
                       </ul>
@@ -75,7 +75,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rent Roll&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <%- Building.where(owner_id: current_user.owner_id).where(competitor: false).order(:name).each do |building|  %>
+                <%- Building.where("id IN (#{@current_user_buildings})").where(competitor: false).order(:name).each do |building|  %>
                     <li><%= link_to building.name, "/rent_roll/#{building.id}" %></li>
                 <%- end %>
               </ul>
@@ -83,8 +83,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Occupancy&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><%= link_to "View Occupancy Report", "/occupancy" %></li>
-                <li role="separator" class="divider"></li>
+                <!--<li><%#= link_to "View Occupancy Report", "/occupancy" %></li>-->
+                <!--<li role="separator" class="divider"></li>-->
                 <li><%= link_to "View Occupancy Rates", building_occupancies_path %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link_to 'Add Occupancy - Owned', "/building_occupancies/new" %></li>

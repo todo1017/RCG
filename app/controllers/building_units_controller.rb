@@ -44,8 +44,7 @@ class BuildingUnitsController < ApplicationController
     end
     @compgroups = CompGroup.all
 
-    # TODO -- needs to take the owner Id!!!!!!!!
-    building_units_owned_in_geography = BuildingUnit.joins(:building).where(buildings: {competitor: false, geography_id: @geography_id}).where("relevant_start_date = ? AND relevant_end_date = ?", Date.strptime("01/01/1910", "%m/%d/%Y"), Date.strptime("12/31/2090", "%m/%d/%Y")).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
+    building_units_owned_in_geography = BuildingUnit.joins(:building).where("buildings.id IN (#{@current_user_buildings})").where(buildings: {competitor: false, geography_id: @geography_id}).where("relevant_start_date = ? AND relevant_end_date = ?", Date.strptime("01/01/1910", "%m/%d/%Y"), Date.strptime("12/31/2090", "%m/%d/%Y")).order("buildings.name, building_units.floor, building_units.beds, building_units.baths")
     if params[:vacancy_filter] == "2"
       interval =  " + interval '30 days'"
     elsif  params[:vacancy_filter] == "3"
