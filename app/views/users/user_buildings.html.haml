@@ -2,6 +2,15 @@
 = link_to "<-Back", user_assignments_path
 %br
 %br
+%b
+  Logged-in user's buildings:
+= @current_user_buildings
+%br
+%b
+  Selected user's buildings:
+= @user_buildings
+%br
+%br
 = "Geographies & Buildings for #{User.find(params[:user_id]).email} associated with #{Owner.find(params[:owner_id]).name}"
 %br
 %br

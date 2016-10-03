@@ -4,13 +4,17 @@
     %p#notice
       = notice
     - if current_user
+      = @current_user_buildings
       - if current_user.super_admin
         %h3
           Super Admin only:
         %br
-        = link_to "Companies", "/owners"
+        = link_to "User Setup & Authorization (not yet tied into page authorization logic)", "/user_assignments"
         %br
-        = link_to "DPM Assignments (remove this?)", "/users"
+        %br
+        = link_to "Companies", "/owners"
+        -#%br
+        -#= link_to "DPM Assignments (remove this?)", "/users"
         %br
         %br
       - if current_user.owner_id != nil && current_user.owner_admin

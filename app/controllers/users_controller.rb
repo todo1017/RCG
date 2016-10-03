@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+
   before_action :require_login, except: [:new, :create]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :get_all_buildings
 
   def new
     @user = User.new
@@ -106,6 +108,11 @@ class UsersController < ApplicationController
 
 
   private
+
+  def get_all_buildings
+    @user_buildings = get_all_user_buildings(User.find(params[:user_id].to_i)).map{|x| x.id}.join(', ') if params[:user_id] != nil
+  end
+
   def set_user
     @user = User.find(params[:id])
   end
