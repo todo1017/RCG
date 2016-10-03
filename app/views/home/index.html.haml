@@ -9,7 +9,7 @@
         %h3
           Super Admin only:
         %br
-        = link_to "User Setup & Authorization (not yet tied into page authorization logic)", "/user_assignments"
+        = link_to "User Setup & Authorization", "/user_assignments"
         %br
         %br
         = link_to "Companies", "/owners"
@@ -22,7 +22,7 @@
           Director of PM only:
         - if ENV['PROD_ENV'] == nil
           %br
-          = link_to "User Setup & Authorization (not yet tied into page authorization logic)", "/user_assignments"
+          = link_to "User Setup & Authorization", "/user_assignments"
           %br
           %br
           = link_to "Comp Groups", "/comp_groups"

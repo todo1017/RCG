@@ -1,7 +1,6 @@
 - if dpm_admin
   can see everything
 - else
-  -#TODO - also filter by owner_id
   %table
     %tr
       %th
@@ -12,7 +11,7 @@
         Some&nbsp;
       %th
         None
-    - Geography.all.each do |geography|
+    - Geography.where(owner_id: User.find(params[:user_id]).owner_id).each do |geography|
       - already_selected_all = true if UserGeography.where(access_type: "all", user_id: user_id, geography_id: geography.id).count > 0
       - already_selected_partial = true if UserGeography.where(access_type: "partial", user_id: user_id, geography_id: geography.id).count > 0
       %tr
@@ -26,7 +25,7 @@
           = radio_button_tag geography.name, 'none', false, onclick: "$.ajax('/user_buildings.js?user_id=#{user_id}&geography_id=#{geography.id}&selection=none');return true;"
 
   %br
-  - Geography.all.each do |geography|
+  - Geography.where(owner_id: User.find(params[:user_id]).owner_id).each do |geography|
     %div{ id: geography.id }
       - user_geography = UserGeography.find_by(user_id: params[:user_id], geography_id: geography.id)
       - if user_geography != nil
