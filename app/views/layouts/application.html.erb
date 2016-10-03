@@ -40,14 +40,16 @@
                 <li><%= link_to "Add New Building", new_building_path %></li>
                 <li role="separator" class="divider"></li>
                 <li role="separator" class="navbar-text">Owned</li>
-                <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
-                    <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= geography.geography_name %></a>
-                      <ul class="dropdown-menu">
-                        <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).where("geographies.id = " + geography.geography_id.to_s).select("buildings.id as building_id, buildings.name as building_name").order("buildings.name").distinct.each do |building|  %>
-                            <li><%= link_to building.building_name, edit_building_path(building.building_id) %></li>
-                        <%- end %>
-                      </ul>
-                    </li>
+                <%- unless @current_user_buildings == "" %>
+                    <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
+                        <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= geography.geography_name %></a>
+                          <ul class="dropdown-menu">
+                            <%- Building.joins(:geography).where("buildings.id IN (#{@current_user_buildings})").where(competitor: false).where("geographies.id = " + geography.geography_id.to_s).select("buildings.id as building_id, buildings.name as building_name").order("buildings.name").distinct.each do |building|  %>
+                                <li><%= link_to building.building_name, edit_building_path(building.building_id) %></li>
+                            <%- end %>
+                          </ul>
+                        </li>
+                    <%- end %>
                 <%- end %>
                 <li role="separator" class="divider"></li>
                 <li role="separator" class="navbar-text">Competitor</li>
@@ -75,8 +77,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rent Roll&nbsp;<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <%- Building.where("id IN (#{@current_user_buildings})").where(competitor: false).order(:name).each do |building|  %>
-                    <li><%= link_to building.name, "/rent_roll/#{building.id}" %></li>
+                <%- unless @current_user_buildings == "" %>
+                    <%- Building.where("id IN (#{@current_user_buildings})").where(competitor: false).order(:name).each do |building|  %>
+                        <li><%= link_to building.name, "/rent_roll/#{building.id}" %></li>
+                    <%- end %>
                 <%- end %>
               </ul>
             </li>
