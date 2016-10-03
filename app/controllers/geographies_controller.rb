@@ -69,6 +69,6 @@ class GeographiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def geography_params
-      params.require(:geography).permit(:name)
+      params.require(:geography).permit(:name, :owner_id)
     end
 end

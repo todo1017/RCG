@@ -69,6 +69,6 @@ class CompGroupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def comp_group_params
-      params.require(:comp_group).permit(:name)
+      params.require(:comp_group).permit(:name, :owner_id)
     end
 end

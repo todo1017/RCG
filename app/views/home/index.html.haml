@@ -10,12 +10,7 @@
         %br
         = link_to "Companies", "/owners"
         %br
-        = link_to "DPM Assignments", "/users"
-        %br
-        %br
-        = link_to "Comp Groups", "/comp_groups"
-        %br
-        = link_to "Geographies", "/geographies"
+        = link_to "DPM Assignments (remove this?)", "/users"
         %br
         %br
       - if current_user.owner_id != nil && current_user.owner_admin
@@ -24,6 +19,11 @@
         - if ENV['PROD_ENV'] == nil
           %br
           = link_to "User Setup & Authorization (not yet tied into page authorization logic)", "/user_assignments"
+          %br
+          %br
+          = link_to "Comp Groups", "/comp_groups"
+          %br
+          = link_to "Geographies", "/geographies"
           %br
           %br
         %br
