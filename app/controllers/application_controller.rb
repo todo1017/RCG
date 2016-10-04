@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
       Building.where(owner_id: user.owner_id)
     else
       directly_assigned_buildings = User.where(id: user.id).joins(:user_buildings).select("user_buildings.building_id AS id")
+      via_assigned_geographies = []
       via_assigned_geographies = Building.select(:id).where("geography_id IN (#{UserGeography.where(user_id: user.id, access_type: "all").pluck(:geography_id).map{|x| x.inspect}.join(', ')})") unless UserGeography.where(user_id: user.id, access_type: "all").blank?
       directly_assigned_buildings + via_assigned_geographies
     end
