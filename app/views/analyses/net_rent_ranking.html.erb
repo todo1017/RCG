@@ -2,6 +2,8 @@
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" charset="utf-8"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.12/api/page.jumpToData().js" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+<script src="https://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
+<script src="https://cdn.rawgit.com/exupero/saveSvgAsPng/gh-pages/saveSvgAsPng.js"></script>
 <style>
 	table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after {
 		display: none;
@@ -49,6 +51,12 @@
 		font-size: 16px;
 		padding: 8px;
 	}
+	.download-png {
+		margin: 10px 0;
+	}
+	svg {
+		background: white;
+	}
 </style>
 <div id="analyses-net-rent-rankings">
 	<div class="row">
@@ -70,7 +78,7 @@
 					<div class="panel-group">
 						<% @geographies.each do |geography| %>
 							<div class="col-xs-6" style="padding-bottom: 5px">
-								<div class="panel panel-default">
+								<div class="panel panel-default geography-group">
 									<div class="panel-heading">
 										<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
 									</div>
@@ -111,6 +119,11 @@
 					<div id="nrsf-tb"></div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<button id="download-chart1" type="button" class="pull-right btn btn-default download-png">Download PNG</button>
+				</div>
+			</div>
 			<div class="row content">
 				<div><h3 class="text-center">RANKING: Average Net Rent</h3></div>
 				<div class="col-xs-8">
@@ -129,6 +142,11 @@
 					<div id="nr-tb"></div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<button id="download-chart2" type="button" class="pull-right btn btn-default download-png">Download PNG</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -139,7 +157,8 @@
 	var nr_table, nrsf_table;
 
 	//init checkbox unchecked
-	$(".filter-content input").prop("checked", true);
+	$("#analyses-net-rent-rankings .geography-group").eq(0).find('input').prop("checked", true);
+	
 	$(".subcheck_all").on("click", function(){
 		if(this.checked){
 			$(this).parents('.panel').eq(0).find('input').prop("checked", true);
@@ -292,6 +311,7 @@
 			.domain([0, 1]);
 		var xAxis = d3.svg.axis()
 			.scale(xscale)
+			.tickSize(0)
 			.orient("bottom");
 		var yAxis = d3.svg.axis()
 			.scale(yscale)
@@ -303,6 +323,7 @@
 
 		svg_nrsf = d3.select("#nrsf-chart")
 			.append("svg")
+			.style("background", "white")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
@@ -326,6 +347,7 @@
 
 		svg_nr = d3.select("#nr-chart")
 			.append("svg")
+			.style("background", "white")
 			.attr("width", width + margin.left + margin.right)
 			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
@@ -504,6 +526,7 @@
 			.domain([0, d3.max(nrsf_data, function(d) { return d.val})]);
 		var nrsf_xAxis = d3.svg.axis()
 			.scale(nrsf_xscale)
+			.tickSize(0)
 			.orient("bottom");
 		var nrsf_yAxis = d3.svg.axis()
 			.scale(nrsf_yscale)
@@ -514,6 +537,7 @@
 			.tickFormat(function(d) { return "$" + commasFormatter(d)});
 		svg_nrsf = d3.select("#nrsf-chart")
 			.append("svg")
+			.style("background", "white")
 			.attr("width", width + nrsf_margin.left + nrsf_margin.right)
 			.attr("height", height + nrsf_margin.top + nrsf_margin.bottom)
 			.append("g")
@@ -530,6 +554,7 @@
 			.data(nrsf_data)
 			.enter()
 			.append("rect")
+			.style("fill", "#5c5c5c")
 			.attr("class", function(d, i){
 				if(data.owned[d.building]){
 					return 'owned bar'
@@ -559,6 +584,7 @@
 			.domain([0, d3.max(nr_data, function(d) { return d.val})]);
 		var nr_xAxis = d3.svg.axis()
 			.scale(nr_xscale)
+			.tickSize(0)
 			.orient("bottom");
 		var nr_yAxis = d3.svg.axis()
 			.scale(nr_yscale)
@@ -569,6 +595,7 @@
 			.tickFormat(function(d) { return "$" + commasFormatter(d)});
 		svg_nr = d3.select("#nr-chart")
 			.append("svg")
+			.style("background", "white")
 			.attr("width", width + nr_margin.left + nr_margin.right)
 			.attr("height", height + nr_margin.top + nr_margin.bottom)
 			.append("g")
@@ -585,6 +612,7 @@
 			.data(nr_data)
 			.enter()
 			.append("rect")
+			.style("fill", "#5c5c5c")
 			.attr("class", function(d, i){
 				if(data.owned[d.building]){
 					return 'owned bar'
@@ -636,4 +664,40 @@
 			$('#analyses-net-rent-rankings #nr-chart rect.bar').removeClass("selected");
 		});
 	}
+
+	// Download PNG
+	$("#download-chart1").on("click", function(){
+		saveSvgAsPng(d3.select('#nrsf-chart svg').node(), 'Average_Net_Rent_SF.png');
+		// html2canvas($("#nrsf-chart svg"), {
+		// 	onrendered: function (canvas) {
+		// 		var imageData = canvas.toDataURL("image/png");
+		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+		// 	    var downloadLink = document.createElement("a");
+		// 		downloadLink.href = newData;
+		// 		downloadLink.download = "Average_Net_Rent_SF.png";
+
+		// 		document.body.appendChild(downloadLink);
+		// 		downloadLink.click();
+		// 		document.body.removeChild(downloadLink);
+		// 	}
+		// });
+	})
+
+
+	$("#download-chart2").on("click", function(e){
+		saveSvgAsPng(d3.select('#nr-chart svg').node(), 'Average_Net_Rent.png');
+		// html2canvas($("#nr-chart svg"), {
+		// 	onrendered: function (canvas) {
+		// 		var imageData = canvas.toDataURL("image/png");
+		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+		// 	    var downloadLink = document.createElement("a");
+		// 		downloadLink.href = newData;
+		// 		downloadLink.download = "Average_Net_Rent.png";
+
+		// 		document.body.appendChild(downloadLink);
+		// 		downloadLink.click();
+		// 		document.body.removeChild(downloadLink);
+		// 	}
+		// });
+	})
 </script>

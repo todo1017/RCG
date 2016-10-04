@@ -114,7 +114,7 @@ class AnalysesController < ApplicationController
 					analysis.gross_rent = (act_rent / sq_feet).round(2)
 
 					if(months_off)
-						analysis.net_rent_sf = ((act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
+						analysis.net_rent_sf = (	(act_rent - ((months_off * act_rent)/lease_length))/sq_feet).round(2)
 						analysis.net_rent = (act_rent - ((months_off * act_rent)/lease_length)).round(2)
 					else
 						analysis.net_rent_sf = ((act_rent - (cash_off / lease_length))/sq_feet).round(2)
@@ -168,67 +168,52 @@ class AnalysesController < ApplicationController
 					result = Building.where("geography_id = ? AND comp_group_id = ?", ids[0], ids[1])
 				end
 				for r in result
-					buildings.push(r[:name])
+					buildings.push({
+						'name' => r["name"],
+						'id' => r["id"]
+					})
 				end
 			end
 
-			gross_year    = {}
-			gross_quarter = {}
-			gross_month   = {}
-			net_year      = {}
-			net_quarter   = {}
-			net_month     = {}
+			gross = {}
+			net = {}
 
 			for building in buildings
+				gross_rent = BuildingUnit.select("avg(actual_rent/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val, date_part('year', as_of_date) as yy, date_part('month', as_of_date) as mm")
+					.where('building_id = ? and as_of_date is not null', building['id'])
+					.group('yy, mm')
+					.order('yy,mm')
 
-				gross_year_res    = Analysis.select("year as label,    avg(gross_rent) as val").where("property = ?", building).group('year').order('year')
-				gross_quarter_res = Analysis.select("quarter as label, avg(gross_rent) as val").where("property = ?", building).group('quarter').order('quarter')
-				gross_month_res   = Analysis.select("month as label,   avg(gross_rent) as val").where("property = ?", building).group('month').order('month')
-				net_year_res      = Analysis.select("year as label,    avg(net_rent_sf)   as val").where("property = ?", building).group('year').order('year')
-				net_quarter_res   = Analysis.select("quarter as label, avg(net_rent_sf)   as val").where("property = ?", building).group('quarter').order('quarter')
-				net_month_res     = Analysis.select("month as label,   avg(net_rent_sf)   as val").where("property = ?", building).group('month').order('month')
-				
-				gross_year[building]    = gross_year_res
-				gross_quarter[building] = gross_quarter_res
-				gross_month[building]   = gross_month_res
-				net_year[building]      = net_year_res
-				net_quarter[building]   = net_quarter_res
-				net_month[building]     = net_month_res
+				net_rent = BuildingUnit.select("avg((actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END)))/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val, date_part('year', as_of_date) as yy, date_part('month', as_of_date) as mm")
+					.where('building_id = ? and as_of_date is not null', building['id'])
+					.group('yy, mm')
+					.order('yy,mm')
 
+				gross[building['name']] = gross_rent
+				net[building['name']] = net_rent
 			end
 
-			result = {
-				'gross' => {
-					'year'    => gross_year,
-					'quarter' => gross_quarter,
-					'month'   => gross_month
-				},
-				'net' => {
-					'year'    => net_year,
-					'quarter' => net_quarter,
-					'month'   => net_month
-				}
-			}
-
-			render json: { data: result}
+			render json: { gross: gross, net: net}
 		when 'ppsf_cbr'
-			from_date = DateTime.parse(params[:from_date]).to_i
-			to_date   = DateTime.parse(params[:to_date]).to_i
+
+			from_date = params[:from_date]
+			to_date   = params[:to_date]
 
 			buildings = []
-			for filter in params[:filter_list]
-				ids = filter.split("_")
+			for geography in params[:geography_filter]
+				ids = geography.split("_")
 				if ids[1] == 'o'
-					sql = 'select b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.competitor= false'
+					sql = 'select b.id as bid, b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.competitor= false'
 				else
-					sql = 'select b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
+					sql = 'select b.id as bid, b.name as bname, g.name as gname from buildings b, geographies g where b.geography_id=g.id and g.id ='+ids[0]+' and b.comp_group_id='+ids[1]
 				end
 				
 				res = ActiveRecord::Base.connection.execute(sql)
 				for r in res
 					buildings.push({
 						'name' => r["bname"],
-						'geography' => r["gname"]
+						'geography' => r["gname"],
+						'id' => r["bid"]
 					})
 				end
 			end
@@ -237,8 +222,28 @@ class AnalysesController < ApplicationController
 			net   = []
 
 			for building in buildings
-				gross_res = Analysis.select('avg(gross_rent) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
-				net_res   = Analysis.select('avg(net_rent_sf) as val').where('property = ? and timestamp >= ? and timestamp <= ?', building['name'], from_date, to_date)
+				gross_res = BuildingUnit.select('avg(actual_rent/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val')
+					.where('building_id = ? and as_of_date >= ? and as_of_date <= ? and 
+						beds >= ? and beds <= ? and 
+						baths >=? and baths <=? and 
+						floor >=? and floor <=? and 
+						sq_feet >=? and sq_feet <= ? ',
+						building['id'], from_date, to_date,
+						params[:units_filter]['beds_min'],params[:units_filter]['beds_max'],
+						params[:units_filter]['bath_min'],params[:units_filter]['bath_max'],
+						params[:units_filter]['floor_min'],params[:units_filter]['floor_max'],
+						params[:units_filter]['square_min'],params[:units_filter]['square_max'])
+				net_res   = BuildingUnit.select('avg((actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END)))/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val')
+					.where('building_id = ? and as_of_date >= ? and as_of_date <= ? and
+						beds >= ? and beds <= ? and 
+						baths >=? and baths <=? and 
+						floor >=? and floor <=? and 
+						sq_feet >=? and sq_feet <= ? ',
+						building['id'], from_date, to_date,
+						params[:units_filter]['beds_min'],params[:units_filter]['beds_max'],
+						params[:units_filter]['bath_min'],params[:units_filter]['bath_max'],
+						params[:units_filter]['floor_min'],params[:units_filter]['floor_max'],
+						params[:units_filter]['square_min'],params[:units_filter]['square_max'])
 
 				gross.push({
 					'val'      => gross_res[0]["val"],
@@ -259,6 +264,16 @@ class AnalysesController < ApplicationController
 			}
 
 			render json: { data: result }
+		when 'units_filter_info'
+			beds_min  = BuildingUnit.select('min(beds)')
+			beds_max  = BuildingUnit.select('max(beds)')
+			baths_min = BuildingUnit.select('min(baths)')
+			baths_max = BuildingUnit.select('max(baths)')
+			floor_min = BuildingUnit.select('min(floor)')
+			floor_max = BuildingUnit.select('max(floor)')
+			sq_ft_min = BuildingUnit.select('min(sq_feet)')
+			sq_ft_max = BuildingUnit.select('max(sq_feet)')
+			render json: {beds_min:beds_min,beds_max:beds_max,baths_min:baths_min,baths_max:baths_max,floor_min:floor_min,floor_max:floor_max,sq_ft_min:sq_ft_min,sq_ft_max:sq_ft_max}
 		when 'nrr'
 			data = {}
 			owned = {}
@@ -272,7 +287,8 @@ class AnalysesController < ApplicationController
 					buildings = Building.where("geography_id = ? AND comp_group_id = ?", ids[0], ids[1])
 				end
 				for building in buildings
-					net_rent = Analysis.select("avg(net_rent_sf) as nrsf, avg(net_rent) as nr").where("property = ?", building[:name])
+					net_rent = BuildingUnit.select("avg((actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END)))/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as nrsf, avg(actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END))) as nr")
+						.where("building_id = ?", building[:id])
 					data[building[:name]] = net_rent
 					owned[building[:name]] = is_owned
 				end

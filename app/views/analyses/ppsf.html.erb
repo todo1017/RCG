@@ -1,6 +1,8 @@
 <link href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css" rel="stylesheet" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
 <script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.js"></script>
+<script src="https://files.codepedia.info/uploads/iScripts/html2canvas.js"></script>
+<script src="https://cdn.rawgit.com/exupero/saveSvgAsPng/gh-pages/saveSvgAsPng.js"></script>
 <style>
 	.tooltip {
 	 	position: absolute;
@@ -21,13 +23,29 @@
 		margin: 0;
 	}
 	.filter-select {
-		padding: 20px 0 10px 0;
+		padding: 10px 0
+	}
+	.geographies {
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		padding: 10px
+	}
+	.units {
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		margin: 10px 0;
+		padding: 10px
+	}
+	.download-png {
+		margin: 10px 0;
 	}
 </style>
 <div id="analyses-ppsf">
 	<div class="row">
 		<div class="analyses-title">
-			<h1 class="text-center">Price per square Foot</h1>
+			<h1 class="text-center">Compare Buildings</h1>
 		</div>
 	</div>
 	<ul class="nav nav-pills nav-justified">
@@ -57,33 +75,67 @@
 					</div>
 				</div>
 				<div>
-					<div class="filter-title full-width">
-						<h3 class="pull-left">Filter</h3>
-						<div class="pull-right filter-select">
-							<button type="button" class="btn btn-warning select-all">Select All</button>
-							<button type="button" class="btn btn-default select-none">Select None</button>
-						</div>
-					</div>
+					<h3>Filter</h3>
 					<div class="filter-content row">
-						<div class="row">
-							<div class="panel-group">
-								<% @geographies.each do |geography| %>
-									<div class="col-xs-6" style="padding-bottom: 5px">
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
-											</div>
-											<div>
-												<div class="panel-body">
-													<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
-													<% @comp_groups.each do |comp_group| %>
-														<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
-													<% end %>	
+						<div class="main-content">
+							<div class="geographies">
+								<h4>Geographies</h4>
+								<div class="filter-title full-width">
+									<div class="filter-select">
+										<button type="button" class="btn btn-warning cbr-select-all">Select All</button>
+										<button type="button" class="btn btn-default cbr-select-none">Select None</button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="panel-group">
+										<% @geographies.each do |geography| %>
+											<div class="col-xs-6" style="padding-bottom: 5px">
+												<div class="panel panel-default geography-group">
+													<div class="panel-heading">
+														<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+													</div>
+													<div>
+														<div class="panel-body">
+															<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+															<% @comp_groups.each do |comp_group| %>
+																<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+															<% end %>	
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
+										<% end %>
 									</div>
-								<% end %>
+								</div>
+							</div>
+							<div class="units">
+								<h4>Units</h4>
+								<div class="form-horizontal">
+									<div class="form-group">
+								      <label class="col-sm-4 control-label"># of beds</label>
+								      <div class="col-sm-8">
+								        <input class="form-control" type="text">
+								      </div>
+								    </div>
+								    <div class="form-group">
+								      <label class="col-sm-4 control-label"># of baths</label>
+								      <div class="col-sm-8">
+								        <input class="form-control" type="text">
+								      </div>
+								    </div>
+								    <div class="form-group">
+								      <label class="col-sm-4 control-label">Floor</label>
+								      <div class="col-sm-8">
+								        <input class="form-control" type="text">
+								      </div>
+								    </div>
+								    <div class="form-group">
+								      <label class="col-sm-4 control-label">Square footage</label>
+								      <div class="col-sm-8">
+								        <input class="form-control" type="text">
+								      </div>
+								    </div>
+								</div>
 							</div>
 						</div>
 						<h4>
@@ -94,8 +146,9 @@
 			</div>
 			<div class="col-xs-8">
 				<div id="rpt-chart">
-					<!-- <canvas style="width: 400px;height: 200px"></canvas> -->
+					<svg style="background:white"></svg>
 				</div>
+				<button id="rpt-chart-download" type="button" class="pull-right btn btn-default download-png">Download PNG</button>
 			</div>
 		</div>
 		<div id="clustered_building_rent" class="tab-pane fade">
@@ -112,39 +165,85 @@
 				<div>
 					<h3>Filter</h3>
 					<div class="filter-content row">
-						<div class="form-group">
-							<label for="from">From</label>
-							<input class="form-control" type="text" id="from" name="from">
-						</div>
-						<div class="form-group">
-							<label for="to">To</label>
-							<input class="form-control" type="text" id="to" name="to">
-						</div>
-						<div class="filter-title full-width">
-							<div class="filter-select">
-								<button type="button" class="btn btn-warning select-all">Select All</button>
-								<button type="button" class="btn btn-default select-none">Select None</button>
+						<div class="main-content">
+							<div class="form-group">
+								<label for="from">From</label>
+								<input class="form-control" type="text" id="from" name="from">
 							</div>
-						</div>
-						<div class="row">
-							<div class="panel-group">
-								<% @geographies.each do |geography| %>
-									<div class="col-xs-6" style="padding-bottom: 5px">
-										<div class="panel panel-default">
-											<div class="panel-heading">
-												<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
-											</div>
-											<div>
-												<div class="panel-body">
-													<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
-													<% @comp_groups.each do |comp_group| %>
-														<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
-													<% end %>	
+							<div class="form-group">
+								<label for="to">To</label>
+								<input class="form-control" type="text" id="to" name="to">
+							</div>
+							<div class="geographies">
+								<h4>Geographies</h4>
+								<div class="filter-title full-width">
+									<div class="filter-select">
+										<button type="button" class="btn btn-warning select-all">Select All</button>
+										<button type="button" class="btn btn-default select-none">Select None</button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="panel-group">
+										<% @geographies.each do |geography| %>
+											<div class="col-xs-6" style="padding-bottom: 5px">
+												<div class="panel panel-default geography-group">
+													<div class="panel-heading">
+														<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+													</div>
+													<div>
+														<div class="panel-body">
+															<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+															<% @comp_groups.each do |comp_group| %>
+																<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+															<% end %>	
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
+										<% end %>
 									</div>
-								<% end %>
+								</div>
+							</div>
+							<div class="units">
+								<h4>Units</h4>
+								<div class="form-horizontal">
+									<div class="form-group min-max">
+								      	<label class="col-sm-4 control-label"># of beds</label>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_bed_min" placeholder="min">
+								      	</div>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-max-value" type="number"  id="cbr_units_bed_max" placeholder="max">
+								      	</div>
+								    </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label"># of baths</label>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_bath_min" placeholder="min">
+								      	</div>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_bath_max" placeholder="max">
+								      	</div>
+								    </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label">Floor</label>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_floor_min" placeholder="min">
+								      	</div>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_floor_max" placeholder="max">
+								      	</div>
+								    </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label">Square footage</label>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_square_min" placeholder="min">
+								      	</div>
+								      	<div class="col-sm-4">
+								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_square_max" placeholder="max">
+								      	</div>
+								    </div>
+								</div>
 							</div>
 						</div>
 						<h4>
@@ -156,6 +255,7 @@
 			<div class="col-xs-8">
 				<div id="cbr-chart">
 				</div>
+				<button id="cbr-chart-download" type="button" class="pull-right btn btn-default download-png">Download PNG</button>
 			</div>
 		</div>
 	</div>
@@ -189,6 +289,128 @@
 	$(".filter-select .select-none").on("click", function(){
 		$(this).parents('.filter-title').parent().eq(0).find('.panel').find('input').prop("checked", false);
 	});
+	$(".filter-select .cbr-select-all").on("click", function(){
+		$(this).parents('.filter-title').parent().eq(0).find('.panel').find('input').prop("checked", true);
+	});
+	$(".filter-select .cbr-select-none").on("click", function(){
+		$(this).parents('.filter-title').parent().eq(0).find('.panel').find('input').prop("checked", false);
+	});
+
+	// units filter initialize
+	$.get( "/analyses/api",
+		{
+			type        : 'units_filter_info'
+		},
+		function( result ) {
+			$("#cbr_units_bed_min").prop("placeholder", "min - " + Math.floor(result.beds_min[0].min));
+			$("#cbr_units_bed_max").prop("placeholder", "max - " + Math.ceil(result.beds_max[0].max));
+			$("#cbr_units_bath_min").prop("placeholder", "min - " + Math.floor(result.baths_min[0].min));
+			$("#cbr_units_bath_max").prop("placeholder", "max - " + Math.ceil(result.baths_max[0].max));
+			$("#cbr_units_floor_min").prop("placeholder", "min - " + Math.floor(result.floor_min[0].min));
+			$("#cbr_units_floor_max").prop("placeholder", "max - " + Math.ceil(result.floor_max[0].max));
+			$("#cbr_units_square_min").prop("placeholder", "min - " + Math.floor(result.sq_ft_min[0].min));
+			$("#cbr_units_square_max").prop("placeholder", "max - " + Math.ceil(result.sq_ft_max[0].max));
+
+			$("#cbr_units_bed_min").prop("min", Math.floor(result.beds_min[0].min));
+			$("#cbr_units_bed_min").prop("max", Math.ceil(result.beds_max[0].max));
+			$("#cbr_units_bed_max").prop("min", Math.floor(result.beds_min[0].min));
+			$("#cbr_units_bed_max").prop("max", Math.ceil(result.beds_max[0].max));
+
+			$("#cbr_units_bath_min").prop("min", Math.floor(result.baths_min[0].min));
+			$("#cbr_units_bath_min").prop("max", Math.ceil(result.baths_max[0].max));
+			$("#cbr_units_bath_max").prop("min", Math.floor(result.baths_min[0].min));
+			$("#cbr_units_bath_max").prop("max", Math.ceil(result.baths_max[0].max));
+
+			$("#cbr_units_floor_min").prop("min", Math.floor(result.floor_min[0].min));
+			$("#cbr_units_floor_min").prop("max", Math.ceil(result.floor_max[0].max));
+			$("#cbr_units_floor_max").prop("min", Math.floor(result.floor_min[0].min));
+			$("#cbr_units_floor_max").prop("max", Math.ceil(result.floor_max[0].max));
+
+			$("#cbr_units_square_min").prop("min", Math.floor(result.sq_ft_min[0].min));
+			$("#cbr_units_square_min").prop("max", Math.ceil(result.sq_ft_max[0].max));
+			$("#cbr_units_square_max").prop("min", Math.floor(result.sq_ft_min[0].min));
+			$("#cbr_units_square_max").prop("max", Math.ceil(result.sq_ft_max[0].max));
+		}
+	);
+
+	$(".min-max .cbr-min-value").on("input", function(){
+		if($(this).val() != ""){
+			var v = parseInt($(this).val());
+			
+			var min = parseInt($(this).attr("min"));
+			var max = parseInt($(this).attr("max"));
+			if( v < min) {
+				$(this).val(min);
+				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", min);
+			}
+			if( v > max) {
+				$(this).val(max);
+				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", max);
+			}
+			if(min <= v && v <= max) {
+				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", v);
+			}
+		} else {
+			$(this).val('');
+		}
+	});
+
+	$(".min-max .cbr-max-value").on("input", function(){
+		if($(this).val() != ""){
+			var v = parseInt($(this).val());
+			
+			var min = parseInt($(this).attr("min"));
+			var max = parseInt($(this).attr("max"));
+			if( v < min) {
+				$(this).val(min);
+				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", min);
+			}
+			if( v > max) {
+				$(this).val(max);
+				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", max);
+			}
+			if(min <= v && v <= max) {
+				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", v);
+			}
+		} else {
+			$(this).val('');
+		}
+	});
+
+	// Download PNG
+
+	$("#rpt-chart-download").on("click", function(e){
+		saveSvgAsPng(d3.select('#rpt-chart svg').node(), 'Price_Trends.png');
+		// html2canvas($("#rpt-chart svg"), {
+		// 	onrendered: function (canvas) {
+		// 		var imageData = canvas.toDataURL("image/png");
+		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+		// 	    var downloadLink = document.createElement("a");
+		// 		downloadLink.href = newData;
+		// 		downloadLink.download = "Price_Trends.png";
+
+		// 		document.body.appendChild(downloadLink);
+		// 		downloadLink.click();
+		// 		document.body.removeChild(downloadLink);
+		// 	}
+		// });
+	})
+	$("#cbr-chart-download").on("click", function(e){
+		saveSvgAsPng(d3.select('#cbr-chart svg').node(), 'Rent_By_Building.png');
+		// html2canvas($("#cbr-chart svg"), {
+		// 	onrendered: function (canvas) {
+		// 		var imageData = canvas.toDataURL("image/png");
+		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+		// 	    var downloadLink = document.createElement("a");
+		// 		downloadLink.href = newData;
+		// 		downloadLink.download = "Rent_By_Building.png";
+
+		// 		document.body.appendChild(downloadLink);
+		// 		downloadLink.click();
+		// 		document.body.removeChild(downloadLink);
+		// 	}
+		// });
+	})
 </script>
 
 <script>
@@ -200,10 +422,8 @@
 	var rpt_data    = {};
 	var rpt_chart;
 
-	rpt_init();
-
 	//init checkbox unchecked
-	$("#rental_price_trend input").attr("checked", true);
+	$("#rental_price_trend .geography-group").eq(0).find('input').prop("checked", true);
 
 	// update rpt chart by filter
 	$("#rental_price_trend .set_by_year").on("click", function(e){
@@ -252,9 +472,60 @@
 		}
 	});
 
+	rpt_init();
+
 	function update_rpt_chart() {
-		
-		var rawdata = rpt_data.data[rpt_filter2][rpt_filter1];
+
+		var rawdata = {}
+
+		switch(rpt_filter1) {
+			case 'year':
+				$.each(rpt_data[rpt_filter2], function(building, arr){
+					rawdata[building] = [];
+					var year = [];
+					$.each(arr, function(i, d){
+						if(year.indexOf(d.yy) == -1) {
+							year.push(d.yy);
+							rawdata[building].push({
+								label: d.yy,
+								val: d.val
+							})
+						} else {
+							rawdata[building][rawdata[building].length-1].val += d.val;
+						}
+					})
+				})
+				break;
+			case 'quarter':
+				$.each(rpt_data[rpt_filter2], function(building, arr){
+					rawdata[building] = [];
+					var quarter = [];
+					$.each(arr, function(i, d){
+						var q = d.yy + "-Q" + Math.floor((d.mm-1)/3+1);
+						if(quarter.indexOf(q) == -1) {
+							quarter.push(q);
+							rawdata[building].push({
+								label: q,
+								val: d.val
+							})
+						} else {
+							rawdata[building][rawdata[building].length-1].val += d.val;
+						}
+					})
+				})
+				break;
+			case 'month':
+				$.each(rpt_data[rpt_filter2], function(building, arr){
+					rawdata[building] = [];
+					$.each(arr, function(i, d){
+						rawdata[building].push({
+							label : d.yy + "-" +d.mm,
+							val : d.val
+						})
+					})
+				})
+				break;
+		}
 
 		if (!jQuery.isEmptyObject(rawdata)) {
 
@@ -274,6 +545,7 @@
 			var data = [];
 
 			var chart_values = [];
+			var total_max = 0;
 			for(i = 0 ; i < tickIndex.length ; i ++) {
 				maxValue = 0;
 				$.each(rawdata, function(name, values){
@@ -287,6 +559,9 @@
 						});
 					}
 				});
+				if(total_max < maxValue) {
+					total_max = maxValue;
+				}
 				chart_values.push({x: i, y: maxValue});
 			}
 			data.push({
@@ -309,31 +584,28 @@
 				}
 			});
 
-			if(rpt_filter1 == "month") {
-				$.each(tickValues, function(i, val){
-					var y_m = val.split('-');
-					tickValues[i] = y_m[1] + '/' + y_m[0];
-				});
-			}
-
 			rpt_chart.xAxis
 				.tickValues(tickIndex)
 				.tickFormat(function(d){
 					return tickValues[d];
 				});
+
+			rpt_chart.yAxis.tickValues([0,total_max]);
 				
 			d3.select('#rpt-chart svg')
 				.datum(data)
 				.call(rpt_chart);
 
 			nv.utils.windowResize(rpt_chart.update);
-			
+
+			d3.selectAll('#rpt-chart svg path').style("fill","none");
 		} else {
 			rpt_empty();
 		}
 	}
 
 	function rpt_empty() {
+		// d3.select('#rental_price_trend svg').remove();
 		data = [
 			{
 				values: [{x: 0, y: 0},{x: 1, y: 1}],
@@ -360,7 +632,7 @@
 				return "$" + d3.format(',.2f')(d);
 			});
 
-		d3.select('#rpt-chart').append('svg')
+		d3.select('#rpt-chart svg')
 			.datum(data)
 			.call(rpt_chart);
 
@@ -378,17 +650,30 @@
 				filter_list : filter_list
 			},
 			function( result ) {
-				$.each(result.data.gross.month, function(i, d){
+				$.each(result.gross, function(i, d){
 					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
 					building_color[i] = random_color;
 				})
-				rpt_empty();
-				rpt_data = result;
-				update_rpt_chart();
+				filter_list = [];
+				$("#rental_price_trend .panel-body input").each(function(){
+					if(this.checked){
+						filter_list.push(this.value)
+					}
+				});
+				$.get( "/analyses/api",
+					{
+						type        : 'ppsf_rpt',
+						filter_list : filter_list
+					},
+					function( result ) {
+						rpt_empty();
+						rpt_data = result;
+						update_rpt_chart();
+					}
+				);
 			}
 		);
 	}
-
 </script>
 
 <script>
@@ -400,7 +685,7 @@
 	var cbr_svg;
 
 	// init checkbox unchecked
-	$("#clustered_building_rent input").attr("checked", true);
+	$("#clustered_building_rent .geography-group").eq(0).find('input').prop("checked", true);
 
 	// immediate filter set
 	$("#clustered_building_rent .set_gross").on("click", function(e){
@@ -415,32 +700,59 @@
 
 	// apply filter
 	$('#clustered_building_rent .apply-filter').on("click", function(e){
-		var filter_list = [];
-		$("#clustered_building_rent .panel-body .checkbox input").each(function(){
+		var geography_filter = [];
+		$("#clustered_building_rent .geographies .panel-body input").each(function(){
 			if(this.checked){
-				filter_list.push(this.value)
+				geography_filter.push(this.value)
 			}
 		});
-		var from_date = $.datepicker.formatDate("dd-mm-yy",from.datepicker("getDate"));
-		var to_date   = $.datepicker.formatDate("dd-mm-yy",to.datepicker("getDate"));
-		$.get( "/analyses/api",
-			{
-				type        : 'ppsf_cbr',
-				from_date   : from_date,
-				to_date     : to_date,
-				filter_list : filter_list
-			},
-			function( result ) {
-				cbr_data = result;
-				update_cbr_chart();
-			}
-		);
+
+		var from_date = $.datepicker.formatDate("yy-mm-dd",from.datepicker("getDate"));
+		var to_date   = $.datepicker.formatDate("yy-mm-dd",to.datepicker("getDate"));
+
+		var beds_min = $("#cbr_units_bed_min").val()?$("#cbr_units_bed_min").val():$("#cbr_units_bed_min").attr("min");
+		var beds_max = $("#cbr_units_bed_max").val()?$("#cbr_units_bed_max").val():$("#cbr_units_bed_max").attr("max");
+		var bath_min = $("#cbr_units_bath_min").val()?$("#cbr_units_bath_min").val():$("#cbr_units_bath_min").attr("min");
+		var bath_max = $("#cbr_units_bath_max").val()?$("#cbr_units_bath_max").val():$("#cbr_units_bath_max").attr("max");
+		var floor_min = $("#cbr_units_floor_min").val()?$("#cbr_units_floor_min").val():$("#cbr_units_floor_min").attr("min");
+		var floor_max = $("#cbr_units_floor_max").val()?$("#cbr_units_floor_max").val():$("#cbr_units_floor_max").attr("max");
+		var square_min = $("#cbr_units_square_min").val()?$("#cbr_units_square_min").val():$("#cbr_units_square_min").attr("min");
+		var square_max = $("#cbr_units_square_max").val()?$("#cbr_units_square_max").val():$("#cbr_units_square_max").attr("max");
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+		console.log(geography_filter.length);
+		if(geography_filter.length > 0){
+			$.get( "/analyses/api",
+				{
+					type        : 'ppsf_cbr',
+					from_date   : from_date,
+					to_date     : to_date,
+					geography_filter : geography_filter,
+					units_filter : units_filter
+				},
+				function( result ) {
+					cbr_data = result;
+					update_cbr_chart();
+				}
+			);
+		} else {
+			cbr_empty();
+		}
+		
 	});
 
 	$('#link_to_clustered_building_rent').on("click", function(e){
 		if(cbr_initiated == false) {
 			cbr_initiated = true;
-			setTimeout(cbr_init, 300);
+			setTimeout(cbr_init, 1000);
 		}
 	});
 
@@ -486,21 +798,41 @@
 	function cbr_init() {
 		cbr_empty();
 
-		var filter_list = [];
-		$("#clustered_building_rent .panel-body .checkbox input").each(function(){
+		var geography_filter = [];
+		$("#clustered_building_rent .geographies .panel-body input").each(function(){
 			if(this.checked){
-				filter_list.push(this.value)
+				geography_filter.push(this.value)
 			}
 		});
-		var from_date = $.datepicker.formatDate("dd-mm-yy",from.datepicker("getDate"));
-		var to_date   = $.datepicker.formatDate("dd-mm-yy",to.datepicker("getDate"));
+		var from_date = $.datepicker.formatDate("yy-mm-dd",from.datepicker("getDate"));
+		var to_date   = $.datepicker.formatDate("yy-mm-dd",to.datepicker("getDate"));
+
+		var beds_min = $("#cbr_units_bed_min").val()?$("#cbr_units_bed_min").val():$("#cbr_units_bed_min").attr("min");
+		var beds_max = $("#cbr_units_bed_max").val()?$("#cbr_units_bed_max").val():$("#cbr_units_bed_max").attr("max");
+		var bath_min = $("#cbr_units_bath_min").val()?$("#cbr_units_bath_min").val():$("#cbr_units_bath_min").attr("min");
+		var bath_max = $("#cbr_units_bath_max").val()?$("#cbr_units_bath_max").val():$("#cbr_units_bath_max").attr("max");
+		var floor_min = $("#cbr_units_floor_min").val()?$("#cbr_units_floor_min").val():$("#cbr_units_floor_min").attr("min");
+		var floor_max = $("#cbr_units_floor_max").val()?$("#cbr_units_floor_max").val():$("#cbr_units_floor_max").attr("max");
+		var square_min = $("#cbr_units_square_min").val()?$("#cbr_units_square_min").val():$("#cbr_units_square_min").attr("min");
+		var square_max = $("#cbr_units_square_max").val()?$("#cbr_units_square_max").val():$("#cbr_units_square_max").attr("max");
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
 
 		$.get( "/analyses/api",
 			{
 				type        : 'ppsf_cbr',
 				from_date   : from_date,
 				to_date     : to_date,
-				filter_list : filter_list
+				geography_filter : geography_filter,
+				units_filter : units_filter
 			},
 			function( result ) {
 				cbr_data = result;
@@ -539,6 +871,7 @@
 			.tickFormat(function(d) { return "$" + commasFormatter(d)});
 		cbr_svg = d3.select("#cbr-chart")
 			.append("svg")
+			.style("background", "white")
 			.attr("width", cbr_width + cbr_margin.left + cbr_margin.right)
 			.attr("height", cbr_height + cbr_margin.top + cbr_margin.bottom)
 			.append("g")
@@ -569,7 +902,12 @@
 
 			// Geography point
 			var geography_data = [];
+			var geo_index = 0;
+			var building_name_to_geo_id = {};
 			$.each(data, function(i, d){
+				if(d.val == null) {
+					d.val = 0;
+				}
 				if(!geography_data.length) {
 					geography_data.push({
 						name  : d.geo,
@@ -585,8 +923,11 @@
 							start : d.building,
 							end   : d.building
 						});
+						geo_index ++;
 					}
 				}
+				building_name_to_geo_id[d.building] = geo_index;
+				d.geo_id = geo_index;
 			});
 
 			// Draw Chart
@@ -597,7 +938,7 @@
 				cbr_width  = $('#cbr-chart').width() - cbr_margin.left - cbr_margin.right,
 				cbr_height = $('#cbr-chart').height() - cbr_margin.top - cbr_margin.bottom;
 			var cbr_xscale = d3.scale.ordinal()
-				.rangeRoundBands([0, cbr_width], .1)
+				.rangeRoundBands([0, cbr_width - 50 * geography_data.length], .1)
 				.domain(data.map(function(d) { return d.building}));
 			var cbr_yscale = d3.scale.linear()
 				.range([cbr_height, 0])
@@ -616,22 +957,55 @@
 				.tickFormat(function(d) { return "$" + commasFormatter(d)});
 			cbr_svg = d3.select("#cbr-chart")
 				.append("svg")
+				.style("background", "white")
 				.attr("width", cbr_width + cbr_margin.left + cbr_margin.right)
 				.attr("height", cbr_height + cbr_margin.top + cbr_margin.bottom)
 				.append("g")
 				.attr("transform", "translate(" + cbr_margin.left + "," + cbr_margin.top + ")");
-			cbr_svg.append('g')
-				.selectAll("line")
+			var separator = cbr_svg.append('g')
+				.attr("class","separator");
+			separator.selectAll("line")
 				.data(geography_data)
 				.enter()
 				.append("line")
 				.attr("class", "spliter")
-				.attr("x1", function(d){return cbr_xscale(d.start) - cbr_xscale.rangeBand() * 0.05})
+				.attr("x1", function(d, i){return cbr_xscale(d.start) + i * 50 - cbr_xscale.rangeBand() * 0.05})
 				.attr("y1", 0)
-				.attr("x2", function(d){return cbr_xscale(d.start) - cbr_xscale.rangeBand() * 0.05})
+				.attr("x2", function(d, i){return cbr_xscale(d.start) + i * 50 - cbr_xscale.rangeBand() * 0.05})
+				.attr("y2", cbr_height)
+				.style("stroke", "#aaa")
+				.style("stroke-width", 2);
+			separator.append("line")
+				.attr("class", "spliter")
+				.attr("x1", cbr_width - 10)
+				.attr("y1", 0)
+				.attr("x2", cbr_width - 10)
+				.attr("y2", cbr_height)
+				.style("stroke", "#aaa")
+				.style("stroke-width", 2);
+
+			var separator_bottom = cbr_svg.append('g')
+				.attr("class","separator-bottom");
+			separator_bottom.selectAll("line")
+				.data(geography_data)
+				.enter()
+				.append("line")
+				.attr("class", "spliter")
+				.attr("x1", function(d, i){return cbr_xscale(d.start) + i * 50 - cbr_xscale.rangeBand() * 0.05})
+				.attr("y1", cbr_height + cbr_margin.bottom - 50)
+				.attr("x2", function(d, i){return cbr_xscale(d.start) + i * 50 - cbr_xscale.rangeBand() * 0.05})
 				.attr("y2", cbr_height + cbr_margin.bottom)
 				.style("stroke", "#aaa")
 				.style("stroke-width", 2);
+			separator_bottom.append("line")
+				.attr("class", "spliter")
+				.attr("x1", cbr_width - 10)
+				.attr("y1", cbr_height + cbr_margin.bottom - 50)
+				.attr("x2", cbr_width - 10)
+				.attr("y2", cbr_height + cbr_margin.bottom)
+				.style("stroke", "#aaa")
+				.style("stroke-width", 2);
+				
 			cbr_svg.append("g")
 				.attr("class", "x axis")
 				.attr("transform", "translate(0," + cbr_height + ")")
@@ -644,7 +1018,7 @@
 				.enter()
 				.append("rect")
 				.attr("class", "bar")
-				.attr("x", function(d) { return cbr_xscale(d.building)})
+				.attr("x", function(d) { return cbr_xscale(d.building)+d.geo_id * 50 + 25})
 				.attr("width", cbr_xscale.rangeBand())
 				.attr("y", function(d) { return cbr_yscale(d.val)})
 				.attr("height", function(d) { return cbr_height - cbr_yscale(d.val)})
@@ -652,14 +1026,14 @@
 					return building_color[d.building]
 				})
 				.on("mousemove", function(d) {
-					var html = '<div>' + d.val.toFixed(2) + '</div>';
+					var html = '<div>$' + d.val.toFixed(2) + '</div>';
 					tooltip.classed("hidden", false)
 						.style("left", event.pageX + "px")
 						.style("top", (event.pageY + 20) + "px")
 						.html(html)
 						.transition() 
 						.duration(500)
-						.style("opacity", 0.9);
+						.style("opacity", 1);
 				})
 				.on("mouseout",  function(d,i) {
 					tooltip.classed("hidden", true).style("opacity",0);
@@ -670,17 +1044,16 @@
 				.enter()
 				.append("text")
 				.attr("class", "geography")
-				.attr("x", function(d) { return (cbr_xscale(d.start) + cbr_xscale(d.end) + cbr_xscale.rangeBand())/2})
+				.attr("x", function(d, i) { return 25 + i * 50 + (cbr_xscale(d.start) + cbr_xscale(d.end) + cbr_xscale.rangeBand())/2})
 				.attr("y", cbr_height + cbr_margin.bottom - 20)
 				.text(function(d){return d.name})
 				.style("text-anchor", "middle");
 			cbr_svg.selectAll('.x.axis text')
 				.style("text-anchor", "end")
-				.attr("x", 10)
-				.attr("y", -10)
-				.attr("dx", -20)
-				.attr("dy", 20)
-				.attr("transform", "rotate(-50)");
+				.attr("transform", function(d){
+					var x_offset = building_name_to_geo_id[d] * 50 + 16;
+					return "translate(" + x_offset + ",0)rotate(-50)"
+				})
 		} else {
 			cbr_empty();
 		}
