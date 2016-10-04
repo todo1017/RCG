@@ -11,6 +11,15 @@
 = @user_buildings
 %br
 %br
+%b
+  Logged-in user's geographies:
+= @current_user_geographies
+%br
+%b
+  Selected user's geographies:
+= @user_geographies
+%br
+%br
 = "Geographies & Buildings for #{User.find(params[:user_id]).email} associated with #{Owner.find(params[:owner_id]).name}"
 %br
 %br

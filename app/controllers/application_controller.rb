@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
   before_action :require_login
 
   before_action :get_current_user_buildings
+  before_action :get_current_user_geographies
 
   private
 
   def get_current_user_buildings
     @current_user_buildings = get_all_user_buildings.map{|x| x.id}.join(', ') if current_user
   end
-
   def get_all_user_buildings(user=current_user)
     if user.owner_admin
       Building.where(owner_id: user.owner_id)
@@ -21,6 +21,17 @@ class ApplicationController < ActionController::Base
       via_assigned_geographies = []
       via_assigned_geographies = Building.select(:id).where("geography_id IN (#{UserGeography.where(user_id: user.id, access_type: "all").pluck(:geography_id).map{|x| x.inspect}.join(', ')})") unless UserGeography.where(user_id: user.id, access_type: "all").blank?
       directly_assigned_buildings + via_assigned_geographies
+    end
+  end
+
+  def get_current_user_geographies
+    @current_user_geographies = get_all_user_geographies if current_user
+  end
+  def get_all_user_geographies(user=current_user)
+    if user.owner_admin
+      Geography.where(owner_id: user.owner_id).map{|x| x.id}.join(', ')
+    else
+      UserGeography.where(user_id: user.id).pluck(:geography_id).map{|x| x.inspect}.join(', ')
     end
   end
 
