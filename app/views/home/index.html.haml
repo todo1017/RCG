@@ -5,6 +5,8 @@
       = notice
     - if current_user
       = @current_user_buildings
+      %br
+      = @current_user_geographies
       - if current_user.super_admin
         %h3
           Super Admin only:
