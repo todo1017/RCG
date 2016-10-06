@@ -17,9 +17,9 @@ class BuildingOccupanciesController < ApplicationController
 
   def select_buildings
     if params[:competitor] == "true"
-      @buildings = Building.where(competitor: true).where("id IN (#{@current_user_buildings})").order('name ASC')
+      @buildings = Building.where(competitor: true).where("geography_id IN (#{@current_user_geographies})").order('name ASC')
     else
-      @buildings = Building.where(competitor: false).where("geography_id IN (#{@current_user_geographies})").order('name ASC')
+      @buildings = Building.where(competitor: false).where("id IN (#{@current_user_buildings})").order('name ASC')
     end
   end
 
