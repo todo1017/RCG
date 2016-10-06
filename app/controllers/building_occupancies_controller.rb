@@ -3,7 +3,7 @@ class BuildingOccupanciesController < ApplicationController
 
   def index
     @building_occupancies_owned = BuildingOccupancy.joins(:building).where("buildings.id IN (#{@current_user_buildings})").where("buildings.competitor = ?", false).order("building_id, as_of_date DESC")
-    @building_occupancies_comp = BuildingOccupancy.joins(:building).where("buildings.competitor = ?", true).order("building_id, as_of_date DESC")
+    @building_occupancies_comp = BuildingOccupancy.joins(:building).where("buildings.competitor = ?", true).where("buildings.geography_id IN (#{@current_user_geographies})").order("building_id, as_of_date DESC")
   end
 
   def new
@@ -17,9 +17,9 @@ class BuildingOccupanciesController < ApplicationController
 
   def select_buildings
     if params[:competitor] == "true"
-      @buildings = Building.where(competitor: true).order('name ASC')
+      @buildings = Building.where(competitor: true).where("id IN (#{@current_user_buildings})").order('name ASC')
     else
-      @buildings = Building.where(competitor: false).order('name ASC')
+      @buildings = Building.where(competitor: false).where("geography_id IN (#{@current_user_geographies})").order('name ASC')
     end
   end
 

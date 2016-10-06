@@ -13,7 +13,7 @@
 
 <div class="clearfix">
   <%= form_tag "/comparisons", :method => 'get', :class => ['pull-left', 'table-filter'] do %>
-      <%= select_tag(:geography_filter, options_from_collection_for_select(Geography.all, :id, :name, params[:geography_filter]), prompt: 'Geography') %>
+      <%= select_tag(:geography_filter, options_from_collection_for_select(Geography.where("id IN (#{@current_user_geographies})"), :id, :name, params[:geography_filter]), prompt: 'Geography') %>
       &nbsp;
       <%= select_tag(:vacancy_filter, options_for_select([['Current vacant', 1], ['Lease ending in the next 30 days', 2], ['Lease ending in the next 60 days', 3], ['Lease ending in the next 90 days', 4], ['Lease ending in the next 120 days', 5]], params[:vacancy_filter]), prompt: 'Show apartments with:') %>
       &nbsp;

@@ -3,7 +3,7 @@
   %b
     = "Buildings for #{Geography.find(geography_id).name}"
   %br
-  - buildings = Building.where(owner_id: User.find(params[:user_id]).owner_id, geography_id: geography_id)
+  - buildings = Building.where(owner_id: User.find(params[:user_id]).owner_id, competitor: false, geography_id: geography_id)
   - unless buildings.blank?
     - buildings.each do |building|
       - user_buildings = UserBuilding.find_by(user_id: params[:user_id], building_id: building.id)
