@@ -53,64 +53,65 @@
           %i
             All Buildings have Setup data
           %br
-        %br
-        = form_tag import_yardi_1_building_units_path, multipart: true, class: 'index-import-form' do
-          %fieldset
-            %legend
-              %h4
-                Import Rent Roll
-            = file_field_tag :file
-            %br
-            %table{:cellpadding => 5}
-              %tr
-                %td
-                  Building
-                %td
-                  &nbsp;
-                  = collection_select :building, :id, Building.where(competitor: false).order('name ASC'), :id, :name, include_blank: true
-              %tr
-                %td
-                  As Of Date
-                %td
-                  &nbsp;
-                  = date_field_tag :as_of_date, Date.today
-              %tr
-                %td{:colspan => 2}
-                  %fieldset
-                    %legend
-                      %h4
-                        Add Concessions (optional)
-                    %table
-                      %tr
-                        %td
-                          Months Off
-                        %td
-                          &nbsp;
-                          = text_field_tag :months_off
-                      %tr
-                        %td
-                          Cash Off
-                        %td
-                          %div{:class => 'dollar-input-container'}
-                            %i $
-                            = text_field_tag :cash_off, '', class: 'js-numbers-only', data: { 'allow-decimal': true }
-                      %tr
-                        %td
-                          Lease Length
-                        %td
-                          &nbsp;
-                          = text_field_tag :lease_length
-                      %tr
-                        %td
-                          Apply concession to leases through
-                        %td
-                          &nbsp;
-                          = date_field_tag :lease_end_date
-              %tr
-            %br
-            = submit_tag "Import Rent Roll", {:class=>"btn btn-success"}
-        %br
-        %br
+      %br
+      %br
+      = form_tag import_yardi_1_building_units_path, multipart: true, class: 'index-import-form' do
+        %fieldset
+          %legend
+            %h4
+              Rent Roll Upload
+          = file_field_tag :file
+          %br
+          %table{:cellpadding => 5}
+            %tr
+              %td
+                Building
+              %td
+                &nbsp;
+                = collection_select :building, :id, Building.where(competitor: false).order('name ASC'), :id, :name, include_blank: true
+            %tr
+              %td
+                As Of Date
+              %td
+                &nbsp;
+                = date_field_tag :as_of_date, Date.today
+            %tr
+              %td{:colspan => 2}
+                %fieldset
+                  %legend
+                    %h4
+                      Add Concessions (optional)
+                  %table
+                    %tr
+                      %td
+                        Months Off
+                      %td
+                        &nbsp;
+                        = text_field_tag :months_off
+                    %tr
+                      %td
+                        Cash Off
+                      %td
+                        %div{:class => 'dollar-input-container'}
+                          %i $
+                          = text_field_tag :cash_off, '', class: 'js-numbers-only', data: { 'allow-decimal': true }
+                    %tr
+                      %td
+                        Lease Length
+                      %td
+                        &nbsp;
+                        = text_field_tag :lease_length
+                    %tr
+                      %td
+                        Apply concession to leases through
+                      %td
+                        &nbsp;
+                        = date_field_tag :lease_end_date
+            %tr
+          %br
+          = submit_tag "Upload Rent Roll", {:class=>"btn btn-success"}
+      %br
+      %br
 
       %br
       %br
