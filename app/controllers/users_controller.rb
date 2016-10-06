@@ -44,12 +44,7 @@ class UsersController < ApplicationController
         @dpm_admin = User.find(params[:user_id]).owner_admin
       }
       format.js{
-        if params[:owner_user_id].present?
-          owner_user = OwnerUser.find(params[:owner_user_id])
-          owner_user.toggle(:dpm_admin)
-          owner_user.save
-          render partial: "/users/geographies", locals: { dpm_admin: owner_user.dpm_admin, owner_id: owner_user.owner_id, user_id: owner_user.user_id }
-        elsif params[:geography_id].present?
+        if params[:geography_id].present?
           UserGeography.destroy_all(user_id: params[:user_id], geography_id: params[:geography_id])
           if params[:selection] == "none"
             render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], access_type: "none" }
@@ -67,6 +62,15 @@ class UsersController < ApplicationController
           else
             user_buildings.destroy
           end
+        elsif params[:owner_id].present?
+          user = User.find(params[:user_id])
+          user.update_attributes owner_id: params[:owner_id]
+          user.save
+        else
+          user = User.find(params[:user_id])
+          user.toggle(:owner_admin)
+          user.save
+          render partial: "/users/geographies", locals: { dpm_admin: user.owner_admin, owner_id: user.owner_id, user_id: user.id }
         end
       }
     end
