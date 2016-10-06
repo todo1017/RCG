@@ -53,7 +53,7 @@
                 <%- end %>
                 <li role="separator" class="divider"></li>
                 <li role="separator" class="navbar-text">Competitor</li>
-                <%- Building.joins(:geography).where(owner_id: current_user.owner_id, competitor: true).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
+                <%- Building.joins(:geography).where("geographies.id IN (#{@current_user_geographies})").where(owner_id: current_user.owner_id, competitor: true).select("geographies.id as geography_id, geographies.name as geography_name").order("geographies.name").distinct.each do |geography|  %>
                     <li class="dropdown dropdown-submenu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= geography.geography_name %></a>
                       <ul class="dropdown-menu">
                         <%- Building.joins(:geography).where(owner_id: current_user.owner_id, competitor: true).where("geographies.id = " + geography.geography_id.to_s).select("buildings.id as building_id, buildings.name as building_name").order("buildings.name").distinct.each do |building|  %>
