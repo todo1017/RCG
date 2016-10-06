@@ -17,25 +17,48 @@ FOR TESTING PURPOSES ONLY
 = @user_geographies
 %br
 %br
+
+
 %h3 User Setup > Geographies & Buildings
 %br
-= link_to "Done", user_assignments_path, {:class=>"btn btn-success"}
-%br
-%br
-%b
-  User:
-= User.find(params[:user_id]).email
-%br
-%br
+
+= form_for @user do |f|
+  = f.submit "Done", {:class=>"btn btn-success"}
+  = link_to "cancel", user_assignments_path
+  %br
+  %br
+  = f.label :email
+  %br
+  = f.text_field :email, size: 35
+  %br
+  = f.label :first_name
+  %br
+  = f.text_field :first_name, size: 21
+  %br
+  = f.label :last_name
+  %br
+  = f.text_field :last_name, size: 21
+  %br
+  %br
+  = f.check_box :active
+  &nbsp;
+  = f.label :active
+  %br
+  %br
 - if current_user.super_admin
+  %b
+    Company
+  %br
   = select_tag :owner_id, options_from_collection_for_select(Owner.all, :id, :name, params[:owner_id]), { include_blank: true, onchange: "javascript:$.ajax('/user_buildings.js?user_id=#{params[:user_id]}&owner_id=' + this.value);return false;" }
   %br
   %br
+%b
+  Role
+%br
 = select_tag :dpm_admin, options_for_select([['Director Of Property Management (DPM)', 'true'], ['Property Manager (PM)', 'false']], @dpm_admin), { include_blank: true, onchange: "javascript:$.ajax('/user_buildings.js?user_id=#{params[:user_id]}');return false;" }
 %br
 %br
-
 #geography_container
   = render partial: "/users/geographies_", locals: { dpm_admin: @dpm_admin, owner_id: params[:owner_id], user_id: params[:user_id] }
-
-= link_to "Done", user_assignments_path, {:class=>"btn btn-success"}
+%br
+%br

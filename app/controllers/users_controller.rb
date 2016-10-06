@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.active = true
     if @user.save
       session[:user_id] = @user.id
       redirect_to user_assignments_path, notice: "User Account created"
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to "/users", notice: 'User was successfully updated.' }
+        format.html { redirect_to user_assignments_path, notice: 'User was successfully updated' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -41,7 +42,8 @@ class UsersController < ApplicationController
   def user_buildings
     respond_to do |format|
       format.html{
-        @dpm_admin = User.find(params[:user_id]).owner_admin
+        @user = User.find(params[:user_id])
+        @dpm_admin = @user.owner_admin
       }
       format.js{
         if params[:geography_id].present?
@@ -127,7 +129,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved, :owner_admin)
+    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved, :owner_admin, :active, :first_name, :last_name)
   end
 
 
