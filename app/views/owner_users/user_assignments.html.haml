@@ -73,6 +73,9 @@
         = "Y" unless user.active
       %td
         = link_to "edit", "/user_buildings?owner_id=#{user.owner_id}&user_id=#{user.id}"
+        - if current_user.super_admin
+          &nbsp;&nbsp;
+          = link_to 'delete', user, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 %br

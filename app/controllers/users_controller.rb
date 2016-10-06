@@ -39,6 +39,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    redirect_to user_assignments_path, notice: 'User was successfully deleted'
+  end
+
   def user_buildings
     respond_to do |format|
       format.html{
