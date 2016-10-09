@@ -13,8 +13,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.active = true
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to user_assignments_path, notice: "User Account created"
+      @user.send_new_user_invitation
+      redirect_to user_assignments_path, notice: "User created and email sent"
     else
       render "new"
     end
