@@ -17,6 +17,9 @@
   %tr
     %th
     %th
+    %th
+      &nbsp;&nbsp;&nbsp;
+    %th Name
     - if current_user.super_admin
       %th
         &nbsp;&nbsp;&nbsp;
@@ -29,7 +32,7 @@
     %th
       = "# of Buildings"
     %th
-      &nbsp;&nbsp;&nbsp;
+      Inactive
     %th
       &nbsp;&nbsp;&nbsp;
   - @users.each do |user|
@@ -39,6 +42,11 @@
         &nbsp;
       %td
         = user.email
+      %td
+        &nbsp;&nbsp;&nbsp;
+      %td
+        = user.first_name
+        = user.last_name
       - if current_user.super_admin
         %td
           &nbsp;&nbsp;&nbsp;
@@ -62,9 +70,12 @@
         -#    = user_geography.geography.name + " "
         -#  = link_to "change", "/user_geographies?user_id=#{owner_user.user_id}"
       %td
-        &nbsp;&nbsp;&nbsp;
+        = "Y" unless user.active
       %td
         = link_to "edit", "/user_buildings?owner_id=#{user.owner_id}&user_id=#{user.id}"
+        - if current_user.super_admin
+          &nbsp;&nbsp;
+          = link_to 'delete', user, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 %br

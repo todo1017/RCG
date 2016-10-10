@@ -1,5 +1,7 @@
 - if dpm_admin
   can see everything
+  %br
+  %br
 - else
   - geographies = Geography.where(owner_id: User.find(params[:user_id]).owner_id)
   %table

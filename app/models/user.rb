@@ -11,10 +11,20 @@ class User < ActiveRecord::Base
   before_create { generate_token(:auth_token) }
 
   def send_password_reset
+    generate_password_reset
+    UserMailer.password_reset(self).deliver
+  end
+
+  def send_new_user_invitation
+    generate_password_reset
+    UserMailer.new_user_email(self).deliver
+  end
+
+
+  def generate_password_reset
     generate_token(:password_reset_token)
     self.password_reset_sent_at = Time.zone.now
     save!
-    UserMailer.password_reset(self).deliver
   end
 
   def generate_token(column)

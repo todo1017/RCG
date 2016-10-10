@@ -36,7 +36,7 @@
     </div>
     <div class="field">
       <%= f.label :geography_id %><br>
-      <%= f.select :geography_id, options_from_collection_for_select(Geography.all, :id, :name, @building.geography_id), :include_blank => true %>
+      <%= f.select :geography_id, options_from_collection_for_select(Geography.where("id IN (#{@current_user_geographies})"), :id, :name, @building.geography_id), :include_blank => true %>
     </div>
     <div class="field">
       <%= f.label :address1, "Address 1" %><br>

@@ -9,4 +9,9 @@ class UserMailer < ApplicationMailer
     @user = user
     mail :to => user.email, :subject => "Password Reset"
   end
+
+  def new_user_email(user)
+    @user = user
+    mail :to => user.email, :subject => "Welcome to Compsy"
+  end
 end

@@ -8,7 +8,7 @@ class BuildingUnitsController < ApplicationController
 
   end
   def comp_index
-    @building_units = BuildingUnit.competitors
+    @building_units = BuildingUnit.competitors.where("buildings.geography_id IN (#{@current_user_geographies})")
     respond_to do |format|
       format.html
       format.xls

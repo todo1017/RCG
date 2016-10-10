@@ -11,9 +11,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.active = true
     if @user.save
-      session[:user_id] = @user.id
-      redirect_to user_assignments_path, notice: "User Account created"
+      @user.send_new_user_invitation
+      redirect_to user_assignments_path, notice: "User created and email sent"
     else
       render "new"
     end
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to "/users", notice: 'User was successfully updated.' }
+        format.html { redirect_to user_assignments_path, notice: 'User was successfully updated' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -38,18 +39,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    redirect_to user_assignments_path, notice: 'User was successfully deleted'
+  end
+
   def user_buildings
     respond_to do |format|
       format.html{
-        @dpm_admin = User.find(params[:user_id]).owner_admin
+        @user = User.find(params[:user_id])
+        @dpm_admin = @user.owner_admin
       }
       format.js{
-        if params[:owner_user_id].present?
-          owner_user = OwnerUser.find(params[:owner_user_id])
-          owner_user.toggle(:dpm_admin)
-          owner_user.save
-          render partial: "/users/geographies", locals: { dpm_admin: owner_user.dpm_admin, owner_id: owner_user.owner_id, user_id: owner_user.user_id }
-        elsif params[:geography_id].present?
+        if params[:geography_id].present?
           UserGeography.destroy_all(user_id: params[:user_id], geography_id: params[:geography_id])
           if params[:selection] == "none"
             render partial: "/users/buildings", locals: { user_id: params[:user_id], geography_id: params[:geography_id], access_type: "none" }
@@ -67,6 +69,15 @@ class UsersController < ApplicationController
           else
             user_buildings.destroy
           end
+        elsif params[:owner_id].present?
+          user = User.find(params[:user_id])
+          user.update_attributes owner_id: params[:owner_id]
+          user.save
+        else
+          user = User.find(params[:user_id])
+          user.toggle(:owner_admin)
+          user.save
+          render partial: "/users/geographies", locals: { dpm_admin: user.owner_admin, owner_id: user.owner_id, user_id: user.id }
         end
       }
     end
@@ -123,7 +134,7 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved, :owner_admin)
+    params.require(:user).permit(:email, :owner_id, :password, :password_confirmation, :approved, :owner_admin, :active, :first_name, :last_name)
   end
 
 
