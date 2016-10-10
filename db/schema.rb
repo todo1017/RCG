@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20161003122609) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "amenity_ceilings", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -32,22 +35,18 @@ ActiveRecord::Schema.define(version: 20161003122609) do
   end
 
   create_table "analyses", force: :cascade do |t|
+    t.integer  "building_unit"
+    t.datetime "date"
     t.string   "property"
-    t.string   "sq_feet"
-    t.string   "act_rent"
-    t.string   "months_off"
-    t.string   "cash_off"
-    t.string   "lease_length"
-    t.string   "date"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
     t.string   "year"
     t.string   "quarter"
     t.string   "month"
-    t.string   "gross_rent"
-    t.string   "net_rent"
-    t.string   "timestamp"
-    t.float    "net_rent_sf",  default: 0.0, null: false
+    t.float    "gross_rent",    default: 0.0, null: false
+    t.float    "net_rent",      default: 0.0, null: false
+    t.integer  "timestamp"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.float    "net_rent_sf",   default: 0.0, null: false
     t.boolean  "owned"
   end
 
@@ -255,8 +254,8 @@ ActiveRecord::Schema.define(version: 20161003122609) do
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "unit_types", force: :cascade do |t|
     t.text     "description"
