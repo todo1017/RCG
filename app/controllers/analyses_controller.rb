@@ -145,6 +145,16 @@ class AnalysesController < ApplicationController
 	def ppsf
 		@geographies = Geography.all
 		@comp_groups = CompGroup.all
+
+		@units_filter = []
+		@units_filter.push(BuildingUnit.select('min(beds)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(beds)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(baths)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(baths)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(floor)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(floor)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(sq_feet)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(sq_feet)')[0]['max'])
 	end
 
 	def net_rent_ranking
@@ -158,6 +168,8 @@ class AnalysesController < ApplicationController
 	def api
 		type = params[:type]
 		case type
+		when 'buildings'
+			render json: { all: Building.all}
 		when 'ppsf_rpt'
 			buildings = []
 			for filter in params[:filter_list]
@@ -180,7 +192,16 @@ class AnalysesController < ApplicationController
 
 			for building in buildings
 				gross_rent = BuildingUnit.select("avg(actual_rent/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val, date_part('year', as_of_date) as yy, date_part('month', as_of_date) as mm")
-					.where('building_id = ? and as_of_date is not null', building['id'])
+					.where('building_id = ? and as_of_date is not null and
+						beds >= ? and beds <= ? and 
+						baths >=? and baths <=? and 
+						floor >=? and floor <=? and 
+						sq_feet >=? and sq_feet <= ? ', 
+						building['id'],
+						params[:units_filter]['beds_min'],params[:units_filter]['beds_max'],
+						params[:units_filter]['bath_min'],params[:units_filter]['bath_max'],
+						params[:units_filter]['floor_min'],params[:units_filter]['floor_max'],
+						params[:units_filter]['square_min'],params[:units_filter]['square_max'])
 					.group('yy, mm')
 					.order('yy,mm')
 
@@ -264,16 +285,6 @@ class AnalysesController < ApplicationController
 			}
 
 			render json: { data: result }
-		when 'units_filter_info'
-			beds_min  = BuildingUnit.select('min(beds)')
-			beds_max  = BuildingUnit.select('max(beds)')
-			baths_min = BuildingUnit.select('min(baths)')
-			baths_max = BuildingUnit.select('max(baths)')
-			floor_min = BuildingUnit.select('min(floor)')
-			floor_max = BuildingUnit.select('max(floor)')
-			sq_ft_min = BuildingUnit.select('min(sq_feet)')
-			sq_ft_max = BuildingUnit.select('max(sq_feet)')
-			render json: {beds_min:beds_min,beds_max:beds_max,baths_min:baths_min,baths_max:baths_max,floor_min:floor_min,floor_max:floor_max,sq_ft_min:sq_ft_min,sq_ft_max:sq_ft_max}
 		when 'nrr'
 			data = {}
 			owned = {}
@@ -296,7 +307,7 @@ class AnalysesController < ApplicationController
 
 			render json: { data: data, owned: owned}
 		when 'building_map'
-			building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a, (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id) b where a.building_id = b.id')
+			building_data = ActiveRecord::Base.connection.execute('select b.id, b.competitor as competitor, b.name, b.units, b.year, b.city, b.state, b.addr, a.occupancy_rate, a.leased_rate from (select b.id, b.competitor, b.name as name, b.number_of_units as units, b.year_built as year, g.name as city, b.state as state, b.address1 as addr from buildings b, geographies g where b.geography_id = g.id) b left join (select a.building_id as building_id, a.date as date, b.occupancy_rate as occupancy_rate, b.leased_rate as leased_rate from (select building_id, max(as_of_date) as date from building_occupancies where building_id is not null group by building_id order by building_id) a left join building_occupancies b on a.building_id = b.building_id and a.date = b.as_of_date order by a.building_id) a on a.building_id = b.id')
 			render json: {buildings: building_data}
 		end
 	end

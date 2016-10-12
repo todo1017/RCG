@@ -73,8 +73,39 @@
 		
 		$.get("/analyses/api", { type : 'building_map'}, function(response){
 			var len = response.buildings.length;
+			var styles = [
+				{
+					"stylers": [
+						{
+							"hue": "#ff1a00"
+						},
+						{
+							"invert_lightness": true
+						},
+						{
+							"saturation": -100
+						},
+						{
+							"lightness": 33
+						},
+						{
+							"gamma": 0.5
+						}
+					]
+				},
+				{
+					"featureType": "water",
+					"elementType": "geometry",
+					"stylers": [
+						{
+							"color": "#2D333C"
+						}
+					]
+				}
+			];
 			var map = new google.maps.Map(d3.select("#analyses-map").node(), {
-				mapTypeId: google.maps.MapTypeId.TERRAIN
+				// styles: styles,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
 			});
 			var geocoder = new google.maps.Geocoder();
 			var resultBounds = new google.maps.LatLngBounds();
@@ -92,7 +123,7 @@
 						var marker = new google.maps.Marker({
 							map: map,
 							position: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()),
-							title: d.name + " : " + owned,
+							title: d.name,
 							icon: {
             					path: google.maps.SymbolPath.CIRCLE,
             					scale: 6,

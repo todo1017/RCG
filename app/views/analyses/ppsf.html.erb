@@ -39,7 +39,85 @@
 		padding: 10px
 	}
 	.download-png {
-		margin: 10px 0;
+		margin: 10px 0
+	}
+	.toward-span {
+		float: left;
+		padding: 7px;
+	}
+	#cbr_units_bed_min {
+		width: 70px;
+		float: left;
+	}
+	#cbr_units_bed_max {
+		width: 70px;
+		float: left;
+	}
+	#cbr_units_bath_min {
+		width: 70px;
+		float: left;
+	}
+	#cbr_units_bath_max {
+		width: 70px;
+		float: left;
+	}
+	#cbr_units_floor_min {
+		width: 60px;
+		float: left;
+	}
+	#cbr_units_floor_max {
+		width: 60px;
+		float: left;
+	}
+	#cbr_units_square_min {
+		width: 90px;
+		float: left;
+	}
+	#cbr_units_square_max {
+		width: 90px;
+		float: left;
+	}
+
+	#rpt_units_bed_min {
+		width: 70px;
+		float: left;
+	}
+	#rpt_units_bed_max {
+		width: 70px;
+		float: left;
+	}
+	#rpt_units_bath_min {
+		width: 70px;
+		float: left;
+	}
+	#rpt_units_bath_max {
+		width: 70px;
+		float: left;
+	}
+	#rpt_units_floor_min {
+		width: 60px;
+		float: left;
+	}
+	#rpt_units_floor_max {
+		width: 60px;
+		float: left;
+	}
+	#rpt_units_square_min {
+		width: 90px;
+		float: left;
+	}
+	#rpt_units_square_max {
+		width: 90px;
+		float: left;
+	}
+
+	.from-to {
+		display: inline-block;
+		padding: 10px;
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		width: 100%
 	}
 </style>
 <div id="analyses-ppsf">
@@ -111,29 +189,37 @@
 							<div class="units">
 								<h4>Units</h4>
 								<div class="form-horizontal">
-									<div class="form-group">
-								      <label class="col-sm-4 control-label"># of beds</label>
-								      <div class="col-sm-8">
-								        <input class="form-control" type="text">
-								      </div>
+									<div class="form-group min-max">
+								      	<label class="col-sm-4 control-label"># of beds</label>
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="rpt_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="rpt_units_bed_max" placeholder="<%= @units_filter[1] %>" max="<%= @units_filter[1] %>">
+								      	</div>
 								    </div>
-								    <div class="form-group">
-								      <label class="col-sm-4 control-label"># of baths</label>
-								      <div class="col-sm-8">
-								        <input class="form-control" type="text">
-								      </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label"># of baths</label>
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="rpt_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="rpt_units_bath_max" placeholder="<%= @units_filter[3] %>" max="<%= @units_filter[3] %>">
+								      	</div>
 								    </div>
-								    <div class="form-group">
-								      <label class="col-sm-4 control-label">Floor</label>
-								      <div class="col-sm-8">
-								        <input class="form-control" type="text">
-								      </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label">Floor</label>
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="rpt_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="rpt_units_floor_max" placeholder="<%= @units_filter[5] %>" max="<%= @units_filter[5] %>">
+								      	</div>
 								    </div>
-								    <div class="form-group">
-								      <label class="col-sm-4 control-label">Square footage</label>
-								      <div class="col-sm-8">
-								        <input class="form-control" type="text">
-								      </div>
+								    <div class="form-group min-max">
+								      	<label class="col-sm-4 control-label">Square footage</label>
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="rpt_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="rpt_units_square_max" placeholder="<%= @units_filter[7] %>" max="<%= @units_filter[7] %>">
+								      	</div>
 								    </div>
 								</div>
 							</div>
@@ -166,12 +252,10 @@
 					<h3>Filter</h3>
 					<div class="filter-content row">
 						<div class="main-content">
-							<div class="form-group">
-								<label for="from">From</label>
+							<div class="form-group from-to">
+								<h4>Date Range</h4>
 								<input class="form-control" type="text" id="from" name="from">
-							</div>
-							<div class="form-group">
-								<label for="to">To</label>
+								<span class="toward-span"> - </span>
 								<input class="form-control" type="text" id="to" name="to">
 							</div>
 							<div class="geographies">
@@ -209,38 +293,34 @@
 								<div class="form-horizontal">
 									<div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of beds</label>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_bed_min" placeholder="min">
-								      	</div>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-max-value" type="number"  id="cbr_units_bed_max" placeholder="max">
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="cbr_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number"  id="cbr_units_bed_max" placeholder="<%= @units_filter[1] %>" max="<%= @units_filter[1] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of baths</label>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_bath_min" placeholder="min">
-								      	</div>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_bath_max" placeholder="max">
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="cbr_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="cbr_units_bath_max" placeholder="<%= @units_filter[3] %>" max="<%= @units_filter[3] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Floor</label>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_floor_min" placeholder="min">
-								      	</div>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_floor_max" placeholder="max">
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="cbr_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="cbr_units_floor_max" placeholder="<%= @units_filter[5] %>" max="<%= @units_filter[5] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Square footage</label>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-min-value" type="number" id="cbr_units_square_min" placeholder="min">
-								      	</div>
-								      	<div class="col-sm-4">
-								        	<input class="form-control cbr-max-value" type="number" id="cbr_units_square_max" placeholder="max">
+								      	<div class="col-sm-8">
+								        	<input class="form-control min-value" type="number" id="cbr_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>">
+								        	<span class="toward-span"> - </span>
+								        	<input class="form-control max-value" type="number" id="cbr_units_square_max" placeholder="<%= @units_filter[7] %>" max="<%= @units_filter[7] %>">
 								      	</div>
 								    </div>
 								</div>
@@ -296,44 +376,7 @@
 		$(this).parents('.filter-title').parent().eq(0).find('.panel').find('input').prop("checked", false);
 	});
 
-	// units filter initialize
-	$.get( "/analyses/api",
-		{
-			type        : 'units_filter_info'
-		},
-		function( result ) {
-			$("#cbr_units_bed_min").prop("placeholder", "min - " + Math.floor(result.beds_min[0].min));
-			$("#cbr_units_bed_max").prop("placeholder", "max - " + Math.ceil(result.beds_max[0].max));
-			$("#cbr_units_bath_min").prop("placeholder", "min - " + Math.floor(result.baths_min[0].min));
-			$("#cbr_units_bath_max").prop("placeholder", "max - " + Math.ceil(result.baths_max[0].max));
-			$("#cbr_units_floor_min").prop("placeholder", "min - " + Math.floor(result.floor_min[0].min));
-			$("#cbr_units_floor_max").prop("placeholder", "max - " + Math.ceil(result.floor_max[0].max));
-			$("#cbr_units_square_min").prop("placeholder", "min - " + Math.floor(result.sq_ft_min[0].min));
-			$("#cbr_units_square_max").prop("placeholder", "max - " + Math.ceil(result.sq_ft_max[0].max));
-
-			$("#cbr_units_bed_min").prop("min", Math.floor(result.beds_min[0].min));
-			$("#cbr_units_bed_min").prop("max", Math.ceil(result.beds_max[0].max));
-			$("#cbr_units_bed_max").prop("min", Math.floor(result.beds_min[0].min));
-			$("#cbr_units_bed_max").prop("max", Math.ceil(result.beds_max[0].max));
-
-			$("#cbr_units_bath_min").prop("min", Math.floor(result.baths_min[0].min));
-			$("#cbr_units_bath_min").prop("max", Math.ceil(result.baths_max[0].max));
-			$("#cbr_units_bath_max").prop("min", Math.floor(result.baths_min[0].min));
-			$("#cbr_units_bath_max").prop("max", Math.ceil(result.baths_max[0].max));
-
-			$("#cbr_units_floor_min").prop("min", Math.floor(result.floor_min[0].min));
-			$("#cbr_units_floor_min").prop("max", Math.ceil(result.floor_max[0].max));
-			$("#cbr_units_floor_max").prop("min", Math.floor(result.floor_min[0].min));
-			$("#cbr_units_floor_max").prop("max", Math.ceil(result.floor_max[0].max));
-
-			$("#cbr_units_square_min").prop("min", Math.floor(result.sq_ft_min[0].min));
-			$("#cbr_units_square_min").prop("max", Math.ceil(result.sq_ft_max[0].max));
-			$("#cbr_units_square_max").prop("min", Math.floor(result.sq_ft_min[0].min));
-			$("#cbr_units_square_max").prop("max", Math.ceil(result.sq_ft_max[0].max));
-		}
-	);
-
-	$(".min-max .cbr-min-value").on("input", function(){
+	$(".min-max .min-value").on("input", function(){
 		if($(this).val() != ""){
 			var v = parseInt($(this).val());
 			
@@ -341,21 +384,21 @@
 			var max = parseInt($(this).attr("max"));
 			if( v < min) {
 				$(this).val(min);
-				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", min);
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", min);
 			}
 			if( v > max) {
 				$(this).val(max);
-				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", max);
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", max);
 			}
 			if(min <= v && v <= max) {
-				$(this).parents('.min-max').eq(0).find('.cbr-max-value').attr("min", v);
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", v);
 			}
 		} else {
 			$(this).val('');
 		}
 	});
 
-	$(".min-max .cbr-max-value").on("input", function(){
+	$(".min-max .max-value").on("input", function(){
 		if($(this).val() != ""){
 			var v = parseInt($(this).val());
 			
@@ -363,14 +406,14 @@
 			var max = parseInt($(this).attr("max"));
 			if( v < min) {
 				$(this).val(min);
-				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", min);
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", min);
 			}
 			if( v > max) {
 				$(this).val(max);
-				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", max);
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", max);
 			}
 			if(min <= v && v <= max) {
-				$(this).parents('.min-max').eq(0).find('.cbr-min-value').attr("max", v);
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", v);
 			}
 		} else {
 			$(this).val('');
@@ -378,38 +421,11 @@
 	});
 
 	// Download PNG
-
 	$("#rpt-chart-download").on("click", function(e){
 		saveSvgAsPng(d3.select('#rpt-chart svg').node(), 'Price_Trends.png');
-		// html2canvas($("#rpt-chart svg"), {
-		// 	onrendered: function (canvas) {
-		// 		var imageData = canvas.toDataURL("image/png");
-		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-		// 	    var downloadLink = document.createElement("a");
-		// 		downloadLink.href = newData;
-		// 		downloadLink.download = "Price_Trends.png";
-
-		// 		document.body.appendChild(downloadLink);
-		// 		downloadLink.click();
-		// 		document.body.removeChild(downloadLink);
-		// 	}
-		// });
 	})
 	$("#cbr-chart-download").on("click", function(e){
 		saveSvgAsPng(d3.select('#cbr-chart svg').node(), 'Rent_By_Building.png');
-		// html2canvas($("#cbr-chart svg"), {
-		// 	onrendered: function (canvas) {
-		// 		var imageData = canvas.toDataURL("image/png");
-		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-		// 	    var downloadLink = document.createElement("a");
-		// 		downloadLink.href = newData;
-		// 		downloadLink.download = "Rent_By_Building.png";
-
-		// 		document.body.appendChild(downloadLink);
-		// 		downloadLink.click();
-		// 		document.body.removeChild(downloadLink);
-		// 	}
-		// });
 	})
 </script>
 
@@ -456,11 +472,32 @@
 			}
 		});
 
+		var beds_min = $("#rpt_units_bed_min").val()?$("#rpt_units_bed_min").val():$("#rpt_units_bed_min").attr("min");
+		var beds_max = $("#rpt_units_bed_max").val()?$("#rpt_units_bed_max").val():$("#rpt_units_bed_max").attr("max");
+		var bath_min = $("#rpt_units_bath_min").val()?$("#rpt_units_bath_min").val():$("#rpt_units_bath_min").attr("min");
+		var bath_max = $("#rpt_units_bath_max").val()?$("#rpt_units_bath_max").val():$("#rpt_units_bath_max").attr("max");
+		var floor_min = $("#rpt_units_floor_min").val()?$("#rpt_units_floor_min").val():$("#rpt_units_floor_min").attr("min");
+		var floor_max = $("#rpt_units_floor_max").val()?$("#rpt_units_floor_max").val():$("#rpt_units_floor_max").attr("max");
+		var square_min = $("#rpt_units_square_min").val()?$("#rpt_units_square_min").val():$("#rpt_units_square_min").attr("min");
+		var square_max = $("#rpt_units_square_max").val()?$("#rpt_units_square_max").val():$("#rpt_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+
 		if(filter_list.length) {
 			$.get( "/analyses/api",
 				{
 					type : "ppsf_rpt",
-					filter_list : filter_list
+					filter_list : filter_list,
+					units_filter : units_filter
 				},
 				function( result ) {
 					rpt_data = result;
@@ -519,7 +556,7 @@
 					rawdata[building] = [];
 					$.each(arr, function(i, d){
 						rawdata[building].push({
-							label : d.yy + "-" +d.mm,
+							label : d.mm + " / " + d.yy,
 							val : d.val
 						})
 					})
@@ -540,7 +577,23 @@
 					});
 				}
 			});
-			tickValues.sort();
+			tickValues.sort(function(a, b){
+				var m_y1 = a.split(" / ");
+				var m_y2 = b.split(" / ");
+				if(m_y2[1] > m_y1[1]) {
+					return true;
+				}else{
+					return false;
+				}
+				if(m_y2[1] == m_y1[1]){
+					if(m_y2[0] > m_y1[0]) {
+						return true;
+					} else {
+						return false;
+					}
+				}
+			});
+			console.log(tickValues);
 
 			var data = [];
 
@@ -644,15 +697,35 @@
 		$("#rental_price_trend .panel-body input").each(function(){
 			filter_list.push(this.value)
 		});
+
+		var beds_min = $("#rpt_units_bed_min").val()?$("#rpt_units_bed_min").val():$("#rpt_units_bed_min").attr("min");
+		var beds_max = $("#rpt_units_bed_max").val()?$("#rpt_units_bed_max").val():$("#rpt_units_bed_max").attr("max");
+		var bath_min = $("#rpt_units_bath_min").val()?$("#rpt_units_bath_min").val():$("#rpt_units_bath_min").attr("min");
+		var bath_max = $("#rpt_units_bath_max").val()?$("#rpt_units_bath_max").val():$("#rpt_units_bath_max").attr("max");
+		var floor_min = $("#rpt_units_floor_min").val()?$("#rpt_units_floor_min").val():$("#rpt_units_floor_min").attr("min");
+		var floor_max = $("#rpt_units_floor_max").val()?$("#rpt_units_floor_max").val():$("#rpt_units_floor_max").attr("max");
+		var square_min = $("#rpt_units_square_min").val()?$("#rpt_units_square_min").val():$("#rpt_units_square_min").attr("min");
+		var square_max = $("#rpt_units_square_max").val()?$("#rpt_units_square_max").val():$("#rpt_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+
 		$.get( "/analyses/api",
 			{
-				type        : 'ppsf_rpt',
-				filter_list : filter_list
+				type : 'buildings'
 			},
 			function( result ) {
-				$.each(result.gross, function(i, d){
+				$.each(result.all, function(i, d){
 					var random_color = '#'+Math.floor(Math.random()*16777215).toString(16);
-					building_color[i] = random_color;
+					building_color[d.name] = random_color;
 				})
 				filter_list = [];
 				$("#rental_price_trend .panel-body input").each(function(){
@@ -663,7 +736,8 @@
 				$.get( "/analyses/api",
 					{
 						type        : 'ppsf_rpt',
-						filter_list : filter_list
+						filter_list : filter_list,
+						units_filter : units_filter
 					},
 					function( result ) {
 						rpt_empty();
@@ -697,7 +771,6 @@
 		update_cbr_chart();
 	});
 
-
 	// apply filter
 	$('#clustered_building_rent .apply-filter').on("click", function(e){
 		var geography_filter = [];
@@ -728,7 +801,6 @@
 			square_min: square_min,
 			square_max: square_max
 		}
-		console.log(geography_filter.length);
 		if(geography_filter.length > 0){
 			$.get( "/analyses/api",
 				{
@@ -745,8 +817,7 @@
 			);
 		} else {
 			cbr_empty();
-		}
-		
+		}	
 	});
 
 	$('#link_to_clustered_building_rent').on("click", function(e){
@@ -815,6 +886,7 @@
 		var floor_max = $("#cbr_units_floor_max").val()?$("#cbr_units_floor_max").val():$("#cbr_units_floor_max").attr("max");
 		var square_min = $("#cbr_units_square_min").val()?$("#cbr_units_square_min").val():$("#cbr_units_square_min").attr("min");
 		var square_max = $("#cbr_units_square_max").val()?$("#cbr_units_square_max").val():$("#cbr_units_square_max").attr("max");
+
 		var units_filter = {
 			beds_min: beds_min,
 			beds_max: beds_max,
