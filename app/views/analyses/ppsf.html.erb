@@ -563,7 +563,6 @@
 				})
 				break;
 		}
-		console.log(rawdata);
 
 		if (!jQuery.isEmptyObject(rawdata)) {
 
@@ -578,21 +577,33 @@
 					});
 				}
 			});
-			tickValues.sort(function(a, b){
-				var m_y1 = a.split(" / ");
-				var m_y2 = b.split(" / ");
-				var y1 = parseInt(m_y1[1]);
-				var y2 = parseInt(m_y2[1]);
-				var m1 = parseInt(m_y1[0]);
-				var m2 = parseInt(m_y2[0]);
+			switch(rpt_filter1) {
+				case 'year':
+					tickValues.sort();
+					break;
+				case 'quarter':
+					tickValues.sort();
+					break;
+				case 'month':
+					tickValues.sort(function(a, b){
+						var m_y1 = a.split(" / ");
+						var m_y2 = b.split(" / ");
+						var y1 = parseInt(m_y1[1]);
+						var y2 = parseInt(m_y2[1]);
+						var m1 = parseInt(m_y1[0]);
+						var m2 = parseInt(m_y2[0]);
 
-				if(y1 == y2) {
-					return m1-m2
-				}else {
-					console.log("d");
-					return y1-y2
-				}
-			});
+						if(y1 == y2) {
+							return m1-m2
+						}else {
+							return y1-y2
+						}
+					});
+					break;
+			}
+			
+
+			console.log(tickValues);
 
 			var data = [];
 
