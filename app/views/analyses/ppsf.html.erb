@@ -563,6 +563,7 @@
 				})
 				break;
 		}
+		console.log(rawdata);
 
 		if (!jQuery.isEmptyObject(rawdata)) {
 
@@ -580,20 +581,18 @@
 			tickValues.sort(function(a, b){
 				var m_y1 = a.split(" / ");
 				var m_y2 = b.split(" / ");
-				if(m_y2[1] > m_y1[1]) {
-					return true;
-				}else{
-					return false;
-				}
-				if(m_y2[1] == m_y1[1]){
-					if(m_y2[0] > m_y1[0]) {
-						return true;
-					} else {
-						return false;
-					}
+				var y1 = parseInt(m_y1[1]);
+				var y2 = parseInt(m_y2[1]);
+				var m1 = parseInt(m_y1[0]);
+				var m2 = parseInt(m_y2[0]);
+
+				if(y1 == y2) {
+					return m1-m2
+				}else {
+					console.log("d");
+					return y1-y2
 				}
 			});
-			console.log(tickValues);
 
 			var data = [];
 
@@ -638,12 +637,15 @@
 			});
 
 			rpt_chart.xAxis
+				.tickPadding(20)
 				.tickValues(tickIndex)
 				.tickFormat(function(d){
 					return tickValues[d];
 				});
 
-			rpt_chart.yAxis.tickValues([0,total_max]);
+			rpt_chart.yAxis
+				.tickPadding(20)
+				.tickValues([0,total_max]);
 				
 			d3.select('#rpt-chart svg')
 				.datum(data)

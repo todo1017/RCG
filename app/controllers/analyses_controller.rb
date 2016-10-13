@@ -206,7 +206,16 @@ class AnalysesController < ApplicationController
 					.order('yy,mm')
 
 				net_rent = BuildingUnit.select("avg((actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END)))/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as val, date_part('year', as_of_date) as yy, date_part('month', as_of_date) as mm")
-					.where('building_id = ? and as_of_date is not null', building['id'])
+					.where('building_id = ? and as_of_date is not null and
+						beds >= ? and beds <= ? and 
+						baths >=? and baths <=? and 
+						floor >=? and floor <=? and 
+						sq_feet >=? and sq_feet <= ? ', 
+						building['id'],
+						params[:units_filter]['beds_min'],params[:units_filter]['beds_max'],
+						params[:units_filter]['bath_min'],params[:units_filter]['bath_max'],
+						params[:units_filter]['floor_min'],params[:units_filter]['floor_max'],
+						params[:units_filter]['square_min'],params[:units_filter]['square_max'])
 					.group('yy, mm')
 					.order('yy,mm')
 
