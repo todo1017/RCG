@@ -1101,8 +1101,6 @@
 				.attr("class", "bar")
 				.attr("x", function(d) { return cbr_xscale(d.building)+d.geo_id * 50 + 25})
 				.attr("width", cbr_xscale.rangeBand())
-				.attr("y", function(d) { return cbr_yscale(d.val)})
-				.attr("height", function(d) { return cbr_height - cbr_yscale(d.val)})
 				.style("fill", function(d){
 					return building_color[d.building]
 				})
@@ -1118,7 +1116,13 @@
 				})
 				.on("mouseout",  function(d,i) {
 					tooltip.classed("hidden", true).style("opacity",0);
-				});;
+				})
+				.attr("height", 0)
+				.attr("y", function(d) { return cbr_yscale(0)})
+				.transition()
+				.duration(1000)
+				.attr("y", function(d) { return cbr_yscale(d.val)})
+				.attr("height", function(d) { return cbr_height - cbr_yscale(d.val)})
 			cbr_svg.append('g')
 				.selectAll(".geography")
 				.data(geography_data)
