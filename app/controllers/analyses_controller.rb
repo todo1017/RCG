@@ -160,6 +160,16 @@ class AnalysesController < ApplicationController
 	def net_rent_ranking
 		@geographies = Geography.all
 		@comp_groups = CompGroup.all
+
+		@units_filter = []
+		@units_filter.push(BuildingUnit.select('min(beds)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(beds)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(baths)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(baths)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(floor)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(floor)')[0]['max'])
+		@units_filter.push(BuildingUnit.select('min(sq_feet)')[0]['min'])
+		@units_filter.push(BuildingUnit.select('max(sq_feet)')[0]['max'])
 	end
 
 	def map
@@ -308,7 +318,16 @@ class AnalysesController < ApplicationController
 				end
 				for building in buildings
 					net_rent = BuildingUnit.select("avg((actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END)))/(CASE sq_feet WHEN 0 THEN 12 ELSE sq_feet END)) as nrsf, avg(actual_rent - (((CASE WHEN months_off IS NULL THEN 0 ELSE months_off END) * actual_rent)/(CASE WHEN lease_length IS NULL THEN 12 ELSE lease_length END))) as nr")
-						.where("building_id = ?", building[:id])
+						.where("building_id = ? and
+							beds >= ? and beds <= ? and 
+							baths >=? and baths <=? and 
+							floor >=? and floor <=? and 
+							sq_feet >=? and sq_feet <= ? ", 
+							building[:id],
+							params[:units_filter]['beds_min'],params[:units_filter]['beds_max'],
+							params[:units_filter]['bath_min'],params[:units_filter]['bath_max'],
+							params[:units_filter]['floor_min'],params[:units_filter]['floor_max'],
+							params[:units_filter]['square_min'],params[:units_filter]['square_max'])
 					data[building[:name]] = net_rent
 					owned[building[:name]] = is_owned
 				end

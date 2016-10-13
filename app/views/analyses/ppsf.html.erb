@@ -192,33 +192,33 @@
 									<div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of beds</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="rpt_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>">
+								        	<input class="form-control min-value" type="number" id="rpt_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>" max="<%= @units_filter[1] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="rpt_units_bed_max" placeholder="<%= @units_filter[1] %>" max="<%= @units_filter[1] %>">
+								        	<input class="form-control max-value" type="number" id="rpt_units_bed_max" placeholder="<%= @units_filter[1] %>" min="<%= @units_filter[0] %>" max="<%= @units_filter[1] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of baths</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="rpt_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>">
+								        	<input class="form-control min-value" type="number" id="rpt_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="rpt_units_bath_max" placeholder="<%= @units_filter[3] %>" max="<%= @units_filter[3] %>">
+								        	<input class="form-control max-value" type="number" id="rpt_units_bath_max" placeholder="<%= @units_filter[3] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Floor</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="rpt_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>">
+								        	<input class="form-control min-value" type="number" id="rpt_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="rpt_units_floor_max" placeholder="<%= @units_filter[5] %>" max="<%= @units_filter[5] %>">
+								        	<input class="form-control max-value" type="number" id="rpt_units_floor_max" placeholder="<%= @units_filter[5] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Square footage</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="rpt_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>">
+								        	<input class="form-control min-value" type="number" id="rpt_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="rpt_units_square_max" placeholder="<%= @units_filter[7] %>" max="<%= @units_filter[7] %>">
+								        	<input class="form-control max-value" type="number" id="rpt_units_square_max" placeholder="<%= @units_filter[7] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
 								      	</div>
 								    </div>
 								</div>
@@ -294,33 +294,33 @@
 									<div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of beds</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="cbr_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>">
+								        	<input class="form-control min-value" type="number" id="cbr_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>" max="<%= @nits_filter[1] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number"  id="cbr_units_bed_max" placeholder="<%= @units_filter[1] %>" max="<%= @units_filter[1] %>">
+								        	<input class="form-control max-value" type="number" id="cbr_units_bed_max" placeholder="<%= @units_filter[1] %>" min="<%= @units_filter[0] %>" max="<%= @units_filter[1] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label"># of baths</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="cbr_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>">
+								        	<input class="form-control min-value" type="number" id="cbr_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="cbr_units_bath_max" placeholder="<%= @units_filter[3] %>" max="<%= @units_filter[3] %>">
+								        	<input class="form-control max-value" type="number" id="cbr_units_bath_max" placeholder="<%= @units_filter[3] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Floor</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="cbr_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>">
+								        	<input class="form-control min-value" type="number" id="cbr_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="cbr_units_floor_max" placeholder="<%= @units_filter[5] %>" max="<%= @units_filter[5] %>">
+								        	<input class="form-control max-value" type="number" id="cbr_units_floor_max" placeholder="<%= @units_filter[5] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
 								      	</div>
 								    </div>
 								    <div class="form-group min-max">
 								      	<label class="col-sm-4 control-label">Square footage</label>
 								      	<div class="col-sm-8">
-								        	<input class="form-control min-value" type="number" id="cbr_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>">
+								        	<input class="form-control min-value" type="number" id="cbr_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
 								        	<span class="toward-span"> - </span>
-								        	<input class="form-control max-value" type="number" id="cbr_units_square_max" placeholder="<%= @units_filter[7] %>" max="<%= @units_filter[7] %>">
+								        	<input class="form-control max-value" type="number" id="cbr_units_square_max" placeholder="<%= @units_filter[7] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
 								      	</div>
 								    </div>
 								</div>

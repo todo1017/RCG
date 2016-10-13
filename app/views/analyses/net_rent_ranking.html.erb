@@ -42,7 +42,7 @@
 		margin: 0;
 	}
 	.filter-select {
-		padding-top: 20px;
+		padding: 10px 0
 	}
 	.top-count {
 		width: 100px
@@ -51,8 +51,65 @@
 		font-size: 16px;
 		padding: 8px;
 	}
-	.download-png {
+	.geographies {
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		padding: 10px
+	}
+	.units {
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 5px;
 		margin: 10px 0;
+		padding: 10px
+	}
+	.download-png {
+		margin: 10px 0
+	}
+	.toward-span {
+		float: left;
+		padding: 7px;
+	}
+	.from-to {
+		display: inline-block;
+		padding: 10px;
+		background: #f5f5f5;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		width: 100%
+	}
+	#nrr_units_bed_min {
+		width: 70px;
+		float: left;
+	}
+	#nrr_units_bed_max {
+		width: 70px;
+		float: left;
+	}
+	#nrr_units_bath_min {
+		width: 70px;
+		float: left;
+	}
+	#nrr_units_bath_max {
+		width: 70px;
+		float: left;
+	}
+	#nrr_units_floor_min {
+		width: 60px;
+		float: left;
+	}
+	#nrr_units_floor_max {
+		width: 60px;
+		float: left;
+	}
+	#nrr_units_square_min {
+		width: 90px;
+		float: left;
+	}
+	#nrr_units_square_max {
+		width: 90px;
+		float: left;
 	}
 	svg {
 		background: white;
@@ -66,38 +123,82 @@
 	</div>
 	<div>
 		<div class="col-xs-4">
-			<div class="filter-title full-width">
-				<h3 class="pull-left">Filter</h3>
-				<div class="pull-right filter-select">
-					<button type="button" class="btn btn-warning select-all">Select All</button>
-					<button type="button" class="btn btn-default select-none">Select None</button>
-				</div>
-			</div>
-			<div class="filter-content row">
-				<div class="row">
-					<div class="panel-group">
-						<% @geographies.each do |geography| %>
-							<div class="col-xs-6" style="padding-bottom: 5px">
-								<div class="panel panel-default geography-group">
-									<div class="panel-heading">
-										<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
-									</div>
-									<div>
-										<div class="panel-body">
-											<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
-											<% @comp_groups.each do |comp_group| %>
-												<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
-											<% end %>	
-										</div>
-									</div>
+			<div>
+				<h3>Filter</h3>
+				<div class="filter-content row">
+					<div class="main-content">
+						<div class="geographies">
+							<h4>Geographies</h4>
+							<div class="filter-title full-width">
+								<div class="filter-select">
+									<button type="button" class="btn btn-warning cbr-select-all">Select All</button>
+									<button type="button" class="btn btn-default cbr-select-none">Select None</button>
 								</div>
 							</div>
-						<% end %>
+							<div class="row">
+								<div class="panel-group">
+									<% @geographies.each do |geography| %>
+										<div class="col-xs-6" style="padding-bottom: 5px">
+											<div class="panel panel-default geography-group">
+												<div class="panel-heading">
+													<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+												</div>
+												<div>
+													<div class="panel-body">
+														<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+														<% @comp_groups.each do |comp_group| %>
+															<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+														<% end %>	
+													</div>
+												</div>
+											</div>
+										</div>
+									<% end %>
+								</div>
+							</div>
+						</div>
+						<div class="units">
+							<h4>Units</h4>
+							<div class="form-horizontal">
+								<div class="form-group min-max">
+							      	<label class="col-sm-4 control-label"># of beds</label>
+							      	<div class="col-sm-8">
+							        	<input class="form-control min-value" type="number" id="nrr_units_bed_min" placeholder="<%= @units_filter[0] %>" min="<%= @units_filter[0] %>" max="<%= @units_filter[1] %>">
+							        	<span class="toward-span"> - </span>
+							        	<input class="form-control max-value" type="number" id="nrr_units_bed_max" placeholder="<%= @units_filter[1] %>" min="<%= @units_filter[0] %>" max="<%= @units_filter[1] %>">
+							      	</div>
+							    </div>
+							    <div class="form-group min-max">
+							      	<label class="col-sm-4 control-label"># of baths</label>
+							      	<div class="col-sm-8">
+							        	<input class="form-control min-value" type="number" id="nrr_units_bath_min" placeholder="<%= @units_filter[2] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
+							        	<span class="toward-span"> - </span>
+							        	<input class="form-control max-value" type="number" id="nrr_units_bath_max" placeholder="<%= @units_filter[3] %>" min="<%= @units_filter[2] %>" max="<%= @units_filter[3] %>">
+							      	</div>
+							    </div>
+							    <div class="form-group min-max">
+							      	<label class="col-sm-4 control-label">Floor</label>
+							      	<div class="col-sm-8">
+							        	<input class="form-control min-value" type="number" id="nrr_units_floor_min" placeholder="<%= @units_filter[4] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
+							        	<span class="toward-span"> - </span>
+							        	<input class="form-control max-value" type="number" id="nrr_units_floor_max" placeholder="<%= @units_filter[5] %>" min="<%= @units_filter[4] %>" max="<%= @units_filter[5] %>">
+							      	</div>
+							    </div>
+							    <div class="form-group min-max">
+							      	<label class="col-sm-4 control-label">Square footage</label>
+							      	<div class="col-sm-8">
+							        	<input class="form-control min-value" type="number" id="nrr_units_square_min" placeholder="<%= @units_filter[6] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
+							        	<span class="toward-span"> - </span>
+							        	<input class="form-control max-value" type="number" id="nrr_units_square_max" placeholder="<%= @units_filter[7] %>" min="<%= @units_filter[6] %>" max="<%= @units_filter[7] %>">
+							      	</div>
+							    </div>
+							</div>
+						</div>
 					</div>
+					<h4>
+						<button type="button" class="btn btn-default apply-filter">Apply Filter</button>
+					</h4>
 				</div>
-				<h4>
-					<button type="button" class="btn btn-default apply-filter">Apply Filter</button>
-				</h4>
 			</div>
 		</div>
 		<div class="nr-view col-xs-8">
@@ -151,6 +252,70 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+	function cleanDecimals(num) {
+		if(num == null){
+			return 0;
+		}
+		var count;
+	    if(Math.floor(num.valueOf()) === num.valueOf()) {
+	    	count = 0;
+	    } else {
+	    	count = num.toString().split(".")[1].length || 0;
+	    }
+	    
+	    if(count > 2) {
+	    	return "$" + num.toFixed(2)
+	    } else {
+
+	    	return "$" + num
+	    }
+	}
+	$(".min-max .min-value").on("input", function(){
+		if($(this).val() != ""){
+			var v = parseInt($(this).val());
+			
+			var min = parseInt($(this).attr("min"));
+			var max = parseInt($(this).attr("max"));
+			if( v < min) {
+				$(this).val(min);
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", min);
+			}
+			if( v > max) {
+				$(this).val(max);
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", max);
+			}
+			if(min <= v && v <= max) {
+				$(this).parents('.min-max').eq(0).find('.max-value').attr("min", v);
+			}
+		} else {
+			$(this).val('');
+		}
+	});
+
+	$(".min-max .max-value").on("input", function(){
+		if($(this).val() != ""){
+			var v = parseInt($(this).val());
+			
+			var min = parseInt($(this).attr("min"));
+			var max = parseInt($(this).attr("max"));
+			if( v < min) {
+				$(this).val(min);
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", min);
+			}
+			if( v > max) {
+				$(this).val(max);
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", max);
+			}
+			if(min <= v && v <= max) {
+				$(this).parents('.min-max').eq(0).find('.min-value').attr("max", v);
+			}
+		} else {
+			$(this).val('');
+		}
+	});
+</script>
+
 <script>
 	var data = {};
 	var nr_chart, nrsf_chart;
@@ -198,18 +363,48 @@
 			}
 		});
 
+		var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+		var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+		var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+		var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+		var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+		var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+		var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+		var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+
 		if(filter_list.length) {
 			$.get( "/analyses/api",
 				{
 					type : "nrr",
-					filter_list : filter_list
+					filter_list : filter_list,
+					units_filter : units_filter
 				},
 				function( result ) {
 					data = result;
+					$.each(data.data, function(i, d){
+						if(!d[0].nrsf) {
+							d[0].nrsf = 0;
+						}
+						if(!d[0].nr) {
+							d[0].nr = 0;
+						}
+					});
 					update();
 				}
 			);
 		} else {
+			console.log("empty")
 			empty();
 		}
 	});
@@ -221,15 +416,43 @@
 				filter_list.push(this.value)
 			}
 		});
+		var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+		var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+		var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+		var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+		var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+		var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+		var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+		var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
 
 		if(filter_list.length) {
 			$.get( "/analyses/api",
 				{
 					type : "nrr",
-					filter_list : filter_list
+					filter_list : filter_list,
+					units_filter : units_filter
 				},
 				function( result ) {
 					data = result;
+					$.each(data.data, function(i, d){
+						if(!d[0].nrsf) {
+							d[0].nrsf = 0;
+						}
+						if(!d[0].nr) {
+							d[0].nr = 0;
+						}
+					});
 					update();
 				}
 			);
@@ -267,13 +490,36 @@
 		$(".filter-content .panel-body input").each(function(){
 			filter_list.push(this.value)
 		});
+
+		var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+		var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+		var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+		var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+		var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+		var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+		var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+		var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+
 		$.get( "/analyses/api",
 			{
 				type        : 'nrr',
-				filter_list : filter_list
+				filter_list : filter_list,
+				units_filter : units_filter
 			},
 			function( result ) {
 				data = result;
+
 				$.each(data.data, function(i, d){
 					if(!d[0].nrsf) {
 						d[0].nrsf = 0;
@@ -439,10 +685,10 @@
 		var nr_tb   = '<table class="display" cellspacing="0" width="100%"><thead><tr><th>Name</th><th>Net Rent</th></tr></thead><tbody>';
 
 		$.each(nrsf_data, function(i, d){
-			nrsf_tb += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>';
+			nrsf_tb += '<tr><td>'+d.building+'</td><td>'+cleanDecimals(d.val)+'</td></tr>';
 		});
 		$.each(nr_data, function(i, d){
-			nr_tb   += '<tr><td>'+d.building+'</td><td>$'+d.val.toFixed(2)+'</td></tr>'	
+			nr_tb   += '<tr><td>'+d.building+'</td><td>'+cleanDecimals(d.val)+'</td></tr>'	
 		});
 
 		nrsf_tb += '</tbody></table>';
@@ -534,7 +780,7 @@
 			.ticks(10)
 			.tickSize(0)
 			.tickPadding(10)
-			.tickFormat(function(d) { return "$" + commasFormatter(d)});
+			.tickFormat(function(d) { return cleanDecimals(d) });
 		svg_nrsf = d3.select("#nrsf-chart")
 			.append("svg")
 			.style("background", "white")
@@ -563,6 +809,10 @@
 			})
 			.attr("x", function(d) { return nrsf_xscale(d.building)})
 			.attr("width", nrsf_xscale.rangeBand())
+			.attr("y", function(d) { return nrsf_yscale(0)})
+			.attr("height", 0)
+			.transition()
+			.duration(1000)
 			.attr("y", function(d) { return nrsf_yscale(d.val)})
 			.attr("height", function(d) { return height - nrsf_yscale(d.val)});
 		svg_nrsf.selectAll('.x.axis text')
@@ -592,7 +842,7 @@
 			.ticks(10)
 			.tickSize(0)
 			.tickPadding(10)
-			.tickFormat(function(d) { return "$" + commasFormatter(d)});
+			.tickFormat(function(d) {return cleanDecimals(d)});
 		svg_nr = d3.select("#nr-chart")
 			.append("svg")
 			.style("background", "white")
@@ -621,6 +871,10 @@
 			})
 			.attr("x", function(d) { return nr_xscale(d.building)})
 			.attr("width", nr_xscale.rangeBand())
+			.attr("y", function(d) { return nr_yscale(0)})
+			.attr("height", 0)
+			.transition()
+			.duration(1000)
 			.attr("y", function(d) { return nr_yscale(d.val)})
 			.attr("height", function(d) { return height - nr_yscale(d.val)});
 		svg_nr.selectAll('.x.axis text')
