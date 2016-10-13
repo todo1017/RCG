@@ -602,9 +602,6 @@
 					break;
 			}
 			
-
-			console.log(tickValues);
-
 			var data = [];
 
 			var chart_values = [];
@@ -881,7 +878,7 @@
 	// chart actions
 	function cbr_init() {
 		cbr_empty();
-
+		var tooltip   = d3.select("#analyses-ppsf").append("div").attr("class", "tooltip hidden");
 		var geography_filter = [];
 		$("#clustered_building_rent .geographies .panel-body input").each(function(){
 			if(this.checked){
@@ -1018,7 +1015,6 @@
 			// Draw Chart
 			d3.select('#clustered_building_rent svg').remove();
 			var commasFormatter = d3.format(",.2f");
-			var tooltip   = d3.select("#analyses-ppsf").append("div").attr("class", "tooltip hidden");
 			var cbr_margin = {top: 20, right: 20, bottom: 180, left: 60},
 				cbr_width  = $('#cbr-chart').width() - cbr_margin.left - cbr_margin.right,
 				cbr_height = $('#cbr-chart').height() - cbr_margin.top - cbr_margin.bottom;
