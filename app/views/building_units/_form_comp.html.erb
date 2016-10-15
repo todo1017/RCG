@@ -55,21 +55,17 @@
     </div>
     <h4>Concessions...</h4>
     <div class="row">
-      <div class="field col-sm-2">
+      <div class="field col-sm-4">
         <%= f.label :months_off, "Months" %><br>
         <%= f.text_field :months_off, {:class => 'js-numbers-only'} %>
       </div>
-      <div class="field col-sm-3">
+      <div class="field col-sm-4">
         <%= f.label :cash_off %><br>
         <div class="dollar-input-container"><i>$</i><%= f.text_field :cash_off, {:class => 'js-numbers-only'} %></div>
       </div>
-      <div class="field col-sm-3">
+      <div class="field col-sm-4">
         <%= f.label :lease_length %><br>
         <%= f.text_field :lease_length, {:class => 'js-numbers-only'} %>
-      </div>
-      <div class="col-sm-4 field">
-        <b>Lease End-date</b><br>
-        <%= f.date_field :lease_end_date %>
       </div>
     </div>
     <%- if @building_unit.created_at != nil %>
