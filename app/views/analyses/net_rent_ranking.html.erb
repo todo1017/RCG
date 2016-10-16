@@ -131,8 +131,8 @@
 							<h4>Geographies</h4>
 							<div class="filter-title full-width">
 								<div class="filter-select">
-									<button type="button" class="btn btn-warning cbr-select-all">Select All</button>
-									<button type="button" class="btn btn-default cbr-select-none">Select None</button>
+									<button type="button" class="btn btn-warning select-all">Select All</button>
+									<button type="button" class="btn btn-default select-none">Select None</button>
 								</div>
 							</div>
 							<div class="row">
@@ -141,13 +141,28 @@
 										<div class="col-xs-6" style="padding-bottom: 5px">
 											<div class="panel panel-default geography-group">
 												<div class="panel-heading">
-													<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+													<div class="checkbox">
+														<label class="geography-name">
+															<input type="checkbox" class="subcheck_all">
+															<span><%= geography.name %></span>
+														</label>
+													</div>
 												</div>
 												<div>
 													<div class="panel-body">
-														<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+														<div class="checkbox" style="color : #4f81bd">
+															<label class="geography-comp">
+																<input type="checkbox" value="<%= geography.id.to_s + '_o' %>">
+																<span>Owned</span>
+															</label>
+														</div>
 														<% @comp_groups.each do |comp_group| %>
-															<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+															<div class="checkbox">
+																<label class="geography-comp">
+																	<input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>">
+																	<span><%= comp_group.name %></span>
+																</label>
+															</div>
 														<% end %>	
 													</div>
 												</div>
@@ -321,6 +336,10 @@
 	var nr_chart, nrsf_chart;
 	var nr_table, nrsf_table;
 
+	// png info
+	var png_geography_info = [];
+	var png_units_info;
+
 	//init checkbox unchecked
 	$("#analyses-net-rent-rankings .geography-group").eq(0).find('input').prop("checked", true);
 	
@@ -331,7 +350,7 @@
 			$(this).parents('.panel').eq(0).find('input').prop("checked", false);
 		}
 	});
-	$(".filter-content .panel-body input").on("click", function(){
+	$(".geographies .panel-body input").on("click", function(){
 		var all_unchecked = true;
 		$(this).parents('.panel-body').eq(0).find('input').each(function(){
 			if(this.checked){
@@ -346,10 +365,10 @@
 	});
 
 	$(".filter-select .select-all").on("click", function(){
-		$(this).parents('.filter-title').parent().eq(0).find('.filter-content').find('input').prop("checked", true);
+		$(this).parents('.geographies').find('input').prop("checked", true);
 	});
 	$(".filter-select .select-none").on("click", function(){
-		$(this).parents('.filter-title').parent().eq(0).find('.filter-content').find('input').prop("checked", false);
+		$(this).parents('.geographies').find('input').prop("checked", false);
 	});
 
 
@@ -400,11 +419,35 @@
 							d[0].nr = 0;
 						}
 					});
+
+					$("#analyses-net-rent-rankings .geography-group").each(function(index){
+						var is_checked = $(this).find(".geography-name input").is(':checked');
+						if(is_checked) {
+							var title = $(this).find(".geography-name span").html();	
+							var values = [];
+							$(this).find(".geography-comp input").each(function(index){
+								if($(this).is(':checked')){
+									values.push($(this).parent().find("span").html());
+								}
+							})
+							png_geography_info.push(title + ":[" + values.join(",") + "]");
+						}
+					});
+
+					var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+					var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+					var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+					var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+					var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+					var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+					var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+					var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+					png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 					update();
 				}
 			);
 		} else {
-			console.log("empty")
 			empty();
 		}
 	});
@@ -469,11 +512,32 @@
 			}
 		});
 
+		var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+		var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+		var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+		var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+		var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+		var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+		var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+		var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+
+		var units_filter = {
+			beds_min: beds_min,
+			beds_max: beds_max,
+			bath_min: bath_min,
+			bath_max: bath_max,
+			floor_min: floor_min,
+			floor_max: floor_max,
+			square_min: square_min,
+			square_max: square_max
+		}
+
 		if(filter_list.length) {
 			$.get( "/analyses/api",
 				{
 					type : "nrr",
-					filter_list : filter_list
+					filter_list : filter_list,
+					units_filter : units_filter
 				},
 				function( result ) {
 					data = result;
@@ -528,6 +592,33 @@
 						d[0].nr = 0;
 					}
 				});
+
+				var title = "RANKING : Average Net Rent / SF";
+
+				$("#analyses-net-rent-rankings .geography-group").each(function(index){
+					var is_checked = $(this).find(".geography-name input").is(':checked');
+					if(is_checked) {
+						var title = $(this).find(".geography-name span").html();	
+						var values = [];
+						$(this).find(".geography-comp input").each(function(index){
+							if($(this).is(':checked')){
+								values.push($(this).parent().find("span").html());
+							}
+						})
+						png_geography_info.push(title + ":[" + values.join(",") + "]");
+					}
+				});
+
+				var beds_min = $("#nrr_units_bed_min").val()?$("#nrr_units_bed_min").val():$("#nrr_units_bed_min").attr("min");
+				var beds_max = $("#nrr_units_bed_max").val()?$("#nrr_units_bed_max").val():$("#nrr_units_bed_max").attr("max");
+				var bath_min = $("#nrr_units_bath_min").val()?$("#nrr_units_bath_min").val():$("#nrr_units_bath_min").attr("min");
+				var bath_max = $("#nrr_units_bath_max").val()?$("#nrr_units_bath_max").val():$("#nrr_units_bath_max").attr("max");
+				var floor_min = $("#nrr_units_floor_min").val()?$("#nrr_units_floor_min").val():$("#nrr_units_floor_min").attr("min");
+				var floor_max = $("#nrr_units_floor_max").val()?$("#nrr_units_floor_max").val():$("#nrr_units_floor_max").attr("max");
+				var square_min = $("#nrr_units_square_min").val()?$("#nrr_units_square_min").val():$("#nrr_units_square_min").attr("min");
+				var square_max = $("#nrr_units_square_max").val()?$("#nrr_units_square_max").val():$("#nrr_units_square_max").attr("max");
+				png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 				empty();
 				update();
 			}
@@ -822,6 +913,7 @@
 			.attr("dx", -20)
 			.attr("dy", 20)
 			.attr("transform", "rotate(-50)");
+		svg_nrsf.selectAll('text').style("font", "normal 12px Calibri");
 
 		var nr_margin = {top: 20, right: 20, bottom: 140, left: 100},
 			width  = $('#nr-chart').width() - nr_margin.left - nr_margin.right,
@@ -885,6 +977,8 @@
 			.attr("dy", 20)
 			.attr("transform", "rotate(-50)");
 
+		svg_nr.selectAll('text').style("font", "normal 12px Calibri");
+
 		// nrsf hovering event
 		$('#analyses-net-rent-rankings #nrsf-chart rect.bar').on("mouseover", function(){	
 			var i = $(this).index();
@@ -921,37 +1015,112 @@
 
 	// Download PNG
 	$("#download-chart1").on("click", function(){
-		saveSvgAsPng(d3.select('#nrsf-chart svg').node(), 'Average_Net_Rent_SF.png');
-		// html2canvas($("#nrsf-chart svg"), {
-		// 	onrendered: function (canvas) {
-		// 		var imageData = canvas.toDataURL("image/png");
-		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-		// 	    var downloadLink = document.createElement("a");
-		// 		downloadLink.href = newData;
-		// 		downloadLink.download = "Average_Net_Rent_SF.png";
 
-		// 		document.body.appendChild(downloadLink);
-		// 		downloadLink.click();
-		// 		document.body.removeChild(downloadLink);
-		// 	}
-		// });
+		var top_count = $("#nrsf-top-count").val();
+
+		var height = $("#nrsf-chart svg").height();
+
+		var info = d3.select('#nrsf-chart svg').append("g")
+			.attr("class", "info")
+			.attr("transform", "translate(50,"+(height + 20)+")");
+
+		info.append("text")
+			.text("RANKING : Average Net Rent / SF ( Top " + top_count + " )")
+			.style("font", "normal 16px Calibri")
+			.style("font-weight", "bold");
+
+		info.append("text")
+			.text("Buildings : ")
+			.attr("x", 20)
+			.attr("y", 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+
+		if(png_geography_info.length ) {
+			png_geography_info.forEach(function(d, i){
+				info.append("text")
+					.text(d)
+					.attr("x", 100)
+					.attr("y", 20 + 20 * i)
+					.style("font", "normal 12px Calibri");	
+			})
+		} else {
+			info.append("text")
+				.text("None")
+				.attr("x", 100)
+				.attr("y", 20 + 20 * i)
+				.style("font", "normal 12px Calibri");	
+		}
+
+		info.append("text")
+			.text("Units : ")
+			.attr("x", 20)
+			.attr("y", png_geography_info.length * 20 + 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+		info.append("text")
+			.text(png_units_info)
+			.attr("x", 100)
+			.attr("y", 20 + 20 * png_geography_info.length)
+			.style("font", "normal 12px Calibri");
+		d3.select('#nrsf-chart svg').attr("height", height+png_geography_info.length * 20 + 60);
+		saveSvgAsPng(d3.select('#nrsf-chart svg').node(), 'Average_Net_Rent_SF.png');
+		d3.select('#nrsf-chart svg').attr("height", height);
+		info.remove();
 	})
 
-
 	$("#download-chart2").on("click", function(e){
-		saveSvgAsPng(d3.select('#nr-chart svg').node(), 'Average_Net_Rent.png');
-		// html2canvas($("#nr-chart svg"), {
-		// 	onrendered: function (canvas) {
-		// 		var imageData = canvas.toDataURL("image/png");
-		// 	    var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-		// 	    var downloadLink = document.createElement("a");
-		// 		downloadLink.href = newData;
-		// 		downloadLink.download = "Average_Net_Rent.png";
 
-		// 		document.body.appendChild(downloadLink);
-		// 		downloadLink.click();
-		// 		document.body.removeChild(downloadLink);
-		// 	}
-		// });
+		var top_count = $("#nr-top-count").val();
+
+		var height = $("#nr-chart svg").height();
+
+		var info = d3.select('#nr-chart svg').append("g")
+			.attr("class", "info")
+			.attr("transform", "translate(50,"+(height + 20)+")");
+
+		info.append("text")
+			.text("RANKING: Average Net Rent ( Top " + top_count + " )")
+			.style("font", "normal 16px Calibri")
+			.style("font-weight", "bold");
+
+		info.append("text")
+			.text("Buildings : ")
+			.attr("x", 20)
+			.attr("y", 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+
+		if(png_geography_info.length) {
+			png_geography_info.forEach(function(d, i){
+				info.append("text")
+					.text(d)
+					.attr("x", 100)
+					.attr("y", 20 + 20 * i)
+					.style("font", "normal 12px Calibri");	
+			})
+		} else {
+			info.append("text")
+				.text("None")
+				.attr("x", 100)
+				.attr("y", 20 + 20 * i)
+				.style("font", "normal 12px Calibri");	
+		}
+
+		info.append("text")
+			.text("Units : ")
+			.attr("x", 20)
+			.attr("y", png_geography_info.length * 20 + 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+		info.append("text")
+			.text(png_units_info)
+			.attr("x", 100)
+			.attr("y", 20 + 20 * png_geography_info.length)
+			.style("font", "normal 12px Calibri");
+		d3.select('#nr-chart svg').attr("height", height+png_geography_info.length * 20 + 60);
+		saveSvgAsPng(d3.select('#nr-chart svg').node(), 'Average_Net_Rent.png');
+		d3.select('#nr-chart svg').attr("height", height);
+		info.remove();
 	})
 </script>

@@ -110,7 +110,6 @@
 		width: 90px;
 		float: left;
 	}
-
 	.from-to {
 		display: inline-block;
 		padding: 10px;
@@ -170,13 +169,28 @@
 											<div class="col-xs-6" style="padding-bottom: 5px">
 												<div class="panel panel-default geography-group">
 													<div class="panel-heading">
-														<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+														<div class="checkbox">
+															<label class="geography-name">
+																<input type="checkbox" class="subcheck_all">
+																<span><%= geography.name %></span>
+															</label>
+														</div>
 													</div>
 													<div>
 														<div class="panel-body">
-															<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+															<div class="checkbox" style="color : #4f81bd">
+																<label class="geography-comp">
+																	<input type="checkbox" value="<%= geography.id.to_s + '_o' %>">
+																	<span>Owned</span>
+																</label>
+															</div>
 															<% @comp_groups.each do |comp_group| %>
-																<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+																<div class="checkbox">
+																	<label class="geography-comp">
+																		<input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>">
+																		<span><%= comp_group.name %></span>
+																	</label>
+																</div>
 															<% end %>	
 														</div>
 													</div>
@@ -272,13 +286,28 @@
 											<div class="col-xs-6" style="padding-bottom: 5px">
 												<div class="panel panel-default geography-group">
 													<div class="panel-heading">
-														<div class="checkbox"><label><input type="checkbox" class="subcheck_all"><%= geography.name %></label></div>
+														<div class="checkbox">
+															<label class="geography-name">
+																<input type="checkbox" class="subcheck_all">
+																<span><%= geography.name %></span>
+															</label>
+														</div>
 													</div>
 													<div>
 														<div class="panel-body">
-															<div class="checkbox" style="color : #4f81bd"><label><input type="checkbox" value="<%= geography.id.to_s + '_o' %>">Owned</label></div>
+															<div class="checkbox" style="color : #4f81bd">
+																<label class="geography-comp">
+																	<input type="checkbox" value="<%= geography.id.to_s + '_o' %>">
+																	<span>Owned</span>
+																</label>
+															</div>
 															<% @comp_groups.each do |comp_group| %>
-																<div class="checkbox"><label><input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>"><%= comp_group.name %></label></div>
+																<div class="checkbox">
+																	<label class="geography-comp">
+																		<input type="checkbox" value="<%= geography.id.to_s + '_' +comp_group.id.to_s %>">
+																		<span><%= comp_group.name %></span>
+																	</label>
+																</div>
 															<% end %>	
 														</div>
 													</div>
@@ -421,11 +450,126 @@
 	});
 
 	// Download PNG
+	function capitalizeFirstLetter(string) {
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
 	$("#rpt-chart-download").on("click", function(e){
+		var height = $("#rpt-chart svg").height();
+
+		var info = d3.select('#rpt-chart svg').append("g")
+			.attr("class", "info")
+			.attr("transform", "translate(50,"+(height + 20)+")");
+
+		info.append("text")
+			.text(rpt_png_title)
+			.style("font", "normal 16px Calibri")
+			.style("font-weight", "bold");
+
+		info.append("text")
+			.text("Buildings : ")
+			.attr("x", 20)
+			.attr("y", 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+
+		if(rpt_png_geography_info.length) {
+			rpt_png_geography_info.forEach(function(d, i){
+				info.append("text")
+					.text(d)
+					.attr("x", 100)
+					.attr("y", 20 + 20 * i)
+					.style("font", "normal 12px Calibri");
+			})
+		} else {
+			info.append("text")
+				.text("None")
+				.attr("x", 100)
+				.attr("y", 40)
+				.style("font", "normal 12px Calibri");
+		}
+
+		info.append("text")
+			.text("Units : ")
+			.attr("x", 20)
+			.attr("y", rpt_png_geography_info.length * 20 + 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+		info.append("text")
+			.text(rpt_png_units_info)
+			.attr("x", 100)
+			.attr("y", 20 + 20 * rpt_png_geography_info.length)
+			.style("font", "normal 12px Calibri");
+		$("#rpt-chart").height(height+rpt_png_geography_info.length * 20 + 60);
 		saveSvgAsPng(d3.select('#rpt-chart svg').node(), 'Price_Trends.png');
+		$("#rpt-chart").height(height);
+		info.remove();
 	})
 	$("#cbr-chart-download").on("click", function(e){
+		
+		var height = $("#cbr-chart svg").height();
+
+		var info = d3.select('#cbr-chart svg').append("g")
+			.attr("class", "info")
+			.attr("transform", "translate(50,"+(height + 20)+")");
+
+		info.append("text")
+			.text(cbr_png_title)
+			.style("font", "normal 16px Calibri")
+			.style("font-weight", "bold");
+
+		info.append("text")
+			.text("Date : ")
+			.attr("x", 20)
+			.attr("y", 20)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+
+		info.append("text")
+				.text(cbr_png_date_info)
+				.attr("x", 100)
+				.attr("y", 20)
+				.style("font", "normal 12px Calibri");	
+
+		info.append("text")
+			.text("Buildings : ")
+			.attr("x", 20)
+			.attr("y", 40)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+
+		if(cbr_png_geography_info.length) {
+			cbr_png_geography_info.forEach(function(d, i){
+				info.append("text")
+					.text(d)
+					.attr("x", 100)
+					.attr("y", 40 + 20 * i)
+					.style("font", "normal 12px Calibri");	
+			})
+		} else {
+			info.append("text")
+				.text(d)
+				.attr("x", 100)
+				.attr("y", 40)
+				.style("font", "normal 12px Calibri");	
+		}
+		
+
+		info.append("text")
+			.text("Units : ")
+			.attr("x", 20)
+			.attr("y", cbr_png_geography_info.length * 20 + 40)
+			.style("font", "normal 14px Calibri")
+			.style("font-weight", "bold");
+		info.append("text")
+			.text(cbr_png_units_info)
+			.attr("x", 100)
+			.attr("y", 40 + 20 * cbr_png_geography_info.length)
+			.style("font", "normal 12px Calibri");
+		d3.select('#cbr-chart svg')
+			.attr("height", height + cbr_png_geography_info.length * 20 + 80);
 		saveSvgAsPng(d3.select('#cbr-chart svg').node(), 'Rent_By_Building.png');
+		d3.select('#cbr-chart svg').attr("height",height);
+		info.remove();
 	})
 </script>
 
@@ -437,6 +581,11 @@
 	var rpt_filter2 = "gross";
 	var rpt_data    = {};
 	var rpt_chart;
+
+	// png info
+	var rpt_png_title = '';
+	var rpt_png_geography_info = [];
+	var rpt_png_units_info = '';
 
 	//init checkbox unchecked
 	$("#rental_price_trend .geography-group").eq(0).find('input').prop("checked", true);
@@ -500,6 +649,32 @@
 					units_filter : units_filter
 				},
 				function( result ) {
+					rpt_png_title = "PPSF : " + capitalizeFirstLetter(rpt_filter2) + " Rent by " + capitalizeFirstLetter(rpt_filter1);
+
+					$("#rental_price_trend .geography-group").each(function(index){
+						var is_checked = $(this).find(".geography-name input").is(':checked');
+						if(is_checked) {
+							var title = $(this).find(".geography-name span").html();	
+							var values = [];
+							$(this).find(".geography-comp input").each(function(index){
+								if($(this).is(':checked')){
+									values.push($(this).parent().find("span").html());
+								}
+							})
+							rpt_png_geography_info.push(title + ":[" + values.join(",") + "]");
+						}
+					});
+
+					var beds_min = $("#rpt_units_bed_min").val()?$("#rpt_units_bed_min").val():$("#rpt_units_bed_min").attr("min");
+					var beds_max = $("#rpt_units_bed_max").val()?$("#rpt_units_bed_max").val():$("#rpt_units_bed_max").attr("max");
+					var bath_min = $("#rpt_units_bath_min").val()?$("#rpt_units_bath_min").val():$("#rpt_units_bath_min").attr("min");
+					var bath_max = $("#rpt_units_bath_max").val()?$("#rpt_units_bath_max").val():$("#rpt_units_bath_max").attr("max");
+					var floor_min = $("#rpt_units_floor_min").val()?$("#rpt_units_floor_min").val():$("#rpt_units_floor_min").attr("min");
+					var floor_max = $("#rpt_units_floor_max").val()?$("#rpt_units_floor_max").val():$("#rpt_units_floor_max").attr("max");
+					var square_min = $("#rpt_units_square_min").val()?$("#rpt_units_square_min").val():$("#rpt_units_square_min").attr("min");
+					var square_max = $("#rpt_units_square_max").val()?$("#rpt_units_square_max").val():$("#rpt_units_square_max").attr("max");
+					rpt_png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 					rpt_data = result;
 					update_rpt_chart();
 				}
@@ -525,11 +700,19 @@
 							year.push(d.yy);
 							rawdata[building].push({
 								label: d.yy,
-								val: d.val
+								total: d.val,
+								count : 1
 							})
 						} else {
-							rawdata[building][rawdata[building].length-1].val += d.val;
+							if(d.val) {
+								rawdata[building][rawdata[building].length-1].total += d.val;
+							}
+							rawdata[building][rawdata[building].length-1].count ++;
 						}
+					})
+
+					rawdata[building].forEach(function(d){
+						d.val = (d.total / d.count).toFixed(2);
 					})
 				})
 				break;
@@ -543,11 +726,16 @@
 							quarter.push(q);
 							rawdata[building].push({
 								label: q,
-								val: d.val
+								total: d.val,
+								count: 1
 							})
 						} else {
-							rawdata[building][rawdata[building].length-1].val += d.val;
+							rawdata[building][rawdata[building].length-1].total += d.val;
+							rawdata[building][rawdata[building].length-1].count ++;
 						}
+					})
+					rawdata[building].forEach(function(d){
+						d.val = (d.total / d.count).toFixed(2);
 					})
 				})
 				break;
@@ -661,6 +849,8 @@
 
 			nv.utils.windowResize(rpt_chart.update);
 
+			d3.selectAll('#rpt-chart text').style("font", "normal 12px Calibri");
+
 			d3.selectAll('#rpt-chart svg path').style("fill","none");
 		} else {
 			rpt_empty();
@@ -750,6 +940,33 @@
 						units_filter : units_filter
 					},
 					function( result ) {
+
+						rpt_png_title = "PPSF : " + capitalizeFirstLetter(rpt_filter2) + " Rent by " + capitalizeFirstLetter(rpt_filter1);
+
+						$("#rental_price_trend .geography-group").each(function(index){
+							var is_checked = $(this).find(".geography-name input").is(':checked');
+							if(is_checked) {
+								var title = $(this).find(".geography-name span").html();	
+								var values = [];
+								$(this).find(".geography-comp input").each(function(index){
+									if($(this).is(':checked')){
+										values.push($(this).parent().find("span").html());
+									}
+								})
+								rpt_png_geography_info.push(title + ":[" + values.join(",") + "]");
+							}
+						});
+
+						var beds_min = $("#rpt_units_bed_min").val()?$("#rpt_units_bed_min").val():$("#rpt_units_bed_min").attr("min");
+						var beds_max = $("#rpt_units_bed_max").val()?$("#rpt_units_bed_max").val():$("#rpt_units_bed_max").attr("max");
+						var bath_min = $("#rpt_units_bath_min").val()?$("#rpt_units_bath_min").val():$("#rpt_units_bath_min").attr("min");
+						var bath_max = $("#rpt_units_bath_max").val()?$("#rpt_units_bath_max").val():$("#rpt_units_bath_max").attr("max");
+						var floor_min = $("#rpt_units_floor_min").val()?$("#rpt_units_floor_min").val():$("#rpt_units_floor_min").attr("min");
+						var floor_max = $("#rpt_units_floor_max").val()?$("#rpt_units_floor_max").val():$("#rpt_units_floor_max").attr("max");
+						var square_min = $("#rpt_units_square_min").val()?$("#rpt_units_square_min").val():$("#rpt_units_square_min").attr("min");
+						var square_max = $("#rpt_units_square_max").val()?$("#rpt_units_square_max").val():$("#rpt_units_square_max").attr("max");
+						rpt_png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 						rpt_empty();
 						rpt_data = result;
 						update_rpt_chart();
@@ -768,6 +985,12 @@
 	var cbr_initiated = false;
 	var cbr_svg;
 	var tooltip   = d3.select("#analyses-ppsf").append("div").attr("class", "tooltip hidden");
+
+	// png info
+	var cbr_png_title = '';
+	var cbr_png_date_info= '';
+	var cbr_png_geography_info = [];
+	var cbr_png_units_info = '';
 
 	// init checkbox unchecked
 	$("#clustered_building_rent .geography-group").eq(0).find('input').prop("checked", true);
@@ -822,6 +1045,36 @@
 					units_filter : units_filter
 				},
 				function( result ) {
+					cbr_png_title = "PPSF : " + capitalizeFirstLetter(cbr_filter) + " Rent"
+
+					var from = $("#from").val();
+					var to = $("#to").val();
+					cbr_png_date_info = from + "~" + to;
+
+					$("#clustered_building_rent .geography-group").each(function(index){
+						var is_checked = $(this).find(".geography-name input").is(':checked');
+						if(is_checked) {
+							var title = $(this).find(".geography-name span").html();	
+							var values = [];
+							$(this).find(".geography-comp input").each(function(index){
+								if($(this).is(':checked')){
+									values.push($(this).parent().find("span").html());
+								}
+							})
+							cbr_png_geography_info.push(title + ":[" + values.join(",") + "]");
+						}
+					});
+
+					var beds_min = $("#cbr_units_bed_min").val()?$("#cbr_units_bed_min").val():$("#cbr_units_bed_min").attr("min");
+					var beds_max = $("#cbr_units_bed_max").val()?$("#cbr_units_bed_max").val():$("#cbr_units_bed_max").attr("max");
+					var bath_min = $("#cbr_units_bath_min").val()?$("#cbr_units_bath_min").val():$("#cbr_units_bath_min").attr("min");
+					var bath_max = $("#cbr_units_bath_max").val()?$("#cbr_units_bath_max").val():$("#cbr_units_bath_max").attr("max");
+					var floor_min = $("#cbr_units_floor_min").val()?$("#cbr_units_floor_min").val():$("#cbr_units_floor_min").attr("min");
+					var floor_max = $("#cbr_units_floor_max").val()?$("#cbr_units_floor_max").val():$("#cbr_units_floor_max").attr("max");
+					var square_min = $("#cbr_units_square_min").val()?$("#cbr_units_square_min").val():$("#cbr_units_square_min").attr("min");
+					var square_max = $("#cbr_units_square_max").val()?$("#cbr_units_square_max").val():$("#cbr_units_square_max").attr("max");
+					cbr_png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 					cbr_data = result;
 					update_cbr_chart();
 				}
@@ -917,6 +1170,36 @@
 				units_filter : units_filter
 			},
 			function( result ) {
+				cbr_png_title = "PPSF : " + capitalizeFirstLetter(cbr_filter) + " Rent"
+
+				var from = $("#from").val();
+				var to = $("#to").val();
+				cbr_png_date_info = from + "~" + to;
+
+				$("#clustered_building_rent .geography-group").each(function(index){
+					var is_checked = $(this).find(".geography-name input").is(':checked');
+					if(is_checked) {
+						var title = $(this).find(".geography-name span").html();	
+						var values = [];
+						$(this).find(".geography-comp input").each(function(index){
+							if($(this).is(':checked')){
+								values.push($(this).parent().find("span").html());
+							}
+						})
+						cbr_png_geography_info.push(title + ":[" + values.join(",") + "]");
+					}
+				});
+
+				var beds_min = $("#cbr_units_bed_min").val()?$("#cbr_units_bed_min").val():$("#cbr_units_bed_min").attr("min");
+				var beds_max = $("#cbr_units_bed_max").val()?$("#cbr_units_bed_max").val():$("#cbr_units_bed_max").attr("max");
+				var bath_min = $("#cbr_units_bath_min").val()?$("#cbr_units_bath_min").val():$("#cbr_units_bath_min").attr("min");
+				var bath_max = $("#cbr_units_bath_max").val()?$("#cbr_units_bath_max").val():$("#cbr_units_bath_max").attr("max");
+				var floor_min = $("#cbr_units_floor_min").val()?$("#cbr_units_floor_min").val():$("#cbr_units_floor_min").attr("min");
+				var floor_max = $("#cbr_units_floor_max").val()?$("#cbr_units_floor_max").val():$("#cbr_units_floor_max").attr("max");
+				var square_min = $("#cbr_units_square_min").val()?$("#cbr_units_square_min").val():$("#cbr_units_square_min").attr("min");
+				var square_max = $("#cbr_units_square_max").val()?$("#cbr_units_square_max").val():$("#cbr_units_square_max").attr("max");
+				cbr_png_units_info = beds_min + "~" + beds_max + "B  " + bath_min + "~" + bath_max + "Ba  " + floor_min + "~" + floor_max + "Fl  " + square_min + "~" + square_max + "Sqft";
+
 				cbr_data = result;
 				update_cbr_chart();
 			}
@@ -943,6 +1226,7 @@
 			.domain([0, 1]);
 		var cbr_xAxis = d3.svg.axis()
 			.scale(cbr_xscale)
+			.tickSize(0)
 			.orient("bottom");
 		var cbr_yAxis = d3.svg.axis()
 			.scale(cbr_yscale)
@@ -961,10 +1245,14 @@
 		cbr_svg.append("g")
 			.attr("class", "x axis")
 			.attr("transform", "translate(0," + cbr_height + ")")
-			.call(cbr_xAxis);
+			.call(cbr_xAxis)
+			.selectAll("text")
+			.style("font", "normal 12px Calibri");
 		cbr_svg.append("g")
 			.attr("class", "y axis")
-			.call(cbr_yAxis);
+			.call(cbr_yAxis)
+			.selectAll("text")
+			.style("font", "normal 12px Calibri");;
 		cbr_svg.selectAll(".bar")
 			.data(cbr_data)
 			.enter()
@@ -1123,6 +1411,7 @@
 				.duration(1000)
 				.attr("y", function(d) { return cbr_yscale(d.val)})
 				.attr("height", function(d) { return cbr_height - cbr_yscale(d.val)})
+
 			cbr_svg.append('g')
 				.selectAll(".geography")
 				.data(geography_data)
@@ -1132,13 +1421,20 @@
 				.attr("x", function(d, i) { return 25 + i * 50 + (cbr_xscale(d.start) + cbr_xscale(d.end) + cbr_xscale.rangeBand())/2})
 				.attr("y", cbr_height + cbr_margin.bottom - 20)
 				.text(function(d){return d.name})
-				.style("text-anchor", "middle");
+				.style("text-anchor", "middle")
+				.style("font", "normal 30px Calibri")
+				.style("fill", "#aaa");
 			cbr_svg.selectAll('.x.axis text')
 				.style("text-anchor", "end")
 				.attr("transform", function(d){
 					var x_offset = building_name_to_geo_id[d] * 50 + 16;
 					return "translate(" + x_offset + ",0)rotate(-50)"
 				})
+				.style("font-weight", "bold")
+				.style("font", "normal 12px Calibri");
+			cbr_svg.selectAll('.y.axis text')
+				.style("font-weight", "bold")
+				.style("font", "normal 12px Calibri");
 		} else {
 			cbr_empty();
 		}
