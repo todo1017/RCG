@@ -14,6 +14,8 @@
           xmlns:html="http://www.w3.org/TR/REC-html40">
   <Worksheet ss:Name="Sheet1">
     <Table>
+      <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="135"/>
+      <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="170"/>
       <Row>
         <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- last_comp_group = "" %>
@@ -130,5 +132,49 @@
           <% end %>
       <% end %>
     </Table>
+    <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+      <PageSetup>
+        <Layout x:Orientation="Landscape"/>
+      </PageSetup>
+      <Unsynced/>
+      <Print>
+        <ValidPrinterInfo/>
+        <HorizontalResolution>-4</HorizontalResolution>
+        <VerticalResolution>-4</VerticalResolution>
+      </Print>
+      <PageLayoutZoom>0</PageLayoutZoom>
+      <Selected/>
+      <Panes>
+        <Pane>
+          <Number>3</Number>
+          <ActiveRow>14</ActiveRow>
+          <ActiveCol>10</ActiveCol>
+        </Pane>
+      </Panes>
+      <ProtectObjects>False</ProtectObjects>
+      <ProtectScenarios>False</ProtectScenarios>
+    </WorksheetOptions>
+    <PageBreaks xmlns="urn:schemas-microsoft-com:office:excel">
+      <ColBreaks>
+        <ColBreak>
+          <Column>7</Column>
+        </ColBreak>
+        <ColBreak>
+          <Column>16</Column>
+        </ColBreak>
+        <ColBreak>
+          <Column>25</Column>
+        </ColBreak>
+        <ColBreak>
+          <Column>34</Column>
+        </ColBreak>
+        <ColBreak>
+          <Column>43</Column>
+        </ColBreak>
+        <ColBreak>
+          <Column>52</Column>
+        </ColBreak>
+      </ColBreaks>
+    </PageBreaks>
   </Worksheet>
 </Workbook>
