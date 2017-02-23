@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Version>14.0</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>9200</WindowHeight>
+  <WindowWidth>21240</WindowWidth>
+  <WindowTopX>10780</WindowTopX>
+  <WindowTopY>340</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="49" ss:ExpandedRowCount="11" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
+   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="184"/>
+   <Column ss:AutoFitWidth="0" ss:Width="95"/>
+   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="148"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+    <Cell ss:MergeAcross="14"><Data ss:Type="String">                   COMP GROUP A                 </Data></Cell>
+    <Cell ss:MergeAcross="8"><Data ss:Type="String">                   COMP GROUP B                 </Data></Cell>
+    <Cell ss:MergeAcross="17"><Data ss:Type="String">                   COMP GROUP C                 </Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Element 1</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Parallel 41</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Bedford Hall</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The BLVD</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">100 Prospect</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">75 Tresser</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">66 Summer</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Summer House</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">121 Towne</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Infinity</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">111 Harbor Pointe</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Key</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Lofts</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Postmark</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">Unit Type</Data></Cell>
+    <Cell><Data ss:Type="String">Available</Data></Cell>
+    <Cell><Data ss:Type="String">Market Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Concession</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
+    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #601</Data></Cell>
+    <Cell><Data ss:Type="String">6 FL 2Bed/2.0Bath 1126 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">January  9</Data></Cell>
+    <Cell><Data ss:Type="Number">2800</Data></Cell>
+    <Cell><Data ss:Type="Number">2.4900000000000002</Data></Cell>
+    <Cell><Data ss:Type="Number">2800</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2999999999999998</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #502</Data></Cell>
+    <Cell><Data ss:Type="String">5 FL 2Bed/2.0Bath 1090 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">January 15</Data></Cell>
+    <Cell><Data ss:Type="Number">2650</Data></Cell>
+    <Cell><Data ss:Type="Number">2.4300000000000002</Data></Cell>
+    <Cell><Data ss:Type="Number">2650</Data></Cell>
+    <Cell><Data ss:Type="Number">2.2400000000000002</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #409</Data></Cell>
+    <Cell><Data ss:Type="String">4 FL 1Bed/1.0Bath 748 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">February  9</Data></Cell>
+    <Cell><Data ss:Type="Number">2050</Data></Cell>
+    <Cell><Data ss:Type="Number">2.74</Data></Cell>
+    <Cell><Data ss:Type="Number">2050</Data></Cell>
+    <Cell><Data ss:Type="Number">2.5299999999999998</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #210</Data></Cell>
+    <Cell><Data ss:Type="String">2 FL 1Bed/1.0Bath 1308 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">now</Data></Cell>
+    <Cell><Data ss:Type="Number">3100</Data></Cell>
+    <Cell><Data ss:Type="Number">2.37</Data></Cell>
+    <Cell><Data ss:Type="Number">3100</Data></Cell>
+    <Cell><Data ss:Type="Number">2.19</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #608</Data></Cell>
+    <Cell><Data ss:Type="String">6 FL 1Bed/1.0Bath 843 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">now</Data></Cell>
+    <Cell><Data ss:Type="Number">2300</Data></Cell>
+    <Cell><Data ss:Type="Number">2.73</Data></Cell>
+    <Cell><Data ss:Type="Number">2300</Data></Cell>
+    <Cell><Data ss:Type="Number">2.52</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Verano #604</Data></Cell>
+    <Cell><Data ss:Type="String">6 FL 3Bed/2.0Bath 1311 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">now</Data></Cell>
+    <Cell><Data ss:Type="Number">3800</Data></Cell>
+    <Cell><Data ss:Type="Number">2.9</Data></Cell>
+    <Cell><Data ss:Type="Number">3800</Data></Cell>
+    <Cell><Data ss:Type="Number">2.68</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Moderne #209</Data></Cell>
+    <Cell><Data ss:Type="String">2 FL 1Bed/1.0Bath 888 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">now</Data></Cell>
+    <Cell><Data ss:Type="Number">2325</Data></Cell>
+    <Cell><Data ss:Type="Number">2.62</Data></Cell>
+    <Cell><Data ss:Type="Number">2325</Data></Cell>
+    <Cell><Data ss:Type="Number">2.42</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Moderne #317</Data></Cell>
+    <Cell><Data ss:Type="String">3 FL 1Bed/1.0Bath 797 sq. ft.</Data></Cell>
+    <Cell><Data ss:Type="String">now</Data></Cell>
+    <Cell><Data ss:Type="Number">2075</Data></Cell>
+    <Cell><Data ss:Type="Number">2.6</Data></Cell>
+    <Cell><Data ss:Type="Number">2075</Data></Cell>
+    <Cell><Data ss:Type="Number">2.4</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Layout x:Orientation="Landscape"/>
+   </PageSetup>
+   <Unsynced/>
+   <Print>
+    <ValidPrinterInfo/>
+    <HorizontalResolution>-4</HorizontalResolution>
+    <VerticalResolution>-4</VerticalResolution>
+   </Print>
+   <PageLayoutZoom>0</PageLayoutZoom>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>14</ActiveRow>
+     <ActiveCol>10</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+  <PageBreaks xmlns="urn:schemas-microsoft-com:office:excel">
+   <ColBreaks>
+    <ColBreak>
+     <Column>7</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>13</Column>
+    </ColBreak>
+   </ColBreaks>
+  </PageBreaks>
+ </Worksheet>
+</Workbook>
