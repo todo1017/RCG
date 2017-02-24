@@ -13,13 +13,25 @@
           xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
           xmlns:html="http://www.w3.org/TR/REC-html40">
   <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-    <WindowHeight>7960</WindowHeight>
+    <WindowHeight>7920</WindowHeight>
     <WindowWidth>27080</WindowWidth>
     <WindowTopX>440</WindowTopX>
     <WindowTopY>1640</WindowTopY>
     <ProtectStructure>False</ProtectStructure>
     <ProtectWindows>False</ProtectWindows>
   </ExcelWorkbook>
+  <Styles>
+    <Style ss:ID="s71">
+        <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
+        <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="s72">
+        <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
+        <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+    </Style>
+  </Styles>
   <Worksheet ss:Name="Sheet1">
     <Names>
       <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Sheet1!C1:C8,Sheet1!R1:R2"/>
@@ -27,8 +39,8 @@
     <Table>
       <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="135"/>
       <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="155"/>
-      <Row>
-        <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
+      <Row ss:StyleID="s72">
+        <Cell ss:StyleID="s71" ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- last_comp_group = "" %>
         <%- @compgroups.each do |comp_group| %>
             <%- building_count = Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).count %>
@@ -40,8 +52,8 @@
             <% end %>
         <% end %>
       </Row>
-      <Row>
-        <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
+      <Row ss:StyleID="s72">
+        <Cell ss:StyleID="s71" ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                 <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"><%= comp_building.name %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
