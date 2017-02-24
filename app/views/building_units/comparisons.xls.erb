@@ -12,7 +12,18 @@
           xmlns:x="urn:schemas-microsoft-com:office:excel"
           xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
           xmlns:html="http://www.w3.org/TR/REC-html40">
+  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+    <WindowHeight>7960</WindowHeight>
+    <WindowWidth>27080</WindowWidth>
+    <WindowTopX>440</WindowTopX>
+    <WindowTopY>1640</WindowTopY>
+    <ProtectStructure>False</ProtectStructure>
+    <ProtectWindows>False</ProtectWindows>
+  </ExcelWorkbook>
   <Worksheet ss:Name="Sheet1">
+    <Names>
+      <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Sheet1!C1:C8,Sheet1!R1:R2"/>
+    </Names>
     <Table>
       <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="135"/>
       <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="155"/>
@@ -24,7 +35,7 @@
             <%- if building_count > 0 %>
                 <Cell ss:MergeAcross="<%= (building_count*colspan_value)-1 %>"><Data ss:Type="String">
                   <%= comp_group.name.upcase if comp_group.name != last_comp_group %>
-                </Data></Cell>
+                </Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% last_comp_group = comp_group.name %>
             <% end %>
         <% end %>
@@ -33,7 +44,7 @@
         <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
-                <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"><%= comp_building.name %></Data></Cell>
+                <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"><%= comp_building.name %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
             <% end %>
         <% end %>
       </Row>
@@ -51,16 +62,16 @@
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                 <% if params[:details].present? %>
-                    <Cell><Data ss:Type="String">Unit Type</Data></Cell>
-                    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-                    <Cell><Data ss:Type="String">Concession</Data></Cell>
-                    <Cell><Data ss:Type="String">Net Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Unit Type</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Concession</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Net Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% else %>
-                    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-                    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-                    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+                    <Cell><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% end %>
             <% end %>
         <% end %>
@@ -76,16 +87,17 @@
               <Row>
                 <Cell>
                   <Data ss:Type="String"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></Data>
+                  <NamedCell ss:Name="Print_Titles"/>
                 </Cell>
-                <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data></Cell>
-                <Cell><Data ss:Type="String"><%= available(building_unit) %></Data></Cell>
-                <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data></Cell>
-                <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data></Cell>
-                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data></Cell>
+                <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell><Data ss:Type="String"><%= available(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% if params[:details].present? %>
-                    <Cell><Data ss:Type="Number"><%= net_rent(building_unit) %></Data></Cell>
+                    <Cell><Data ss:Type="Number"><%= net_rent(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% end %>
-                <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data></Cell>
+                <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                   <%- CompGroup.all.each do |comp_group| %>
                       <% additional_row = Array.new %>
                       <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
@@ -139,16 +151,33 @@
       <Unsynced/>
       <Print>
         <ValidPrinterInfo/>
+        <PaperSizeIndex>3</PaperSizeIndex>
         <HorizontalResolution>-4</HorizontalResolution>
         <VerticalResolution>-4</VerticalResolution>
       </Print>
       <PageLayoutZoom>0</PageLayoutZoom>
       <Selected/>
+      <FreezePanes/>
+      <FrozenNoSplit/>
+      <SplitHorizontal>2</SplitHorizontal>
+      <TopRowBottomPane>2</TopRowBottomPane>
+      <SplitVertical>8</SplitVertical>
+      <LeftColumnRightPane>8</LeftColumnRightPane>
+      <ActivePane>0</ActivePane>
       <Panes>
         <Pane>
           <Number>3</Number>
-          <ActiveRow>14</ActiveRow>
-          <ActiveCol>10</ActiveCol>
+        </Pane>
+        <Pane>
+          <Number>1</Number>
+        </Pane>
+        <Pane>
+          <Number>2</Number>
+        </Pane>
+        <Pane>
+          <Number>0</Number>
+          <ActiveRow>12</ActiveRow>
+          <ActiveCol>6</ActiveCol>
         </Pane>
       </Panes>
       <ProtectObjects>False</ProtectObjects>
@@ -156,9 +185,6 @@
     </WorksheetOptions>
     <PageBreaks xmlns="urn:schemas-microsoft-com:office:excel">
       <ColBreaks>
-        <ColBreak>
-          <Column><%= if params[:details].present? then 8 else 7 end %></Column>
-        </ColBreak>
         <ColBreak>
           <Column><%= if params[:details].present? then 14 else 16 end %></Column>
         </ColBreak>
