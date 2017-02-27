@@ -23,13 +23,13 @@
   <Styles>
     <Style ss:ID="s71">
         <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
-        <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
+        <Interior ss:Color="#002060" ss:Pattern="Solid"/>
     </Style>
     <Style ss:ID="s72">
         <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
-        <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+        <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
+        <Interior ss:Color="#002060" ss:Pattern="Solid"/>
     </Style>
     <Style ss:ID="s18" ss:Name="Currency">
         <NumberFormat
@@ -64,30 +64,30 @@
             <% end %>
         <% end %>
       </Row>
-      <Row>
-        <Cell><Data ss:Type="String"></Data></Cell>
-        <Cell><Data ss:Type="String">Unit Type</Data></Cell>
-        <Cell><Data ss:Type="String">Available</Data></Cell>
-        <Cell><Data ss:Type="String">Market Rent</Data></Cell>
-        <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-        <Cell><Data ss:Type="String">Concession</Data></Cell>
+      <Row ss:StyleID="s72">
+        <Cell ss:StyleID="s71"><Data ss:Type="String"></Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Unit Type</Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Available</Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Market Rent</Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Gross/ft2</Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Concession</Data></Cell>
         <% if params[:details].present? %>
-            <Cell><Data ss:Type="String">Net Rent</Data></Cell>
+            <Cell ss:StyleID="s71"><Data ss:Type="String">Net Rent</Data></Cell>
         <% end %>
-        <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+        <Cell ss:StyleID="s71"><Data ss:Type="String">Net/ft2</Data></Cell>
         <%- @compgroups.each do |comp_group| %>
             <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
                 <% if params[:details].present? %>
-                    <Cell><Data ss:Type="String">Unit Type</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Concession</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Net Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Unit Type</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Concession</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Net Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% else %>
-                    <Cell><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                    <Cell><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Actual Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s71"><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% end %>
             <% end %>
         <% end %>
