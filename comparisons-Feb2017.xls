@@ -12,10 +12,10 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>6560</WindowHeight>
+  <WindowHeight>5620</WindowHeight>
   <WindowWidth>27080</WindowWidth>
-  <WindowTopX>440</WindowTopX>
-  <WindowTopY>1640</WindowTopY>
+  <WindowTopX>1500</WindowTopX>
+  <WindowTopY>1380</WindowTopY>
   <ProtectStructure>False</ProtectStructure>
   <ProtectWindows>False</ProtectWindows>
  </ExcelWorkbook>
@@ -972,6 +972,7 @@
    <Print>
     <ValidPrinterInfo/>
     <PaperSizeIndex>3</PaperSizeIndex>
+    <Scale>76</Scale>
     <HorizontalResolution>-4</HorizontalResolution>
     <VerticalResolution>-4</VerticalResolution>
    </Print>

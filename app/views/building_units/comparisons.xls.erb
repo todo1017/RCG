@@ -192,6 +192,7 @@
       <Print>
         <ValidPrinterInfo/>
         <PaperSizeIndex>3</PaperSizeIndex>
+        <Scale>76</Scale>
         <HorizontalResolution>-4</HorizontalResolution>
         <VerticalResolution>-4</VerticalResolution>
       </Print>
@@ -226,31 +227,16 @@
     <PageBreaks xmlns="urn:schemas-microsoft-com:office:excel">
       <ColBreaks>
         <ColBreak>
-          <Column><%= if params[:details].present? then 14 else 16 end %></Column>
-        </ColBreak>
-        <ColBreak>
           <Column><%= if params[:details].present? then 20 else 25 end %></Column>
-        </ColBreak>
-        <ColBreak>
-          <Column><%= if params[:details].present? then 26 else 34 end %></Column>
         </ColBreak>
         <ColBreak>
           <Column><%= if params[:details].present? then 32 else 43 end %></Column>
         </ColBreak>
         <ColBreak>
-          <Column><%= if params[:details].present? then 38 else 52 end %></Column>
-        </ColBreak>
-        <ColBreak>
           <Column><%= if params[:details].present? then 44 else 61 end %></Column>
         </ColBreak>
         <ColBreak>
-          <Column><%= if params[:details].present? then 50 else 70 end %></Column>
-        </ColBreak>
-        <ColBreak>
           <Column><%= if params[:details].present? then 56 else 79 end %></Column>
-        </ColBreak>
-        <ColBreak>
-          <Column><%= if params[:details].present? then 62 else 88 end %></Column>
         </ColBreak>
         <ColBreak>
           <Column><%= if params[:details].present? then 68 else 97 end %></Column>
