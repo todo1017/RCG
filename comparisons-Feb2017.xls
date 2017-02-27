@@ -11,7 +11,7 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>5400</WindowHeight>
+  <WindowHeight>9240</WindowHeight>
   <WindowWidth>27080</WindowWidth>
   <WindowTopX>440</WindowTopX>
   <WindowTopY>1640</WindowTopY>
@@ -33,47 +33,107 @@
   </Style>
   <Style ss:ID="s62">
    <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
+   <Font ss:FontName="Calibri" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
+   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s64">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
    <Interior ss:Color="#333399" ss:Pattern="Solid"/>
   </Style>
-  <Style ss:ID="s65">
+  <Style ss:ID="s67">
    <NumberFormat
     ss:Format="_-[$$-409]* #,##0.00_ ;_-[$$-409]* \-#,##0.00\ ;_-[$$-409]* &quot;-&quot;??_ ;_-@_ "/>
   </Style>
-  <Style ss:ID="s67" ss:Parent="s18">
+  <Style ss:ID="s69" ss:Parent="s18">
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
   </Style>
-  <Style ss:ID="s68">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-   <Font ss:FontName="Calibri" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
-   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+  <Style ss:ID="s70">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#FF6600"/>
+   </Borders>
   </Style>
-  <Style ss:ID="s69">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-   <Font ss:FontName="Calibri" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
-   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+  <Style ss:ID="s75">
+   <Borders/>
+  </Style>
+  <Style ss:ID="s80">
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s81">
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s82">
+   <Borders>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s83">
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s84">
+   <Borders>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s85">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s86">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
+  </Style>
+  <Style ss:ID="s87">
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#90713A"/>
+   </Borders>
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
   <Names>
    <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Sheet1!C1:C7,Sheet1!R1:R2"/>
   </Names>
-  <Table ss:ExpandedColumnCount="49" ss:ExpandedRowCount="11" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="49" ss:ExpandedRowCount="24" x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
    <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="184"/>
    <Column ss:AutoFitWidth="0" ss:Width="95"/>
    <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="148"/>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s69">
-    <Cell ss:MergeAcross="6" ss:StyleID="s68"><Data ss:Type="String"></Data><NamedCell
+   <Row ss:AutoFitHeight="0" ss:StyleID="s62">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="14" ss:StyleID="s68"><Data ss:Type="String">               COMP GROUP A                 </Data><NamedCell
+    <Cell ss:MergeAcross="14"><Data ss:Type="String">               COMP GROUP A                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="8" ss:StyleID="s68"><Data ss:Type="String">                   COMP GROUP B                 </Data><NamedCell
+    <Cell ss:MergeAcross="8"><Data ss:Type="String">                   COMP GROUP B                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="17" ss:StyleID="s68"><Data ss:Type="String">                   COMP GROUP C                 </Data><NamedCell
+    <Cell ss:MergeAcross="17"><Data ss:Type="String">                   COMP GROUP C                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s62">
+   <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell ss:MergeAcross="2"><Data ss:Type="String">Element 1</Data><NamedCell
@@ -190,7 +250,7 @@
     <Cell><Data ss:Type="String">5 FL 2Bed/2.0Bath 1090 sq. ft.</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">January 15</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s65"><Data ss:Type="Number">2650</Data><NamedCell
+    <Cell ss:StyleID="s67"><Data ss:Type="Number">2650</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">2.4300000000000002</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
@@ -246,7 +306,7 @@
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s67"><Data ss:Type="Number">2.37</Data><NamedCell
+    <Cell ss:StyleID="s69"><Data ss:Type="Number">2.37</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">2.19</Data><NamedCell ss:Name="Print_Titles"/></Cell>
@@ -365,6 +425,52 @@
     <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
     <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
    </Row>
+   <Row ss:Index="13" ss:AutoFitHeight="0" ss:StyleID="s70"/>
+   <Row ss:Index="15" ss:AutoFitHeight="0"/>
+   <Row ss:AutoFitHeight="0" ss:StyleID="s88"/>
+   <Row ss:AutoFitHeight="0"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s80"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s81"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s81"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s82"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell ss:Index="3" ss:StyleID="s85"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s86"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s86"><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s87"><NamedCell ss:Name="Print_Titles"/></Cell>
+   </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
    <PageSetup>
@@ -398,9 +504,8 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>1</ActiveRow>
-     <ActiveCol>0</ActiveCol>
-     <RangeSelection>R2C1:R2C7</RangeSelection>
+     <ActiveRow>16</ActiveRow>
+     <ActiveCol>1</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
