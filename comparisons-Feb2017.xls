@@ -11,7 +11,7 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>9240</WindowHeight>
+  <WindowHeight>4160</WindowHeight>
   <WindowWidth>27080</WindowWidth>
   <WindowTopX>440</WindowTopX>
   <WindowTopY>1640</WindowTopY>
@@ -33,139 +33,91 @@
   </Style>
   <Style ss:ID="s62">
    <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-   <Font ss:FontName="Calibri" ss:Size="12" ss:Color="#FFFFFF" ss:Bold="1"/>
-   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+   <Borders/>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"
+    ss:Bold="1"/>
+   <Interior ss:Color="#003366" ss:Pattern="Solid"/>
+   <NumberFormat/>
+   <Protection/>
   </Style>
   <Style ss:ID="s64">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
-   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
-  </Style>
-  <Style ss:ID="s67">
-   <NumberFormat
-    ss:Format="_-[$$-409]* #,##0.00_ ;_-[$$-409]* \-#,##0.00\ ;_-[$$-409]* &quot;-&quot;??_ ;_-@_ "/>
-  </Style>
-  <Style ss:ID="s69" ss:Parent="s18">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#666699"/>
+   </Borders>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s65">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#666699"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat
+    ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s66">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#666699"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
+     ss:Color="#666699"/>
+   </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat
+    ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+   <Protection/>
   </Style>
   <Style ss:ID="s70">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#FF6600"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s75">
-   <Borders/>
-  </Style>
-  <Style ss:ID="s80">
+   <Alignment ss:Vertical="Bottom"/>
    <Borders>
     <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
+     ss:Color="#666699"/>
    </Borders>
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat
+    ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+   <Protection/>
   </Style>
-  <Style ss:ID="s81">
-   <Borders>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s82">
-   <Borders>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s83">
-   <Borders>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s84">
-   <Borders>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s85">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s86">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
-  </Style>
-  <Style ss:ID="s87">
-   <Borders>
-    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"
-     ss:Color="#90713A"/>
-   </Borders>
+  <Style ss:ID="s72" ss:Parent="s18">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   <NumberFormat
+    ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
   <Names>
-   <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Sheet1!C1:C7,Sheet1!R1:R2"/>
+   <NamedRange ss:Name="Print_Titles" ss:RefersTo="=Sheet1!C1:C8,Sheet1!R1:R2"/>
   </Names>
-  <Table ss:ExpandedColumnCount="49" ss:ExpandedRowCount="24" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="20" ss:ExpandedRowCount="14" x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
-   <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="184"/>
-   <Column ss:AutoFitWidth="0" ss:Width="95"/>
-   <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="148"/>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s62">
-    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
+   <Column ss:AutoFitWidth="0" ss:Width="135"/>
+   <Column ss:AutoFitWidth="0" ss:Width="155"/>
+   <Row ss:StyleID="s62">
+    <Cell ss:MergeAcross="7"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="14"><Data ss:Type="String">               COMP GROUP A                 </Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="8"><Data ss:Type="String">                   COMP GROUP B                 </Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="17"><Data ss:Type="String">                   COMP GROUP C                 </Data><NamedCell
+    <Cell ss:MergeAcross="11"><Data ss:Type="String">                   COMP GROUP A                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s64">
-    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
+   <Row ss:StyleID="s62">
+    <Cell ss:MergeAcross="7"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">Element 1</Data><NamedCell
+    <Cell ss:MergeAcross="5"><Data ss:Type="String">West Coast Building</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">Parallel 41</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">Bedford Hall</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">The BLVD</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">100 Prospect</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">75 Tresser</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">66 Summer</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">Summer House</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">121 Towne</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">Infinity</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">111 Harbor Pointe</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Key</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Lofts</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Postmark</Data><NamedCell
+    <Cell ss:MergeAcross="5"><Data ss:Type="String">Danburyer</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
+   <Row ss:Height="16" ss:StyleID="s62">
     <Cell><Data ss:Type="String"></Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">Unit Type</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">Available</Data><NamedCell ss:Name="Print_Titles"/></Cell>
@@ -173,310 +125,249 @@
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">Gross/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">Concession</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">Net Rent</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">Net/ft2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">Unit Type</Data></Cell>
     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
     <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Concession</Data></Cell>
+    <Cell><Data ss:Type="String">Net Rent</Data></Cell>
     <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Unit Type</Data></Cell>
     <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
     <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
-    <Cell><Data ss:Type="String">Actual Rent</Data></Cell>
-    <Cell><Data ss:Type="String">Gross/ft2</Data></Cell>
+    <Cell><Data ss:Type="String">Concession</Data></Cell>
+    <Cell><Data ss:Type="String">Net Rent</Data></Cell>
     <Cell><Data ss:Type="String">Net/ft2</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #601</Data><NamedCell
+   <Row ss:StyleID="s64">
+    <Cell><Data ss:Type="String">3210 Pacific Avenue #303</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">6 FL 2Bed/2.0Bath 1126 sq. ft.</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">January  9</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2800</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.4900000000000002</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2800</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.2999999999999998</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #502</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">5 FL 2Bed/2.0Bath 1090 sq. ft.</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">January 15</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s67"><Data ss:Type="Number">2650</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.4300000000000002</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2650</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.2400000000000002</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #409</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">4 FL 1Bed/1.0Bath 748 sq. ft.</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">February  9</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2050</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.74</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2050</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.5299999999999998</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #210</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">2 FL 1Bed/1.0Bath 1308 sq. ft.</Data><NamedCell
+    <Cell><Data ss:Type="String">3 FL 1Bed/2.0Bath 790 sq. ft.</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s69"><Data ss:Type="Number">2.37</Data><NamedCell
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2075</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.19</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.63</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2575</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1860.42</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.35</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #608</Data><NamedCell
+   <Row>
+    <Cell ss:MergeAcross="7"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">6 FL 1Bed/1.0Bath 843 sq. ft.</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2300</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.73</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2300</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.52</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">5 FL 1Bed/2.0Bath 1200 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3000</Data><Comment><Data>West Coast Building - 5 FL 1Bed/2.0Bath 1200 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2.5</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2.5</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">5 FL 1Bed/2.0Bath 800 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/2.0Bath 800 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3.75</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3.75</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Verano #604</Data><NamedCell
+   <Row>
+    <Cell ss:MergeAcross="7"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">6 FL 3Bed/2.0Bath 1311 sq. ft.</Data><NamedCell
-      ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">3800</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.9</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">3800</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.68</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s70"><Data ss:Type="String">5 FL 1Bed/2.0Bath 1200 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3500</Data><Comment><Data>West Coast Building - 5 FL 1Bed/2.0Bath 1200 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2.92</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">3500</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">2.92</Data></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s70"><Data ss:Type="String"></Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Moderne #209</Data><NamedCell
+   <Row ss:Height="16">
+    <Cell ss:MergeAcross="7"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">2 FL 1Bed/1.0Bath 888 sq. ft.</Data><NamedCell
+    <Cell ss:StyleID="s70"><Data ss:Type="String">5 FL 1Bed/2.0Bath 3000 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">4000</Data><Comment><Data>West Coast Building - 5 FL 1Bed/2.0Bath 3000 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1.33</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">4000</Data></Cell>
+    <Cell ss:StyleID="s72"><Data ss:Type="Number">1.33</Data></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s70"><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">land #631</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 726 sq. ft.</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2325</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.62</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2325</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.42</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell><Data ss:Type="String">Moderne #317</Data><NamedCell
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2000</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="String">3 FL 1Bed/1.0Bath 797 sq. ft.</Data><NamedCell
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.75</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2000</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.75</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+   </Row>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">land #202</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 552 sq. ft.</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2075</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.6</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2075</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.4</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
-    <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">5.43</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">5.43</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
-   <Row ss:Index="13" ss:AutoFitHeight="0" ss:StyleID="s70"/>
-   <Row ss:Index="15" ss:AutoFitHeight="0"/>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s88"/>
-   <Row ss:AutoFitHeight="0"/>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s80"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s81"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s81"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s82"><NamedCell ss:Name="Print_Titles"/></Cell>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">sea #5</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 758 sq. ft.</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1700</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.2400000000000002</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1722</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1126</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1.49</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">sea #2</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 552 sq. ft.</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1500</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.72</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1522</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">992.67</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1.8</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">AprilFour #202</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 552 sq. ft.</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1500</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.72</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1500</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.72</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
+   <Row ss:Height="16" ss:StyleID="s64">
+    <Cell><Data ss:Type="String">AprilFour #205</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 758 sq. ft.</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1700</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.2400000000000002</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">1700</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.2400000000000002</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s83"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s75"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s84"><NamedCell ss:Name="Print_Titles"/></Cell>
-   </Row>
-   <Row ss:AutoFitHeight="0">
-    <Cell ss:Index="3" ss:StyleID="s85"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s86"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s86"><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell ss:StyleID="s87"><NamedCell ss:Name="Print_Titles"/></Cell>
+   <Row ss:StyleID="s64">
+    <Cell><Data ss:Type="String">Verano #506</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">5 FL 1Bed/1.0Bath 998 sq. ft.</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2425</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.4300000000000002</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2425</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2.4300000000000002</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
+    <Cell ss:MergeAcross="5" ss:StyleID="s66"><Data ss:Type="String">nothing exact</Data></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="String">5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data><Comment><Data>Danburyer - 5 FL 1Bed/1.0Bath 500 sq. ft.</Data></Comment></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">0</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">3000</Data></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">6</Data></Cell>
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
    <PageSetup>
     <Layout x:Orientation="Landscape"/>
+    <Footer
+     x:Data="&amp;C&amp;&quot;Calibri,Regular&quot;&amp;K000000Page &amp;P of &amp;N&amp;R&amp;&quot;Calibri,Regular&quot;&amp;K000000Printed on &amp;D at &amp;T"/>
    </PageSetup>
-   <Unsynced/>
    <Print>
     <ValidPrinterInfo/>
     <PaperSizeIndex>3</PaperSizeIndex>
@@ -489,8 +380,8 @@
    <FrozenNoSplit/>
    <SplitHorizontal>2</SplitHorizontal>
    <TopRowBottomPane>2</TopRowBottomPane>
-   <SplitVertical>7</SplitVertical>
-   <LeftColumnRightPane>7</LeftColumnRightPane>
+   <SplitVertical>8</SplitVertical>
+   <LeftColumnRightPane>8</LeftColumnRightPane>
    <ActivePane>0</ActivePane>
    <Panes>
     <Pane>
@@ -504,8 +395,8 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>16</ActiveRow>
-     <ActiveCol>1</ActiveCol>
+     <ActiveRow>12</ActiveRow>
+     <ActiveCol>6</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
@@ -514,10 +405,34 @@
   <PageBreaks xmlns="urn:schemas-microsoft-com:office:excel">
    <ColBreaks>
     <ColBreak>
-     <Column>7</Column>
+     <Column>14</Column>
     </ColBreak>
     <ColBreak>
-     <Column>13</Column>
+     <Column>20</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>26</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>32</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>38</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>44</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>50</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>56</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>62</Column>
+    </ColBreak>
+    <ColBreak>
+     <Column>68</Column>
     </ColBreak>
    </ColBreaks>
   </PageBreaks>
