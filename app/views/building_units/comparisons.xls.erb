@@ -31,6 +31,10 @@
         <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
         <Interior ss:Color="#333399" ss:Pattern="Solid"/>
     </Style>
+    <Style ss:ID="s18" ss:Name="Currency">
+        <NumberFormat
+        ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+    </Style>
   </Styles>
   <Worksheet ss:Name="Sheet1">
     <Names>
@@ -103,13 +107,13 @@
                 </Cell>
                 <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <Cell><Data ss:Type="String"><%= available(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell><Data ss:Type="Number"><%= building_unit.market_rent %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= building_unit.market_rent %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% if params[:details].present? %>
-                    <Cell><Data ss:Type="Number"><%= net_rent(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= net_rent(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% end %>
-                <Cell><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                   <%- CompGroup.all.each do |comp_group| %>
                       <% additional_row = Array.new %>
                       <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>

@@ -11,7 +11,7 @@
   <AllowPNG/>
  </OfficeDocumentSettings>
  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
-  <WindowHeight>7920</WindowHeight>
+  <WindowHeight>7060</WindowHeight>
   <WindowWidth>27080</WindowWidth>
   <WindowTopX>440</WindowTopX>
   <WindowTopY>1640</WindowTopY>
@@ -27,15 +27,21 @@
    <NumberFormat/>
    <Protection/>
   </Style>
-  <Style ss:ID="s71">
+  <Style ss:ID="s18" ss:Name="Currency">
+   <NumberFormat
+    ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+  </Style>
+  <Style ss:ID="s62">
    <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
    <Interior ss:Color="#333399" ss:Pattern="Solid"/>
   </Style>
-  <Style ss:ID="s72">
-   <Alignment ss:Horizontal="Center" ss:Vertical="Center"/>
-   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#FFFFFF"/>
-   <Interior ss:Color="#333399" ss:Pattern="Solid"/>
+  <Style ss:ID="s65">
+   <NumberFormat
+    ss:Format="_-[$$-409]* #,##0.00_ ;_-[$$-409]* \-#,##0.00\ ;_-[$$-409]* &quot;-&quot;??_ ;_-@_ "/>
+  </Style>
+  <Style ss:ID="s66" ss:Parent="s18">
+   <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
   </Style>
  </Styles>
  <Worksheet ss:Name="Sheet1">
@@ -47,46 +53,46 @@
    <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="184"/>
    <Column ss:AutoFitWidth="0" ss:Width="95"/>
    <Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="148"/>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s72">
-    <Cell ss:MergeAcross="6" ss:StyleID="s71"><Data ss:Type="String"></Data><NamedCell
+   <Row ss:AutoFitHeight="0" ss:StyleID="s62">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="14" ss:StyleID="s71"><Data ss:Type="String">               COMP GROUP A                 </Data><NamedCell
+    <Cell ss:MergeAcross="14"><Data ss:Type="String">               COMP GROUP A                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="8" ss:StyleID="s71"><Data ss:Type="String">                   COMP GROUP B                 </Data><NamedCell
+    <Cell ss:MergeAcross="8"><Data ss:Type="String">                   COMP GROUP B                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="17" ss:StyleID="s71"><Data ss:Type="String">                   COMP GROUP C                 </Data><NamedCell
+    <Cell ss:MergeAcross="17"><Data ss:Type="String">                   COMP GROUP C                 </Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
    </Row>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s72">
-    <Cell ss:MergeAcross="6" ss:StyleID="s71"><Data ss:Type="String"></Data><NamedCell
+   <Row ss:AutoFitHeight="0" ss:StyleID="s62">
+    <Cell ss:MergeAcross="6"><Data ss:Type="String"></Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">Element 1</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Element 1</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">Parallel 41</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Parallel 41</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">Bedford Hall</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Bedford Hall</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">The BLVD</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The BLVD</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">100 Prospect</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">100 Prospect</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">75 Tresser</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">75 Tresser</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">66 Summer</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">66 Summer</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">Summer House</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Summer House</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">121 Towne</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">121 Towne</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">Infinity</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">Infinity</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">111 Harbor Pointe</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">111 Harbor Pointe</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">The Key</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Key</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">The Lofts</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Lofts</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
-    <Cell ss:MergeAcross="2" ss:StyleID="s71"><Data ss:Type="String">The Postmark</Data><NamedCell
+    <Cell ss:MergeAcross="2"><Data ss:Type="String">The Postmark</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
    </Row>
    <Row ss:AutoFitHeight="0">
@@ -174,7 +180,8 @@
     <Cell><Data ss:Type="String">5 FL 2Bed/2.0Bath 1090 sq. ft.</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">January 15</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2650</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s65"><Data ss:Type="Number">2650</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">2.4300000000000002</Data><NamedCell
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">2650</Data><NamedCell ss:Name="Print_Titles"/></Cell>
@@ -229,7 +236,8 @@
       ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="String">now</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
-    <Cell><Data ss:Type="Number">2.37</Data><NamedCell ss:Name="Print_Titles"/></Cell>
+    <Cell ss:StyleID="s66"><Data ss:Type="Number">2.37</Data><NamedCell
+      ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">3100</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell><Data ss:Type="Number">2.19</Data><NamedCell ss:Name="Print_Titles"/></Cell>
     <Cell ss:MergeAcross="2"><Data ss:Type="String">nothing exact</Data></Cell>
@@ -380,9 +388,8 @@
     </Pane>
     <Pane>
      <Number>0</Number>
-     <ActiveRow>0</ActiveRow>
-     <ActiveCol>0</ActiveCol>
-     <RangeSelection>R1:R2</RangeSelection>
+     <ActiveRow>6</ActiveRow>
+     <ActiveCol>4</ActiveCol>
     </Pane>
    </Panes>
    <ProtectObjects>False</ProtectObjects>
