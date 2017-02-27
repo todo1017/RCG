@@ -12,12 +12,12 @@
       <Cell ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
       <% additional_row_data.each do |comp| %>
           <% if comp == nil %>
-              <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String"></Data></Cell>
+              <Cell ss:MergeAcross="<%= colspan_value-1 %>" ss:StyleID="s18_left"><Data ss:Type="String"></Data></Cell>
           <% else %>
               <% if details == "yes" %>
-                  <%= render partial: "three_field_details", locals: {comp: comp} %>
+                  <%= render partial: "three_field_details", locals: {comp: comp, cell_style: "s18"} %>
               <% else %>
-                  <%= render partial: "three_fields", locals: {comp: comp} %>
+                  <%= render partial: "three_fields", locals: {comp: comp, cell_style: "s18"} %>
               <% end %>
           <% end %>
       <% end %>

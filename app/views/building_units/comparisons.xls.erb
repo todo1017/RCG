@@ -32,8 +32,31 @@
         <Interior ss:Color="#002060" ss:Pattern="Solid"/>
     </Style>
     <Style ss:ID="s18" ss:Name="Currency">
-        <NumberFormat
-        ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+        <NumberFormat ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+    </Style>
+    <Style ss:ID="s18_left">
+        <Borders>
+            <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#4F81BD"/>
+        </Borders>
+          <NumberFormat ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+    </Style>
+    <Style ss:ID="s18_border">
+        <Borders>
+            <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#4F81BD"/>
+        </Borders>
+        <NumberFormat ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+    </Style>
+    <Style ss:ID="s18_border_left">
+        <Borders>
+            <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#4F81BD"/>
+            <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#4F81BD"/>
+        </Borders>
+          <NumberFormat ss:Format="_-&quot;$&quot;* #,##0.00_-;\-&quot;$&quot;* #,##0.00_-;_-&quot;$&quot;* &quot;-&quot;??_-;_-@_-"/>
+    </Style>
+    <Style ss:ID="row_border">
+        <Borders>
+            <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#4F81BD"/>
+        </Borders>
     </Style>
   </Styles>
   <Worksheet ss:Name="Sheet1">
@@ -100,20 +123,20 @@
               <% @additional_row_2 = Array.new %>
               <% @additional_row_3 = Array.new %>
               <% @additional_row_4 = Array.new %>
-              <Row>
+              <Row ss:StyleID="row_border">
                 <Cell>
                   <Data ss:Type="String"><%= link_to building_unit.building.name + " #" + building_unit.number, edit_building_unit_path(building_unit) %></Data>
                   <NamedCell ss:Name="Print_Titles"/>
                 </Cell>
                 <Cell><Data ss:Type="String"><%= unit_type(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <Cell><Data ss:Type="String"><%= available(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= building_unit.market_rent %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
-                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18_border"><Data ss:Type="Number"><%= building_unit.market_rent %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18_border"><Data ss:Type="Number"><%= gross_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18_border"><Data ss:Type="Number"><%= concessions_calc(building_unit, "owned") %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% if params[:details].present? %>
-                    <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= net_rent(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                    <Cell ss:StyleID="s18_border"><Data ss:Type="Number"><%= net_rent(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                 <% end %>
-                <Cell ss:StyleID="s18"><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
+                <Cell ss:StyleID="s18_border"><Data ss:Type="Number"><%= net_sq_foot(building_unit) %></Data><NamedCell ss:Name="Print_Titles"/></Cell>
                   <%- CompGroup.all.each do |comp_group| %>
                       <% additional_row = Array.new %>
                       <%- Building.where(competitor: true, comp_group_id: comp_group.id, geography_id: @geography_id).each do |comp_building| %>
@@ -121,16 +144,16 @@
                           <% comps_query_1(building_unit, comp_building.id).each do |comp| %>
                               <% if counter == 0 %>
                                   <% if params[:details].present? %>
-                                    <%= render partial: "three_field_details", locals: {comp: comp} %>
+                                    <%= render partial: "three_field_details", locals: {comp: comp, cell_style: "s18_border"} %>
                                   <% else %>
-                                    <%= render partial: "three_fields", locals: {comp: comp} %>
+                                    <%= render partial: "three_fields", locals: {comp: comp, cell_style: "s18_border"} %>
                                   <% end %>
                               <% else %>
                                   <% add_to_array(counter, comp) %>
                               <% end %>
                               <% counter = counter + 1 %>
                           <% end.empty? and begin %>
-                              <Cell ss:MergeAcross="<%= colspan_value-1 %>"><Data ss:Type="String">nothing exact</Data></Cell>
+                              <Cell ss:MergeAcross="<%= colspan_value-1 %>" ss:StyleID="s18_border_left"><Data ss:Type="String">nothing exact</Data></Cell>
                               <% counter = counter + 1 %>
                           <% end %>
                           <% comps_query_2(building_unit, comp_building.id).each do |comp| %>
