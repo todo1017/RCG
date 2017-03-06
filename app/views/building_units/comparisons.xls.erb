@@ -217,8 +217,8 @@
       <FrozenNoSplit/>
       <SplitHorizontal>3</SplitHorizontal>
       <TopRowBottomPane>3</TopRowBottomPane>
-      <SplitVertical>8</SplitVertical>
-      <LeftColumnRightPane>8</LeftColumnRightPane>
+      <SplitVertical><%= if params[:details].present? then 8 else 7 end %></SplitVertical>
+      <LeftColumnRightPane><%= if params[:details].present? then 8 else 7 end %></LeftColumnRightPane>
       <ActivePane>0</ActivePane>
       <Panes>
         <Pane>
