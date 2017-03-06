@@ -66,6 +66,19 @@
     <Table>
       <Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="135"/>
       <Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 9 else 8 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 15 else 13 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 21 else 18 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 27 else 23 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 33 else 28 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 39 else 33 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 45 else 38 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 51 else 43 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 57 else 49 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 63 else 55 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 69 else 61 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 75 else 67 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
+      <Column ss:Index="<%= if params[:details].present? then 81 else 73 end %>" ss:AutoFitWidth="0" ss:Width="155"/>
       <Row ss:StyleID="s72">
         <Cell ss:StyleID="s71" ss:MergeAcross="<%= colspan_value_owned-1 %>"><Data ss:Type="String"></Data></Cell>
         <%- last_comp_group = "" %>
@@ -192,7 +205,7 @@
       <Print>
         <ValidPrinterInfo/>
         <PaperSizeIndex>3</PaperSizeIndex>
-        <Scale>74</Scale>
+        <Scale>65</Scale>
         <HorizontalResolution>-4</HorizontalResolution>
         <VerticalResolution>-4</VerticalResolution>
       </Print>
@@ -230,7 +243,7 @@
           <Column><%= if params[:details].present? then 20 else 25 end %></Column>
         </ColBreak>
         <ColBreak>
-          <Column><%= if params[:details].present? then 32 else 43 end %></Column>
+          <Column><%= if params[:details].present? then 32 else 40 end %></Column>
         </ColBreak>
         <ColBreak>
           <Column><%= if params[:details].present? then 44 else 61 end %></Column>
@@ -240,6 +253,12 @@
         </ColBreak>
         <ColBreak>
           <Column><%= if params[:details].present? then 68 else 97 end %></Column>
+        </ColBreak>
+        <ColBreak>
+          <Column><%= if params[:details].present? then 80 else 97 end %></Column>
+        </ColBreak>
+        <ColBreak>
+          <Column><%= if params[:details].present? then 92 else 97 end %></Column>
         </ColBreak>
       </ColBreaks>
     </PageBreaks>
